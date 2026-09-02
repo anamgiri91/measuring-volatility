@@ -21,3 +21,6 @@ data/superseded-*/
 figures/
 tables/
 logs/
+
+# Script outputs
+output/
