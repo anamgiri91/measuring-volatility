@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-08-29T20:07:28+00:00",
+  "git_commit": "d45270c24ca34851b4f553589b6122f3a15e9801-dirty",
+  "python": "3.14.6",
+  "packages": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5"
+  },
+  "raw_data": {
+    "n_files": 1268,
+    "aggregate_sha256": "7b2c5cc9815ee9600208ba91251a5147b541d4c044c4fbabd9396cb278f4afec"
+  },
+  "cleaning_code_sha256": "3d8bc524bad4786095804c7d9eb2dcd97bd95e30678a56e920e81ff95b913d33",
+  "rule_versions": {
+    "ohlc_repair": "PAP-v4 \u00a73.1 envelope repair, v1 (2026-08-28)",
+    "duplicate_resolution": "classify; collapse EXACT_DUPLICATE, exclude all conflicting classes, v1 (2026-08-28)",
+    "instrument_classification": "ticker convention validated against par value, v1 (2026-08-27)",
+    "calendar": "staleness-detected sessions + documented special-session allowlist, v1 (2026-08-28)"
+  },
+  "artifacts": {
+    "panel_long": {
+      "rows": 505525,
+      "securities": 372,
+      "date_min": "1995-07-20",
+      "date_max": "2026-08-26",
+      "sessions": 5172,
+      "rows_repaired": 40531
+    },
+    "panel_trades": {
+      "rows": 286994,
+      "securities": 521,
+      "date_min": "2024-03-04",
+      "date_max": "2026-08-26",
+      "sessions": 890,
+      "rows_repaired": 1716
+    },
+    "panel_trades_clean": {
+      "rows": 184430,
+      "securities": 521,
+      "date_min": "2024-03-04",
+      "date_max": "2026-08-26",
+      "sessions": 569,
+      "rows_repaired": 1154
+    }
+  }
+}
