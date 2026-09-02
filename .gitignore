@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Superseded build artifacts.
+# Retained locally for audit, kept out of git: these are the 2026-08-28 panels that
+# data/processed/ replaced, and every one is reconstructible from the git commit and
+# raw-data hash recorded in data/processed/BUILD-MANIFEST.json.
+data/superseded-*/
+
+# Generated outputs
+figures/
+tables/
+logs/
