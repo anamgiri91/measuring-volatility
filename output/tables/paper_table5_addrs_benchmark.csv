@@ -1,0 +1,7 @@
+Regime,RS: ratio to matched proxy,AddRS: ratio to matched proxy,Interpretation
+NIFTY 50,0.98,1.005,Correction lands near the matched proxy
+NEPSE Q1,0.986,1.259,No RS deficit against the proxy; correction overshoots
+NEPSE Q2,1.143,1.323,Base estimator already above the matched proxy
+NEPSE Q3,1.108,1.283,Base estimator already above the matched proxy
+NEPSE Q4,1.04,1.217,Base estimator already above the matched proxy
+NEPSE Q5,0.977,1.149,Correction still overshoots

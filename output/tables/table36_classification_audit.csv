@@ -1,0 +1,5 @@
+rule_based,(not in master),debenture,equity,fund,promoter
+debenture,0,84,0,0,0
+equity,10,1,281,0,0
+fund,0,0,0,51,0
+promoter,0,0,1,0,93

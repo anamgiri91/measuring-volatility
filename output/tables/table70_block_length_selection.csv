@@ -1,0 +1,5 @@
+series,politis_white_block_length,n_origins,expected_blocks_per_replicate
+India VIX at origins,10.884017213655707,190,17.45678973767289
+"forward RV, close-to-close",5.191515599452404,190,36.598175688818316
+"forward RV, Parkinson",3.5564161420152107,190,53.424569120400584
+"PRIMARY (maximum, used)",10.88,190,17.463235294117645

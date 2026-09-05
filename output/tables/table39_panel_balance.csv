@@ -1,0 +1,3 @@
+denominator,cells,observed,fill_rate,note
+full grid (every security x every detected session),166148,143718,0.8649998796253943,"the unconditional balanced panel; its shortfall is dominated by securities not yet listed or already delisted, which is not an absence of trading"
+"own listing window (first to last observed session, per security)",144636,143718,0.9936530324400564,"the conditional balanced panel; its shortfall IS non-trading, and is the number the estimator claims must survive"

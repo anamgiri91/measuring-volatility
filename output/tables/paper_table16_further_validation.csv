@@ -1,0 +1,4 @@
+Check,Result,What it answers
+Conditional panel balance (own listing window),"143,718 of 144,636 security-session cells observed (99.37%)","supports item 1: the equity panel is close to fully balanced once a security's own listing window is the denominator; most of the unconditional shortfall is securities not yet listed or already delisted, not missed trading"
+Detected calendar vs external session record,829 of 831 dates agree (99.8%),supports item 8: the data-detected trading calendar is cross-checked against an independent session record rather than asserted
+Staleness-threshold sensitivity,569-569 detected sessions across thresholds 0.1-0.999,"supports item 8: the session count is unchanged across the full range of plausible staleness thresholds, so the 90% default is not doing hidden work"

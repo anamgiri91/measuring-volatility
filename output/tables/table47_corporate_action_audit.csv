@@ -1,0 +1,5 @@
+ca_class,n_rows,n_securities,n_dates,median_implied_factor,min_implied_factor,max_implied_factor,interpretation
+corporate_action,214,133,126,1.0899951460012722,1.0056346711053574,1.860774295936408,NEPSE's ex-date reference-price adjustment: the published previous close is reduced by a bonus/rights entitlement. Adopting it removes a price move that did not happen.
+reference_rounding,34,34,5,0.9985378269783969,0.995135290296264,1.004391559164958,"within the 0.5% rounding floor; not separable from tick rounding, so treated as agreement and NOT adjusted."
+upward_adjustment,62,62,4,0.9882874953893619,0.9584548838145054,0.9947285862153598,published previous close ABOVE the prior close. Not explicable as an entitlement; left UNADJUSTED and disclosed.
+session_gap,5,4,5,0.9690524406455381,0.9095845777898452,1.200016371301109,"the prior observed row is not the previous genuine session, so there is no overnight return to define either way."

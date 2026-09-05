@@ -1,0 +1,2 @@
+universe,buckets,median_trades,Parkinson_sd_ratio,Garman-Klass_sd_ratio,Rogers-Satchell_sd_ratio,n_days,zero_range_pct
+pooled (every instrument type),6,3.0,0.73729093759758,0.6060465158139342,0.5934934760504519,31305,33.43235904807539

@@ -1,0 +1,8 @@
+Measure,Pooled universe,Ordinary equity
+Stock-days,"184,391","143,718"
+Median trades/day,111,164
+10th percentile trades/day,4,37
+Stock-days below 10 trades,14.8%,1.6%
+P(H = L),5.70%,0.28%
+Parkinson exactly zero,5.70%,0.28%
+Rogers-Satchell exactly zero,15.25%,4.35%

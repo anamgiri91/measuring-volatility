@@ -1,0 +1,5 @@
+reported_value,reported_R2,series,dataset,horizon,sample,producer,R2_equals_corr_squared
+0.776,0.602,Parkinson (21d),"NIFTY 50 + India VIX, full 2010-2026 sample",TRAILING 21-session realised vs same-day VIX (horizon-MISMATCHED),"all 3,999 matched observations",09_cross_market_control.py -> table15_vix_anchor.csv,True
+0.796,0.634,Close-to-close (21d),"NIFTY 50 + India VIX, full 2010-2026 sample",TRAILING 21-session realised vs same-day VIX (horizon-MISMATCHED),"all 3,999 matched observations",09_cross_market_control.py -> table15_vix_anchor.csv,True
+0.776,0.602,Parkinson (21d),NIFTY 50 + India VIX,TRAILING 21-session realised vs same-day VIX (horizon-MISMATCHED),as reported (all sessions),09_cross_market_control.py -> table31_nifty_outlier_sensitivity.csv,True
+0.832,0.692,Parkinson (21d),NIFTY 50 + India VIX,TRAILING 21-session realised vs same-day VIX (horizon-MISMATCHED),excluding 2012-10-05 (largest ln(H/L)),09_cross_market_control.py -> table31_nifty_outlier_sensitivity.csv,True

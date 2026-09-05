@@ -1,0 +1,5 @@
+outcome,n,window_start,window_end
+both call it a session,515,2024-03-04,2026-06-12
+"detector says session, external record has no observation",1,2024-03-04,2026-06-12
+"external record has an observation, detector says carried forward",1,2024-03-04,2026-06-12
+both call it a non-session,314,2024-03-04,2026-06-12

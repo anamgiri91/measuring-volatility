@@ -1,0 +1,13 @@
+estimator,interval,sd_ratio,lo,hi,verdict_at_2.5pct,verdict_at_5pct,verdict_at_10pct
+Parkinson,95% (conservative),1.0005124209604042,0.9761338118109685,1.0239105829919555,equivalent,equivalent,equivalent
+Parkinson,"90% (textbook TOST, one-sided alpha=.05)",1.0005124209604042,0.9799307538115889,1.020294226451025,equivalent,equivalent,equivalent
+Garman-Klass,95% (conservative),1.0007102960309897,0.9667566922123622,1.032998924510942,inconclusive,equivalent,equivalent
+Garman-Klass,"90% (textbook TOST, one-sided alpha=.05)",1.0007102960309897,0.9720671742004093,1.0280265057074316,inconclusive,equivalent,equivalent
+Rogers-Satchell,95% (conservative),1.0367014025421628,0.9999732441583418,1.0735537410004448,inconclusive,inconclusive,equivalent
+Rogers-Satchell,"90% (textbook TOST, one-sided alpha=.05)",1.0367014025421628,1.0047221492811211,1.0673883230874397,inconclusive,inconclusive,equivalent
+AddRS,95% (conservative),1.2254322742258388,1.2038307189252462,1.247993329310245,different,different,different
+AddRS,"90% (textbook TOST, one-sided alpha=.05)",1.2254322742258388,1.2076217214636116,1.244201375646133,different,different,different
+Close-to-close,95% (conservative),1.0,1.0,1.0,equivalent,equivalent,equivalent
+Close-to-close,"90% (textbook TOST, one-sided alpha=.05)",1.0,1.0,1.0,equivalent,equivalent,equivalent
+Yang-Zhang,95% (conservative),1.2796238186799052,1.2232619649372438,1.3549435985085518,different,different,different
+Yang-Zhang,"90% (textbook TOST, one-sided alpha=.05)",1.2796238186799052,1.228139065956174,1.344347875128212,different,different,different

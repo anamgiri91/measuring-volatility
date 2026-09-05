@@ -1,0 +1,3 @@
+window,first,last,n_obs,VIX_Parkinson_corr,VIX_CC_corr,mean_india_vix,parkinson_beats_cc
+full VIX sample (2010 onward),2010-02-03,2026-06-12,3999,0.7761134754787054,0.7961584921273629,17.732075511172106,False
+NEPSE-overlap window only,2024-03-04,2026-06-12,557,0.5084697293879601,0.5700603891334479,14.485888684887433,False

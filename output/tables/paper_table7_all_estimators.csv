@@ -1,0 +1,7 @@
+Estimator,Scope,Matched proxy,Matched stock-days,SD ratio to matched proxy,95% CI (two-way),95% CI (block-date),Verdict at +/-5% margin,Note
+Parkinson,Within-session,Open-to-close 2nd moment,"143,718",1.001,"[0.986, 1.016]","[0.976, 1.024]",equivalent,
+Garman-Klass,Within-session,Open-to-close 2nd moment,"143,718",1.001,"[0.981, 1.022]","[0.967, 1.033]",equivalent,
+Rogers-Satchell,Within-session,Open-to-close 2nd moment,"143,718",1.037,"[1.013, 1.062]","[1.0000, 1.074]",inconclusive,
+AddRS,Within-session,Open-to-close 2nd moment,"143,718",1.225,"[1.207, 1.245]","[1.204, 1.248]",different,
+Close-to-close,Total risk,Close-to-close 2nd moment,"143,196",1.000,"[1.000, 1.000]","[1.000, 1.000]",equivalent,"definitional anchor: this estimator IS the benchmark, so the ratio is 1 by construction and carries no information"
+Yang-Zhang,Total risk,Close-to-close 2nd moment,"135,899",1.280,"[1.258, 1.303]","[1.223, 1.355]",different,

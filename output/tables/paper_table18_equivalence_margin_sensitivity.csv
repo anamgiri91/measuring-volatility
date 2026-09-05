@@ -1,0 +1,13 @@
+Estimator,Interval,SD ratio to matched proxy,Verdict at ±2.5%,Verdict at ±5%,Verdict at ±10%
+Parkinson,95% (conservative),1.001,equivalent,equivalent,equivalent
+Parkinson,"90% (textbook TOST, one-sided alpha=.05)",1.001,equivalent,equivalent,equivalent
+Garman-Klass,95% (conservative),1.001,inconclusive,equivalent,equivalent
+Garman-Klass,"90% (textbook TOST, one-sided alpha=.05)",1.001,inconclusive,equivalent,equivalent
+Rogers-Satchell,95% (conservative),1.037,inconclusive,inconclusive,equivalent
+Rogers-Satchell,"90% (textbook TOST, one-sided alpha=.05)",1.037,inconclusive,inconclusive,equivalent
+AddRS,95% (conservative),1.225,different,different,different
+AddRS,"90% (textbook TOST, one-sided alpha=.05)",1.225,different,different,different
+Close-to-close,95% (conservative),1.000,equivalent,equivalent,equivalent
+Close-to-close,"90% (textbook TOST, one-sided alpha=.05)",1.000,equivalent,equivalent,equivalent
+Yang-Zhang,95% (conservative),1.280,different,different,different
+Yang-Zhang,"90% (textbook TOST, one-sided alpha=.05)",1.280,different,different,different

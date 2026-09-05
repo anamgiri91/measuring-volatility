@@ -1,0 +1,17 @@
+Quantity,Series,Value,95% CI,Note
+Lag-1 autocorrelation of the non-overlapping origins,India VIX at the primary origins,0.646,,
+Lag-1 autocorrelation of the non-overlapping origins,"forward realised volatility, close-to-close",0.537,,
+Lag-1 autocorrelation of the non-overlapping origins,"forward realised volatility, Parkinson",0.475,,
+Lag-1 autocorrelation of the non-overlapping origins,"forecast error VIX - RV, close-to-close",0.262,,
+Correlation interval: analytic Fisher-z (assumes normality AND independence),Close-to-close,0.695,"[0.613, 0.762]",too narrow
+Correlation interval: paired stationary block bootstrap (quoted),Close-to-close,0.695,"[0.498, 0.770]",quoted
+Correlation interval: analytic Fisher-z (assumes normality AND independence),Parkinson,0.630,"[0.536, 0.709]",too narrow
+Correlation interval: paired stationary block bootstrap (quoted),Parkinson,0.630,"[0.452, 0.723]",quoted
+Block-length selection (Politis-White per series; MAXIMUM is our own conservative post hoc aggregation rule),India VIX at origins,10.88 origins,,17 expected-length blocks per replicate from 190 origins
+Block-length selection (Politis-White per series; MAXIMUM is our own conservative post hoc aggregation rule),"forward RV, close-to-close",5.19 origins,,37 expected-length blocks per replicate from 190 origins
+Block-length selection (Politis-White per series; MAXIMUM is our own conservative post hoc aggregation rule),"forward RV, Parkinson",3.56 origins,,53 expected-length blocks per replicate from 190 origins
+Block-length selection (Politis-White per series; MAXIMUM is our own conservative post hoc aggregation rule),"PRIMARY (maximum, used)",10.88 origins,,17 expected-length blocks per replicate from 190 origins
+"Parkinson − close-to-close difference, mean block = 1 origin(s) [sensitivity]",difference,-0.064,"[-0.168, 0.063]","contains zero; Fisher scale [-0.272, 0.127]"
+"Parkinson − close-to-close difference, mean block = 3 origin(s) [sensitivity]",difference,-0.064,"[-0.147, 0.082]","contains zero; Fisher scale [-0.261, 0.136]"
+"Parkinson − close-to-close difference, mean block = 6 origin(s) [sensitivity]",difference,-0.064,"[-0.162, 0.092]","contains zero; Fisher scale [-0.265, 0.146]"
+"Parkinson − close-to-close difference, mean block = 10.88 origin(s) [PRIMARY, data-selected]",difference,-0.064,"[-0.164, 0.095]","contains zero; Fisher scale [-0.270, 0.154]"

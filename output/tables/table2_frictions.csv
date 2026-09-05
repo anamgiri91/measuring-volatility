@@ -1,0 +1,16 @@
+Friction / data defect,NEPSE
+F1  Thin trading: median trades/stock-day,111
+F1  Stock-days with < 10 trades,14.8%
+F1  Stock-days with < 30 trades,25.4%
+F1  Stock-days with < 100 trades,47.1%
+F7  Zero observed range (H == L),5.7%
+F7  -> Parkinson variance exactly zero (uninformative),5.7%
+--  Rogers-Satchell exactly zero,15.3%
+      ...of which H == L,37.4%
+      ...remainder are MONOTONE days (a known RS property),62.6%
+F3  Zero close-to-close return (stale price),3.3%
+DATA  OHLC-inconsistent records,0.00%
+DATA  Rogers-Satchell negative (impossible if valid),0.000%
+      ...share of those that are OHLC-inconsistent,0.0%
+DATA  Garman-Klass negative (impossible if valid),0.000%
+      ...share of those that are OHLC-inconsistent,0.0%

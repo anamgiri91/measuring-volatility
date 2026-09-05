@@ -1,0 +1,3 @@
+market,sessions,first,last,span_years,sessions_per_year_A,note
+NEPSE (detected calendar),569.0,2024-03-04,2026-08-26,2.478,229.6,derived from data/processed/nepse_trading_calendar.csv; do NOT substitute 252
+NSE / NIFTY 50 (convention),,,,,252.0,"standard NSE convention, used only for the NIFTY cross-market block in script 09"

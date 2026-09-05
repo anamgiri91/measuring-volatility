@@ -1,0 +1,20 @@
+record_id,title,authors,year,source_query,duplicate_of,retrieval_status,inclusion,exclusion_reason
+R01,Volatility of Daily Nepal Stock Exchange (NEPSE) Index Return: A GARCH Family Models,"Dangal, D. N.; Gajurel, R. P.",2021,Q1,,metadata_and_abstract,included,
+R02,Nepalese Stock Market Volatility Using ARCH and GARCH Models,Dhungana (initials not stated in record),2025,Q1,,inaccessible,inaccessible,
+R03,A Study on Nepalese Stock Market Volatility (Academia.edu posting),not stated,0,Q1,,not_retrieved,excluded,"no resolvable bibliographic record: no journal, volume, year or DOI identifiable"
+R04,"Evidence from GARCH-family models (JORI, partial title only)",not stated,0,Q1,,inaccessible,inaccessible,
+R05,Butwal Campus Journal 5(1) item surfaced without a resolvable title,not stated,2022,Q1,,not_retrieved,excluded,record could not be resolved to a specific article; title not recoverable from the hit
+R06,Time-Varying Efficiency and Volatility Regimes in Nepal Stock Exchange (NEPSE): Evidence from Daily Data under the Adaptive Market Hypothesis,"Karki, S.",2026,Q2,,metadata_and_abstract,included,
+R07,Weak Form of Efficiency in Nepal Stock Exchange (KMC Research Journal),not stated in record,0,Q2,,inaccessible,inaccessible,
+R08,Technical Analysis and Efficient Market Hypothesis in the Nepal Stock Exchange,not stated in record,0,Q2,,inaccessible,inaccessible,
+R09,Weak Form of Market Efficiency in Nepalese Stock Market (ResearchGate posting),not stated,0,Q2,,not_retrieved,excluded,aggregator posting without a resolvable publisher record
+R10,Non-linear properties of Nepalese capital market: a multifractal detrended fluctuation analysis approach,not stated in record,0,Q2,,inaccessible,inaccessible,
+R11,Thin-trading-adjusted weak-form efficiency result attributed to Dangol (2012),Dangol (attribution from a search-engine prose summary only),2012,Q2,,not_retrieved,excluded,"appeared only inside the search engine's own summary text; no record, DOI or journal could be resolved, so it cannot be verified or cited"
+R12,Performance analysis and prediction of NEPSE for investment decision using machine learning techniques,not stated in record,0,Q2,,not_retrieved,excluded,"out of scope: return prediction, not volatility measurement or estimator evaluation"
+R13,"Trading Volume, Trading Price, Trading Frequency and Stock Return Volatility of Everest Bank Limited","Neupane, B.; Neupane, D.; Baral, P.",2022,Q4,,full_text,included,
+R14,Pravaha 28(1) direct PDF download URL for the Everest Bank study,"Neupane, B.; Neupane, D.; Baral, P.",2022,Q4,R13,full_text,duplicate,
+R15,Stock Market Volatility in Nepal (Academia.edu posting),not stated,0,Q4,,not_retrieved,excluded,no resolvable bibliographic record
+R16,Volatility Analysis of Nepalese Stock Market (ResearchGate posting),not stated,0,Q4,,inaccessible,inaccessible,
+R17,"Multi-security NEPSE study reported by a search summary as '26 securities, mid-July 2005 to mid-July 2008, 147 listed companies'",misattributed by the search summary to Neupane et al. (2022),0,Q4,,not_retrieved,excluded,"snippet_conflation: reading R13's full text shows this sentence is in ITS literature review, describing a study it cites, not R13's own sample; the underlying study could not be identified from R13's reference list with confidence"
+R18,Daily stock price behavior of commercial banks in Nepal,"Baral, K. J.; Shrestha, S. K.",2006,C1,,inaccessible,inaccessible,
+R19,A note on price-volume dynamics in an emerging stock market,"Bajracharya, K.",2020,C1,,inaccessible,inaccessible,

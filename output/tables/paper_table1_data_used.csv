@@ -1,0 +1,6 @@
+Dataset,Period / size,Use in this paper
+NEPSE main analysis panel (after screens),2024-03-04 to 2026-08-26; 520 securities,Main OHLC and liquidity analysis
+NEPSE ordinary-equity subset,"292 equities; 143,718 stock-days",Primary estimation universe
+NEPSE index,"2,296 usable sessions",Aggregate-market comparison
+NIFTY 50,"4,037 sessions, 2010-2026",Cross-market implementation check
+India VIX,"4,036 raw; 3,999 after 21-session matching",Options-based external co-movement check

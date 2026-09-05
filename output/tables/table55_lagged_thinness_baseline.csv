@@ -1,0 +1,3 @@
+specification,group,n_securities,n_stock_days,share_of_eligible_pct,Parkinson,lo95,hi95,verdict_vs_margin,pct_of_eligible_stock_days_flagged
+"baseline (90%, bottom 10%, floor 60)",thin (lagged screen),62,12454,9.828975510429574,1.0200207337324858,0.9841926173577382,1.0642196429424513,inconclusive,9.828975510429574
+"baseline (90%, bottom 10%, floor 60)",all other eligible equity,274,114253,90.17102448957043,1.01465203986,0.9918838278485963,1.0349754370953763,equivalent,9.828975510429574

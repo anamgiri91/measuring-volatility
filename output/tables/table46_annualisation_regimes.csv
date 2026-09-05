@@ -1,0 +1,4 @@
+regime,sessions,first,last,span_years,sessions_per_year,interpretation,usable_as_annualisation_factor
+WHOLE SAMPLE (the reported A),569,2024-03-04,2026-08-26,2.4777549623545516,229.64337016574586,"observed rate over THIS sample period; spans a trading-week reform, so it is not a NEPSE convention and must not be quoted as one",True
+Mon-Fri (from 2026-04-06),99,2026-04-06,2026-08-26,0.3887748117727584,254.64612676056336,"observed rate under the POST-reform five-day Monday-Friday week. NOT A USABLE ANNUALISATION FACTOR: it annualises a partial year, and since both regimes schedule five sessions per week the difference from the pre-reform row reflects the holiday composition of that partial window, not the weekday reform",False
+Sun-Thu (to 2026-04-05),470,2024-03-04,2026-04-05,2.086242299794661,225.28543307086616,observed rate under the PRE-reform five-day Sunday-Thursday week,True

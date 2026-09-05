@@ -1,0 +1,5 @@
+definition,adopted,n_defined,note
+previous OBSERVED row's close (.shift(1)),False,143426,spans session gaps: treats a multi-session absence as one overnight return
+supplied prev_close column in the source file,False,143718,disagrees with the prior observed row on 315 rows; those disagreements are now classified rather than treated as unaudited provenance
+close of the previous GENUINE SESSION (previous revision),False,143196,"NaN across 230 gap transitions; largest gap 91 sessions. Correct on gaps, but leaves the ex-date entitlement drop in the return"
+"previous GENUINE SESSION, corporate-action adjusted (ADOPTED)",True,143196,"the definition now used by the screening stage, the auction flags, close-to-close and Yang-Zhang alike"

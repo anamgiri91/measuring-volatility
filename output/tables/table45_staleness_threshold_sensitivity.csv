@@ -1,0 +1,10 @@
+stale_threshold,n_sessions,differs_from_lowest_threshold,n_inferred_holidays,n_off_schedule_sessions
+0.1,569,0,0,1
+0.25,569,0,0,1
+0.5,569,0,0,1
+0.75,569,0,0,1
+0.8,569,0,0,1
+0.9,569,0,0,1
+0.95,569,0,0,1
+0.99,569,0,0,1
+0.999,569,0,0,1

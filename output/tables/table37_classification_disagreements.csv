@@ -1,0 +1,13 @@
+symbol,issue,rule_based,master,final,median_close,effect
+ADBLB,DISAGREEMENT,equity,debenture,debenture,1000.0,moved OUT of the equity universe (equity -> debenture)
+BPW,NOT IN MASTER,equity,,equity,1177.3,
+JALPA,NOT IN MASTER,equity,,equity,1294.9,
+KLBSL,NOT IN MASTER,equity,,equity,922.45,
+MKLB,NOT IN MASTER,equity,,equity,1009.45,
+MMFDB,NOT IN MASTER,equity,,equity,525.0,
+NADEP,DISAGREEMENT,promoter,equity,equity,818.3,moved INTO the equity universe (promoter -> equity)
+NLBBL,NOT IN MASTER,equity,,equity,527.0999999999999,
+SABSL,NOT IN MASTER,equity,,equity,855.8,
+SAMAJ,NOT IN MASTER,equity,,equity,2698.2,
+SDLBSL,NOT IN MASTER,equity,,equity,907.0,
+SFCL,NOT IN MASTER,equity,,equity,454.5,

@@ -1,0 +1,5 @@
+series,lag1_autocorrelation,n
+India VIX at the primary origins,0.6460693448090837,190
+"forward realised volatility, close-to-close",0.5374291554539092,190
+"forward realised volatility, Parkinson",0.47497876645664255,190
+"forecast error VIX - RV, close-to-close",0.2623617993104941,190

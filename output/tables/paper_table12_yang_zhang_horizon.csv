@@ -1,0 +1,5 @@
+Previous-close definition,Benchmark horizon,Horizon-matched,Matched stock-days,SD ratio to matched proxy,Adopted
+unadjusted previous session,same-session r_cc^2,False,"135,899",1.288,False
+unadjusted previous session,21-session close-to-close variance,True,"135,899",1.273,False
+corporate-action adjusted (adopted),same-session r_cc^2,False,"135,899",1.295,False
+corporate-action adjusted (adopted),21-session close-to-close variance,True,"135,899",1.280,True

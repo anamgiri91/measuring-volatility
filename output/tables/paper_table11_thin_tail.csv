@@ -1,0 +1,7 @@
+Group / security,Securities or observations,Stock-days or listing window,Share of panel / participation,Zero-range share,Parkinson: SD ratio to matched proxy,95% CI (two-way),Verdict vs ±5% margin
+GROUP: extreme thin tail,4 securities,919,0.64%,26.2%,0.814,"[0.722, 0.909]",different
+GROUP: all other ordinary equity,288 securities,"142,799",99.36%,0.1%,1.001,"[0.984, 1.018]",equivalent
+,29 observed,549,5.3%,86.2%,0.601,,collapses
+,374 observed,569,65.7%,31.6%,0.801,,collapses
+,510 observed,566,90.1%,19.0%,0.841,,collapses
+,6 observed,6,100.0%,16.7%,1.006,,collapses

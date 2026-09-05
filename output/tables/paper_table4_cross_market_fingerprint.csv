@@ -1,0 +1,8 @@
+Regime,Median trades/day,Parkinson: SD ratio to matched proxy,Rogers-Satchell: SD ratio to matched proxy,Zero range
+NIFTY 50,Dense,0.978,0.98,0.00%
+NEPSE equity - thin,33,0.934,0.955,1.66%
+NEPSE equity,77,1.058,1.145,0.00%
+NEPSE equity,131,1.043,1.113,0.00%
+NEPSE equity,208,1.029,1.085,0.00%
+NEPSE equity,350,1.0,1.029,0.00%
+NEPSE equity - dense,787,0.972,0.972,0.00%

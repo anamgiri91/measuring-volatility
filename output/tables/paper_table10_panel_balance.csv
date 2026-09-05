@@ -1,0 +1,6 @@
+Liquidity quintile (security-level),Securities,Stock-days,Median trades/day,Min participation,Median participation,Parkinson: stock-day weighted,Parkinson: equal-security median,Security-level 5th-95th percentile
+Q1,59,28770,49,0.053,1.000,1.022,1.02,"[0.717, 1.135]"
+Q2,58,31143,103,0.928,1.000,1.037,1.036,"[0.965, 1.098]"
+Q3,58,32442,168,0.996,1.000,1.011,1.005,"[0.957, 1.103]"
+Q4,59,27701,250,0.995,1.000,0.984,0.99,"[0.816, 1.060]"
+Q5,58,23662,500,0.996,1.000,0.938,0.946,"[0.773, 1.030]"

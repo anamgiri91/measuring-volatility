@@ -1,0 +1,16 @@
+Sensitivity axis,Specification,Eligible stock-days flagged thin,Parkinson: SD ratio to matched proxy,95% CI (block-date),Verdict at ±5% margin
+Threshold grid,"participation < 80%, bottom 5% trades",4.83%,0.998,"[0.954, 1.051]",inconclusive
+Threshold grid,"participation < 80%, bottom 10% trades",9.82%,1.020,"[0.984, 1.064]",inconclusive
+Threshold grid,"participation < 80%, bottom 20% trades",19.75%,1.033,"[0.9995, 1.074]",inconclusive
+Threshold grid,"participation < 90%, bottom 5% trades",4.84%,0.998,"[0.954, 1.051]",inconclusive
+Threshold grid,"participation < 90%, bottom 10% trades",9.83%,1.020,"[0.984, 1.064]",inconclusive
+Threshold grid,"participation < 90%, bottom 20% trades",19.76%,1.033,"[0.9995, 1.074]",inconclusive
+Threshold grid,"participation < 95%, bottom 5% trades",4.85%,0.999,"[0.954, 1.051]",inconclusive
+Threshold grid,"participation < 95%, bottom 10% trades",9.83%,1.020,"[0.984, 1.064]",inconclusive
+Threshold grid,"participation < 95%, bottom 20% trades",19.76%,1.033,"[0.9995, 1.074]",inconclusive
+History floor,40 scheduled sessions,9.84%,1.020,"[0.981, 1.063]",inconclusive
+History floor,60 scheduled sessions,9.83%,1.020,"[0.984, 1.064]",inconclusive
+History floor,120 scheduled sessions,9.84%,1.015,"[0.966, 1.062]",inconclusive
+Component,participation only,0.43%,0.847,"[0.729, 1.104]",inconclusive
+Component,trade count only,9.76%,1.020,"[0.975, 1.065]",inconclusive
+Component,composite OR (baseline),9.83%,1.020,"[0.984, 1.064]",inconclusive

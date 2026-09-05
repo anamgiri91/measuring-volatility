@@ -1,0 +1,2 @@
+specification,n_obs,pearson_Parkinson,pearson_CloseToClose,difference_pk_minus_cc,difference_lo95,difference_hi95,decision_rule_outcome
+non-overlapping forward windows (primary),190,0.6304786398566091,0.6945404014736771,-0.064061761617068,-0.16916512405017134,0.06463684804543222,inconclusive: the difference interval contains zero

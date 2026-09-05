@@ -1,0 +1,3 @@
+Group,Securities,Stock-days,Share of eligible stock-days,Parkinson: SD ratio to matched proxy,95% CI (block-date),Verdict at ±5% margin
+thin (lagged screen),62,"12,454",9.83%,1.020,"[0.984, 1.064]",inconclusive
+all other eligible equity,274,"114,253",90.17%,1.015,"[0.992, 1.035]",equivalent

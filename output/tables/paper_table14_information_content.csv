@@ -1,0 +1,5 @@
+Estimator,Matched stock-days,SD ratio to matched proxy,Pearson correlation with proxy,Spearman correlation with proxy
+Parkinson,"143,718",1.001,0.701,0.63
+Garman-Klass,"143,718",1.001,0.381,0.391
+Rogers-Satchell,"143,718",1.037,0.209,0.138
+AddRS,"143,718",1.225,0.679,0.519

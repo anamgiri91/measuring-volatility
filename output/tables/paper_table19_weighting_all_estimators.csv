@@ -1,0 +1,7 @@
+Estimator,Securities,Stock-days,Stock-day weighted (primary),Equal-security mean,Equal-security median,Security-level 5th-95th percentile
+Parkinson,292,"143,718",1.001,0.989,1.002,"[0.816, 1.108]"
+Garman-Klass,292,"143,718",1.001,0.981,1.003,"[0.733, 1.147]"
+Rogers-Satchell,292,"143,718",1.037,1.010,1.034,"[0.709, 1.217]"
+AddRS,292,"143,718",1.225,1.214,1.216,"[1.071, 1.374]"
+Close-to-close,291,"143,196",1.000,1.000,1.000,"[1.000, 1.000]"
+Yang-Zhang,286,"135,899",1.280,1.293,1.293,"[1.045, 1.588]"

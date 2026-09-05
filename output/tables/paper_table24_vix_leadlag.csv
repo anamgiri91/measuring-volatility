@@ -1,0 +1,9 @@
+Estimator,Window relative to the VIX observation,Observations,Correlation with VIX,95% CI
+Close-to-close,BACKWARD 30d (contains t),189,0.806,"[0.749, 0.850]"
+Close-to-close,FORWARD 30d (excludes t),189,0.694,"[0.612, 0.762]"
+Parkinson,BACKWARD 30d (contains t),189,0.778,"[0.714, 0.828]"
+Parkinson,FORWARD 30d (excludes t),189,0.629,"[0.534, 0.708]"
+Garman-Klass,BACKWARD 30d (contains t),189,0.749,"[0.679, 0.806]"
+Garman-Klass,FORWARD 30d (excludes t),189,0.602,"[0.502, 0.686]"
+Rogers-Satchell,BACKWARD 30d (contains t),189,0.673,"[0.587, 0.744]"
+Rogers-Satchell,FORWARD 30d (excludes t),189,0.539,"[0.429, 0.633]"

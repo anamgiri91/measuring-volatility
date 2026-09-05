@@ -1,0 +1,5 @@
+previous_close_definition,benchmark_horizon,horizon_matched,n_matched_rows,sd_ratio,adopted
+unadjusted previous session,same-session r_cc^2,False,135899,1.288075296747971,False
+unadjusted previous session,21-session close-to-close variance,True,135899,1.2732389490299603,False
+corporate-action adjusted (adopted),same-session r_cc^2,False,135899,1.2952096803597437,False
+corporate-action adjusted (adopted),21-session close-to-close variance,True,135899,1.2796238186799054,True

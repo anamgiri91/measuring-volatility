@@ -1,0 +1,5 @@
+Estimator,Forward windows,Correlation with VIX (levels),95% CI (paired block bootstrap),Calibration slope on VIX,95% CI (slope),R²,Correlation in changes
+Close-to-close,190,0.695,"[0.498, 0.770]",0.844,"[0.557, 1.027]",0.482,0.463
+Parkinson,190,0.630,"[0.452, 0.723]",0.595,"[0.454, 0.700]",0.398,0.282
+Garman-Klass,190,0.604,"[0.401, 0.718]",0.579,"[0.437, 0.682]",0.365,0.244
+Rogers-Satchell,190,0.541,"[0.298, 0.715]",0.566,"[0.422, 0.666]",0.293,0.188
