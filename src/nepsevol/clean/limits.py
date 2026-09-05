@@ -4,14 +4,17 @@ NEPSE censors observed prices in two places, and both truncate what a volatility
 can see. Neither is a nuisance to be cleaned away: they are the mechanism.
 
     Pre-open auction band   orders may be placed only within +/- band of the previous close.
-                            The OPENING price is censored. Observed +/-2% through 2026-03,
-                            widened to +/-5% from 2026-04.
+                            The OPENING price is censored. Observed +/-2% through 2026-04-19,
+                            widened to +/-5% from 2026-04-20.
 
     Daily price limit       the whole session is bounded relative to the previous close, so the
-                            HIGH and LOW are censored. Observed +/-10% through 2026-03, widened
-                            to +/-15% from 2026-04.
+                            HIGH and LOW are censored. Observed +/-10% through 2026-04-19, widened
+                            to +/-15% from 2026-04-20.
 
-Both were verified from the data rather than assumed: pre-2026-04 the 99th percentile of the
+These dates are the PRICE regime. They are distinct from the TRADING-WEEK reform of 2026-04-06;
+see :data:`REGIMES` and :data:`nepsevol.trading_calendar.WEEK_REFORM`.
+
+Both were verified from the data rather than assumed: pre-2026-04-20 the 99th percentile of the
 absolute close-to-close move sits at exactly 10.0% with 1.81% of highs pinned at +10% and only
 0.07% of moves exceeding 10.5%.
 
@@ -29,12 +32,23 @@ __all__ = ["REGIMES", "regime_for", "flag_limits", "censoring_summary",
            "range_ceiling", "flag_infeasible_range"]
 
 # (effective_from, pre_open_band, daily_price_limit) — fractions of the previous close.
-# The 2026-04 revision changed BOTH simultaneously, alongside a new intraday circuit breaker and
-# round-the-clock order entry. Treatments in that window are therefore CONFOUNDED and must not be
-# used as a clean natural experiment.
+# The 2026-04-20 revision changed BOTH bands simultaneously, alongside a new two-tier intraday
+# circuit breaker. Treatments in that window are therefore CONFOUNDED and must not be used as a
+# clean natural experiment.
+#
+# REFEREE ITEM 9. This date is 2026-04-20 and stays there. It is NOT the same event as the
+# trading-week reform, which took effect 2026-04-06 and lives in
+# nepsevol.trading_calendar.WEEK_REFORM. Both dates were previously written as 2026-04-20, which
+# put the two-week window 6-19 April under the wrong calendar regime. Keep them separate:
+#
+#     2026-04-06   Sun-Thu -> Mon-Fri            WHICH DAYS are sessions   (trading_calendar)
+#     2026-04-20   +/-10% -> +/-15%, 2% -> 5%    HOW FAR a price may move  (this module)
+#
+# Within 6-19 April 2026 the market traded a Monday-Friday week under the OLD +/-10% limit. Any
+# code that needs one of these must import the one it means rather than share a literal.
 REGIMES = [
     (pd.Timestamp("1900-01-01"), 0.02, 0.10),
-    (pd.Timestamp("2026-04-01"), 0.05, 0.15),
+    (pd.Timestamp("2026-04-20"), 0.05, 0.15),
 ]
 
 
@@ -63,10 +77,23 @@ def flag_limits(df: pd.DataFrame, tol: float = 0.05, symbol_col: str = "symbol")
         low_limited            low within tolerance of the lower daily limit
         range_censored         either extreme was limited -> observed range is truncated
     """
+    # PEER-REVIEW ITEM D / MANDATORY ITEM 4. This was a bare `.shift(1)` -- the previous
+    # OBSERVED ROW -- which is the third of the three previous-close definitions the reviewer
+    # found coexisting in the package. It is the wrong one twice over for an auction flag:
+    # across a listing gap it compares today's open against a close up to 91 sessions old, and
+    # on an ex-date it compares against an unadjusted close, so a bonus entitlement registers as
+    # an opening move of tens of percent and is counted as a pinned or limited open that never
+    # happened. Both errors bias exactly the opening-auction diagnostics this function feeds.
+    #
+    # It now uses the package-wide adopted definition. `open_at_prev_close` in particular is a
+    # statement about the auction finding no match against the exchange's own reference price,
+    # so it must be evaluated against that reference price.
+    from nepsevol.corporate_actions import adjusted_previous_close
+
     d = df.copy()
     if symbol_col in d.columns:
         d = d.sort_values([symbol_col, "date"])
-        prev_c = d.groupby(symbol_col)["close"].shift(1)
+        prev_c = adjusted_previous_close(d, symbol_col=symbol_col)
     else:
         d = d.sort_values("date")
         prev_c = d["close"].shift(1)

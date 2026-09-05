@@ -1,9 +1,10 @@
 """NEPSE trading calendar — detected from data, not assumed from a weekday rule.
 
 A fixed weekday rule is wrong for this market. NEPSE traded **Sunday-Thursday** historically and
-switched to **Monday-Friday** in April 2026. A hard-coded Sun-Thu filter therefore deletes genuine
-Friday sessions and retains stale Sundays after the change, contaminating exactly the window that
-contains the widened price-band regime.
+switched to **Monday-Friday effective 6 April 2026**. A hard-coded Sun-Thu filter therefore
+deletes genuine Friday sessions and retains stale Sundays after the change, contaminating exactly
+the window that also contains the widened price-band regime -- which is a *separate* reform,
+effective **20 April 2026**, and is dated separately in :mod:`nepsevol.clean.limits`.
 
 Evidence from the panel, measured as the fraction of a date's cross-section whose close is
 identical to the prior dated file (near 1.0 means the file repeats the previous session and is
@@ -26,17 +27,45 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-__all__ = ["SCHEDULES", "expected_weekdays", "detect_sessions", "session_index",
-           "build_calendar"]
+__all__ = ["SCHEDULES", "WEEK_REFORM", "expected_weekdays", "detect_sessions",
+           "session_index", "build_calendar"]
 
 # Documented schedule regimes, used only as a cross-check on the detector.
+#
+# REFEREE ITEM 9. This constant previously read 2026-04-20, the same date as the price-limit
+# revision in nepsevol.clean.limits.REGIMES. The two reforms are SEPARATE EVENTS with separate
+# effective dates and must not share a constant:
+#
+#   2026-04-06  TRADING WEEK. NEPSE moved from Sunday-Thursday to Monday-Friday, aligning with
+#               the Cabinet decision of 5 April 2026 that made Saturday and Sunday the weekly
+#               public holidays. This is a CALENDAR change: it alters which weekdays are
+#               sessions, and nothing else.
+#   2026-04-20  PRICE REGIME. The daily price limit widened from +/-10% to +/-15%, the pre-open
+#               band from +/-2% to +/-5%, and the market-wide circuit breaker became two-tier.
+#               This is a CENSORING change: it alters how far a price may travel within a
+#               session. See nepsevol.clean.limits.REGIMES, which keeps 2026-04-20.
+#
+# Conflating them mis-dates the calendar by two weeks and mis-attributes the censoring regime
+# of those two weeks. The panel confirms the split rather than merely permitting it:
+#
+#   2026-04-05  Sunday, staleness 0.009  -> a genuine session: the LAST Sunday session, traded
+#                                           on the day the Cabinet decision was taken
+#   2026-04-10  Friday, staleness 0.028  -> a genuine session under the new week
+#   2026-04-17  Friday, staleness 0.049  -> a genuine session under the new week
+#   2026-04-12  Sunday, staleness 1.000  -> carried forward: a weekend day, not a holiday
+#   2026-04-19  Sunday, staleness 1.000  -> carried forward: a weekend day, not a holiday
+#
+# Under the old 2026-04-20 boundary those two Fridays were recorded as sessions "off documented
+# schedule" and those two Sundays as inferred holidays. Under 2026-04-06 all four are exactly
+# what the schedule says they are, and the April transition is clean rather than ragged.
 SCHEDULES = [
     (pd.Timestamp("1900-01-01"), ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]),
-    # Effective 20 April 2026, per the NEPSE trading-rule revision that also widened the
-    # pre-open band and the daily price limit. Dated from the documented reform, not inferred:
-    # 2026-04-05 is a Sunday with full activity, which rules out an April-1 break.
-    (pd.Timestamp("2026-04-20"), ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]),
+    (pd.Timestamp("2026-04-06"), ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]),
 ]
+
+#: Effective date of the trading-week reform, exported so that callers state which reform they
+#: mean instead of reaching for a bare date literal.
+WEEK_REFORM = SCHEDULES[1][0]
 
 
 def expected_weekdays(date) -> list[str]:
@@ -96,8 +125,11 @@ def build_calendar(panel: pd.DataFrame, stale_threshold: float = 0.90,
          A carried-forward file repeats the previous session exactly; a genuine session, however
          quiet, never exceeds 8.7%.
       2. The DOCUMENTED schedule is a cross-check that EXPLAINS disagreements rather than
-         overriding them. It cannot be primary: the April 2026 transition is not a clean break,
-         with Fridays 10 and 17 April trading while the Sundays either side did not.
+         overriding them. It cannot be primary, because a documented date can be wrong or, as
+         here, can be two documented dates confused for one. Fridays 10 and 17 April traded
+         while the Sundays either side did not; that looked ragged only because the schedule
+         boundary was mis-set to the price-limit date. Dated correctly at 2026-04-06 the
+         transition is clean, and the detector agrees with the schedule on every day of it.
       3. Every disagreement between schedule and data is recorded, never silently resolved.
 
     On circularity: using price staleness to define sessions is a real hazard in principle, since
@@ -118,7 +150,9 @@ def build_calendar(panel: pd.DataFrame, stale_threshold: float = 0.90,
     det = detect_sessions(panel, stale_threshold=stale_threshold, price_col=price_col)
     cal = pd.DataFrame(index=det.index)
     cal["weekday"] = det["weekday"]
-    cal["regime"] = ["Mon-Fri" if d >= SCHEDULES[1][0] else "Sun-Thu" for d in cal.index]
+    # The regime label names the TRADING WEEK, so it keys off WEEK_REFORM (2026-04-06), not
+    # the price-limit date. See the SCHEDULES comment above and clean.limits.REGIMES.
+    cal["regime"] = ["Mon-Fri" if d >= WEEK_REFORM else "Sun-Thu" for d in cal.index]
     cal["scheduled_session"] = det["scheduled"]
     cal["stale_frac"] = det["stale_frac"]
     cal["carried_forward"] = det["stale_frac"] >= stale_threshold

@@ -34,10 +34,8 @@ Properties, verifiable from this docstring alone:
   about a particular dataset and is recorded in the audit register, not here.
 
 Provenance convention: ORIGINAL values are preserved as ``open_original`` ...
-``close_original`` for all four fields. That is the single convention for new code. The
-frozen confirmatory script ``scripts/11_ho2_confirmatory.py`` performs its own inline
-repair using ``high_raw``/``low_raw``; it is deliberately NOT migrated, because the
-historical registered result must stay byte-reconstructable.
+``close_original`` for all four fields, and that is the single convention used throughout
+this package.
 
 Duplicate keys
 --------------
