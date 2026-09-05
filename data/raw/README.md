@@ -1,24 +1,16 @@
-# `data/raw/` — currently empty, deliberately
+# Raw NEPSE stock-level inputs
 
-Raw input data is held in the project's private data vault, not here, because its redistribution
-terms are unresolved. The file in question is the NEPSE daily index series (2010-01-03 →
-2026-06-12, 3,759 rows), which was self-scraped from a source not yet documented.
+The original stock-level NEPSE source files used to build the processed panel are **not redistributed** in this journal submission package because their redistribution terms are unresolved.
 
-Until provenance and licence are established, the conservative state is to keep it out of the
-public package. Public is the harder state to undo.
+For paper reproduction, use the frozen, audited CSV files in `data/processed/`. They are sufficient for every retained paper-facing analysis in `run_paper_analysis.sh`.
 
-## What happens next
+`scripts/02_build_panel.py` remains the complete cleaning/build specification. If the original source files are lawfully available, place them in:
 
-- **If redistribution is permitted** — the file is promoted here, and `config/config.yaml` points
-  at this directory.
-- **If it is not** — this package ships `src/nepsevol/ingest/` (the scraper) plus
-  `scripts/00_fetch_data.py`, and a user reproduces by fetching from source.
+- `data/raw/stock-daily-long/*.csv`
+- `data/raw/stock-daily-trades/*.csv`
 
-Either way the scraper is being rebuilt, because reproducing from an opaque CSV is not a
-reproduction. Anyone running this pipeline should be able to obtain the inputs themselves.
+and run `python scripts/02_build_panel.py`.
 
-## Contract for anything placed here
+The original project build manifest recorded 1,268 raw CSVs with aggregate SHA-256:
 
-- Treated as **read-only**. Never edited in place. Cleaning writes to `data/interim/`.
-- Every file has a provenance entry: source, retrieval date, method, licence, known limitations.
-- Every file is checksummed, and the checksum is verified before use.
+`7b2c5cc9815ee9600208ba91251a5147b541d4c044c4fbabd9396cb278f4afec`
