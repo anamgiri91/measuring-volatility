@@ -4,6 +4,16 @@ version = "0.1.0"
 description = "Volatility estimation in a market without derivatives: evidence from NEPSE"
 requires-python = ">=3.12"
 
+# F-8b. These were previously declared only in requirements.txt, so `pip install -e .` on its
+# own installed the package and nothing else. requirements.txt remains the exact pinned lock
+# for the reference environment; this is the supported floor.
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "matplotlib>=3.8",
+    "statsmodels>=0.14",
+]
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"

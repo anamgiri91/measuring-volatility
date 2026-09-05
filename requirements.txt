@@ -1,11 +1,16 @@
-# Verified to have cp314 arm64 wheels as of 2026-08-26.
-Markdown==3.10.3
-arch==8.0.0
+# Pinned for the reference environment recorded in data/processed/BUILD-MANIFEST.json:
+#   Python 3.14.6, macOS arm64, wheels verified 2026-08-26.
+# The pipeline is additionally verified to run on Python 3.12 / x86-64 (Linux) with the
+# next-nearest available versions; see README "Environment" for the tested matrix.
+#
+# Only direct imports are listed. arch, Markdown and pyyaml were pinned in an earlier
+# revision but are not imported by any shipped code, and have been removed (F-8c).
 matplotlib==3.11.1
 numpy==2.5.2
 pandas==3.0.5
-pyarrow==25.0.1
-pytest
-pyyaml
-scipy==1.18.1
 statsmodels==0.14.6
+pytest==8.4.2
+
+# Transitive, pinned deliberately: statsmodels pulls scipy in, and the pin keeps the
+# resolved environment deterministic. No shipped module imports scipy directly.
+scipy==1.18.1
