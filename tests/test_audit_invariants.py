@@ -255,7 +255,7 @@ def test_no_active_script_reads_the_mixed_universe_directly():
     allowed = {"03_descriptive.py", "22_universe_composition.py"}
     offenders = [
         f.name for f in sorted(scripts.glob("*.py"))
-        if f.name not in allowed and "analysis_sample.parquet" in f.read_text()
+        if f.name not in allowed and "analysis_sample.csv" in f.read_text()
     ]
     assert not offenders, f"scripts bypassing load_sample(): {offenders}"
 
