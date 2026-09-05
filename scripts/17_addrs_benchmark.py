@@ -24,17 +24,25 @@ sys.path.insert(0, str(ROOT / "src"))
 from nepsevol.sample import load_sample
 from nepsevol.utils import plotstyle as ps
 from nepsevol.estimators import range_ as R
+from nepsevol.estimators.ratios import sd_ratio, assert_same_scale
 ps.apply(); FIG=ROOT/"output"/"figures"; TAB=ROOT/"output"/"tables"
-EXT=ROOT.parent/"private"/"data-vault"/"raw"/"external"
+EXT=ROOT/"data"/"external"
 
 def block(df, label, trades=np.nan):
     d=df[(df[["open","high","low","close"]]>0).all(axis=1)].copy()
     oc=(np.log(d.close/d.open)**2).mean()
     out={"regime":label,"median_trades":trades,"n":len(d),
          "P(H=L) %":100*(d.high==d.low).mean()}
+    # F-5. sd_ratio returns its scale, and the three ratios are asserted onto one scale before
+    # they are written into the same row. This is the guard nepsevol.estimators.ratios exists
+    # to provide; it was previously bypassed by an inline np.sqrt(m/oc).
+    labelled=[]
     for nm,fn in [("Parkinson",R.parkinson),("RS",R.rogers_satchell),("AddRS",R.add_rs)]:
         m=np.nanmean(np.asarray(fn(d),dtype=float))
-        out[f"{nm}/OC"]=np.sqrt(m/oc) if m>0 and oc>0 else np.nan
+        val,scale=sd_ratio(m,oc) if (m>0 and oc>0) else (np.nan,"sd")
+        out[f"{nm}/OC"]=val
+        labelled.append((val,scale))
+    assert_same_scale(*labelled)
     out["RS==0 %"]=100*(np.abs(np.asarray(R.rogers_satchell(d),dtype=float))<=1e-15).mean()
     return out
 

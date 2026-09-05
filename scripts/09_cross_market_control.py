@@ -4,11 +4,27 @@ The single most damaging objection to this paper is that something is wrong with
 with the data, or with our code, rather than with range estimators under thin trading.
 This script answers it with real data rather than simulation.
 
-The identical estimator code is run on three regimes:
+The identical ESTIMATOR code is run on three regimes:
 
     NIFTY 50      dense, clean, liquid, has a listed implied-volatility index
     NEPSE index   moderate: aggregates every listed security
     NEPSE equity  thin, split by published daily trade count
+
+SCREEN ASYMMETRY, stated because "identical code" is easy to over-read (F-3). The estimator
+functions are identical across all three regimes. The INPUT SCREENS are not, and cannot be:
+
+    NEPSE equity   positivity + |ln(C/C_prev)| < 0.5 + rules-derived range ceiling
+                   + duplicate-key reconciliation + OHLC envelope repair
+                   (scripts/02_build_panel.py, scripts/03_descriptive.py:42,48)
+    NIFTY 50       positivity only (fingerprint(), below)
+    NEPSE index    positivity only (fingerprint(), below)
+
+The extra NEPSE screens are rules-derived from NEPSE's own price limits and duplicate-key
+pathologies; there is no NSE analogue to transfer. The consequence is that the NEPSE panel is
+an audited sample compared against two unaudited ones, and it is why a single unscreened NIFTY
+session carries the leverage quantified in the sensitivity block at the end of this script.
+Any manuscript sentence describing this comparison must say "identical estimator code", not
+"identical code".
 
 Under GBM with a continuously observed path, E[Parkinson] = E[(ln C/O)^2] = intraday
 variance, so their ratio is 1. Departures from 1 are diagnostic rather than causal: in NEPSE,
@@ -39,9 +55,16 @@ from nepsevol.estimators import range_ as R
 
 ps.apply()
 FIG = ROOT/"output"/"figures"; TAB = ROOT/"output"/"tables"
-EXT = ROOT.parent/"private"/"data-vault"/"raw"/"external"
-VAULT = ROOT.parent/"private"/"data-vault"/"raw"
+EXT = ROOT/"data"/"external"
+VAULT = ROOT/"data"/"external"
 LN2 = np.log(2)
+
+# Annualisation factor for the NIFTY series ONLY (F-11). 252 is the correct NSE convention and
+# is used here deliberately, not by default: this block annualises an Indian index against an
+# Indian volatility index. The manuscript's rule -- use the market's own genuine session count
+# rather than importing 252 -- applies to NEPSE, where A is derived from the detected trading
+# calendar by scripts/26_annualization_factor.py. Nothing in this script annualises NEPSE data.
+NIFTY_SESSIONS_PER_YEAR = 252
 
 
 def fingerprint(df):
@@ -105,27 +128,154 @@ print(fp.to_string(index=False, float_format=lambda x: f"{x:,.3f}"))
 # ─────────────────────────────────────────────────────── India VIX as an external anchor
 vix = pd.read_csv(EXT/"india_vix.csv", parse_dates=["Date"])
 vix.columns = ["date","india_vix"]
-nf = nifty.copy()
-# 21-session volatility must aggregate DAILY VARIANCE first and take the square root last.
-# The previous implementation averaged daily sigmas, which is a different smoother and was
-# inconsistent with the manuscript's reporting formula (sqrt(A * mean(v_t))).
-nf["pk_var"] = R.parkinson(nf.set_index("date")).values.clip(min=0)
-nf["cc_ret"] = np.log(nf.close).diff()
-nf["pk_21"] = np.sqrt(nf["pk_var"].rolling(21).mean() * 252) * 100
-nf["cc_21"] = nf["cc_ret"].rolling(21).std(ddof=1) * np.sqrt(252) * 100
-mm = nf.merge(vix, on="date").dropna(subset=["pk_21","cc_21","india_vix"])
-anchor = []
-for nm, col in [("Parkinson (21d)","pk_21"), ("Close-to-close (21d)","cc_21")]:
-    r = sm.OLS(mm.india_vix, sm.add_constant(mm[[col]], has_constant="add")).fit(cov_type="HC1")
-    anchor.append({"estimator":nm, "slope on India VIX":r.params.iloc[1],
-                   "intercept":r.params.iloc[0], "R2":r.rsquared,
-                   "corr":mm.india_vix.corr(mm[col]), "mean level":mm[col].mean()})
-an = pd.DataFrame(anchor).set_index("estimator")
+
+
+def vix_anchor(nifty_df):
+    """Regress India VIX on 21-session NIFTY volatility, both aggregated variance-first.
+
+    21-session volatility must aggregate DAILY VARIANCE first and take the square root last.
+    The previous implementation averaged daily sigmas, which is a different smoother and was
+    inconsistent with the manuscript's reporting formula (sqrt(A * mean(v_t))).
+
+    Returns (table, merged_frame) so the caller can report the matched-observation count
+    rather than hard-coding it downstream (F-6).
+    """
+    nf = nifty_df.copy()
+    nf["pk_var"] = R.parkinson(nf.set_index("date")).values.clip(min=0)
+    nf["cc_ret"] = np.log(nf.close).diff()
+    A = NIFTY_SESSIONS_PER_YEAR
+    nf["pk_21"] = np.sqrt(nf["pk_var"].rolling(21).mean() * A) * 100
+    nf["cc_21"] = nf["cc_ret"].rolling(21).std(ddof=1) * np.sqrt(A) * 100
+    m = nf.merge(vix, on="date").dropna(subset=["pk_21","cc_21","india_vix"])
+    rows = []
+    for nm, col in [("Parkinson (21d)","pk_21"), ("Close-to-close (21d)","cc_21")]:
+        r = sm.OLS(m.india_vix, sm.add_constant(m[[col]], has_constant="add")).fit(cov_type="HC1")
+        c = m.india_vix.corr(m[col])
+        # R2 IS THE SQUARED CORRELATION HERE and carries no additional information: the
+        # regression has one regressor and an intercept, so R2 == corr^2 identically. It was
+        # reported alongside the correlation in the manuscript as if it were a second piece of
+        # evidence. It is retained in this artifact only to make the identity checkable --
+        # `R2_minus_corr_squared` is zero to floating-point -- and is NOT promoted to the
+        # manuscript tables or the QA ledger. Report the correlation.
+        rows.append({"estimator":nm, "slope_on_estimator":r.params.iloc[1],
+                     "intercept":r.params.iloc[0], "R2":r.rsquared,
+                     "corr":c, "R2_minus_corr_squared":r.rsquared - c**2,
+                     "mean level":m[col].mean(), "n_obs":len(m)})
+    return pd.DataFrame(rows).set_index("estimator"), m
+
+
+an, mm = vix_anchor(nifty)
 an.to_csv(TAB/"table15_vix_anchor.csv")
+
+# ───────────────────────── PERIOD SENSITIVITY OF THE VIX EXERCISE  (peer-review item E / 6)
+#
+# The NIFTY/India VIX series run from 2010; the NEPSE equity panel begins 2024-03-04. The
+# co-movement statistic was therefore computed over a sixteen-year window and used to support a
+# claim about a market observed for two and a half years of it. That is not a like-for-like
+# comparison, and the difference is not cosmetic: restricted to the window the NEPSE study
+# actually occupies, both correlations fall by roughly a quarter.
+#
+# Both windows are now reported. The full sample is retained because it is the better estimate
+# of the VIX-realized-volatility relationship in the Indian market; the overlap window is
+# reported because it is the only one contemporaneous with the NEPSE evidence, and it is the one
+# the manuscript must quote when the two markets are discussed together.
+#
+# Note the coverage asymmetry: the India VIX series ends before the NEPSE panel does, so the
+# overlap is bounded by the VIX series, not by the NEPSE sample. That is stated in the table
+# rather than left for a reader to discover from the observation count.
+NEPSE_PANEL_START = pd.Timestamp("2024-03-04")
+
+_ov = mm[mm.date >= NEPSE_PANEL_START]
+_per = []
+for label, m_ in [("full VIX sample (2010 onward)", mm),
+                  ("NEPSE-overlap window only", _ov)]:
+    _per.append({
+        "window": label,
+        "first": m_.date.min().date(), "last": m_.date.max().date(),
+        "n_obs": len(m_),
+        "VIX_Parkinson_corr": m_.india_vix.corr(m_.pk_21),
+        "VIX_CC_corr": m_.india_vix.corr(m_.cc_21),
+        "mean_india_vix": m_.india_vix.mean(),
+    })
+per = pd.DataFrame(_per)
+per["parkinson_beats_cc"] = per.VIX_Parkinson_corr > per.VIX_CC_corr
+per.to_csv(TAB/"table50_vix_period_sensitivity.csv", index=False)
+
+print("\n\nPERIOD SENSITIVITY: the VIX exercise on the window the NEPSE study occupies")
+print("="*100)
+print(per.to_string(index=False, float_format=lambda x: f"{x:,.3f}"))
+_f, _o = per.iloc[0], per.iloc[1]
+print(f"\n  Parkinson-VIX      {_f.VIX_Parkinson_corr:.3f} -> {_o.VIX_Parkinson_corr:.3f}")
+print(f"  close-to-close-VIX {_f.VIX_CC_corr:.3f} -> {_o.VIX_CC_corr:.3f}")
+print("  -> the relationship stays positive and clearly present, but 'strong co-movement' is")
+print("     much weaker evidence in the period that actually corresponds to the NEPSE panel.")
+print("     Close-to-close leads Parkinson in BOTH windows, so nothing here ranks the two.")
+print(f"  -> the overlap ends {_o.last}, bounded by the India VIX series rather than by the")
+print(f"     NEPSE panel, which runs to {panel.date.max().date()}.")
 print(f"\n\nIndia VIX as an external anchor on NIFTY  ({len(mm):,} days)\n" + "="*82)
 print(an.to_string(float_format=lambda x: f"{x:,.3f}"))
 print(f"\nmean India VIX = {mm.india_vix.mean():.1f}%   "
       f"mean Parkinson = {mm.pk_21.mean():.1f}%   mean close-to-close = {mm.cc_21.mean():.1f}%")
+
+# ────────────────────────────────────── OUTLIER SENSITIVITY OF THE NIFTY BENCHMARK  (F-1, F-2)
+#
+# The NIFTY series is read unscreened (see SCREEN ASYMMETRY in the module docstring): it does
+# not pass the |ln(C/C_prev)| < 0.5 filter or the rules-derived range ceiling that the NEPSE
+# panel passes. With only ~4,000 sessions against ~24,000 stock-days per NEPSE bucket, a single
+# extreme session therefore carries far more leverage on the NIFTY reference numbers than any
+# single NEPSE observation carries on the NEPSE ones.
+#
+# One session dominates: the largest ln(H/L) in the whole 2010-2026 series. It is a genuine
+# recorded exchange session and is NOT deleted from the reported results -- excluding real
+# extremes is exactly the discretion this paper warns against. It is quantified instead, so the
+# reader can see how much of each reference number depends on it.
+#
+# The session is identified from the data by rank, never by a hard-coded date, so this block
+# stays correct if the input series is revised or extended.
+def _loo(nifty_df, drop_dates):
+    keep = nifty_df[~nifty_df.date.isin(drop_dates)]
+    fp_ = fingerprint(keep)
+    an_, mm_ = vix_anchor(keep)
+    return {
+        "n_sessions": len(keep),
+        "Parkinson_OC_sd": fp_["Parkinson_sd_ratio"],
+        "RS_OC_sd": fp_["Rogers-Satchell_sd_ratio"],
+        "GK_OC_sd": fp_["Garman-Klass_sd_ratio"],
+        "n_vix_matched": len(mm_),
+        "VIX_Parkinson_corr": an_.loc["Parkinson (21d)", "corr"],
+        "VIX_Parkinson_R2": an_.loc["Parkinson (21d)", "R2"],
+        "VIX_CC_corr": an_.loc["Close-to-close (21d)", "corr"],
+        "VIX_CC_R2": an_.loc["Close-to-close (21d)", "R2"],
+    }
+
+_rng = np.log(nifty.high / nifty.low)
+_extreme = nifty.loc[_rng.idxmax()]
+_xdate = pd.Timestamp(_extreme.date)
+sens = pd.DataFrame([
+    {"specification": "as reported (all sessions)", **_loo(nifty, [])},
+    {"specification": f"excluding {_xdate.date()} (largest ln(H/L))", **_loo(nifty, [_xdate])},
+])
+sens.insert(1, "excluded_session_ln_HL", [np.nan, float(_rng.max())])
+sens.to_csv(TAB/"table31_nifty_outlier_sensitivity.csv", index=False)
+
+_a, _b = sens.iloc[0], sens.iloc[1]
+print("\n\nNIFTY benchmark: leave-one-out sensitivity to the single largest-range session")
+print("="*94)
+print(f"  session          {_xdate.date()}   O={_extreme.open:,.2f}  H={_extreme.high:,.2f}  "
+      f"L={_extreme.low:,.2f}  C={_extreme.close:,.2f}")
+print(f"  ln(H/L)          {float(_rng.max()):.4f}  (largest of {len(nifty):,} sessions); "
+      f"same-day ln(C/C_prev) = {float(np.log(_extreme.close/nifty.close.shift(1).loc[_rng.idxmax()])):.4f}")
+print("  -> a RANGE event, not a close-to-close event, so it moves Parkinson and leaves "
+      "close-to-close almost untouched.\n")
+print(sens.drop(columns=["excluded_session_ln_HL"]).to_string(index=False,
+      float_format=lambda x: f"{x:,.4f}"))
+print(f"\n  Parkinson/OC (SD)     {_a.Parkinson_OC_sd:.3f} -> {_b.Parkinson_OC_sd:.3f}")
+print(f"  RS/OC (SD)            {_a.RS_OC_sd:.3f} -> {_b.RS_OC_sd:.3f}")
+print(f"  VIX~Parkinson corr    {_a.VIX_Parkinson_corr:.3f} -> {_b.VIX_Parkinson_corr:.3f}   "
+      f"(close-to-close: {_a.VIX_CC_corr:.3f} -> {_b.VIX_CC_corr:.3f})")
+if (_a.VIX_Parkinson_corr < _a.VIX_CC_corr) != (_b.VIX_Parkinson_corr < _b.VIX_CC_corr):
+    print("  *** The Parkinson-vs-close-to-close ORDERING REVERSES on this single session. ***")
+    print("      Any manuscript sentence ranking the two estimators must carry this caveat.")
 
 # ─────────────────────────────────────────────────────── FIGURE 12
 fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.0))

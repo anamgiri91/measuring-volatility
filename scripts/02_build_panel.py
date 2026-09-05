@@ -17,17 +17,51 @@ bootstrap()
 import numpy as np, pandas as pd
 
 sys.path.insert(0, str(ROOT / "src"))
-from nepsevol.clean.ohlc import (repair_ohlc, resolve_duplicate_keys, ohlc_violations,
-                                 repair_audit_table)
+from nepsevol.clean.ohlc import (repair_ohlc, resolve_duplicate_keys, classify_duplicates,
+                                 ohlc_violations, repair_audit_table,
+                                 DUPLICATE_CLASSES)
 from nepsevol.provenance import write_manifest
 
-RAW = ROOT.parent / "private" / "data-vault" / "raw"
+RAW = ROOT / "data" / "raw"
+
+
+def _require_raw(subdir: str) -> list:
+    """Fail with an actionable message, not `ValueError: No objects to concatenate` (F-7).
+
+    scripts/_env.py refuses to let a missing package produce a bare ImportError; the same
+    standard applies to missing INPUTS. This script cannot run from the published submission
+    package, by design -- the raw NEPSE downloads are not redistributable -- and the reader
+    deserves to be told that rather than to debug a pandas traceback.
+    """
+    d = RAW / subdir
+    files = sorted(d.glob("*.csv")) if d.exists() else []
+    if files:
+        return files
+    import sys as _sys
+    print("\n".join([
+        "",
+        "  Raw NEPSE inputs not found.",
+        f"  Expected CSV files in: {d}",
+        f"  Found: {'directory does not exist' if not d.exists() else '0 CSV files'}",
+        "",
+        "  This script rebuilds the processed panels from the ORIGINAL stock-level NEPSE",
+        "  downloads, which are NOT redistributed in this submission package (see",
+        "  data/raw/README.md for the licensing reason and the expected layout).",
+        "",
+        "  To reproduce the PAPER, you do not need this script. Run instead:",
+        "",
+        "      bash run_paper_analysis.sh",
+        "",
+        "  which starts from the frozen, audited panels in data/processed/.",
+        "",
+    ]), file=_sys.stderr)
+    raise SystemExit(1)
 OUT = ROOT / "data" / "processed"; OUT.mkdir(parents=True, exist_ok=True)
 
 
 def build_long() -> pd.DataFrame:
     frames = []
-    for f in sorted((RAW / "stock-daily-long").glob("*.csv")):
+    for f in _require_raw("stock-daily-long"):
         try:
             d = pd.read_csv(f)
         except Exception:
@@ -71,7 +105,7 @@ def _num(s):
 
 def build_trades() -> pd.DataFrame:
     frames = []
-    for f in sorted((RAW / "stock-daily-trades").glob("*.csv")):
+    for f in _require_raw("stock-daily-trades"):
         try:
             d = pd.read_csv(f)
         except Exception:
@@ -92,7 +126,43 @@ def build_trades() -> pd.DataFrame:
         if c not in ("date", "symbol"):
             p[c] = _num(p[c])
     p = p.dropna(subset=["date", "close", "symbol"]).sort_values(["symbol", "date"])
-    p = p.drop_duplicates(subset=["symbol", "date"], keep="last").reset_index(drop=True)
+
+    # REFEREE #7 FIX. This previously read
+    #     p = p.drop_duplicates(subset=["symbol","date"], keep="last")
+    # which silently selected one row of every duplicated security-day BY FILE ORDER, before
+    # resolve_duplicate_keys() ran at the caller. That contradicts the stated policy in
+    # nepsevol.clean.ohlc and in the manuscript's Section 3 -- conflicting duplicates are
+    # classified and EXCLUDED, never resolved by row order -- and it silently applied to the
+    # daily-trades panel that carries the paper's main equity estimates.
+    #
+    # Duplicates are now classified first and audited to disk, and only exact duplicates are
+    # collapsed. Any conflicting class is excluded by resolve_duplicate_keys, exactly as in
+    # the long-history panel. The audit is emitted whether or not conflicts are found, so the
+    # absence of conflicts becomes evidence rather than an assumption.
+    # The audit is emitted with a ROW FOR EVERY CLASS whether or not that class occurs, and with
+    # the number of keys examined. An empty file cannot distinguish "no conflicts were found"
+    # from "the audit never ran", and referee item 1 is precisely a complaint that conflict-
+    # freedom was an assumption rather than a demonstrated fact. A zero has to be printed to
+    # count as evidence.
+    audit_dir = ROOT / "data" / "processed" / "audit"
+    audit_dir.mkdir(parents=True, exist_ok=True)
+    label = classify_duplicates(p)
+    counts = label.value_counts() if len(label) else pd.Series(dtype=int)
+    summary = pd.DataFrame({
+        "class": list(DUPLICATE_CLASSES),
+        "duplicate_keys": [int(counts.get(c, 0)) for c in DUPLICATE_CLASSES],
+    })
+    summary.loc[len(summary)] = ["KEYS_EXAMINED", int(len(p.groupby(["symbol", "date"]).size()))]
+    summary.loc[len(summary)] = ["ROWS_EXAMINED", int(len(p))]
+    summary.to_csv(audit_dir / "panel_trades_duplicate_audit.csv", index=False)
+    print("\n  daily-trades duplicate classes (audited before any collapse):")
+    print(summary.to_string(index=False))
+    if not len(label):
+        print("  -> zero duplicated (symbol, date) keys. The obsolete drop_duplicates(keep='last')")
+        print("     path therefore had nothing to select between, so the frozen panel is")
+        print("     unaffected by it. This is now a demonstrated fact, not an assumption.")
+
+    p = resolve_duplicate_keys(p).reset_index(drop=True)
     return p
 
 
@@ -112,35 +182,48 @@ def diagnose(p: pd.DataFrame, name: str):
     return viol
 
 
-from nepsevol.trading_calendar import detect_sessions
+from nepsevol.trading_calendar import build_calendar, detect_sessions
 
 
 def clean_trades_panel(p: pd.DataFrame, stale_threshold: float = 0.90) -> pd.DataFrame:
-    """Keep only genuine trading sessions, detected from the data.
+    """Keep only genuine trading sessions, detected from the data, and WRITE THE CALENDAR.
 
     A fixed weekday filter is WRONG for this market. NEPSE traded Sunday-Thursday historically and
-    switched to Monday-Friday in April 2026, so a hard-coded Sun-Thu rule deletes genuine Friday
-    sessions and retains stale Sundays after the change -- contaminating precisely the window that
-    contains the widened price-band regime. It also silently keeps public holidays, on which the
-    archive carries the previous session forward.
+    switched to Monday-Friday effective 6 April 2026, so a hard-coded Sun-Thu rule deletes genuine
+    Friday sessions and retains stale Sundays after the change -- contaminating precisely the
+    window that also contains the widened price-band regime of 20 April. It also silently keeps
+    public holidays, on which the archive carries the previous session forward.
 
     Sessions are therefore identified by the staleness signature: a dated file whose cross-section
     is >= `stale_threshold` identical to the prior file is a carried-forward record, not a session.
+
+    The calendar is written here rather than shipped as an orphan artifact. It previously had no
+    producer anywhere in the package: ``data/processed/nepse_trading_calendar.csv`` was consumed
+    by script 26 and named in no reproducibility-map row, so a reader could neither regenerate it
+    nor check what schedule constants it was built under. It is the ONLY place the session
+    ordinal comes from -- and the session ordinal is what makes an overnight return an overnight
+    return -- so an unreproducible calendar silently fixes the Yang-Zhang sample.
     """
-    sess = detect_sessions(p, stale_threshold=stale_threshold)
-    live = set(sess.index[sess.is_session])
+    cal = build_calendar(p, stale_threshold=stale_threshold)
+    live = set(cal.index[cal.is_session])
     q = p[p["date"].isin(live)].copy()
+
+    cal_out = cal.reset_index().rename(columns={"index": "date"})
+    cal_out.to_csv(OUT / "nepse_trading_calendar.csv", index=False, date_format="%Y-%m-%d")
 
     n_days = q["date"].nunique()
     span = (q["date"].max() - q["date"].min()).days / 365.25
-    dis = int(sess.rule_data_disagree.sum())
+    dis = int(detect_sessions(p, stale_threshold=stale_threshold).rule_data_disagree.sum())
     print(f"\nPANEL B - cleaned (data-detected calendar)")
     print(f"  dated files                  {p['date'].nunique():,}")
     print(f"  genuine sessions             {n_days}")
     print(f"  rule/data disagreements      {dis}  (holidays, and the Apr-2026 schedule change)")
+    print(f"  off-schedule sessions        {int(cal.off_schedule_session.sum())}")
+    print(f"  inferred holidays            {int(cal.inferred_holiday.sum())}")
     print(f"  rows                         {len(q):,}")
     print(f"  span                         {q['date'].min().date()} -> {q['date'].max().date()}")
     print(f"  sessions per year            {n_days/span:.0f}")
+    print(f"  wrote                        {(OUT/'nepse_trading_calendar.csv').name}")
     return q
 
 
@@ -159,9 +242,9 @@ if __name__ == "__main__":
 
     clean = clean_trades_panel(trades)
 
-    long_.to_parquet(OUT / "panel_long.parquet", index=False)
-    trades.to_parquet(OUT / "panel_trades.parquet", index=False)
-    clean.to_parquet(OUT / "panel_trades_clean.parquet", index=False)
+    long_.to_csv(OUT / "panel_long.csv", index=False, date_format="%Y-%m-%d")
+    trades.to_csv(OUT / "panel_trades.csv", index=False, date_format="%Y-%m-%d")
+    clean.to_csv(OUT / "panel_trades_clean.csv", index=False, date_format="%Y-%m-%d")
 
     # Provenance: every repaired field, and a versioned manifest for the artefacts.
     audit_dir = OUT / "audit"; audit_dir.mkdir(exist_ok=True)
@@ -172,6 +255,6 @@ if __name__ == "__main__":
               f"{audit_dir.name}/{name}_repair_audit.csv")
     write_manifest(ROOT, OUT, {"panel_long": long_, "panel_trades": trades,
                                "panel_trades_clean": clean})
-    print(f"\nwrote {OUT/'panel_long.parquet'}")
-    print(f"wrote {OUT/'panel_trades.parquet'}")
-    print(f"wrote {OUT/'panel_trades_clean.parquet'}")
+    print(f"\nwrote {OUT/'panel_long.csv'}")
+    print(f"wrote {OUT/'panel_trades.csv'}")
+    print(f"wrote {OUT/'panel_trades_clean.csv'}")

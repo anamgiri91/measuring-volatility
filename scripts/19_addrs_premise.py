@@ -20,8 +20,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from nepsevol.sample import load_sample
 from nepsevol.estimators import range_ as R
 from nepsevol.clean.limits import flag_limits
-TAB=ROOT/"output"/"tables"; EXT=ROOT.parent/"private"/"data-vault"/"raw"/"external"
-VAULT=ROOT.parent/"private"/"data-vault"/"raw"
+TAB=ROOT/"output"/"tables"; EXT=ROOT/"data"/"external"
+VAULT=ROOT/"data"/"external"
 
 def ratios(g):
     oc=(np.log(g.close/g.open)**2).mean()
@@ -43,7 +43,8 @@ for q,g in p.groupby("q",sort=False):
 t1=pd.DataFrame(rows).sort_values("median_trades",na_position="first")
 print("1. Does AddRS's premise hold? (it corrects a DOWNWARD bias)")
 print(t1.to_string(index=False,float_format=lambda x:f"{x:,.3f}"))
-print("  -> the one bucket where the premise holds is the one where AddRS lands on 1.005.\n")
+print("  -> none of the displayed buckets shows a large RS deficit under the <0.95 screen;\n"
+      "     on NIFTY 50 the correction nevertheless lands close to the matched benchmark.\n")
 
 # 2. the retracted mechanism, tested within-market
 sess={d:i for i,d in enumerate(sorted(p.date.unique()))}

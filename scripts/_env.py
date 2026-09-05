@@ -11,7 +11,9 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-REQUIRED = ["numpy", "pandas", "scipy", "matplotlib"]
+# F-8c. scipy was listed here and hard-failed every script, although no shipped module
+# imports it. Scripts that need statsmodels request it via bootstrap(["statsmodels"]).
+REQUIRED = ["numpy", "pandas", "matplotlib"]
 
 
 def _script_path() -> str:

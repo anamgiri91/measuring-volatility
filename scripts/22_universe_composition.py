@@ -57,8 +57,20 @@ def profile(df, sessions):
 
 
 full = load_sample(ROOT, "full")
-eq   = pd.read_parquet(ROOT / "data/processed/equity_sample.parquet")
+eq   = pd.read_csv(ROOT / "data/processed/equity_sample.csv", parse_dates=["date"])
 sessions = pd.Series(sorted(full.date.unique()))
+
+# One-row-per-security audit table so the paper's 291-equity restriction is directly inspectable.
+classification = (full.groupby("symbol")
+                    .agg(sec_type=("sec_type", "first"),
+                         median_close=("close", "median"),
+                         stock_days=("date", "size"),
+                         median_trades=("n_trades", "median"),
+                         first_date=("date", "min"),
+                         last_date=("date", "max"))
+                    .reset_index()
+                    .sort_values(["sec_type", "symbol"]))
+classification.to_csv(TAB / "instrument_classification.csv", index=False, date_format="%Y-%m-%d")
 
 full_q, eq_q = quintiles(full), quintiles(eq)
 pf, pe = profile(full_q, sessions), profile(eq_q, sessions)

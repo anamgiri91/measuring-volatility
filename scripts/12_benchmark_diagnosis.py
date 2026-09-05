@@ -21,10 +21,13 @@ bootstrap()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 sys.path.insert(0, str(ROOT / "src"))
 from nepsevol.sample import load_sample
+from nepsevol.estimators.ratios import variance_ratio, assert_same_scale
+from nepsevol.inference import weighted_stat_ci, weighted_var
 from nepsevol.utils import plotstyle as ps
 ps.apply()
-EXT=ROOT.parent/"private"/"data-vault"/"raw"/"external"
-VAULT=ROOT.parent/"private"/"data-vault"/"raw"
+N_BOOT, SEED = 1000, 20260901   # same convention as scripts/26_robustness.py
+EXT=ROOT/"data"/"external"
+VAULT=ROOT/"data"/"external"
 FIG=ROOT/"output"/"figures"; TAB=ROOT/"output"/"tables"
 
 def decompose(df, label, panel=False):
@@ -33,13 +36,20 @@ def decompose(df, label, panel=False):
     d=df[(df[["open","high","low","close"]]>0).all(axis=1)].copy()
     d=d.sort_values(["symbol","date"]) if panel else d.sort_values("date")
     o,h,l,c=np.log(d.open),np.log(d.high),np.log(d.low),np.log(d.close)
-    rs=((h-o)*((h-o)-(c-o))+(l-o)*((l-o)-(c-o))).mean()
+    # A-005 EXTENSION. rs is kept as a SERIES here, not collapsed to a mean yet. The original
+    # code averaged it at this point -- over every row of d -- while the denominators below are
+    # restricted to strictly consecutive sessions. RS/open-to-close was therefore a ratio of two
+    # different samples. On the dense group that moved the published figure from 1.021 to 1.059
+    # and on the thin group from 1.004 to 0.998, i.e. across one. The A-005 note below already
+    # stated the same-rows principle for r_cc/r_on/r_oc; rs simply escaped it by being computed
+    # nineteen lines earlier. Collapse it AFTER the ok_all mask, with everything else.
+    rs_daily=((h-o)*((h-o)-(c-o))+(l-o)*((l-o)-(c-o)))
     if panel:
         # Restrict to strictly consecutive TRADING SESSIONS. Otherwise a thin security's
         # "overnight" return spans however many days since it last traded (mean 4.3 days in
         # the thin sixth), which mechanically inflates overnight variance.
         sess={dt:i for i,dt in enumerate(sorted(d.date.unique()))}
-        sr=d.date.map(sess); ok=d.groupby("symbol")[sr.name if sr.name else "date"].transform("size")*0==0
+        sr=d.date.map(sess)
         gap=sr.groupby(d.symbol).diff()
         prev_c=np.log(d.groupby("symbol").close.shift(1))
         r_cc=(c-prev_c).where(gap==1); r_on=(o-prev_c).where(gap==1)
@@ -54,15 +64,45 @@ def decompose(df, label, panel=False):
     # the index rows only because they take the non-panel path). Restrict all four here.
     ok_all = r_cc.notna() & r_on.notna() & r_oc.notna()
     r_cc, r_on, r_oc = r_cc[ok_all], r_on[ok_all], r_oc[ok_all]
+    rs_daily = rs_daily[ok_all]          # same rows as every denominator (A-005 extension)
+    rs = rs_daily.mean()
     r_co = r_on
     v_cc,v_oc,v_on=r_cc.var(),r_oc.var(),r_on.var()
     # Var(cc) = Var(co) + Var(oc) + 2 Cov(co, oc). The covariance term is NOT optional: without
     # it, Var(oc)/Var(cc) is not a variance "share" and can exceed 1, as it does for dense
     # securities here. Report all three components.
     cov = float(r_co.cov(r_oc))
-    return {"market":label,"n":len(d),
-            "RS/close-to-close":rs/v_cc,"RS/open-to-close":rs/v_oc,
-            "OC/CC ratio":v_oc/v_cc,
+    # F-5. Bare division is what produced the 0.965-vs-0.980 confusion documented in
+    # nepsevol.estimators.ratios. Every ratio below is produced by a helper that RETURNS ITS
+    # SCALE, and the scale is asserted before the two are placed in one row.
+    rs_cc, sc1 = variance_ratio(rs, v_cc)
+    rs_oc, sc2 = variance_ratio(rs, v_oc)
+    oc_cc, sc3 = variance_ratio(v_oc, v_cc)
+    assert_same_scale((rs_cc, sc1), (rs_oc, sc2), (oc_cc, sc3))
+
+    # REFEREE ITEMS 11, 14 AND 19. RS/open-to-close on thin equity is the number Section 5.4
+    # quotes, and successive revisions have printed it as 0.998, then 1.004, and now 0.999 --
+    # moving across one under sample changes far smaller than its own sampling error. Reporting
+    # it as a bare point estimate invites exactly the over-reading item 11 objects to, so an
+    # interval is attached here and Section 5.4 must quote it.
+    #
+    # This is a ratio involving a VARIANCE, whose centring mean moves under resampling, so it
+    # is not a ratio of sums and the general weighted path is used. Panels cluster on security
+    # AND date; the two index series have no cross-section, so they cluster on date alone.
+    sub = pd.DataFrame({"rs": rs_daily.to_numpy(), "oc": r_oc.to_numpy()})
+    keys = (d.loc[ok_all[ok_all].index] if panel else None)
+    lo, hi = weighted_stat_ci(
+        lambda f, w: (w * f["rs"]).sum() / w.sum() / weighted_var(f["oc"].to_numpy(), w),
+        sub,
+        sec=(keys.symbol.to_numpy() if panel else np.zeros(len(sub))),
+        date=(keys.date.to_numpy() if panel else d.date[ok_all].to_numpy()),
+        dims=(("security", "date") if panel else ("date",)),
+        n_boot=N_BOOT, seed=SEED,
+    )
+    return {"market":label,"n_rows":len(d),"n":int(ok_all.sum()),
+            "RS/close-to-close":rs_cc,"RS/open-to-close":rs_oc,
+            "RS/open-to-close lo95":lo,"RS/open-to-close hi95":hi,
+            "OC/CC ratio":oc_cc,
             "Var(open) /Var(cc)":v_on/v_cc,
             "Var(intraday)/Var(cc)":v_oc/v_cc,
             "2Cov/Var(cc)":2*cov/v_cc,
@@ -86,6 +126,14 @@ print("  to the random-walk effect. Ratio identity: RS/CC = (RS/OC) x (OC/CC).")
 print("  NOTE: OC/CC is a RATIO, not a variance share. Var(cc) = Var(co)+Var(oc)+2Cov(co,oc),")
 print("  so the three components are reported separately and must sum to 1.\n")
 print(t.to_string(float_format=lambda x:f"{x:,.3f}"))
+print("\n  RS / open-to-close with 95% multiway-cluster intervals (referee items 11, 14, 19):")
+for _m, _r in t.iterrows():
+    _spans = _r["RS/open-to-close lo95"] <= 1.0 <= _r["RS/open-to-close hi95"]
+    print(f"    {_m:<22} {_r['RS/open-to-close']:.3f}  "
+          f"[{_r['RS/open-to-close lo95']:.3f}, {_r['RS/open-to-close hi95']:.3f}]  "
+          f"{'spans 1.000' if _spans else 'EXCLUDES 1.000'}")
+print("  -> where the interval spans one, the point estimate's position relative to one carries")
+print("     no information, and Section 5.4 must not be written as though it does.")
 
 fig,axes=plt.subplots(1,2,figsize=(10.4,4.0))
 ax=axes[0]

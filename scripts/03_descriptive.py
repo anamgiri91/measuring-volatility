@@ -17,20 +17,39 @@ import matplotlib.pyplot as plt
 from nepsevol.utils import plotstyle as ps
 from nepsevol.universe import classify_panel
 from nepsevol.clean.limits import flag_infeasible_range
+from nepsevol.corporate_actions import adjusted_previous_close
+from nepsevol.trading_calendar import session_index
 from nepsevol.estimators import range_ as R
 
 ps.apply()
 FIG = ROOT / "output" / "figures"; FIG.mkdir(parents=True, exist_ok=True)
 TAB = ROOT / "output" / "tables";  TAB.mkdir(parents=True, exist_ok=True)
 
-p = pd.read_parquet(ROOT / "data/processed/panel_trades_clean.parquet")
+p = pd.read_csv(ROOT / "data/processed/panel_trades_clean.csv", parse_dates=["date"])
 p = p.dropna(subset=["n_trades", "open", "high", "low", "close", "prev_close"])
 p = p[(p[["open","high","low","close","prev_close"]] > 0).all(axis=1)]
 p = p[p["n_trades"] >= 1]
 
+# ---------------------------------------------------------------- ONE previous-close definition
+# PEER-REVIEW ITEM D / MANDATORY ITEM 4. This screen used the supplied `prev_close` column while
+# the opening-auction flags used `.shift(1)` and the estimator code used the previous genuine
+# session -- three definitions of the same quantity in three files. The return screen below is
+# the gate every downstream result passes through, so a screen computed on one definition and an
+# estimator computed on another means the sample is not the sample that was screened. Under the
+# old pairing the surviving panel contained a stock-day whose close-to-close return was 0.526 on
+# the estimator's definition, having passed a screen at 0.5 on the supplied column's.
+#
+# The package now adopts a single definition everywhere: the close of the previous GENUINE
+# TRADING SESSION, adjusted for a corporate action where NEPSE's own published previous close
+# evidences one. See nepsevol.corporate_actions.
+p = p.sort_values(["symbol", "date"])
+_cal = pd.read_csv(ROOT / "data/processed/nepse_trading_calendar.csv", parse_dates=["date"]).set_index("date")
+p["session_ord"] = session_index(p.date, _cal).to_numpy()
+p["prev_close_adj"] = adjusted_previous_close(p)
+
 # ---------------------------------------------------------------- per-stock-day estimators
 p["hl"]  = np.log(p["high"] / p["low"])
-p["cc"]  = np.log(p["close"] / p["prev_close"])
+p["cc"]  = np.log(p["close"] / p["prev_close_adj"])
 p["u"]   = np.log(p["high"] / p["open"])
 p["d"]   = np.log(p["low"] / p["open"])
 p["c"]   = np.log(p["close"] / p["open"])
@@ -39,7 +58,15 @@ p["var_pk"] = p["hl"]**2 / (4*LN2)
 p["var_cc"] = p["cc"]**2
 p["var_gk"] = 0.5*p["hl"]**2 - (2*LN2 - 1)*p["c"]**2
 p["var_rs"] = p["u"]*(p["u"]-p["c"]) + p["d"]*(p["d"]-p["c"])
-p = p[p["cc"].abs() < 0.5]                      # drop implausible returns (splits/errors)
+# Drop implausible returns (unadjusted splits / data errors). Written as a NEGATED screen so
+# that an UNDEFINED return passes: under the adopted definition `cc` is NaN on a security's
+# first row and across a listing gap, where there is no previous genuine session. Those rows
+# have no close-to-close return to be implausible, and `abs() < 0.5` would have silently
+# deleted all 522 of them along with the genuinely bad ones.
+_impl = (p["cc"].abs() >= 0.5)
+if _impl.any():
+    print(f"\nimplausible close-to-close return (|ln C/C_prev| >= 0.5): dropping {int(_impl.sum())} row(s)")
+p = p[~_impl]
 
 # ---------------------------------------------------------------- RANGE screen
 # The return filter above cannot protect a range estimator: a corrupted high or low leaves the
@@ -184,9 +211,23 @@ plt.close(fig)
 print(f"wrote {FIG/'fig5_pathologies.png'}")
 
 g.to_csv(TAB / "table3_pathologies_by_decile.csv", index=False)
+
+# Persist the stock-day composition statistic used in Section 5.1.
+dec_comp = (p.groupby("dec")
+              .agg(stock_days=("symbol", "size"),
+                   securities=("symbol", "nunique"),
+                   median_trades=("n_trades", "median"),
+                   ordinary_equity_stock_days=("sec_type", lambda x: int((x == "equity").sum())))
+              .reset_index())
+dec_comp["non_equity_stock_days"] = dec_comp["stock_days"] - dec_comp["ordinary_equity_stock_days"]
+dec_comp["non_equity_share"] = dec_comp["non_equity_stock_days"] / dec_comp["stock_days"]
+dec_comp.to_csv(TAB / "table3b_instrument_composition_by_stockday_decile.csv", index=False)
+
 print("\n=== Pathology rates by liquidity decile ===")
 print(g.rename(columns={"n_med":"median trades","pk_zero":"PK=0 %","gk_neg":"GK<0 %","cc_zero":"zero ret %"})
       .to_string(index=False, float_format=lambda x: f"{x:,.1f}"))
+print("\n=== Instrument composition by stock-day liquidity decile ===")
+print(dec_comp.to_string(index=False, formatters={"non_equity_share": "{:.1%}".format}))
 # Two samples are written. Downstream scripts must choose explicitly rather than inherit a
 # default, because the choice determines whether a "liquidity" contrast is a liquidity contrast.
 # Hard invariant gate: a failure raises and stops the build (audit policy SS8).
@@ -194,7 +235,7 @@ validate_analysis_sample(_eq, universe="equity")
 validate_analysis_sample(p, universe="full", expect_sec_type=False)
 print("  invariant gate: PASSED for both samples")
 
-p.to_parquet(ROOT / "data/processed/analysis_sample.parquet", index=False)          # full universe
-_eq.to_parquet(ROOT / "data/processed/equity_sample.parquet", index=False)          # ordinary equity
-print(f"\nwrote analysis_sample.parquet ({len(p):,} rows, all instrument types)")
-print(f"wrote equity_sample.parquet   ({len(_eq):,} rows, ordinary equity only)")
+p.to_csv(ROOT / "data/processed/analysis_sample.csv", index=False, date_format="%Y-%m-%d")          # full universe
+_eq.to_csv(ROOT / "data/processed/equity_sample.csv", index=False, date_format="%Y-%m-%d")          # ordinary equity
+print(f"\nwrote analysis_sample.csv ({len(p):,} rows, all instrument types)")
+print(f"wrote equity_sample.csv   ({len(_eq):,} rows, ordinary equity only)")
