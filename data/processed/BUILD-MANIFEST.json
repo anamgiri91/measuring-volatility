@@ -1,16 +1,26 @@
 {
-  "generated_utc": "2026-08-29T20:07:28+00:00",
-  "git_commit": "d45270c24ca34851b4f553589b6122f3a15e9801-dirty",
+  "generated_utc": "2026-09-03T02:10:19+00:00",
+  "code_identifier": {
+    "algorithm": "sha256 over sha256 of each .py file in src/nepsevol, scripts, sorted, excluding __pycache__",
+    "n_files": 38,
+    "sha256": "932522c7ec40853c2363d11e5fae099e12c274eca714ec79923ef8de92b5286e",
+    "recompute": "python -c \"import pathlib,sys; sys.path.insert(0,'src'); from nepsevol.provenance import code_identifier; print(code_identifier('.')['sha256'])\""
+  },
+  "git_commit": "UNKNOWN",
+  "git_commit_note": "Not a git checkout; use code_identifier.sha256, which any holder of this package can recompute.",
   "python": "3.14.6",
   "packages": {
     "numpy": "2.5.2",
     "pandas": "3.0.5"
   },
   "raw_data": {
-    "n_files": 1268,
-    "aggregate_sha256": "7b2c5cc9815ee9600208ba91251a5147b541d4c044c4fbabd9396cb278f4afec"
+    "status": "NOT_REDISTRIBUTED",
+    "n_files": 0,
+    "aggregate_sha256": null,
+    "claim": "The raw NEPSE downloads are not redistributed in this package (their redistribution terms are unresolved), so no aggregate raw-data hash is asserted. This manifest makes NO claim about raw-data provenance. The paper-facing pipeline starts from the frozen processed panel in data/processed/, whose own hashes are recorded in SUBMISSION_MANIFEST.json."
   },
-  "cleaning_code_sha256": "3d8bc524bad4786095804c7d9eb2dcd97bd95e30678a56e920e81ff95b913d33",
+  "cleaning_code_sha256": "30d26f2699512ad4244f289c59b1ecae25b75d30d08dd27d5eff74541cce24c4",
+  "cleaning_code_sha256_note": "Historical snapshot: the state of src/nepsevol/clean/*.py at the time the processed panel referenced by 'artifacts' below was actually built. Source files below may have been edited since (bug fixes, added checks, documentation) without the panel being rebuilt, so this hash is not expected to match a fresh hash of the CURRENT clean/*.py -- that comparison is what 'code_identifier' above is for, and it IS recomputed on every run. A rebuild that regenerates 'cleaning_code_sha256' itself requires the raw NEPSE downloads, which this package does not redistribute (see 'raw_data').",
   "rule_versions": {
     "ohlc_repair": "PAP-v4 \u00a73.1 envelope repair, v1 (2026-08-28)",
     "duplicate_resolution": "classify; collapse EXACT_DUPLICATE, exclude all conflicting classes, v1 (2026-08-28)",
@@ -42,5 +52,24 @@
       "sessions": 569,
       "rows_repaired": 1154
     }
+  },
+  "provenance_repair": {
+    "repaired_utc": "2026-09-05T01:20:54+00:00",
+    "reason": "Mandatory item 7 of the peer-review evaluation: the manifest asserted a raw-data hash it did not carry, and offered no code identifier a package holder could use.",
+    "fields_repaired": [
+      "raw_data",
+      "git_commit",
+      "code_identifier",
+      "cleaning_code_sha256_note"
+    ],
+    "fields_preserved": [
+      "generated_utc",
+      "python",
+      "packages",
+      "cleaning_code_sha256",
+      "rule_versions",
+      "artifacts"
+    ],
+    "note": "The build record itself is unchanged. 'generated_utc' still names the original build, and 'artifacts' still records the panels that build produced, including intermediates not redistributed here."
   }
 }
