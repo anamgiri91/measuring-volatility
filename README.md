@@ -1,337 +1,100 @@
-# Calculating Volatility in Frontier Markets Without Options
+# NEPSE Volatility — Journal Submission Reproducibility Package
 
-**Evidence and a practical framework from the Nepal Stock Exchange**
+This package accompanies **Calculating Volatility in Frontier Markets Without Options: Evidence and a Practical Framework from the Nepal Stock Exchange**.
 
-Anam Giri · Draft research paper, August 2026
+## What is included
 
-Replication package for a study of how volatility can be measured in a cash-only
-frontier market. The Nepal Stock Exchange (NEPSE) has no exchange-traded equity
-options or futures, so there is no option chain to invert and no NEPSE analogue of
-the VIX. This repository contains the estimator library, cleaning pipeline, and
-analysis scripts that ask what *can* be measured from daily OHLC data instead, and
-how far those measurements can be trusted.
+- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-8). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
+- `paper/submission/` — the double-anonymous submission set: anonymised manuscript, separate title page, and a cover letter for each recommended journal.
+- `paper/manuscript_as_reviewed_pre_revision.pdf` — the manuscript **as reviewed** (the PRE-revision PDF the first-round referee actually read), retained only so the revision can be checked against it. **This is not the current manuscript; `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` above is.** (Renamed from the earlier, misleadingly generic `NEPSE_Volatility_Final_Manuscript.pdf` after a forensic audit found the old name being mistaken for the current file.) No PDF rendering of the current `.docx` ships in this package — this development environment has no docx-to-PDF renderer available; export one from the `.docx` before submitting to a journal.
+- `PAPER_REVISIONS.md` — **superseded**; the pre-referee revision notes, retained for provenance.
+- `REFEREE_RESPONSE.md` — item-by-item response to the 2026-09-02 referee report, with what changed, where, and what did not change and why.
+- `REFEREE_RESPONSE_ROUND3.md` — item-by-item response to the second peer-review evaluation (items A-H), applied by `paper/apply_round3_revisions.py` on top of the above.
+- `FORENSIC_AUDIT_RESPONSE.md` — response to the third-round forensic packaging/provenance audit: manifest-stability fixes, the historical-vs-current cleaning-hash distinction, and the still-open PDF-regeneration and archive-cleanup items.
+- `FOURTH_ROUND_AUDIT_RESPONSE.md` — response to the 4 September independent editorial/methodological review: the Yang-Zhang mixed-previous-close defect (adopted ratio corrected 1.309 → **1.280**), and an honest triage of the remaining mandatory items.
+- `M7_ANALYSIS_PLAN.md` — the analysis plan and decision rule for the forward-looking India VIX test, **frozen before any forward result was computed**.
+- `OPTIONAL_ITEMS_FOLLOWUP.md` — follow-up on the remaining optional items: literature-integration confirmation, the structured abstract, the master-coverage sensitivity check (Table 17), JEL/data-availability/funding/conflict-of-interest statements, and the table-header/CI-precision fixes.
+- `data/processed/` — frozen paper-facing stock-day panels in CSV format (see `data/processed/README.md`).
+- `data/external/` — NIFTY 50, India VIX, the NEPSE index series, and the NEPSE security master used to validate the instrument classification (see `data/external/README.md`).
+- `data/audit/duplicate_key_rows.csv` — compact extract containing only the duplicated historical security-date rows needed to reproduce the duplicate audit in Section 3.
+- `scripts/` — the producer scripts for the paper's retained empirical results.
+- `src/nepsevol/` — cleaning, calendar, universe-classification, validation, and volatility-estimator code.
+- `output/tables/` and `output/figures/` — frozen outputs generated for the submitted manuscript.
+- `REPRODUCIBILITY_MAP.csv` — manuscript claim/figure/table → producer → output mapping.
+- `AUDIT-REGISTER.md` — resolves the `D-`, `A-`, `SS` and `PAP-` identifiers cited in code comments.
 
----
+## Environment
 
-## The short version
+The reference environment, recorded in `data/processed/BUILD-MANIFEST.json`, is **Python 3.14.6**
+on macOS arm64 with the exact pins in `requirements.txt`.
 
-Volatility in a frontier market is as much a **data-engineering** problem as an
-econometric one. Three findings drive the paper:
-
-**1. Ordinary equity is far more usable than the exchange's published file suggests.**
-Across 143,149 stock-days for 291 ordinary equities (March 2024 – August 2026), the
-Parkinson standard-deviation ratio against a matched open-to-close benchmark stays
-between **0.935 and 1.058** across liquidity groups. The thinnest equity bucket has a
-zero-range rate of just **1.63%**. Range estimators do not collapse under thin trading.
-
-**2. The apparent collapse is an instrument-composition artifact.**
-NEPSE publishes ordinary equity, corporate debentures, closed-end funds, and
-restricted promoter shares in one daily table **with no instrument-type field**. Pool
-them, sort by trading intensity, and the thinnest quintile returns a Rogers-Satchell
-variance ratio of **0.172** — which looks like catastrophic estimator failure and is
-really an asset-class ranking. The thinnest pooled decile is **94.3% non-equity** by
-stock-day.
-
-| Measure | Pooled universe | Ordinary equity |
-|---|---:|---:|
-| Stock-days | 184,390 | 143,149 |
-| Median trades/day | 111 | 165 |
-| 10th percentile trades/day | 4 | 37 |
-| Stock-days below 10 trades | 14.8% | 1.6% |
-| P(H = L) | 5.70% | 0.28% |
-| Rogers-Satchell exactly zero | 15.25% | 4.35% |
-
-**3. Daily ranges carry real information about the option-implied volatility state —
-but do not dominate close-to-close.**
-On the NIFTY 50, where an options market exists, 21-session Parkinson volatility
-correlates **0.776** with India VIX (R² = 0.602). Standard 21-session close-to-close
-volatility correlates **0.796** (R² = 0.634). Both track the volatility state that
-options price; the range measure does not outperform in this validation. This is a
-validation anchor, **not** an implied-volatility substitute — Parkinson is backward-
-looking and statistical, India VIX is forward-looking and risk-neutral.
-
-A corollary worth its own line: **do not import a bias correction without testing its
-premise.** Additive Rogers-Satchell (AddRS) lands at 1.005 of benchmark on NIFTY 50,
-but reaches **1.149–1.323** on NEPSE equity, where no downward RS bias is detectable
-against the available proxy. The correction is non-negative by construction, so where
-the base estimator is not deficient it can only overshoot.
-
----
-
-## Repository layout
-
-```
-src/nepsevol/            estimator + cleaning library
-  estimators/
-    range_.py            Parkinson, Garman-Klass, Rogers-Satchell, GKYZ,
-                         Yang-Zhang, realized range, AddRS
-    simulate.py          price paths with KNOWN sigma, sampled at controllable
-                         trade intensity — the discretisation-bias experiment
-    ratios.py            scale-explicit variance vs SD ratios
-  clean/
-    ohlc.py              envelope repair + duplicate-key resolution
-    limits.py            price-limit and pre-open band censoring detection
-    special_sessions.py  documented make-up sessions, with evidence status
-  trading_calendar/      session detection from data, not a weekday rule
-  universe/              instrument classification, validated against par value
-  sample.py              universe selection (equity vs full)
-  validate.py            invariants that HALT the build
-  provenance.py          versioned build manifests
-
-scripts/                 numbered pipeline stages (see mapping below)
-tests/                   estimator validation + audit regression tests
-data/processed/          committed analysis artifacts + build manifest
-data/raw/                empty by design — see Data availability
-```
-
----
-
-## Installation
-
-Requires **Python 3.12+**.
+The pipeline is additionally verified on **Python 3.12 / x86-64 Linux**, where all frozen tables
+and figures reproduce byte-identically under the next-nearest available package versions. The
+supported floor is Python 3.12; `pyproject.toml` declares the dependency floors and
+`requirements.txt` is the exact lock for the reference environment.
 
 ```bash
-git clone https://github.com/anamgiri91/measuring-volatility.git
-cd measuring-volatility
-python3 -m venv .venv && source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
 pip install -r requirements.txt
 pip install -e .
-pytest
 ```
 
-Dependencies are pinned to exact versions. A replication package that floats its
-dependencies does not replicate — numeric output can move across minor releases of
-pandas, numpy, scipy and statsmodels, and results here are reported to three decimals.
+Then run:
 
----
-
-## Data availability
-
-**`data/raw/` ships empty, deliberately.** The raw NEPSE series was self-scraped from
-a source whose redistribution terms are unresolved. Until provenance and licence are
-established, the conservative state is to keep it out of the public package — public
-is the harder state to undo. See [`data/raw/README.md`](data/raw/README.md) for the
-contract governing anything later placed there.
-
-**Processed analysis artifacts are committed**, so the core equity results can be
-reproduced without the private vault:
-
-| File | Rows | Securities | Coverage |
-|---|---:|---:|---|
-| `panel_long.parquet` | 505,525 | 372 | 1995-07-20 → 2026-08-26 |
-| `panel_trades.parquet` | 286,994 | 521 | 2024-03-04 → 2026-08-26 |
-| `panel_trades_clean.parquet` | 184,430 | 521 | session-filtered, 569 sessions |
-| `equity_sample.parquet` | — | 291 equities | primary estimation universe |
-| `analysis_sample.parquet` | — | mixed | composition-warning universe |
-
-`panel_trades_clean` carries 184,430 rows and 521 securities; the paper's pooled
-analysis sample reports 184,390 stock-days and 520 securities, the difference being
-the positivity, return, and feasible-range screens applied downstream.
-
-Scripts that need the private vault expect it as a **sibling** directory:
-
-```
-../private/data-vault/raw/                 stock-daily-long/, stock-daily-trades/
-../private/data-vault/raw/external/        nifty50.csv, india_vix.csv
-../private/data-vault/raw/                 nepse_index_history.csv
+```bash
+bash run_paper_analysis.sh
+pytest -q
 ```
 
-Every processed artifact is stamped by `nepsevol.provenance` into
-[`data/processed/BUILD-MANIFEST.json`](data/processed/BUILD-MANIFEST.json), which
-records the git commit, the aggregate SHA-256 of the raw inputs, a hash of the
-cleaning code, the version of every cleaning rule in force, and the shape of each
-artifact. An artifact that cannot say which code and which raw data produced it is
-not evidence.
+The paper-facing pipeline intentionally starts from the included **processed CSV panel**. The original NEPSE stock-level downloads used to build that panel are not redistributed in this submission package because their redistribution terms are unresolved. `scripts/02_build_panel.py` is retained as the cleaning/build specification; it expects the original source files under `data/raw/stock-daily-long/` and `data/raw/stock-daily-trades/` if the author has lawful access to them, and exits with an explanatory message if they are absent.
 
----
+## Paper-facing analysis order
 
-## Reproducing the results
+`run_paper_analysis.sh` runs these in order. Step 0 runs first because the classification decides
+which securities are in the ordinary-equity universe, and step 10 runs last because it only
+reformats what the others produce.
 
-Scripts write to `output/figures/` and `output/tables/`.
+`scripts/30_repair_build_manifest.py` runs first (it depends on nothing) and repairs the build
+manifest's provenance fields. Step 0 runs next because the classification decides which
+securities are in the ordinary-equity universe. `scripts/28_panel_balance.py` and
+`scripts/29_calendar_validation.py` run after step 1 (they read the equity sample) and before the
+final formatting step, which runs last.
 
-| Script | Produces | Paper exhibit | Runs from this repo alone? |
-|---|---|---|:--:|
-| `02_build_panel.py` | the three panels + repair audits | §3 | ✗ needs raw vault |
-| `03_descriptive.py` | Tables 1–3, Figures 1 & 5 | §5.2, §6.1 | ✓ |
-| `09_cross_market_control.py` | Tables 14, 15, 30; Figure 12 | §6.2, §6.3 | ✗ needs NIFTY + VIX |
-| `12_benchmark_diagnosis.py` | Table 18, Figure 14 | §5.4 | ✗ needs NIFTY + index |
-| `13_opening_auction.py` | Table 19, Figure 15 | §5.3 | ✓ |
-| `17_addrs_benchmark.py` | Table 23, Figure 18 | §6.4 | ✗ needs NIFTY |
-| `19_addrs_premise.py` | Table 25 | §6.4 | ✗ needs NIFTY + index |
-| `22_universe_composition.py` | Table 27, Figure 21 | §5.1 | ✓ |
-| `24_duplicate_key_reconciliation.py` | Table 29 | §3 | ✗ needs raw vault |
+0. `scripts/27_classification_audit.py` — validates the rule-based instrument classification against the external NEPSE security master and writes the confusion table and disagreement list (paper Table 9).
+1. `scripts/03_descriptive.py` — pooled/equity sample screens, descriptive tables, Figure 2 support, and the 94.3% stock-day composition audit.
+2. `scripts/09_cross_market_control.py` — cross-market estimator fingerprint, India VIX co-movement anchor (full sample and NEPSE-overlap window), and the single-session sensitivity of the NIFTY benchmark (paper Figure 5; Tables 4, 13 and VIX statistics).
+3. `scripts/12_benchmark_diagnosis.py` — matched-benchmark and variance-decomposition analysis (paper Figure 4).
+4. `scripts/13_opening_auction.py` — opening-auction descriptive diagnostics (paper Figure 3).
+5. `scripts/17_addrs_benchmark.py` — AddRS benchmark comparison (paper Figure 6 and Table 5).
+6. `scripts/19_addrs_premise.py` — diagnostic checks underlying the AddRS interpretation.
+7. `scripts/22_universe_composition.py` — instrument-composition result and one-row-per-security classification audit (paper Figure 1).
+8. `scripts/24_duplicate_key_reconciliation.py` — Section 3 duplicate-count reconciliation.
+9. `scripts/26_robustness.py` — predetermined-liquidity sorting, multiway-cluster bootstrap intervals, all six named estimators against scope- **and row-**matched **and horizon-matched** benchmarks (with a stated, post hoc ±5% equivalence-margin verdict reported across a margin grid), OHLC-repair sensitivity, the previous-close reconciliation and corporate-action-adjusted previous close, the stationary block-date bootstrap, and the NEPSE annualisation factor.
+10. `scripts/28_panel_balance.py` — security-level and lagged liquidity quintiles, conditional panel-balance/fill-rate, the extreme thin tail (Table 11), and information-content (Pearson/Spearman) correlations (Table 14).
+11. `scripts/29_calendar_validation.py` — the detected trading calendar cross-checked against an independent session record, and its sensitivity to the staleness threshold (Table 16).
+12. `scripts/31_lagged_thinness_screen.py` — the lagged, outcome-independent liquidity screen for the thin tail and its sensitivity grids (Tables 21-22).
+13. `scripts/32_vix_forward_validation.py` — India VIX as a forward forecast of realised NIFTY volatility, lead-lag profile, overlapping-window sensitivity, and the reconciliation of the circulated 0.776/0.832 correlations (Tables 23-25).
+14. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–25, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
 
-The four vault-dependent cross-market scripts are the NIFTY 50 / India VIX validation
-and the raw-panel audit. Everything resting on the committed NEPSE equity panels —
-including the paper's central composition result (§5.1) — runs from a clean clone.
+## Important implementation conventions
 
-*Runnability above is determined by reading each script's declared inputs; the scripts
-have not been executed in a fresh environment as part of writing this README.*
+- The 21-session Parkinson series is computed as `sqrt(A * rolling_mean(daily_variance))`; daily standard deviations are **not** averaged.
+- Intraday range estimators are compared with an open-to-close benchmark. The cross-market and AddRS ratio scripts use the open-to-close **second moment**; the variance-decomposition script uses sample variance because the decomposition is stated in variance terms. The difference is numerically small in this sample, but the distinction is explicit here and every ratio is produced by a helper in `nepsevol.estimators.ratios` that returns its scale.
+- **Estimator code is identical across regimes; input screens are not.** The NEPSE panel passes positivity, return and rules-derived range screens plus duplicate reconciliation and envelope repair. NIFTY 50 and the NEPSE index are read with a positivity filter only, because the NEPSE screens are derived from NEPSE's own price-limit rules and have no NSE analogue. Any sentence describing the cross-market comparison must say "identical estimator code".
+- Annualisation uses the market's own genuine session count. `scripts/26_robustness.py` derives **A ≈ 229.6 sessions/year** for NEPSE from the detected trading calendar; 252 appears only in the NIFTY block of `scripts/09`, where it is the correct NSE convention.
+- **April 2026 was two reforms, not one, and they have two dates.** The trading week moved from Sunday–Thursday to Monday–Friday effective **2026-04-06** (`nepsevol.trading_calendar.WEEK_REFORM`); the price band widened from ±2%→±5% and the daily limit from 10%→15% effective **2026-04-20** (`nepsevol.clean.limits.REGIMES`). Both were previously written as 2026-04-20, which put 6–19 April under the wrong calendar regime. The detected sessions are unaffected — the detector reads the data, not the schedule — but the schedule cross-check now labels those two weeks correctly, and the two Fridays and two Sundays in them are no longer recorded as off-schedule sessions and inferred holidays.
+- Instrument classification is performed before interpreting the liquidity gradient, and is now **validated against an external NEPSE security master** (`scripts/27_classification_audit.py`): the rule and the master agree on **509 of 511** matched securities, 99.61%. The two disagreements are corrected — `ADBLB` is a bond the ticker rule read as equity, `NADEP` an ordinary equity it read as a promoter share — so the principal estimation universe is **292 ordinary equities / 143,718 stock-days**, up from 291 / 143,149.
+- **Every ratio is evaluated on rows where both its numerator and its benchmark are defined, and — for Yang–Zhang — over the same horizon too.** Scope-matching a benchmark is not enough if the two series have different support: Yang–Zhang needs a 21-session window and close-to-close needs a previous session, so an unmatched comparison divided a mean over 137,107 rows by a mean over 142,858 (**1.245**). Matching rows alone raises it to **1.288** — but 1.288 still scores a 21-session estimator against a single session's squared return. Benchmarking it against close-to-close variance over its own 21-session window moves the figure to **1.273**, and adjusting the previous close for NEPSE's own corporate-action convention (below) — **on both sides of the comparison** — moves it to the adopted **1.280 [1.258, 1.303]**, which is what the manuscript reports. The previous close enters Yang–Zhang's own overnight term as well as the benchmark's close-to-close return; an earlier revision adjusted only the benchmark and reported the resulting mixed-definition ratio of 1.309, which no single specification produces (see `FOURTH_ROUND_AUDIT_RESPONSE.md`, audit register `R-022`).
+- **315 previous-close disagreements are classified, not just counted.** `nepsevol.corporate_actions` finds that 214 of them are NEPSE's own ex-date reference-price adjustment (implied factors clustering at 1.05–1.30), 34 are within a rounding floor, 62 are unexplained upward revisions, and 5 span a session gap. The adopted previous close uses NEPSE's published value on the 214 corporate-action rows and the prior session's own close everywhere else.
+- **A ratio near one is not evidence of daily tracking fidelity.** `nepsevol.equivalence` classifies every ratio against a stated ±5% margin — declared post hoc, applied consistently, and reported across a ±2.5/5/10% grid — instead of reading support from whether a CI contains one, and Pearson/Spearman correlation with the matched proxy is reported alongside every SD ratio — Parkinson and Rogers-Satchell sit within 0.04 of each other in SD ratio but correlate with the proxy at 0.70 vs. 0.21.
+- **The two-way bootstrap resamples calendar dates independently and cannot see correlation between adjacent sessions.** `nepsevol.inference.ratio_of_sums_ci_block` adds a stationary block bootstrap over dates (Politis & Romano, 1994); it reduces the count of Table 7 estimators distinguishable from the matched proxy from 3 of 6 to 2 of 6.
+- **A small extreme thin tail (4 securities) is reported separately from the thinnest liquidity quintile**, because the quintile's own median (100% participation) does not describe its own worst members (participation as low as 5.3%, zero-range up to 86%).
+- **Overnight returns span exactly one genuine trading session.** `nepsevol.estimators.range_.previous_session_close` returns NaN across a gap; a plain `.shift(1)` would treat a 91-session absence as one overnight return, and 230 such transitions exist in the equity panel.
+- **Inference clusters on security *and* date.** `nepsevol.inference` implements the multiway (pigeonhole) bootstrap; security-only intervals understate width by roughly a factor of two on this panel, because a market-wide shock moves every security on the same date.
+- The India VIX exercise is external **co-movement** evidence, not a claim that historical OHLC volatility equals option-implied volatility, and not estimator validation.
+- Liquidity buckets in Tables 4 and 5 are formed on **same-day** trade counts, which is endogenous. `scripts/26_robustness.py` reproduces them under two predetermined sorts and the manuscript reports both (Table 6); the gradient differs materially and the original must not be read causally.
 
----
+## Data and licensing
 
-## Estimators
-
-All functions return **daily variance** — not annualised, not sigma. Callers
-annualise explicitly with a session count from `nepsevol.trading_calendar` rather than
-assuming 252, because NEPSE's session count is neither 252 nor stable across its
-April 2026 schedule change.
-
-| Estimator | Uses | Strength | Frontier-market risk |
-|---|---|---|---|
-| Close-to-close | C_t, C_{t−1} | robust to H/L errors | discards intraday path; stale closes |
-| Parkinson | H, L | efficient use of range | zero range when trades are few |
-| Garman-Klass | O,H,L,C | range plus O→C move | opening jumps; invalid bars |
-| Rogers-Satchell | O,H,L,C | drift-independent | discrete extrema; monotone-day zeros |
-| Yang-Zhang | prior C + OHLC | includes overnight variation | calendar definition; window dependence |
-| AddRS | OHLC + boundary term | targets discrete-extrema bias | overcorrects if no downward bias exists |
-
-Every estimator is tested against a case with a **known answer** — see
-`tests/test_estimators.py`, which validates each one against a densely-sampled
-simulated path with true sigma fixed by construction. These are four-line formulas
-that are easy to write and easy to get subtly wrong, and a wrong one produces
-plausible numbers rather than an error.
-
----
-
-## Design decisions that carry the results
-
-These are the parts most likely to be reused, and each exists because something went
-wrong first.
-
-**Cleaning order is load-bearing.** `resolve_duplicate_keys` must run on *original,
-unrepaired* values, before `repair_ohlc`. Repairing first can push two genuinely
-conflicting records' extrema out to the same `max(H,O,C)` / `min(L,O,C)`, silently
-reclassifying a price conflict as an exact duplicate. The order is exported as
-`CLEANING_ORDER` and enforced by test.
-
-**Envelope repair never touches open or close.** O and C are single transaction prices
-carried from the tape; H and L are session extrema and are the fields an exchange feed
-most often reports inconsistently. Repair is `H := max(H,O,C)`, `L := min(L,O,C)`,
-idempotent and order-independent, with every changed value itemised in
-`data/processed/audit/`.
-
-**Duplicates are excluded, not tie-broken.** 622 exact-duplicate keys are collapsed;
-18 keys with conflicting OHLC are dropped whole rather than resolved by file order.
-
-**The trading calendar is detected, not assumed.** NEPSE traded Sunday–Thursday and
-moved to Monday–Friday in April 2026. A hard-coded Sun–Thu filter deletes genuine
-Friday sessions and retains stale Sundays after the change — contaminating precisely
-the window containing the widened price-band regime. Sessions are inferred from a
-staleness signature instead.
-
-**Instrument type is recovered and validated.** No type field exists, so type is read
-from ticker convention and confirmed against par value (funds ~10, equity/promoter
-~100, debentures ~1,000). The fund band is separated by an empty interval — the
-51st-lowest median close is 10.78, the 52nd is 100.00 — so funds are identified by
-price with no judgement call.
-
-**Invariants halt the build.** `nepsevol.validate` raises; it does not warn. A warning
-in a long run log is not a guard, and the reason several defects here survived into
-committed results is that nothing refused to continue.
-
-**Ratio scale is explicit.** Variance ratios and SD ratios differ by a square root.
-Both were once computed under the bare name `ratio`, and the same quantity appeared in
-adjacent manuscript sections as 0.980 and 0.965 purely because one script applied
-`np.sqrt` and the other did not. `nepsevol.estimators.ratios` returns a scale label
-with every value and raises on mismatched comparison.
-
----
-
-## Practical protocol
-
-The paper's operational recommendation (§7), condensed:
-
-1. **Define the target first** — within-session volatility, or total daily risk
-   including overnight variation. They need different estimators and different benchmarks.
-2. **Restrict the universe to the intended asset class** before ranking by liquidity.
-   Do not let debentures, funds, or promoter shares define the "thin stock" bucket.
-3. **Validate every bar**: `L ≤ min(O,C) ≤ max(O,C) ≤ H`. Negative simplified
-   Garman-Klass or Rogers-Satchell on an invalid bar is a data problem, not a market
-   phenomenon.
-4. **Use the genuine session calendar.** "Previous close" means previous *session*.
-   Annualise on the market's actual session count.
-5. **Compute at least two estimators.** Agreement reassures; disagreement is a
-   diagnostic to investigate.
-6. **Report P(H=L), zero-return rates, and trade counts by liquidity group.**
-7. **Do not add a bias correction until the bias premise is supported in the target
-   sample.**
-8. **Separate measurement from prediction.** Feed the volatility series into HAR,
-   GARCH or CARR models; do not call a historical measure "implied volatility."
-
-Recommended 21-session reporting formula:
-
-```
-σ̂₂₁,ₜ = √[ A × (1/21) × Σⱼ₌₀²⁰ v̂ₜ₋ⱼ ]
-```
-
-where `v̂` is the chosen daily variance estimator and `A` the stated annual session
-count. Report close-to-close volatility beside it, with the security's median trade
-count and zero-range rate over the same window.
-
----
-
-## What is deliberately absent
-
-The archive records failed and superseded analyses, and they are **not** promoted into
-results. Specifically excluded:
-
-- the attempted **censored-normal** estimate of latent opening dispersion, which failed
-  its post-April-2026 regime-change check;
-- the earlier **multi-horizon convergence** result, invalidated by a stock-day bucket
-  construction that stitched nonconsecutive sessions;
-- alternative equity-classifier robustness rows and post-hoc confirmatory diagnostics
-  for which the audit found no producing code.
-
-Attractive findings that cannot be regenerated are treated as unavailable evidence.
-`tests/test_audit_invariants.py` contains one regression test per defect the
-2026-08-28 audit found — including several that reached committed results before being
-caught.
-
----
-
-## Limitations
-
-The NEPSE benchmark is **not** true integrated variance. Without high-frequency data
-or an options market, latent daily variance is unobserved; the matched open-to-close
-squared return is a practical proxy, and Patton (2011) shows imperfect proxies affect
-comparisons. The paper therefore reports whether downward bias is *detectable against
-the available benchmark*, not that true latent variance is known. Institutional rules
-— pre-open bands, price limits, no-match auction outcomes — are documented as
-observable fingerprints rather than used to identify a latent uncensored distribution.
-The India VIX exercise is a cross-market validation, not a Nepal-specific
-implied-volatility comparison. The scope is measurement, not forecasting.
-
----
-
-## Key references
-
-Parkinson (1980) *J. Business* 53(1) 61–65 · Garman & Klass (1980) *J. Business* 53(1)
-67–78 · Rogers & Satchell (1991) *Ann. Appl. Prob.* 1(4) 504–512 · Yang & Zhang (2000)
-*J. Business* 73(3) 477–491 · Maheswaran & Kumar (2013) *Economic Modelling* 33
-701–712 · Kumar & Maheswaran (2014) *Economic Modelling* 38 33–44 · Patton (2011)
-*J. Econometrics* 160(1) 246–256
-
----
-
-## Citation
-
-```bibtex
-@unpublished{giri2026volatility,
-  author = {Giri, Anam},
-  title  = {Calculating Volatility in Frontier Markets Without Options:
-            Evidence and a Practical Framework from the Nepal Stock Exchange},
-  year   = {2026},
-  month  = {August},
-  note   = {Draft research paper}
-}
-```
-
-**Status.** Draft. The research remains exploratory unless a claim is explicitly
-designated otherwise. Empirical quantities are drawn from the NEPSE volatility
-research archive and its generated outputs; this revision retains only claims backed
-by an explicit producer script, a generated table or figure, or a directly auditable
-source artifact.
-
-**Licence.** Not yet specified. Until a licence file is added, default copyright
-applies and no reuse rights are granted.
+The MIT `LICENSE` applies to code only. Data remain subject to their original source terms. The package includes the frozen inputs needed to reproduce the submitted paper's empirical outputs; do not assume that inclusion grants broader redistribution rights.
