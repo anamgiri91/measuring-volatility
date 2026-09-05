@@ -13,14 +13,43 @@ Notation follows the literature:
 All functions here are generic implementations. Market-specific interpretation belongs in
 the manuscript and the audit record, not in these docstrings.
 
-References. Verification status is tracked in private/audit/EQUATION-CODE-MAP.md; entries
-marked UNVERIFIED have had their metadata confirmed but not their equations read from the
-primary source.
-    Parkinson (1980), J. Business 53(1), 61-65                  -- equation UNVERIFIED
-    Garman & Klass (1980), J. Business 53(1), 67-78             -- equation UNVERIFIED
-    Rogers & Satchell (1991), Ann. Appl. Prob. 1(4), 504-512    -- abstract read; equation UNVERIFIED
-    Yang & Zhang (2000), J. Business                            -- equation UNVERIFIED
-    Kumar & Maheswaran (2014), Economic Modelling 38, 33-44     -- see add_rs provenance
+References. Two things are tracked separately and must not be collapsed: whether the
+BIBLIOGRAPHIC RECORD is confirmed, and whether the EQUATION was read from the primary source.
+
+Every bibliographic record below is now confirmed against publisher-deposited Crossref
+metadata (referee item 18), which corrected one error carried in the manuscript reference
+list: Yang & Zhang is 477-492, not 477-491.
+
+    Parkinson (1980), J. Business 53(1), 61-65
+        doi:10.1086/296071 -- record CONFIRMED; equation from secondary presentation
+    Garman & Klass (1980), J. Business 53(1), 67-78
+        doi:10.1086/296072 -- record CONFIRMED; equation from secondary presentation
+    Rogers & Satchell (1991), Ann. Appl. Prob. 1(4), 504-512
+        doi:10.1214/aoap/1177005835 -- record CONFIRMED; abstract read, and it independently
+        confirms both claims made below: the estimator uses high, low and closing prices, and
+        the authors themselves propose a correction for discretisation error. Full text not
+        obtained, so the derivation is not independently checked.
+    Yang & Zhang (2000), J. Business 73(3), 477-492
+        doi:10.1086/209650 -- record CONFIRMED (pagination corrected from 477-491);
+        equation from secondary presentation
+    Kumar & Maheswaran (2014a), Economic Modelling 38, 33-44
+        doi:10.1016/j.econmod.2013.11.045 -- record CONFIRMED; the THEORY paper. See add_rs.
+    Kumar & Maheswaran (2014b), Int. Review of Financial Analysis 34, 166-176
+        doi:10.1016/j.irfa.2014.06.002 -- record CONFIRMED; the OPERATIONAL paper, and the
+        source of the equations implemented in add_rs. See add_rs provenance.
+
+"equation from secondary presentation" means the formula was transcribed from a reproduction
+rather than read from the primary text. The four classical equations are stable across the
+literature and are additionally checked here against their own stated properties -- the
+non-negativity proofs in the docstrings below are derived from the equations as written. FORENSIC
+FOLLOW-UP: that phrasing previously claimed a transcription error "would show up as a proof that
+fails", which overstates what a coarse property check can guarantee -- a wrong coefficient can
+easily preserve non-negativity (or another property this weak) while still being wrong. The
+accurate claim is narrower: these property checks are independent NECESSARY-condition sanity
+tests on the implemented equations. They can catch some classes of transcription error (a sign
+flip that breaks non-negativity, for instance) but do not verify the coefficients or derivations,
+and are not a substitute for reading the primary text. That is a weaker guarantee than primary
+reading and is labelled as such. See AUDIT-REGISTER.md.
 """
 
 from __future__ import annotations
@@ -36,10 +65,64 @@ __all__ = [
 ]
 
 
-def _logs(df: pd.DataFrame) -> dict[str, pd.Series]:
-    """Standard log transforms. Expects columns open/high/low/close."""
+def previous_session_close(df: pd.DataFrame, session_col: str = "session_ord") -> pd.Series:
+    """Close of the PREVIOUS GENUINE TRADING SESSION, or NaN where there was not one.
+
+    REFEREE ITEM 5 (critical), second half. The overnight return ``o = ln(O_t / C_{t-1})`` is
+    defined in Section 4.5 against the previous genuine trading session. A bare ``.shift(1)``
+    gives the previous OBSERVED ROW instead, and the two differ whenever a security does not
+    trade on a session: in the shipped ordinary-equity panel, 230 row transitions skip more than
+    one detected NEPSE session, the largest gap being 91 sessions. Treating a 91-session move as
+    one overnight return inflates the overnight variance component of Yang-Zhang by roughly two
+    orders of magnitude on those rows.
+
+    ``session_ord`` is the consecutive-session ordinal from
+    :func:`nepsevol.trading_calendar.session_index`. When it is present, the previous close is
+    accepted only where the ordinal advanced by exactly one; every gap yields NaN and is excluded
+    downstream rather than silently mis-scaled. When it is absent this degrades to ``.shift(1)``,
+    which is correct for a gapless series such as an index and is what the index scripts pass.
+
+    THE SUPPLIED ``prev_close`` COLUMN. The previous revision declined to use it because its
+    provenance was unaudited. That audit has since been done -- see
+    :mod:`nepsevol.corporate_actions` -- and it changed the answer: 214 of the 315
+    disagreements are NEPSE's own ex-date reference-price adjustments, identifiable by an
+    implied factor sitting on the bonus-share ladder. Ignoring them makes an entitlement drop
+    look like a price movement, which is not a defensible input to a volatility estimator.
+
+    This function is therefore the UNADJUSTED primitive, retained for the sensitivity
+    specification and for gapless series such as an index.
+    :func:`nepsevol.corporate_actions.adjusted_previous_close` is the definition the package
+    ADOPTS and the one every analysis uses; it wraps this rule and substitutes the published
+    previous close on classified ex-dates only.
+    """
+    prev = df["close"].shift(1)
+    if session_col in df.columns:
+        step = df[session_col].diff()
+        prev = prev.where(step == 1)
+    return prev
+
+
+def _logs(df: pd.DataFrame, prev_close: pd.Series | None = None) -> dict[str, pd.Series]:
+    """Standard log transforms. Expects columns open/high/low/close.
+
+    Rows must already be sorted within one security. Quantities that reach across sessions --
+    ``o`` and ``cc`` -- use :func:`previous_session_close` by default, so they are NaN across a
+    session gap rather than silently spanning it. The purely within-session quantities (``u``,
+    ``d``, ``c``, ``hl``) are unaffected: they read one bar only.
+
+    ``prev_close`` OVERRIDES the default previous-session close for the two cross-session
+    quantities. FOURTH-ROUND AUDIT FIX: without this parameter there was no way for a caller to
+    push the package's ADOPTED previous close (the corporate-action-adjusted series from
+    :mod:`nepsevol.corporate_actions`) into an estimator, so ``scripts/26_robustness.py`` was
+    building its Yang-Zhang NUMERATOR from the unadjusted close while building the matched
+    close-to-close DENOMINATOR from the adjusted one. That mixed-definition ratio was reported
+    as though one definition had been applied throughout. It had not. Passing the series
+    explicitly is now the only way a caller states which definition it means, and the two
+    consistent specifications differ materially (1.280 adjusted vs 1.273 unadjusted, against
+    1.309 for the mixed ratio that should never have been quoted).
+    """
     o_, h, l, c_ = df["open"], df["high"], df["low"], df["close"]
-    prev_c = c_.shift(1)
+    prev_c = previous_session_close(df) if prev_close is None else prev_close
     return {
         "o": np.log(o_ / prev_c),
         "u": np.log(h / o_),
@@ -50,10 +133,16 @@ def _logs(df: pd.DataFrame) -> dict[str, pd.Series]:
     }
 
 
-def close_to_close(df: pd.DataFrame, window: int | None = None) -> pd.Series:
+def close_to_close(df: pd.DataFrame, window: int | None = None,
+                   prev_close: pd.Series | None = None) -> pd.Series:
     """Close-to-close variance. The friction-robust baseline: uses no range data,
-    so it is immune to discretisation bias in the observed high and low."""
-    r = _logs(df)["cc"]
+    so it is immune to discretisation bias in the observed high and low.
+
+    ``prev_close`` overrides the default previous-session close, so a caller comparing this
+    against :func:`yang_zhang` can guarantee both sides use the SAME definition -- see
+    :func:`_logs` for why that guarantee had to be made explicit.
+    """
+    r = _logs(df, prev_close)["cc"]
     if window is None:
         return r.pow(2)
     return r.rolling(window).var(ddof=1)
@@ -131,23 +220,74 @@ def gkyz(df: pd.DataFrame) -> pd.Series:
     return L["o"].pow(2) + 0.5 * (L["u"] - L["d"]).pow(2) - (2.0 * LN2 - 1.0) * L["c"].pow(2)
 
 
-def yang_zhang(df: pd.DataFrame, window: int = 21) -> pd.Series:
+def yang_zhang(df: pd.DataFrame, window: int = 21,
+               prev_close: pd.Series | None = None) -> pd.Series:
     """Yang & Zhang (2000). Minimum-variance, drift-independent, jump-robust.
 
     sigma^2 = sigma_o^2 + k*sigma_c^2 + (1-k)*sigma_rs^2
     k = 0.34 / (1.34 + (n+1)/(n-1))
 
     Requires a window because sigma_o^2 and sigma_c^2 are cross-day variances.
-    Its overnight component makes it the most exposed of the family to the definition of
-    a session gap -- see gkyz.
+
+    SESSION GAPS. Its overnight component makes this the most exposed estimator in the family
+    to the definition of a session gap -- see gkyz -- and the exposure is not hypothetical in
+    this sample. ``o`` is built by :func:`previous_session_close`, so it is NaN wherever a
+    security's rows skip a detected session. ``min_periods`` is left at the pandas default, so
+    a window containing any such gap yields NaN for that row rather than an overnight variance
+    computed from a shorter, silently different window. Yang-Zhang is therefore defined on
+    strictly fewer rows than the single-bar estimators, which is exactly why every ratio
+    involving it must be evaluated on a row-matched sample; see
+    ``scripts/26_robustness.py::_ratios_from``.
+
+    TWO WINDOW CONVENTIONS. ``var_o`` and ``var_c`` are sample variances about their own means
+    while ``var_rs`` is a rolling MEAN of a quantity that is already a squared deviation about
+    zero. That asymmetry is Yang and Zhang's, not an implementation slip: the first two terms
+    estimate variances of returns whose means are not assumed zero, and the third averages an
+    estimator that is itself already a variance.
     """
-    L = _logs(df)
+    L = _logs(df, prev_close)
     n = window
     k = 0.34 / (1.34 + (n + 1) / (n - 1))
     var_o = L["o"].rolling(n).var(ddof=1)
     var_c = L["c"].rolling(n).var(ddof=1)
     var_rs = rogers_satchell(df).rolling(n).mean()
     return var_o + k * var_c + (1.0 - k) * var_rs
+
+
+def yang_zhang_benchmark(df: pd.DataFrame, window: int = 21) -> pd.Series:
+    """The HORIZON-matched benchmark for :func:`yang_zhang`: rolling close-to-close variance.
+
+    PEER-REVIEW ITEM C / MANDATORY ITEM 3. The previous revision fixed the SAMPLE mismatch in
+    the Yang-Zhang comparison -- numerator and denominator are now averaged over the same rows
+    -- and reported 1.288. The reviewer identified a second, independent mismatch that row
+    alignment does not touch: a HORIZON mismatch.
+
+    Yang-Zhang with a 21-session window estimates the variance of a 21-SESSION process. The
+    benchmark it was compared against was ``r_cc^2``, the squared close-to-close return of the
+    CURRENT session alone. Matching rows makes the two averages describe the same stock-days; it
+    does not make them describe the same horizon. Comparing a 21-session estimator against a
+    one-session realization is the same species of error as Section 5.4's own diagnosis --
+    scoring an estimator against a benchmark of the wrong scope -- committed on the time axis
+    instead of the session axis.
+
+    The horizon-matched benchmark is the natural one: the sample variance of the close-to-close
+    log return over the SAME 21-session window, on the same rows.
+
+        sigma^2_bench,t = Var( r_cc )  over sessions t-20 .. t,  ddof = 1
+
+    ``ddof=1`` is not a free choice here. Yang-Zhang's own ``sigma_o^2`` and ``sigma_c^2`` terms
+    are sample variances about their own means with ``ddof=1`` (see :func:`yang_zhang`), so a
+    benchmark using the uncentred second moment, or ``ddof=0``, would differ from the numerator
+    in its centring convention rather than only in the quantity being measured. On the shipped
+    ordinary-equity panel the whole-sample ratio moves 1.288 -> 1.273 under this benchmark.
+
+    Both the row-matched and the horizon-matched comparisons are retained and reported. They
+    answer different questions -- "does Yang-Zhang track the day's realized total risk" versus
+    "does Yang-Zhang track realized total risk over its own window" -- and only the second is a
+    like-for-like estimator comparison. The manuscript leads with the second and names the
+    first explicitly, rather than reporting one number and calling it the ratio.
+    """
+    return close_to_close(df, window=window)
 
 
 def realized_range(df: pd.DataFrame, window: int = 21) -> pd.Series:
@@ -158,24 +298,36 @@ def realized_range(df: pd.DataFrame, window: int = 21) -> pd.Series:
 def add_rs(df: pd.DataFrame, rtol: float = 1e-12) -> pd.Series:
     """AddRS — the additively bias-corrected Rogers-Satchell estimator.
 
-    Kumar, D. & Maheswaran, S. (2014), "A reflection principle for a random walk with
+    Kumar, D. & Maheswaran, S. (2014a), "A reflection principle for a random walk with
     implications for volatility estimation using extreme values of asset prices",
     Economic Modelling 38, 33-44, DOI 10.1016/j.econmod.2013.11.045.
 
     PROVENANCE -- three distinct levels, not to be collapsed:
 
-    * ORIGINAL SOURCE:            Kumar & Maheswaran (2014), as cited above.
-    * OPERATIONAL EQUATIONS USED: taken from a later author reproduction, Kumar (2018),
-                                  open access, and checked term-for-term against it.
-    * PRIMARY DERIVATION / PROOF: NOT independently verified. The 2014 full text was not
-                                  obtained, so the proof of exact unbiasedness and the
-                                  conditions it requires are unverified here.
+    * ORIGINAL SOURCE:            Kumar & Maheswaran (2014a), as cited above. The reflection
+                                  principle and the unbiasedness proof are stated there.
+    * OPERATIONAL EQUATIONS USED: Kumar, D. & Maheswaran, S. (2014b), "Modeling and forecasting
+                                  the additive bias corrected extreme value volatility
+                                  estimator", International Review of Financial Analysis 34,
+                                  166-176, DOI 10.1016/j.irfa.2014.06.002. Record CONFIRMED.
+    * PRIMARY DERIVATION / PROOF: NOT independently verified. Neither full text was obtained,
+                                  so the proof of exact unbiasedness and the conditions it
+                                  requires are unverified here.
 
-    What is verified is the later author reproduction, not the primary equation. The
-    maintained model is a random walk with iid symmetric double-exponential increments,
-    not Brownian motion, so "AddRS is unbiased" must not be written unqualified.
-    Verification evidence is recorded in private/audit/, not here, because it is a fact
-    about a particular dataset and audit run rather than about this function.
+    PEER-REVIEW ITEM H / MANDATORY ITEM 9. Until this revision the operational line above read
+    "a later author reproduction, Kumar (2018), open access". That citation was incomplete in
+    the code and absent from the manuscript's reference list, and the reviewer was right to
+    call it out. It could not be resolved to any bibliographic record: no Kumar (2018) item
+    carrying these operational equations exists that the author can produce. It has therefore
+    been WITHDRAWN rather than reconstructed, and replaced by Kumar & Maheswaran (2014b), the
+    companion modelling-and-forecasting paper in which the AddRS equations are given in the
+    operational form implemented below. A citation that cannot be produced on demand is not
+    evidence, and downgrading it quietly would have repeated the fault.
+
+    What is verified is the operational presentation, not the primary proof. The maintained
+    model is a random walk with iid symmetric double-exponential increments, not Brownian
+    motion, so "AddRS is unbiased" must not be written unqualified. The distinction between
+    these three levels is recorded in AUDIT-REGISTER.md.
 
     With b = ln(H/O), c = ln(L/O), x = ln(C/O) and u = 2b - x, v = 2c - x:
 
