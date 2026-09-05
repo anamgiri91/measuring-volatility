@@ -1,0 +1,653 @@
+symbol,company_name,sharesansar_sector,sec_type_master,par_value,listing_date,listed_shares
+ADBLB,4% Agricultural Bond,Corporate Debentures,debenture,,,
+ADBLB86,4% Agricultural Bond 2086,Corporate Debentures,debenture,1000.0,2021-12-14,6000000.0
+ADBLB87,4% Agricultural Bond 2087,Corporate Debentures,debenture,1000.0,,6000000.0
+ADBLD83,10.35% Agricultural Bank Debenture 2083,Corporate Debentures,debenture,1000.0,2020-07-09,2500000.0
+BOKD86,8.5% BOK Debenture 2086,Corporate Debentures,debenture,1000.0,2021-08-12,1600000.0
+BOKD86KA,10.5% BOK Debenture 2086,Corporate Debentures,debenture,1000.0,2023-02-26,1100000.0
+CBLD88,10.25% Civil Bank Debenture 2088,Corporate Debentures,debenture,1000.0,2022-04-12,3000000.0
+CCBD88,10.50% Century Debenture 2088,Corporate Debentures,debenture,1000.0,2022-06-30,2200000.0
+CIZBD86,10.25% Citizens Bank Debenture 2086,Corporate Debentures,debenture,1000.0,2020-07-09,2500000.0
+CIZBD90,10% Citizens Bank Debenture 2090,Corporate Debentures,debenture,1000.0,,3000000.0
+EBLD85,10.5% Everest Bank Ltd Rinpatra 2085,Corporate Debentures,debenture,1000.0,2022-09-23,2000000.0
+EBLD86,8.5% Everest Bank Debenture,Corporate Debentures,debenture,1000.0,2022-05-05,856783.0
+EBLD91,7.50% Everest Bank Limited Debenture  2091,Corporate Debentures,debenture,1000.0,2025-04-21,3000000.0
+EBLEB89,"Everest Bank Limited Energy Bond, 2089",Corporate Debentures,debenture,1000.0,2023-04-05,746830.0
+GBBD85,8.75% Garima Debenture 2085,Corporate Debentures,debenture,1000.0,2022-03-04,1000000.0
+GBD80/81,10.25% Global IME Bank Limited Debenture 2080/81,Corporate Debentures,debenture,1000.0,2019-07-28,103105160.0
+GBILD84/85,11.25% Global IME Bank Debenture 2084/85,Corporate Debentures,debenture,1000.0,2023-06-06,5000000.0
+GBILD86/87,8.5% Global IME Bank Ltd. Debenture 2086/87,Corporate Debentures,debenture,1000.0,2021-09-16,3000000.0
+GWFD83,12% Goodwill Finance Limited Debenture 2083,Corporate Debentures,debenture,1000.0,2020-06-30,250000.0
+HBLD83,10% Himalayan Bank Ltd. Debenture 2083,Corporate Debentures,debenture,1000.0,2019-12-30,2569104.0
+HBLD86,Himalayan Bank Limited Bond 2086,Government Bonds,debenture,,,
+ICFCD83,12% ICFC Finance Limited Debenture 2083,Corporate Debentures,debenture,1000.0,2020-06-30,200000.0
+ICFCD88,9% ICFC Finance Limited Debenture 2088,Corporate Debentures,debenture,1000.0,2025-03-02,300000.0
+ICFCD89,8% ICFC  Finance Limited Debenture 2089,Corporate Debentures,debenture,,,
+JBBD87,Jyoti Bikash Bank Bond 2087,Government Bonds,debenture,,,
+KBLD86,10.25% Kumari Bank Debenture 2086,Corporate Debentures,debenture,1000.0,2020-06-30,3000000.0
+KBLD89,11% KBL Debenture 2089,Corporate Debentures,debenture,1000.0,2022-11-14,3000000.0
+KBLD90,10% KBL Debenture 2090,Corporate Debentures,debenture,,,
+KSBBLD87,9% Kamana Sewa Bikas Bank Limited Debenture 2087,Corporate Debentures,debenture,,,
+LBBLD89,11% LBBL Debenture 2089,Corporate Debentures,debenture,1000.0,2023-08-30,1000000.0
+LBLD86,10% Laxmi Bank Debenture 2086,Corporate Debentures,debenture,1000.0,2020-02-18,2000000.0
+LBLD88,8.5% Laxmi Bank Debenture,Corporate Debentures,debenture,1000.0,2021-09-02,2000000.0
+MBLD2085,10.25% Machhapuchchhre Debenture 2085,Corporate Debentures,debenture,1000.0,2019-12-04,3000000.0
+MBLD87,8.5% Machhapuchchhre Debenture 2087,Corporate Debentures,debenture,1000.0,2021-09-09,2253496.0
+MFLD85,9.5%  Manjushree Finance Ltd. Debenture 2085,Corporate Debentures,debenture,1000.0,2021-04-13,500000.0
+MLBLD89,11% Mahalaxmi Debenture 2089,Corporate Debentures,debenture,1000.0,2023-08-30,1000000.0
+MND84/85,8.75% Muktinath Debenture/Rinpatra 2084/85,Corporate Debentures,debenture,1000.0,2021-09-02,1250000.0
+NABILD2089,7% Nabil Debenture 2089,Corporate Debentures,debenture,1000.0,2025-11-12,3000000.0
+NABILD87,9% Nabil Debenture 2087,Corporate Debentures,debenture,,,
+NBBD2085,10.25% NBBL Debenture 2085,Corporate Debentures,debenture,1000.0,2019-09-04,2000000.0
+NBLD82,10% Nabil Bank Debenture 2082,Corporate Debentures,debenture,1000.0,2020-07-21,2000000.0
+NBLD85,8% Nabil Debenture 2085,Corporate Debentures,debenture,1000.0,,2207108.0
+NBLD87,8.5% Nepal Bank Debenture 2087,Corporate Debentures,debenture,1000.0,,3500000.0
+NCCD86,9.5%  NCC Rinpatra 2086,Corporate Debentures,debenture,1000.0,2021-05-24,3000000.0
+NIBD2082,10.5% Nepal Investment Bank Debenture 2082,Corporate Debentures,debenture,1000.0,2019-09-02,2000000.0
+NIBD84,8.5% Nepal Investment Bank Bond 2084,Corporate Debentures,debenture,1000.0,2021-04-13,4000000.0
+NICAD2091,7% NIC Asia Debenture 2091,Corporate Debentures,debenture,1000.0,2025-08-13,5000000.0
+NICAD8182,9% NIC Asia Debenture 2081/82,Corporate Debentures,debenture,1000.0,2018-01-10,3000000.0
+NICAD8283,11% NIC Asia Debenture 2082/83,Corporate Debentures,debenture,1000.0,,1830000.0
+NICAD85/86,10% NIC Asia Debenture 2085/86,Corporate Debentures,debenture,,,
+NICD83/84,10.25% NIC ASIA Debenture 2083/84,Corporate Debentures,debenture,1000.0,2019-12-04,1943698.0
+NICD88,8.5% NIC Asia Debenture 2088,Corporate Debentures,debenture,1000.0,2021-09-13,1573872.0
+NIFRAGED,6% Nifra Harit Urja Debenture 2088/89,Corporate Debentures,debenture,1000.0,2025-07-09,5000000.0
+NIFRAUR85/86,7% NIFRA Urja Rinpatra 2085/86,Corporate Debentures,debenture,1000.0,2023-02-23,2289813.0
+NIMBD90,10% NIMB Debenture 2090,Corporate Debentures,debenture,1000.0,2024-03-28,4040000.0
+NMBD2085,10% NMB Debenture 2085,Corporate Debentures,debenture,1000.0,2019-09-02,1684505.0
+NMBD87/88,8.5% NMB Rinpatra 2087/88,Corporate Debentures,debenture,1000.0,2021-08-19,2000000.0
+NMBD89/90,10.75% NMB Debenture  2089/2090,Corporate Debentures,debenture,1000.0,2023-07-05,4000000.0
+NMBUR93/94,4% NMB Urja Rinpatra (Energy Bond II) 2093/94,Corporate Debentures,debenture,1000.0,2022-09-06,2727437.0
+PBD84,10.15% Prime Debenture 2084,Corporate Debentures,debenture,,,
+PBD85,8.75% Prime Debenture 2085,Corporate Debentures,debenture,1000.0,2021-09-06,2447963.0
+PBD88,10% Prime Debenture 2088,Corporate Debentures,debenture,1000.0,2022-08-10,1741884.0
+PBLD84,10% Prabhu Bank Debenture 2084 (PBLD84),Corporate Debentures,debenture,1000.0,,2000000.0
+PBLD86,10.25% Prabhu Bank Debenture 2086,Corporate Debentures,debenture,1000.0,2020-01-20,1000000.0
+PBLD87,8.5% Prabhu Bank Debenture 2087,Corporate Debentures,debenture,1000.0,2021-08-17,2650000.0
+RBBD2088,7% RBBL Debenture 2088,Corporate Debentures,debenture,,,
+RBBD83,8.5% RBBL Debenture 2083,Corporate Debentures,debenture,1000.0,2021-09-13,2500000.0
+SAND2085,10% Sanima Debenture 2085,Corporate Debentures,debenture,1000.0,2019-03-10,2000000.0
+SBD87,8.5% Sanima Debenture 2087,Corporate Debentures,debenture,1000.0,2021-02-21,3052404.0
+SBD89,10.25% Sanima Debenture 2089,Corporate Debentures,debenture,1000.0,2022-08-30,5000000.0
+SBIBD86,10% Nepal SBI Bank Debenture 2086,Corporate Debentures,debenture,1000.0,2020-07-12,2033888.0
+SBID2090,7% Nepal SBI Bank Debenture 2090,Corporate Debentures,debenture,,,
+SBID83,10.25% Nepal SBI Bank Debenture 2083,Corporate Debentures,debenture,1000.0,2022-09-02,2401482.0
+SBID89,9% Nepal SBI Bank Debenture 2089,Corporate Debentures,debenture,1000.0,2023-10-03,1418366.0
+SBLD2082,10.5% SBL Debenture 2082,Corporate Debentures,debenture,1000.0,2019-03-10,2250000.0
+SBLD2091,7.25% SBL Debenture 2091,Corporate Debentures,debenture,1000.0,2025-09-01,2500000.0
+SBLD83,10.25% SBL Debenture 2083,Corporate Debentures,debenture,1000.0,2019-10-22,2500000.0
+SBLD84,8.5% SBL Debenture 2084,Corporate Debentures,debenture,1000.0,2020-11-19,3000000.0
+SBLD89,10.75 % SBL Debenture 2089,Corporate Debentures,debenture,1000.0,2022-08-16,4000000.0
+SCBD,10.30% Standard Chartered Bank Nepal Limited Debenture,Corporate Debentures,debenture,1000.0,,2400000.0
+SDBD87,"9% Shangrila Development Bank Debenture, 2087",Corporate Debentures,debenture,1000.0,,750000.0
+SHINED,Shine Resunga Debenture,Corporate Debentures,debenture,,,
+SRBLD83,10.25% SRBL Debenture 2083,Corporate Debentures,debenture,1000.0,2020-01-29,3000000.0
+SRD80,10% Sunrise Debenture 2080,Corporate Debentures,debenture,1000.0,2019-07-11,1000000.0
+ACLBSL,Aarambha Chautari Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-01-01,3671435.0
+ADBL,Agricultural Development Bank Limited,Commercial Bank,equity,100.0,2010-08-16,143055192.0
+AHL,Asian Hydropower Limited,Hydropower,equity,100.0,2023-03-22,3400000.0
+AHPC,Arun Valley Hydropower Development Company Limited,Hydropower,equity,100.0,2014-06-30,40404032.0
+AKJCL,Ankhukhola Hydropower Company Limited,Hydropower,equity,100.0,,20000000.0
+AKPL,Arun Kabeli Power Limited,Hydropower,equity,100.0,2017-03-21,38959421.0
+ALBSL,Asha Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-03-10,8026857.0
+ALICL,Asian Life Insurance Company Limited,Life Insurance,equity,100.0,2010-04-16,52512173.0
+ANLB,Aatmanirbhar Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2023-04-30,895072.0
+APHL,Appolo Hydropower Limited,Hydropower,equity,100.0,2026-06-08,4700000.0
+API,Api Power Company Limited,Hydropower,equity,100.0,2015-11-09,63797242.0
+AVYAN,Aviyan Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-09-23,2500000.0
+BANDIPUR,Bandipur Cable Car and Tourism Limited,Hotel & Tourism,equity,100.0,2025-11-10,28300000.0
+BARUN,Barun Hydropower Company Limited,Hydropower,equity,100.0,2015-10-07,11225324.0
+BBC,Bishal Bazar Company Limited,Trading,equity,100.0,,40100000.0
+BEDC,Bhugol Energy Development Company Limited,Hydropower,equity,100.0,2023-06-07,5440534.0
+BFC,Best Finance Company Limited,Finance,equity,100.0,,8904242.0
+BGWT,Bhagawati Hydropower Development Company Limited,Hydropower,equity,100.0,2023-10-11,6782399.0
+BHCL,Bikash Hydropower Company Limited,Hydropower,equity,100.0,2025-08-19,9091013.0
+BHDC,Bindhyabasini Hydropower Development Company Limited,Hydropower,equity,100.0,2022-07-27,11862900.0
+BHL,Balephi Hydropower Limited,Hydropower,equity,100.0,2022-05-24,36559400.0
+BHPL,Barahi Hydropower Public Limited,Hydropower,equity,100.0,2023-01-02,2500000.0
+BJHL,Bhujung Hydropower Limited,Hydropower,equity,100.0,2026-03-19,10000000.0
+BNHC,Buddha Bhumi Nepal Hydropower Company Limited,Hydropower,equity,100.0,2022-01-16,8000000.0
+BNL,Bottlers Nepal Limited (Balaju),Manufacturing and Processing,equity,100.0,,1948887.0
+BNT,Bottlers Nepal (Terai) Limited,Manufacturing and Processing,equity,100.0,,1210000.0
+BPCL,Butwal Power Company Limited,Hydropower,equity,100.0,2014-06-30,34090646.0
+BUNGAL,Bungal Hydro Limited,Hydropower,equity,100.0,,8300000.0
+CBBL,Chhimek Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2004-12-28,36172643.0
+CFCL,Central Finance Limited,Finance,equity,100.0,2018-06-21,9488756.0
+CGH,Chandragiri Hills Limited,Hotel & Tourism,equity,100.0,2021-02-05,16107956.0
+CHCL,Chilime Hydro power Company Limited,Hydropower,equity,100.0,,94849892.0
+CHDC,CEDB Holdings Limited,Investment,equity,100.0,2021-06-08,10342371.0
+CHL,Chhyangdi Hydropower Company Limited,Hydropower,equity,100.0,2017-07-26,7739550.0
+CIT,Citizen Investment Trust,Investment,equity,100.0,2021-04-18,68057981.0
+CITY,City Hotel Limited,Hotel & Tourism,equity,100.0,2023-06-08,30132000.0
+CKHL,Chirkhwa Hydro Power Limited,Hydropower,equity,100.0,2023-12-20,4000000.0
+CLI,Citizen Life Insurance Company Limited,Life Insurance,equity,100.0,2023-09-27,50000000.0
+CMB,Capital Merchant Banking & Finance Limited,Finance,equity,100.0,,9350695.0
+CORBL,Corporate Development Bank Limited,Development Bank,equity,100.0,2022-05-20,5250000.0
+CREST,Crest Micro Life Insurance Limited,Life Insurance,equity,100.0,2025-04-09,7500000.0
+CYCL,CYC Nepal Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-06-12,2664244.0
+CZBIL,Citizens Bank International Limited,Commercial Bank,equity,100.0,2017-01-10,155074636.0
+DDBL,Deprosc Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2005-05-29,20551143.0
+DHEL,Daramkhola Hydro Energy Limited,Hydropower,equity,100.0,2025-11-05,10305000.0
+DHPL,Dibyashwari Hydropower Company Limited,Hydropower,equity,100.0,2017-02-12,2640000.0
+DLBS,Dhaulagiri Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-10-21,1331000.0
+DOLTI,Dolti Power Company Ltd,Hydropower,equity,100.0,2023-06-07,5364860.0
+DORDI,Dordi Khola Hydropower Company Limited,Hydropower,equity,100.0,2022-07-13,21085208.0
+EBL,Everest Bank Limited,Commercial Bank,equity,100.0,1995-04-03,137213760.0
+ECL,Everest Colour Limited,Manufacturing and Processing,equity,100.0,2026-07-16,3000000.0
+EDBL,Excel Development Bank Limited,Development Bank,equity,100.0,,12496945.0
+EHPL,Eastern Hydropower Limited,Hydropower,equity,100.0,2022-12-13,6200000.0
+ENL,Emerging Nepal Limited,Investment,equity,100.0,2022-03-04,5556000.0
+FMDBL,First Microfinance Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2012-06-10,13448714.0
+FOWAD,Forward Microfinance Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2017-05-16,11959538.0
+GBBL,Garima Bikas Bank Limited,Development Bank,equity,100.0,2015-06-21,60213486.0
+GBIME,Global IME Bank Limited,Commercial Bank,equity,100.0,2017-07-26,381158528.0
+GBLBS,Grameen Bikas Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-11-23,10053500.0
+GCIL,Ghorahi Cement Industry Limited,Manufacturing and Processing,equity,100.0,2023-08-10,50244543.0
+GFCL,Goodwill Finance Company Limited,Finance,equity,100.0,,9461152.0
+GHL,Ghalemdi Hydro Limited,Hydropower,equity,100.0,2019-02-17,16500000.0
+GILB,Global IME Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-12-01,6482979.0
+GLBSL,Gurans Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-05-27,1323581.0
+GLH,Greenlife Hydropower Limited,Hydropower,equity,100.0,,18000000.0
+GMFBS,Ganapati Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-05-13,1515546.0
+GMFIL,Guheswori Merchant Banking & Finance Limited,Finance,equity,100.0,2017-01-23,10121760.0
+GMLI,Guardian Micro Life Insurance Limited,Life Insurance,equity,100.0,2025-02-06,7500000.0
+GRDBL,Green Development Bank Limited,Development Bank,equity,100.0,2016-11-16,6155000.0
+GUFL,Gurkhas Finance Limited,Finance,equity,100.0,,8679938.0
+GVL,Green Ventures Limited,Hydropower,equity,100.0,2022-04-17,34375000.0
+HATHY,Hathway Investment Nepal Limited,Investment,equity,50.0,2023-10-10,31711680.0
+HBL,Himalayan Bank Limited,Commercial Bank,equity,100.0,1998-07-04,225816627.0
+HDHPC,Himal Dolakha Hydropower Company Limited,Hydropower,equity,100.0,2020-02-24,28000000.0
+HDL,Himalayan Distillery Limited,Manufacturing and Processing,equity,100.0,,36880822.0
+HEI,Himalayan Everest Insurance Limited,Non-Life Insurance,equity,100.0,,25001574.0
+HFIN,Hotel Forest Inn Limited,Hotel & Tourism,equity,100.0,2026-03-11,20000000.0
+HHL,Himalayan Hydropower Limited,Hydropower,equity,100.0,2022-08-05,10950000.0
+HIDCL,Hydroelectricity Investment and Development Company Limited,Investment,equity,100.0,2016-07-01,249282106.0
+HIMSTAR,Him Star Urja Company Limited,Hydropower,equity,100.0,2025-08-28,3730000.0
+HLBSL,Himalayan Laghubitta Bittiya Sanstha Limited (Former Civil Laghubitta),Microfinance,equity,100.0,2015-10-25,3410862.0
+HLI,Himalayan Life Insurance Limited,Life Insurance,equity,100.0,2010-07-13,91432374.0
+HPPL,Himalayan Power Partner Limited,Hydropower,equity,100.0,2017-08-18,10654170.0
+HRL,Himalayan Reinsurance Limited,Others,equity,100.0,2024-01-07,108680000.0
+HURJA,Himalaya Urja Bikas Company Limited,Hydropower,equity,100.0,2019-05-21,19800000.0
+ICFC,ICFC Finance Limited,Finance,equity,100.0,,11834710.0
+IGI,IGI Prudential Insurance Limited,Non-Life Insurance,equity,100.0,,30293346.0
+IHL,Ingwa Hydropower Ltd,Hydropower,equity,100.0,2023-06-19,6000000.0
+ILBS,Infinity Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-07-07,4974160.0
+ILI,IME Life Insurance Company Limited,Life Insurance,equity,100.0,2023-08-03,50000000.0
+JBBL,Jyoti Bikash Bank Limited,Development Bank,equity,100.0,,43957860.0
+JBLB,Jeevan Bikas Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2021-07-28,17512356.0
+JFL,Janaki Finance Company Limited,Finance,equity,100.0,,6904728.0
+JHAPA,Jhapa Energy Limited,Others,equity,100.0,2025-11-14,3801900.0
+JOSHI,Joshi Hydropower Development Company Limited,Hydropower,equity,100.0,,6128100.0
+JSLBB,Janautthan Samudayic Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-10-25,1700919.0
+KAHL,Kalanga Hydro Limited,Hydropower,equity,100.0,2026-07-01,14000000.0
+KBL,Kumari Bank Limited,Commercial Bank,equity,100.0,2017-09-06,262258613.0
+KBSH,Kutheli Bukhari Small Hydropower Limited,Hydropower,equity,100.0,2023-08-20,1474597.0
+KDL,Kalinchowk Darshan Limited,Hotel & Tourism,equity,100.0,2023-03-22,6300000.0
+KHPL,Kalinchowk Hydropower Limited,Hydropower,equity,100.0,,5500000.0
+KKHC,Khani Khola Hydropower Company Limited,Hydropower,equity,100.0,2017-01-03,9314286.0
+KMCDB,Kalika Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2014-01-27,4484616.0
+KPCL,Kalika Power Company Limited,Hydropower,equity,100.0,2018-10-11,9993260.0
+KRBL,Karnali Development Bank Limited,Development Bank,equity,100.0,,5028300.0
+KSBBL,Kamana Sewa Bikas Bank Limited,Development Bank,equity,100.0,,38619309.0
+LBBL,Lumbini Bikas Bank Limited,Development Bank,equity,100.0,,36236782.0
+LEC,Liberty Energy Company Limited,Hydropower,equity,100.0,,22500000.0
+LICN,Life Insurance Corporation Nepal Limited,Life Insurance,equity,100.0,2003-03-21,55000000.0
+LLBS,Laxmi Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2014-10-08,4416621.0
+LSL,Laxmi Sunrise Bank Limited,Commercial Bank,equity,100.0,2017-03-28,267811635.0
+MABEL,Mabilung Energy Limited,Hydropower,equity,100.0,2025-11-03,3858240.0
+MAKAR,Makar Jitumaya Suri Hydropower Company Limited,Hydropower,equity,100.0,2023-05-04,7600000.0
+MANDU,Mandu Hydropower Limited,Hydropower,equity,100.0,2023-10-10,15000007.0
+MATRI,Matribhumi Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-10-25,6283574.0
+MBJC,Madhya Bhotekoshi Jalavidyut Company Limited,Hydropower,equity,100.0,2021-12-23,60000000.0
+MBL,Machhapuchchhre Bank Limited,Commercial Bank,equity,100.0,2003-05-28,120862116.0
+MCHL,Menchhiyam Hydropower  Limited,Hydropower,equity,100.0,2023-06-15,5425833.0
+MDB,Miteri Development Bank Limited,Development Bank,equity,100.0,,12171002.0
+MEHL,Manakamana Engineering Hydropower Limited,Hydropower,equity,100.0,2023-09-24,8000000.0
+MEL,Modi Energy Limited,Hydropower,equity,100.0,2023-07-04,29000000.0
+MEN,Mountain Energy Nepal Limited,Hydropower,equity,100.0,,31232590.0
+MEPDL,Mount Everest Power Development Limited,Hydropower,equity,100.0,2026-08-11,8600000.0
+MERO,Mero Microfinance Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2016-07-05,14864025.0
+MFIL,Manjushree Finance Limited,Finance,equity,100.0,,13515529.0
+MHCL,Molung Hydropower Company Limited,Hydropower,equity,100.0,2023-04-12,8025000.0
+MHL,Mandakini Hydropower Limited,Hydropower,equity,100.0,2022-08-16,6467672.0
+MHNL,Mountain Hydro Nepal Limited,Hydropower,equity,100.0,2019-04-11,12500000.0
+MKCL,Muktinath Krishi Company Limited,Others,equity,100.0,2023-12-13,7560000.0
+MKHC,Maya Khola Hydropower Company Limited,Hydropower,equity,100.0,2023-03-20,10000000.0
+MKHL,Mai Khola Hydropower Limited,Hydropower,equity,100.0,2023-05-15,3921568.0
+MKJC,Mailung Khola Jal Vidhyut Company Limited,Hydropower,equity,100.0,2021-09-21,3763198.0
+MLBBL,Mithila Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2011-03-24,2558437.0
+MLBL,Mahalaxmi Bikas Bank Limited,Development Bank,equity,100.0,,45112811.0
+MLBS,Manushi Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2021-09-26,1093750.0
+MLBSL,Mahila Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2021-03-15,2175625.0
+MMKJL,Mathillo Mailun Khola Jalvidhyut Limited,Hydropower,equity,100.0,2023-11-09,10000000.0
+MNBBL,Muktinath Bikas Bank Limited,Development Bank,equity,100.0,,80003889.0
+MPFL,Multipurpose Finance Company Limited,Finance,equity,100.0,2020-02-17,6102000.0
+MSHL,Mid Solu Hydropower Company Limited,Hydropower,equity,100.0,2023-10-11,8606600.0
+MSLB,Mahuli Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2017-08-21,3874951.0
+NABBC,Narayani Development Bank Limited,Development Bank,equity,100.0,2021-04-21,5249352.0
+NABIL,Nabil Bank Limited,Commercial Bank,equity,100.0,1985-11-24,270569984.0
+NADEP,NADEP Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2018-08-23,4857600.0
+NBL,Nepal Bank Limited,Commercial Bank,equity,100.0,2012-12-02,146940230.0
+NESDO,Nesdo Sambridha Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-03-27,2913375.0
+NFD,Nepal Film Dev. Company Limited,Others,equity,100.0,,491285.0
+NFS,Nepal Finance Limited,Finance,equity,100.0,2021-02-03,8389439.0
+NGPL,Ngadi Group Power Limited,Hydropower,equity,100.0,2016-08-31,38784300.0
+NHDL,Nepal Hydro Developer Limited,Hydropower,equity,100.0,2017-11-06,4231344.0
+NHPC,National Hydro Power Company Limited,Hydropower,equity,100.0,2023-10-19,24664380.0
+NICA,NIC Asia Bank Limited,Commercial Bank,equity,100.0,2007-07-25,149175670.0
+NICL,Nepal Insurance Company Limited,Non-Life Insurance,equity,100.0,2014-10-21,25485751.0
+NICLBSL,NIC Asia Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2020-07-08,17394400.0
+NIFRA,Nepal Infrastructure Bank Limited,Investment,equity,100.0,,216000000.0
+NIL,Neco Insurance Limited,Non-Life Insurance,equity,100.0,2015-07-12,27722783.0
+NIMB,Nepal Investment Mega Bank Limited,Commercial Bank,equity,100.0,1987-08-24,341285949.0
+NLG,NLG Insurance Company Limited,Non-Life Insurance,equity,100.0,,26678336.0
+NLIC,Nepal Life Insurance Company Limited,Life Insurance,equity,100.0,2003-01-22,94802015.0
+NLICL,National Life Insurance Company Limited,Life Insurance,equity,100.0,1998-12-20,56916492.0
+NLO,Nepal Lube Oil Limited,Manufacturing and Processing,equity,100.0,,875569.0
+NMB,NMB Bank Limited,Commercial Bank,equity,100.0,2018-08-22,192850413.0
+NMBMF,NMB Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-11-22,7214492.0
+NMFBS,National Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2016-12-05,15213628.0
+NMIC,Nepal Micro Insurance Company Limited,Non-Life Insurance,equity,100.0,2025-04-03,7500000.0
+NMLBBL,Nerude Mirmire Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2010-08-02,13977643.0
+NRIC,Nepal Reinsurance Company Limited,Others,equity,100.0,2020-06-10,134221871.0
+NRM,Nepal Republic Media Limited,Others,equity,100.0,2023-08-03,9675000.0
+NRN,NRN Infrastructure and Development Limited,Investment,equity,100.0,2020-08-25,17981212.0
+NTC,Nepal Doorsanchar Company Limited,Others,equity,100.0,,180000000.0
+NUBL,Nirdhan Utthan Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2003-04-24,27426838.0
+NWCL,Nepal Warehousing Company Limited,Others,equity,100.0,2023-12-20,6875000.0
+NYADI,Nyadi Hydropower  Limited,Hydropower,equity,100.0,2021-11-24,15000000.0
+OHL,Oriental Hotel Limited,Hotel & Tourism,equity,100.0,,11844950.0
+OMPL,Om Megashree Pharmaceuticals Limited,Manufacturing and Processing,equity,100.0,2025-04-30,6000000.0
+PCBL,Prime Commercial Bank Limited,Commercial Bank,equity,100.0,2017-07-07,209547818.0
+PCIL,Palpa Cements Industries Limited,Manufacturing and Processing,equity,100.0,2026-04-09,37500000.0
+PFL,Pokhara Finance Limited,Finance,equity,100.0,2017-09-22,10825567.0
+PHCL,Peoples Hydropower Company Limited,Hydropower,equity,100.0,2022-12-13,32000000.0
+PMHPL,Panchakanya Mai Hydropower Limited,Hydropower,equity,100.0,2018-10-10,11000000.0
+PMLI,Prabhu Mahalaxmi Life Insurance Company Limited,Life Insurance,equity,100.0,2021-01-01,53077940.0
+PPCL,Panchthar Power Company Limited,Hydropower,equity,100.0,2019-05-02,9625000.0
+PPL,People's Power Limited,Hydropower,equity,100.0,2022-10-13,9489000.0
+PRIN,Prabhu Insurance Company Limited,Non-Life Insurance,equity,100.0,,18489392.0
+PROFL,Progressive Finance Limited,Finance,equity,100.0,2019-05-14,8561070.0
+PRVU,Prabhu Bank Limited,Commercial Bank,equity,100.0,2017-01-15,235424899.0
+PURE,Pure Energy Limited,Others,equity,100.0,2025-05-26,8000000.0
+RADHI,Radhi Bidyut Company Limited,Hydropower,equity,100.0,2018-03-18,18389795.0
+RAWA,Rawa Energy Development Ltd.,Hydropower,equity,100.0,2023-07-04,2800000.0
+RBCL,Rastriya Beema Company Limited,Non-Life Insurance,equity,100.0,,2666390.0
+RFPL,River Falls Power Limited,Hydropower,equity,100.0,2022-06-15,14000000.0
+RHGCL,Rapti Hydro & General Construction Limited,Hydropower,equity,100.0,2022-08-30,12255876.0
+RHPL,Rasuwagadhi Hydropower Company Limited,Hydropower,equity,100.0,2019-08-06,68421000.0
+RIDI,Ridi Power Company Limited,Hydropower,equity,100.0,2024-05-13,23233518.0
+RJBCL,Rastriya Jeewan Beema Company Limited (former Rastriya Beema Sansthan),Life Insurance,equity,100.0,,995138.0
+RLEL,Ridge Line Energy Limited,Hydropower,equity,100.0,2026-03-25,11850000.0
+RLFL,Reliance Finance Limited,Finance,equity,100.0,2016-04-26,11214518.0
+RNLI,Reliable Nepal Life Insurance Limited,Life Insurance,equity,100.0,2023-09-13,51968000.0
+RSDC,RSDC Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2016-12-15,10340645.0
+RSML,Reliance Spinning Mills Limited,Manufacturing and Processing,equity,100.0,2026-02-13,19000000.0
+RURU,Ru Ru Jalbidhyut Pariyojana Limited,Hydropower,equity,100.0,2021-05-02,6240545.0
+SABBL,Salapa Bikas Bank Limited,Development Bank,equity,100.0,2026-02-13,5223880.0
+SADBL,Shangrila Development Bank Limited,Development Bank,equity,100.0,,37340686.0
+SAGAR,Sagar Distillery Limited,Manufacturing and Processing,equity,100.0,2025-11-06,7260000.0
+SAHAS,Sahas Urja Limited,Hydropower,equity,100.0,2021-10-28,45738000.0
+SAIL,Shreenagar Agritech Industries Limited,Manufacturing and Processing,equity,100.0,2025-11-21,16312500.0
+SALICO,Sagarmatha Lumbini Insurance Company Limited,Non-Life Insurance,equity,100.0,,26226382.0
+SANIMA,Sanima Bank Limited,Commercial Bank,equity,100.0,2017-02-17,135815256.0
+SANVI,Sanvi Energy Limited,Hydropower,equity,100.0,2025-07-17,8800000.0
+SAPDBL,Saptakoshi Development Bank Limited,Development Bank,equity,100.0,,8343385.0
+SAPIL,Sarvottam Paints Industries Limited,Manufacturing and Processing,equity,100.0,2026-08-12,3400000.0
+SARBTM,Sarbottam Cement Limited,Manufacturing and Processing,equity,100.0,2024-03-18,52242750.0
+SBI,Nepal SBI Bank Limited,Commercial Bank,equity,100.0,1995-01-17,113351244.0
+SBL,Siddhartha Bank Limited,Commercial Bank,equity,100.0,2016-07-11,147944792.0
+SCB,Standard Chartered Bank Nepal Limited,Commercial Bank,equity,100.0,1998-07-04,100423684.0
+SGHC,Swet-Ganga Hydropower & Construction Limited,Hydropower,equity,100.0,2022-08-16,15930000.0
+SGHL,Sanigad Hydro Limited,Hydropower,equity,100.0,2026-07-01,28500000.0
+SGIC,Sanima GIC Insurance Limited,Non-Life Insurance,equity,100.0,,22575000.0
+SHEL,Singati Hydro Energy Limited,Hydropower,equity,100.0,2021-04-27,30450000.0
+SHINE,Shine Resunga Development Bank Limited,Development Bank,equity,100.0,,50219730.0
+SHIVM,Shivam Cements Limited,Manufacturing and Processing,equity,100.0,,55932288.0
+SHL,Soaltee Hotel Limited,Hotel & Tourism,equity,10.0,,117514209.0
+SHLB,Shrijanshil Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-12-13,1093750.0
+SHPC,Sanima Mai Hydropower Limited,Hydropower,equity,100.0,2014-01-14,37379938.0
+SICL,Shikhar Insurance Company Limited,Non-Life Insurance,equity,100.0,2016-01-24,30984849.0
+SIFC,Shree Investment Finance Company Limited,Finance,equity,100.0,,10000000.0
+SIKLES,Sikles Hydropower Limited,Hydropower,equity,100.0,2022-11-14,9775000.0
+SINDU,Sindhu Bikas Bank Limited,Development Bank,equity,100.0,2013-09-01,5574561.0
+SIPD,Shikhar Power Development Limited,Hydropower,equity,100.0,2026-04-09,9800000.0
+SJCL,Sanjen Jalavidhyut Company Limited,Hydropower,equity,100.0,2019-08-06,36500000.0
+SJLIC,SuryaJyoti Life Insurance Company Limited,Life Insurance,equity,100.0,2010-09-09,50119478.0
+SKBBL,Sana Kisan Bikas Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2013-10-08,49271703.0
+SKHEL,Suryakunda Hydro Electric Limited,Hydropower,equity,100.0,2026-03-26,6896744.0
+SKHL,Super Khudi Hydropower Limited,Hydropower,equity,100.0,2026-03-24,15500000.0
+SLBBL,Swarojgar Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2013-06-19,8956337.0
+SLBSL,Samudayik Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-01-20,1708050.0
+SMATA,Samata Gharelu Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2017-06-01,6605042.0
+SMB,Support Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2018-02-15,1340756.0
+SMFBS,Swabhimaan Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2019-06-10,1534456.0
+SMH,Supermai Hydropower  Limited,Hydropower,equity,100.0,2023-03-20,6420000.0
+SMHL,Super Madi Hydropower Limited,Hydropower,equity,100.0,2023-03-02,23152500.0
+SMJC,Sagarmatha Jalbidhyut Company Limited,Hydropower,equity,100.0,2023-04-12,11732000.0
+SMPDA,Sampada Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2020-08-05,7008584.0
+SNLI,Sun Nepal Life Insurance Company Limited,Life Insurance,equity,100.0,2023-09-19,52827936.0
+SNORL,Snow Rivers Limited,Hydropower,equity,100.0,2026-06-25,9375000.0
+SOHL,Solu Hydropower Limited,Hydropower,equity,100.0,2026-03-12,100000000.0
+SONA,Sonapur Minerals and Oil Limited,Manufacturing and Processing,equity,100.0,2023-10-19,30750500.0
+SOPL,Sopan Pharmaceuticals Limited,Manufacturing and Processing,equity,100.0,2026-06-05,17160000.0
+SPC,Samling Power Company Limited,Hydropower,equity,100.0,2021-11-24,5000000.0
+SPDL,Synergy Power Development Limited,Hydropower,equity,100.0,2017-05-08,13308488.0
+SPHL,Sayapatri Hydropower Limited,Hydropower,equity,100.0,2022-10-13,3000000.0
+SPIL,Siddhartha Premier Insurance Limited,Non-Life Insurance,equity,100.0,,28065499.0
+SPL,Shuvam Power Limited,Hydropower,equity,100.0,2023-03-02,2000000.0
+SRLI,Sanima Reliance Life Insurance Limited,Life Insurance,equity,100.0,2021-09-01,50149240.0
+SRS,Shree Ram Sugar Mills Limited,Manufacturing and Processing,equity,100.0,,3045990.0
+SSHL,Shiva Shree Hydropower Limited,Hydropower,equity,100.0,2020-10-22,29528000.0
+STC,Salt Trading Corporation Limited,Trading,equity,100.0,,3511852.0
+SWASTIK,Swastik Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2025-11-10,577500.0
+SWBBL,Swabalamban Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2007-08-17,17500000.0
+SWMF,Suryodaya Womi Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-11-26,11062863.0
+SYPNL,SY Panel Nepal Limited,Manufacturing and Processing,equity,100.0,2025-12-09,13081371.0
+TAMOR,Sanima Middle Tamor Hydropower Limited,Hydropower,equity,100.0,2023-04-09,33325000.0
+TPC,Terhathum Power Company Limited,Hydropower,equity,100.0,2021-10-28,8000000.0
+TPKHL,Taksar Pikhuwa Khola Hydropower Limited,Hydropower,equity,100.0,2026-06-19,12000000.0
+TRH,Taragaon Regency Hotel Limited,Hotel & Tourism,equity,100.0,,19621202.0
+TSHL,Three Star Hydropower Limited,Hydropower,equity,100.0,2023-08-10,4925000.0
+TTL,Trade Tower Limited,Others,equity,100.0,2025-07-15,8156097.0
+TVCL,Trishuli Jal Vidhyut Company Limited,Hydropower,equity,100.0,,18525000.0
+UAIL,United Ajod Insurance Limited,Non-Life Insurance,equity,100.0,,26498996.0
+UHEWA,Upper Hewakhola Hydropower Company Limited,Hydropower,equity,100.0,2022-08-10,5750000.0
+ULBSL,Upakar Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2022-05-26,1061482.0
+ULHC,Upper Lohore Khola Hydropower Company Limited,Hydropower,equity,100.0,,5098040.0
+UMHL,United Modi Hydropower Limited,Hydropower,equity,100.0,2017-05-21,13166350.0
+UMRH,United Idi-Mardi and R.B. Hydropower Limited,Hydropower,equity,100.0,,4838652.0
+UNHPL,Union Hydro Holdings Company Limited,Hydropower,equity,100.0,2019-06-11,7500000.0
+UNL,Unilever Nepal Limited,Manufacturing and Processing,equity,100.0,,920700.0
+UNLB,Unique Nepal Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2023-02-18,1485750.0
+UPCL,Universal Power Company Limited,Hydropower,equity,100.0,2019-03-19,24851237.0
+UPPER,Upper Tamakoshi Hydropower Limited,Hydropower,equity,100.0,2019-01-10,211800000.0
+USHEC,Upper Solu Hydro Electric Company Limited,Hydropower,equity,100.0,2022-08-16,13500000.0
+USHL,Upper Syange Hydropower Limited,Hydropower,equity,100.0,2023-08-10,2200000.0
+USLB,Unnati Sahakarya Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2018-03-06,2468657.0
+VLBS,Vijaya Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2015-10-14,7917221.0
+VLUCL,Vision Lumbini Urja Company Limited,Hydropower,equity,100.0,2023-12-20,19125000.0
+WNLB,Wean Nepal Laghubitta Bittiya Sanstha Limited,Microfinance,equity,100.0,2018-06-14,843406.0
+YMHL,Yambaling Hydropower Limited,Hydropower,equity,100.0,2026-06-19,7000000.0
+C30MF,Citizens Super 30 Mutual Fund,Mutual Fund,fund,10.0,2023-08-08,75072390.0
+CMF1,Citizens Mutual Fund-1,Mutual Fund,fund,10.0,2018-04-16,82000000.0
+CMF2,Citizens Mutual Fund - 2,Mutual Fund,fund,10.0,2019-10-20,56000000.0
+CSY,Citizens Santulit Yojana,Mutual Fund,fund,10.0,2026-02-09,125000000.0
+GBIMESY2,Global IME Samunnat Yojana -II,Mutual Fund,fund,10.0,2025-08-24,150000000.0
+GIBF1,Global IME Balanced Fund-I,Mutual Fund,fund,10.0,2022-08-30,102576360.0
+GIMES1,Global IME Samunnat Scheme 1,Mutual Fund,fund,10.0,2016-05-16,100000000.0
+GSY,Garima Samriddhi Yojana,Mutual Fund,fund,,,
+H8020,Himalayan 80-20,Mutual Fund,fund,,,
+HLICF,HLI Large Cap Fund,Mutual Fund,fund,10.0,2025-11-04,500000000.0
+KDBY,Kumari Dhanabriddhi Yojana,Mutual Fund,fund,10.0,2022-07-25,122507259.0
+KEF,Kumari Equity Fund,Mutual Fund,fund,10.0,2021-04-18,100000000.0
+KSY,Kumari Sabal Yojana,Mutual Fund,fund,10.0,2024-03-19,74475070.0
+LEMF,Laxmi Equity Fund,Mutual Fund,fund,10.0,2017-07-11,125000000.0
+LSH12,LS Horizon 12,Mutual Fund,fund,10.0,2026-08-05,150000000.0
+LUK,Laxmi Unnati Kosh,Mutual Fund,fund,10.0,2020-09-13,65262360.0
+LVF2,Laxmi Value Fund-II,Mutual Fund,fund,10.0,2023-09-13,
+MBLEF,MBL Equity Fund,Mutual Fund,fund,10.0,2025-05-21,121625330.0
+MMF1,Mega Mutual Fund - 1,Mutual Fund,fund,10.0,2021-11-16,125000000.0
+MNMF1,Muktinath Mutual Fund 1,Mutual Fund,fund,,,
+NBF1,Nabil Balanced Fund-1,Mutual Fund,fund,10.0,2013-04-29,75000000.0
+NBF2,Nabil Balanced Fund - 2,Mutual Fund,fund,10.0,2019-07-17,112000000.0
+NBF3,Nabil Balanced Fund III,Mutual Fund,fund,10.0,2021-11-17,125000000.0
+NEF,Nabil Equity Fund,Mutual Fund,fund,10.0,2017-01-23,125000000.0
+NIBLGF,NIBL Growth Fund,Mutual Fund,fund,10.0,2023-02-07,132000000.0
+NIBLPF,NIBL Pragati Fund,Mutual Fund,fund,10.0,2017-03-19,75000000.0
+NIBLSTF,NIBL Stable Fund,Mutual Fund,fund,10.0,2024-05-30,113000000.0
+NIBSF1,NIBL Samriddhi Fund 1,Mutual Fund,fund,10.0,2015-02-08,75000000.0
+NIBSF2,NIBL Samriddhi Fund - 2,Mutual Fund,fund,10.0,2021-06-25,150000000.0
+NICBF,NIC ASIA Balanced Fund,Mutual Fund,fund,10.0,2019-10-18,75500000.0
+NICFC,NIC Asia Flexi Cap Fund,Mutual Fund,fund,10.0,2022-07-25,102000000.0
+NICGF,NIC Asia Growth Fund,Mutual Fund,fund,10.0,2018-04-16,83520000.0
+NICGF2,NIC Asia Growth Fund 2,Mutual Fund,fund,10.0,2024-02-05,90500000.0
+NICSF,NIC Asia Select-30,Mutual Fund,fund,10.0,2021-08-29,125000000.0
+NMB50,NMB 50,Mutual Fund,fund,10.0,2019-12-04,125000000.0
+NMBHF1,NMB Hybrid Fund L- 1,Mutual Fund,fund,10.0,2017-01-16,100000000.0
+NMBHF2,NMB Hybrid Fund L-II,Mutual Fund,fund,10.0,2025-04-20,
+NSIF2,NMB Sulav Investment Fund - II,Mutual Fund,fund,10.0,2022-11-09,122100000.0
+NSY,Nepal Life Samriddhi Lagani Yojana,Mutual Fund,fund,10.0,2026-03-16,200000000.0
+PRSF,Prabhu Smart Fund,Mutual Fund,fund,10.0,2023-06-06,100000000.0
+PSF,Prabhu Select Fund,Mutual Fund,fund,10.0,2021-06-21,125000000.0
+RBBF40,RBB Focus 40,Mutual Fund,fund,10.0,2025-12-03,125000000.0
+RMF1,RBB Mutual Fund 1,Mutual Fund,fund,10.0,2021-08-29,125000000.0
+RMF2,RBB Mutual Fund 2,Mutual Fund,fund,10.0,2023-06-26,84611929.0
+RSY,Reliable Samriddhi Yojana,Mutual Fund,fund,10.0,2025-06-23,120000000.0
+RSY2,Reliable Samriddhi Yojana-2,Mutual Fund,fund,10.0,2026-08-07,
+SAEF,Sanima Equity Fund,Mutual Fund,fund,10.0,2018-02-20,130000000.0
+SAEF2,Sanima Equity Fund II,Mutual Fund,fund,10.0,2026-08-05,125000000.0
+SAGF,Sanima Growth Fund,Mutual Fund,fund,10.0,2023-02-07,67253260.0
+SBCF,Sunrise Bluechip Fund,Mutual Fund,fund,10.0,2021-05-27,125000000.0
+SEF,Siddhartha Equity Fund,Mutual Fund,fund,10.0,2018-01-05,150000000.0
+SEF2,Siddhartha Equity Fund 2,Mutual Fund,fund,10.0,2026-08-04,125000000.0
+SFEF,Sunrise Focused Equity Fund,Mutual Fund,fund,10.0,2023-04-05,100000000.0
+SFMF,Sunrise First Mutual Fund,Mutual Fund,fund,10.0,2020-01-09,86000000.0
+SIGS2,Siddhartha Investment Growth Scheme-2,Mutual Fund,fund,10.0,2019-09-25,120000000.0
+SIGS3,Siddhartha Investment Growth Scheme 3,Mutual Fund,fund,10.0,2023-07-16,80580000.0
+SLCF,Sanima Large Cap Fund,Mutual Fund,fund,10.0,2021-02-23,120000000.0
+EBLCP,Everest Bank Limited Convertible Preference,Preference Share,preference,100.0,,2000000.0
+ACEDPO,ACE Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1920000.0
+ACLBSLP,Aarambha Chautari Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+AEFLPO,Alpic Everest Finance Company Limited Promotor Share,Promoter Share,promoter,100.0,,585000.0
+AFCPO,Annapurna Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,1008000.0
+AICPO,Alliance Insurance Company Limited Promoter,Promoter Share,promoter,100.0,,0.0
+AKBSLP,Adhikhola Laghubitta Bittiya Sanstha Limited promoter,Promoter Share,promoter,,,
+ALBSLP,Asha Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,
+ALICLP,Asian Life Insurance company Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+ARDBLP,Araniko Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+BBBLNP,Bagheshowari Development Bank Limited Promoer Share,Promoter Share,promoter,100.0,,100000.0
+BBBLPO,Bhrikuti Bikash Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1480389.0
+BFCPO,Best Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,145460.0
+BHBLPO,Bhargav Bikash Bank Limited Promoter Share,Promoter Share,promoter,100.0,,944860.0
+BLDBLP,Biratlaxmi Development Bank Limited Promoter Share,Promoter Share,promoter,10.0,,10000.0
+BOKLPO,Bank of Kathmandu Limited Promoter Share,Promoter Share,promoter,100.0,,5000000.0
+BSBLPO,Bishwa Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2400000.0
+BUDBLP,Business Universal Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,300000.0
+CBBLPO,Chhimek Laghubitta Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,5021301.0
+CBLPO,Civil Bank Limited Promoter Share,Promoter Share,promoter,100.0,,21400000.0
+CCBLPO,Century Commercial Bank Limited Promoter Share,Promoter Share,promoter,100.0,,21200000.0
+CDBLPO,City Development Bank Limited promoter Share,Promoter Share,promoter,100.0,,100000.0
+CEDBLP,Clean Energy Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,6528000.0
+CEFLPO,City Express Finance Limited Promoter Share,Promoter Share,promoter,100.0,,500000.0
+CFCLPO,Central Finance Limited Promoter Share,Promoter Share,promoter,100.0,,1500000.0
+CITPO,Citizen Investment Trust Promoter Share,Promoter Share,promoter,,,53137504.0
+CMBFPO,Cosmic Merchant Bank & Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,450306.0
+CORBLP,Corporate Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+CYCLP,CYC Nepal Laghubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+CZBILP,Citizens Bank International Limited Promoter Share,Promoter Share,promoter,100.0,,10000.0
+DBBLPO,Deva Bikas Bank Limited Promoter Share,Promoter Share,promoter,,,
+DCBLPO,Development Credit Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1680000.0
+DDBLPO,Deprosc Laghubitta Bittiya Sanstha Limited Promoter share,Promoter Share,promoter,100.0,,50000.0
+EBLPO,Everest Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+EDBLPO,Excel Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+EFLPO,Everest Finance Limited Promoter Share,Promoter Share,promoter,100.0,,120000.0
+EICPO,Everest Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,
+FBBLPO,Fewa Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,420000.0
+FFCLPO,Fewa Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,420000.0
+FMDBLP,First Microfinance Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,2300000.0
+FOWADP,Forward Microfinance Laghubitta Bittya Sanstha Limited Promoter,Promoter Share,promoter,,,
+GBBLPO,Garima Bikash Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+GBIMEP,Global IME Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+GBLBSP,Grameen Bikas Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+GDBLPO,Gandaki Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,3520000.0
+GFCLPO,Goodwill Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,461896.0
+GFLPO,General Finance company Limited Promoter Share,Promoter Share,promoter,100.0,,145460.0
+GILBPO,Global IME Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+GLICLP,Gurans Life Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,19755846.0
+GMFILP,Guheswori Merchant Banking & Finance Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+GRANDP,Grand Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1680000.0
+GRDBLP,Green Development Bank Ltd. Promoter Share,Promoter Share,promoter,,,
+GSDBLP,Gaurishankar Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+GUFLPO,Gurkhas Finance Limited Promoter Share,Promoter Share,promoter,100.0,,198000.0
+HAMAPO,Hama Merchant & Finance Limited Promoter Share,Promoter Share,promoter,100.0,,200000.0
+HAMROP,Hamro Bikas Bank Limted Promoter Share,Promoter Share,promoter,100.0,,601000.0
+HATHPO,Hathway Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,1500000.0
+HBLPO,Himalayan Bank Limited Promoter,Promoter Share,promoter,100.0,,100000.0
+HEIP,Himalayan Everest Insurance Limited Promoter,Promoter Share,promoter,,,
+HGIPO,Himalayan General Insurance Co. Ltd Promoter Share,Promoter Share,promoter,100.0,,2675044.0
+HIDCLP,Hydroelectricity Investment and Development Company Limited Promoter Share,Promoter Share,promoter,,,
+HLBSLP,Himalayan Laghubitta Bittiya Sanstha Limited Promoter Share (Former Civil Laghubitta),Promoter Share,promoter,,,
+HLIPO,Himalayan Life Insurance Limited Promoter Share,Promoter Share,promoter,,,
+ICFCPO,ICFC Finance Limited Promoter Share,Promoter Share,promoter,100.0,,220000.0
+IDBLPO,Infrastructure Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2464000.0
+IGIPO,IME General Insurance Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+ILBSP,Infinity Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+IMEFIP,IME Financial Institution Promoter Share,Promoter Share,promoter,100.0,,1621491.0
+JBBLPO,Jyoti Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+JBLBP,Jeevan Bikas Laghubitta Bittya Sanstha Ltd Promoter,Promoter Share,promoter,,,
+JBNLPO,Janata Bank Nepal Limited Promoter Share,Promoter Share,promoter,,,
+JEFLPO,Jebils Finance Limited Promoter Share,Promoter Share,promoter,100.0,,2200000.0
+JFLPO,Janaki Finance Limited Promoter Share,Promoter Share,promoter,100.0,,240000.0
+JSLBBP,Janautthan Samudayic Laghubitta Bikas Bank Limited Promoter Share,Promoter Share,promoter,,,
+KADBLP,Kanchan Development Bank Limited Promoter Share,Promoter Share,promoter,,,
+KAFILP,Kaski Finanace Limited Promoter,Promoter Share,promoter,100.0,,1685208.0
+KBBLPO,Kailash Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1008000.0
+KBLPO,Kumari Bank Limited Promotor Share,Promoter Share,promoter,100.0,,5250000.0
+KDBLPO,Kasthamandap Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,200000.0
+KFLPO,Kathmandu Finance Limited Promoter Share,Promoter Share,promoter,100.0,,198000.0
+KISTPO,KIST Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1200000.0
+KLBSLP,Kisan Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+KMBLPO,Kamana Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2300000.0
+KMCDBP,Kalika Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,500000.0
+KNBLPO,Kankai Bikas Bank Limited Promoter Share,Promoter Share,promoter,,,
+KRBLPO,Karnali Development Bank Limited Promoter Share,Promoter Share,promoter,,,
+KSBBLP,Kamana Sewa Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2300000.0
+LBBLPO,Lumbini Bikas Bank Ltd. Promoter Share,Promoter Share,promoter,,,6800000.0
+LBLPO,Laxmi Bank Limited Promotor Share,Promoter Share,promoter,100.0,,300000.0
+LFLCPO,Lumbini Finance Limited Promoter Share,Promoter Share,promoter,100.0,,6000000.0
+LGILPO,Lumbini General Insurance Company Limited Promoter Share,Promoter Share,promoter,,,
+LSLPO,Laxmi Sunrise Bank Limited Promoter Share,Promoter Share,promoter,,,
+LUBLPO,Lumbini Bank Limited Promotor Share,Promoter Share,promoter,100.0,,5250000.0
+MATRIP,Matribhumi Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+MBBLPO,Mahakali Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+MBLPO,Machhapuchchhre Bank Limited Promotor Share,Promoter Share,promoter,100.0,,5751559.0
+MDBLPO,Malika Bikash Bank Limited promoter Share,Promoter Share,promoter,100.0,,350000.0
+MDBPO,Miteri Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,10000.0
+MEGAPO,Mega Bank Nepal Limited Promoter Share,Promoter Share,promoter,100.0,,
+MEROPO,Mero Microfinance Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+MFILPO,Manjushree Finance Limited Promoter Share,Promoter Share,promoter,,,
+MFLPO,Maha Laxmi Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+MIDBLP,Mission Development Bank Limited Promoter Share,Promoter Share,promoter,,,
+MLBBLP,Mithila Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+MLBLPO,Mahalaxmi Bikas Bank Ltd. Promotor Share,Promoter Share,promoter,100.0,,100000.0
+MLBSLP,Mahila Lagubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+MLBSP,Manushi Laghubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+MMFDBP,Mirmire Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+MNBBLP,Muktinath Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+MPFLPO,Multipurpose Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,250000.0
+MSLBP,Mahuli Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+NABBCP,Narayani Development Bank Limited Promoter,Promoter Share,promoter,,,
+NABBPO,Nepal Aawas Finance Limited Promoter Share,Promoter Share,promoter,100.0,,944682.0
+NABILP,NABIL Bank Limited Promoter Share,Promoter Share,promoter,100.0,,4811751.0
+NADEPP,NADEP Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,
+NBBLPO,Nagbeli Laghubitta Bikas Bank Ltd. Promoter Share,Promoter Share,promoter,100.0,,143000.0
+NBBPO,Nepal Bangladesh Bank Promoter Share,Promoter Share,promoter,100.0,,36478215.0
+NCCBPO,Nepal Credit and Commerce Bank Limited Promoter Share,Promoter Share,promoter,100.0,,115146728.0
+NCDBPO,Nepal Community Development Bank Ltd. Promoter Share,Promoter Share,promoter,100.0,,1095000.0
+NCMPO,NIDC Capital Markets Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+NDEPPO,NDEP Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,0.0
+NEFLPO,Nepal Express Finance Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+NFSPO,Nepal Finance Limited Promoter Share,Promoter Share,promoter,100.0,,1359599.0
+NIBPO,Nepal Investment Bank Limited Promoter Share,Promoter Share,promoter,100.0,,282441.0
+NICAP,NICA Bank Limited Promoter share,Promoter Share,promoter,100.0,,5148000.0
+NICLBSLP,NIC Asia Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+NICLPO,Nepal Insurance Company Ltd Promoter Share,Promoter Share,promoter,,,
+NIFRAP,Nepal Infrastructure Bank Limited Promoter,Promoter Share,promoter,,,
+NILPO,Neco Insurance Company Limited Promoter,Promoter Share,promoter,100.0,,1352216.0
+NIMBPO,Nepal Investment Mega Bank Ltd. Promoter Share,Promoter Share,promoter,,,
+NLBBLP,Nerude Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+NLICLP,National Life Insurance Company Limited Promoter share,Promoter Share,promoter,100.0,,1000000.0
+NLICP,Nepal Life Insurance Company Limited Promoter,Promoter Share,promoter,100.0,,100000.0
+NMBMFP,NMB Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+NMBPO,NMB Bank Limited Promoter Share,Promoter Share,promoter,100.0,,8579999.0
+NMFBSP,National Laghubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+NMLBBLP,Nerude Mirmire Laghubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+NNFCPO,Narayani National Company Limited Promoter Share,Promoter Share,promoter,100.0,,1293176.0
+NNLBPO,Naya Nepal Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+NRICP,Nepal Reinsurance Company Limited Promoter Share,Promoter Share,promoter,,,
+NSLBP,Naya Sarathi Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,200000.0
+NUBLPO,Nirdhan Utthan Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+ODBLPO,Om Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+OFLPO,Om Finance Limited Promoter Share,Promoter Share,promoter,100.0,,10000.0
+PADBLP,Pacific Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,878400.0
+PCBLP,Prime Commercial Bank Limited Promoter Share,Promoter Share,promoter,100.0,,400000.0
+PDBLPO,Paschimanchal Bikash Bank Limited Promoter Share,Promoter Share,promoter,100.0,,600000.0
+PFILPO,Prudential Finance Company Limited Promoter share,Promoter Share,promoter,100.0,,100000.0
+PFLPO,Pokhara Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,1862078.0
+PICLPO,Prudential Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+PICPO,Premier Insurance Company (Nepal) Limited Promoter Share,Promoter Share,promoter,,,
+PLICPO,Prime Life Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,4881600.0
+PMLIP,Prabhu Mahalaxmi Life Insurance Limited promotor,Promoter Share,promoter,,,
+PRDBLP,Professional Diyalo Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+PRFLPO,Prabhu Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,43350.0
+PRINPO,Prabhu Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+PROFLP,Progressive Finance Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+PRVUPO,Prabhu Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+PURBLP,Purnima Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,1356025.0
+RBCLPO,Rastriya Beema Company Limited Promoter Share,Promoter Share,promoter,100.0,,1776296.0
+RBSPO,Rastriya Beema Sansthan Promoter Share,Promoter Share,promoter,100.0,,828999.0
+REDBLP,Reliable Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+RFLPO,Reliable Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+RLFLPO,Reliance Lotus Finance Limited Promoter Share,Promoter Share,promoter,100.0,,2000000.0
+RMDCPO,RMDC Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,5720000.0
+RSDCP,RSDC Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SADBLP,Shangrila Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,7359999.0
+SAFLPO,Sagarmatha Finance Limited Promoter Share,Promoter Share,promoter,100.0,,3187731.0
+SALICOPO,Sagarmatha Lumbini Insurance Company Limited Promoter Share,Promoter Share,promoter,,,
+SAPDBLP,Saptakoshi Development Bank Ltd Promoter Share,Promoter Share,promoter,,,
+SBBLJP,Sahayogi Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,10000.0
+SBLPO,Siddhartha Bank Limited Promoter Share,Promoter Share,promoter,100.0,,3000000.0
+SDBLPO,Siddhartha Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,300000.0
+SDESIP,Swadeshi Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SETIPO,Seti Finance Limited Promoter Share,Promoter Share,promoter,100.0,,560000.0
+SEWAPO,Sewa Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+SFCLP,Samriddhi Finance Company Limited Promoter Share,Promoter Share,promoter,,,
+SFFILP,Srijana Finance Limited Promoter Share,Promoter Share,promoter,100.0,,84000.0
+SFLPO,Siddhartha Finance Limited Promoter share,Promoter Share,promoter,100.0,,312000.0
+SGICP,Sanima GIC Insurance Limited Promoter Share,Promoter Share,promoter,,,
+SHINEP,Shine Resunga Development Bank Ltd. Promoter Share,Promoter Share,promoter,,,
+SICLPO,Shikhar Insurance Company Limited Promoter share,Promoter Share,promoter,100.0,,200000.0
+SICPO,Sagarmatha Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+SIFCPO,Shree Investment & Finance Company Limited Promoter share,Promoter Share,promoter,100.0,,1000000.0
+SILPO,Siddhartha Insurance Limited Promoter Share,Promoter Share,promoter,100.0,,1000000.0
+SINDUP,Sindhu Bikas Bank Limited Promoter share,Promoter Share,promoter,,,
+SJLICP,SuryaJyoti Life Insurance Company Limited Promoter,Promoter Share,promoter,,,
+SKBBLP,Sana Kisan Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SLBBLP,Swarojgar Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SLBSP,Suryodaya Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SLICLP,Surya Life Insurance Company Limited Promoter Share,Promoter Share,promoter,100.0,,900000.0
+SMATAP,Samata Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SMBPO,Support Microfinance Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SMFBSP,Swabhimaan Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SMFDBP,Summit Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,
+SMPDAP,Sampada Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+SNMAPO,Sanima Bank Limited Promoter Share,Promoter Share,promoter,100.0,,5376000.0
+SODBLPO,Society Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,61070.0
+SPILPO,Siddhartha Premier Insurance Limited Promoter Share,Promoter Share,promoter,,,
+SRBLPO,Sunrise Bank Limited Promoter Share,Promoter Share,promoter,100.0,,20000000.0
+SRLIP,Sanima Reliance Life Insurance Limited Promoter Share,Promoter Share,promoter,,,
+STFLPO,Standard Finance Limited Promoter Share,Promoter Share,promoter,100.0,,9437241.0
+SUBBLP,Subbecha Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,833613.0
+SUPRMP,Supreme Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,4704000.0
+SWBBLP,Swabalamban Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,100.0,,175000.0
+SWMFPO,Suryodaya Womi Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,7919848.0
+SYFLPO,Synergy Finance Limited Promoter Share,Promoter Share,promoter,100.0,,500000.0
+TBBLP,Triveni Bikash Bank Limited Promoter Share,Promoter Share,promoter,100.0,,500000.0
+TDBLPO,Tourism Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,6400000.0
+TMDBLP,Tinau Mission Development Bank Limited	Promoter,Promoter Share,promoter,,,
+TNBLPO,Tinau Development Bank Limited Promoter,Promoter Share,promoter,100.0,,100000.0
+UAILPO,United Ajod Insurance Limited Promoter Share,Promoter Share,promoter,,,
+UFCLPO,Union Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,10000.0
+UFILPO,Unique Finance Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
+UFLPO,United Finance Limited Promoter Share,Promoter Share,promoter,100.0,,900000.0
+UICPO,United Insurance Co. (Nepal) Ltd. Promoter Share,Promoter Share,promoter,100.0,,1500000.0
+UNLBP,Unique Nepal Laghubitta Bittiya Sanstha Limited Promoter,Promoter Share,promoter,,,
+USLBP,Unnati Sahakarya Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+VBBLPO,Vibor Bikas Bank Limited Promoter Share,Promoter Share,promoter,100.0,,0.0
+VLBSPO,Vijaya Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+WDBLPO,Western Development Bank Limited Promoter shares,Promoter Share,promoter,100.0,,500000.0
+WMBFPO,Samriddhi Finance Company Limited Promoter Share,Promoter Share,promoter,100.0,,360000.0
+WNLBP,Wean Nepal Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+WOMIPO,Womi Laghubitta Bittiya Sanstha Limited Promoter Share,Promoter Share,promoter,,,
+YETIPO,Yeti Development Bank Limited Promoter Share,Promoter Share,promoter,100.0,,100000.0
