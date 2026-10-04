@@ -1,0 +1,13 @@
+regime,from,to,rules,quantity,value,lo,hi
+A1,2024-03-04,2025-03-19,"last-trade close, +/-2% band, +/-10% limit","transient-noise share of the proxy, 1 - E[K]/E[OC]",0.1444772189,0.09759485929,0.202686918
+A1,2024-03-04,2025-03-19,"last-trade close, +/-2% band, +/-10% limit",E[K]/E[P],0.8170719241,0.7480711458,0.8729953694
+A1,2024-03-04,2025-03-19,"last-trade close, +/-2% band, +/-10% limit",E[OC]/E[P],0.9550557182,0.9206992121,0.9851774771
+B,2025-03-20,2025-09-21,"15-minute VWAP close, +/-2% band, +/-10% limit","transient-noise share of the proxy, 1 - E[K]/E[OC]",0.234107964,0.1874297538,0.2921384068
+B,2025-03-20,2025-09-21,"15-minute VWAP close, +/-2% band, +/-10% limit",E[K]/E[P],0.693185363,0.6162058915,0.7689025012
+B,2025-03-20,2025-09-21,"15-minute VWAP close, +/-2% band, +/-10% limit",E[OC]/E[P],0.9050692922,0.8591162921,0.9602023223
+A2,2025-09-23,2026-04-19,"last-trade close, +/-2% band, +/-10% limit","transient-noise share of the proxy, 1 - E[K]/E[OC]",0.1794142073,0.07420271742,0.2786420618
+A2,2025-09-23,2026-04-19,"last-trade close, +/-2% band, +/-10% limit",E[K]/E[P],0.8395043392,0.6970401275,1.040891529
+A2,2025-09-23,2026-04-19,"last-trade close, +/-2% band, +/-10% limit",E[OC]/E[P],1.023054928,0.9358971387,1.13695368
+C,2026-04-20,2026-08-26,"last-trade close, +/-5% band, +/-15% limit","transient-noise share of the proxy, 1 - E[K]/E[OC]",0.5618916072,0.4610964064,0.6627831007
+C,2026-04-20,2026-08-26,"last-trade close, +/-5% band, +/-15% limit",E[K]/E[P],0.4977153264,0.3794027443,0.6147766961
+C,2026-04-20,2026-08-26,"last-trade close, +/-5% band, +/-15% limit",E[OC]/E[P],1.13605522,1.056764448,1.203806337

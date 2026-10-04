@@ -329,8 +329,16 @@ def _group_means(M: np.ndarray, codes: np.ndarray, w: np.ndarray) -> np.ndarray:
 
 
 def optimal_weights(Sigma: np.ndarray, beta: np.ndarray) -> np.ndarray:
-    """``w* = Sigma^{-1} beta / (beta' Sigma^{-1} beta)`` -- (P3) in the module docstring."""
-    Si_b = np.linalg.solve(Sigma, beta)
+    """``w* = Sigma^{-1} beta / (beta' Sigma^{-1} beta)`` -- (P3) in the module docstring.
+
+    The Moore-Penrose inverse is used, so a set containing an EXACT linear combination of its
+    other members (Garman-Klass is 2 ln2 * Parkinson - (2 ln2 - 1) * OC, identically) returns the
+    minimum-norm weights instead of the arbitrary, enormous, offsetting weights a plain solve
+    produces on a singular matrix. The composite itself, w'X, is the same either way; only the
+    attribution of weight among collinear measures is not identified, which is why callers
+    should combine a linearly independent set.
+    """
+    Si_b = np.linalg.pinv(Sigma, rcond=1e-10, hermitian=True) @ beta
     return Si_b / float(beta @ Si_b)
 
 
@@ -345,7 +353,7 @@ def efficiency_bounds(Sigma: np.ndarray, beta: np.ndarray, var_vhat: float) -> d
     and the scalar ``composite_var`` = 1/(beta' Sigma^{-1} beta) = Var(IV) + n_C.
     """
     sv = np.diag(Sigma) / beta ** 2
-    comp = 1.0 / float(beta @ np.linalg.solve(Sigma, beta))
+    comp = 1.0 / float(beta @ np.linalg.pinv(Sigma, rcond=1e-10, hermitian=True) @ beta)
     D = sv - comp
     UB = sv - var_vhat
     with np.errstate(invalid="ignore", divide="ignore"):
@@ -571,11 +579,17 @@ def calibrate(X: np.ndarray, Z: np.ndarray, group, measures, reference: str,
     sel = list(range(len(measures))) if composite_over is None else [measures.index(m) for m in composite_over]
     wts = np.full(len(measures), np.nan)
     wts[sel] = optimal_weights(Sigma[np.ix_(sel, sel)], beta[sel])
-    bounds_sel = efficiency_bounds(Sigma[np.ix_(sel, sel)], beta[sel], var_vhat)
-    bounds = {k: np.full(len(measures), np.nan) for k in ("scaled_var", "excess", "upper", "eff_lb")}
-    for k in bounds:
-        bounds[k][sel] = bounds_sel[k]
-    bounds["composite_var"] = bounds_sel["composite_var"]
+    # bounds for EVERY measure, against the composite built from the selected set: a measure
+    # outside that set but inside its span (Garman-Klass, when Parkinson and OC are in it) gets a
+    # well-defined, non-negative excess noise
+    comp_var = efficiency_bounds(Sigma[np.ix_(sel, sel)], beta[sel], var_vhat)["composite_var"]
+    sv = np.diag(Sigma) / beta ** 2
+    D = sv - comp_var
+    UB = sv - var_vhat
+    with np.errstate(invalid="ignore", divide="ignore"):
+        eff_lb = np.where(UB - D > 0, UB / (UB - D), np.inf)
+    bounds = {"scaled_var": sv, "excess": D, "upper": UB, "eff_lb": eff_lb,
+              "composite_var": comp_var}
 
     # rank-one share of the standardised cross-covariance between measures and instruments
     Zx = Zs[:, 1:] if transform == "fod" else Zs
@@ -604,7 +618,12 @@ def calibrate(X: np.ndarray, Z: np.ndarray, group, measures, reference: str,
                 gd[:, j] = np.bincount(dcodes, weights=h[:, j], minlength=n_d)
                 gs[:, j] = np.bincount(codes_k, weights=h[:, j], minlength=n_g)
             S = gd.T @ gd
-            if cluster == "two-way":
+            # Two-way clustering needs more than one security: with a single series the security
+            # "cluster" is the whole sample, S_security = g g' cancels the date term against the
+            # row term, and S collapses to rank one. A single series is therefore clustered on
+            # date alone, which is heteroskedasticity-robust and sufficient because the moment
+            # contributions are martingale differences over time.
+            if cluster == "two-way" and n_g > 1:
                 S = S + gs.T @ gs - h.T @ h
             Sinv = np.linalg.pinv(S)
             a_vec = (Zs * (w * Xs[:, k])[:, None]).sum(0)

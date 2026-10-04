@@ -48,6 +48,9 @@ from nepsevol.estimators.microsim import MicroParams, simulate_panel
 from nepsevol.estimators.range_ import add_rs
 
 TAB = ROOT / "output" / "tables"
+# Ten significant digits: far beyond any reported precision, and short enough that the last
+# floating-point bits -- which differ with BLAS threading -- never reach the frozen CSV.
+FLOAT_FMT = "%.10g"
 TAB.mkdir(parents=True, exist_ok=True)
 
 N_REPS = 12
@@ -64,6 +67,9 @@ SCENARIOS = {
     "S3_nepse_band5_limit15": dict(NEPSE, band=0.05, limit=0.15),
 }
 MEASURES = ["OC", "P", "GK", "RS", "AddRS", "AP", "GKV"]
+# Garman-Klass is identically 2 ln2 * P - (2 ln2 - 1) * OC, so the named composite is built on the
+# linearly independent remainder (the same set scripts/34 uses); GK still gets its bound.
+COMPOSITE_NAMED = ["OC", "P", "RS", "AddRS", "AP", "GKV"]
 INSTR_COLS = ["OC", "P"]
 
 
@@ -108,13 +114,13 @@ def one_rep(name: str, overrides: dict, seed: int) -> tuple[list, list, dict]:
     Z = use[inst].to_numpy()
     w = use["w"].to_numpy()
     res = calibrate(X, Z, use["symbol"], MEASURES, "OC", weights=w, date=use["date"],
-                    composite_over=MEASURES)
+                    composite_over=COMPOSITE_NAMED)
     resb = calibrate(use[list(BLOCKS_OHLCV)].to_numpy(), Z, use["symbol"], list(BLOCKS_OHLCV),
                      "c2", weights=w, date=use["date"], composite_over=list(BLOCKS_OHLCV),
                      compute_J=False)
     # the whole-sample within transformation, kept only to measure its order-1/T bias
     resw = calibrate(X, Z, use["symbol"], MEASURES, "OC", weights=w, date=use["date"],
-                     composite_over=MEASURES, transform="within", compute_J=False)
+                     composite_over=COMPOSITE_NAMED, transform="within", compute_J=False)
 
     tru, ivw, wdm = oracle(use, MEASURES + list(BLOCKS_OHLCV), w)
     b_oc = tru["OC"]
@@ -145,8 +151,9 @@ def one_rep(name: str, overrides: dict, seed: int) -> tuple[list, list, dict]:
         comp.append({"scenario": name, "seed": seed, "estimator": m,
                      "true_mse": mse(Xw[:, k] / res.beta[k]),
                      "id_eff_lb": res.bounds["eff_lb"][k], "weight": res.weights[k]})
+    # GK sits outside the composite's (linearly independent) set: its weight is NaN by design
     comp.append({"scenario": name, "seed": seed, "estimator": "composite_named",
-                 "true_mse": mse(Xw @ res.weights), "id_eff_lb": np.nan, "weight": np.nan})
+                 "true_mse": mse(Xw @ np.nan_to_num(res.weights)), "id_eff_lb": np.nan, "weight": np.nan})
     Bw = np.column_stack([wdm(use[b].to_numpy()) for b in BLOCKS_OHLCV])
     # block composite is calibrated to c2 (= OC); same target
     comp.append({"scenario": name, "seed": seed, "estimator": "composite_blocks",
@@ -230,7 +237,7 @@ def main() -> None:
     print("Brownian benchmark: best quadratic estimators with and without the VWAP coordinate")
     bm = bm_vwap_efficiency()
     print(bm.to_string(index=False, float_format=lambda x: f"{x:.3f}"))
-    bm.to_csv(TAB / "table77_bm_vwap_efficiency.csv", index=False)
+    bm.to_csv(TAB / "table77_bm_vwap_efficiency.csv", index=False, float_format=FLOAT_FMT)
 
     cal_rows, comp_rows, end_rows = [], [], []
     for si, (name, ov) in enumerate(SCENARIOS.items()):
@@ -256,7 +263,7 @@ def main() -> None:
                 J_reject_rate=("J_rej", "mean"), first_stage_F=("first_stage_F", "mean"),
                 rank1_share=("rank1_share", "mean"), n_obs=("n_obs", "mean"))
            .reset_index())
-    agg.to_csv(TAB / "table74_mc_calibration.csv", index=False)
+    agg.to_csv(TAB / "table74_mc_calibration.csv", index=False, float_format=FLOAT_FMT)
     print("\nCalibration: oracle slope (relative to OC) vs instrumented estimate vs naive statistics")
     print(agg.drop(columns=["n_obs"]).to_string(index=False, float_format=lambda x: f"{x:.3f}"))
 
@@ -270,12 +277,12 @@ def main() -> None:
                  true_eff_of_composite=("true_eff_of_composite", "mean"),
                  id_eff_lb=("id_eff_lb", "mean"), lb_holds_share=("lb_holds", "mean"))
             .reset_index())
-    cagg.to_csv(TAB / "table75_mc_composite.csv", index=False)
+    cagg.to_csv(TAB / "table75_mc_composite.csv", index=False, float_format=FLOAT_FMT)
     print("\nComposite: true MSE (target b_OC * IV), true efficiency of the named composite, identified lower bound")
     print(cagg.to_string(index=False, float_format=lambda x: f"{x:.4g}"))
 
     end = pd.DataFrame(end_rows).groupby("scenario", sort=False).mean(numeric_only=True).reset_index()
-    end.to_csv(TAB / "table76_mc_endpoint_noise.csv", index=False)
+    end.to_csv(TAB / "table76_mc_endpoint_noise.csv", index=False, float_format=FLOAT_FMT)
     print("\nEndpoint noise and kernel reference, by scenario (means over replications)")
     print(end.drop(columns=["seed"]).to_string(index=False, float_format=lambda x: f"{x:.3f}"))
     print(f"\ndone in {time.time() - t0:.0f}s")
