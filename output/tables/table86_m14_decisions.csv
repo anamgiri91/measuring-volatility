@@ -1,0 +1,17 @@
+hypothesis,statistic,estimate,verdict
+H1,"slope and additive share, P","slope 0.919 [0.760, 1.056]; additive 0.069 [-0.052, 0.203]",no detectable attenuation
+H1,"slope and additive share, GK","slope 0.887 [0.668, 1.078]; additive 0.096 [-0.072, 0.282]",no detectable attenuation
+H1,"slope and additive share, RS","slope 0.912 [0.650, 1.135]; additive 0.161 [-0.040, 0.386]",no detectable attenuation
+H2,"slope P, Q1 - Q5","0.082 [-0.163, 0.342]",not detected
+H3,"out-of-sample noise difference, composite - OC","-2.606e-07 [-3.762e-07, 3.824e-07]",not established
+H3,"out-of-sample noise difference, composite - P","-1.491e-08 [-8.742e-08, 5.026e-07]",not established
+H3,"out-of-sample noise difference, composite - GK","-9.533e-08 [-2.323e-07, 1.688e-07]",not established
+H3,"out-of-sample noise difference, composite - RS","-2.990e-07 [-9.858e-07, -1.114e-07]",improvement
+H3,"out-of-sample noise difference, composite - GKV","-2.771e-07 [-5.961e-07, -7.419e-08]",improvement
+H4,slope P: B - A1 and B - A2 (predicted > 0),"B - A1 -0.252 [-0.421, 0.077]; B - A2 -0.240 [-0.414, 0.116]",not detected
+H4 (reported),"E[c_t o_t+1]/E[P], B - A1 (predicted > 0)","-0.0107 [-0.0356, 0.0158]",not detected
+H4 (reported),"E[c_t o_t+1]/E[P], B - A2 (predicted > 0)","0.0043 [-0.0448, 0.0459]",not detected
+H5,slope P: C - A2 (predicted > 0),"-0.061 [-0.339, 0.174]",not detected
+H5 (reported),"E[o_t c_t]/E[P], C - A2 (predicted < 0)","-0.3647 [-0.4644, -0.2479]",as predicted
+H6,"NIFTY slopes, lagged minus VIX instruments (full (incl. 2012-10-05))","OC +0.000 [+0.000, +0.000]; P -0.028 [-0.131, +0.043]; GK -0.039 [-0.182, +0.059]; RS -0.087 [-0.356, +0.066]; AddRS -0.099 [-0.380, +0.033]",corroborated
+H6,"NIFTY slopes, lagged minus VIX instruments (excl. 2012-10-05)","OC +0.000 [+0.000, +0.000]; P +0.009 [-0.034, +0.064]; GK +0.013 [-0.046, +0.088]; RS +0.010 [-0.064, +0.095]; AddRS -0.003 [-0.077, +0.064]",corroborated

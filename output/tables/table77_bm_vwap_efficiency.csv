@@ -1,0 +1,10 @@
+estimator,efficiency_vs_c2,weights
+c^2 (open-to-close),0.9997898131,c2=+0.9987
+"best quadratic in (u,d)",5.885717041,u2=+0.2248; d2=+0.2249; ud=-1.4266
+"best quadratic in (c,a)  [AP]",2.008791187,c2=+2.0095; a2=+6.0077; ac=-6.0256
+"best quadratic in (u,d,c)  [Garman-Klass]",7.473560761,u2=+0.5124; d2=+0.5154; c2=-0.3737; ud=-0.9764; uc=-0.0293; dc=-0.0326
+"best quadratic in (u,d,c,a)  [GKV]",7.600978512,u2=+1.3223; d2=+1.3326; c2=-0.3538; ud=+0.6521; uc=-0.6965; dc=-0.7015; a2=+0.6462; ac=+1.2544; au=-1.9027; ad=-1.9135
+Parkinson,4.916877944,mean=1.0001
+Garman-Klass simplified,7.47579748,mean=0.9997
+Rogers-Satchell,6.060042808,mean=0.9999
+AP = 2c^2 - 6ac + 6a^2,2.005721777,mean=1.0008
