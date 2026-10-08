@@ -240,15 +240,28 @@ manifest = {
                       "Vietnam at 21 sessions, so the summary claim G fails. Its open-free special case had "
                       "the lowest loss at 5 sessions in every panel (post hoc reading of a reported variant).",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-017",
+        "M18_anam_morocco": {
+            "status": "package only; not part of the manuscript",
+            "panel": "src/nepsevol/frontier.py (Casablanca Stock Exchange 2012-2026, data supplied by the author, "
+                     "pinned by SHA-256, not packaged; daily limits by AMMC regime)",
+            "plan": "M18_ANAM_MOROCCO_PLAN.md (frozen in commit b4de86d, before any estimator was computed on "
+                    "these data; the open-free form tested as a hypothesis fixed in advance)",
+            "results": "M18_ANAM_MOROCCO_RESULTS.md; output/tables/table112-116",
+            "result": "Every binding hypothesis holds: the open-free form has the lowest loss at both horizons and "
+                      "beats close-to-close and the full estimator at 5 sessions; the full estimator beats "
+                      "close-to-close and Parkinson at 5 sessions; both calibrated levels are 1.005.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-007 to M-018",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
-                        "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py"],
+                        "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py",
+                        "scripts/43_anam_morocco.py"],
         "new_modules": ["src/nepsevol/opening.py", "src/nepsevol/estimators/anam.py",
                         "src/nepsevol/volforecast.py", "src/nepsevol/frontier.py"],
         "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py",
                       "tests/test_anam_estimator.py", "tests/test_anam_results.py",
-                      "tests/test_frontier_panels.py", "tests/test_anam_frontier_results.py"],
+                      "tests/test_frontier_panels.py", "tests/test_anam_frontier_results.py",
+                      "tests/test_anam_morocco_results.py"],
         "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market "
                     "without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock "
                     "Exchange",

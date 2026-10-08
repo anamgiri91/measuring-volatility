@@ -1,0 +1,39 @@
+rule,estimator,market,verdict,detail,span,window,rival,dQLIKE_estimator_minus_rival,t
+F1,Anam,Morocco 2012-2026,holds,5 sessions: Anam beats CC,,,,,
+F2,Anam,Morocco 2012-2026,holds,5 sessions: Anam beats P,,,,,
+F3,Anam,Morocco 2012-2026,holds,Anam (calibrated) 1.005; o2+P 1.283; YZ daily form 1.273,,,,,
+best in panel,Anam,Morocco 2012-2026,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+V1,"Anam, open-free special case (b=0)",Morocco 2012-2026,holds,5 sessions: open-free form beats CC,,,,,
+V2,"Anam, open-free special case (b=0)",Morocco 2012-2026,holds,5 sessions: open-free form beats Anam,,,,,
+V3,"Anam, open-free special case (b=0)",Morocco 2012-2026,holds,no estimator beats the open-free form at 5 or 21 sessions,,,,,
+O,"Anam, open-free special case (b=0)",Morocco 2012-2026,holds,V1 holds; V3 holds,,,,,
+rival,Anam,Morocco 2012-2026,beats,,test half,5,CC,-0.007815696969,-2.056403176
+rival,Anam,Morocco 2012-2026,beats,,test half,5,P,-0.06461983287,-11.01084449
+rival,Anam,Morocco 2012-2026,beats,,test half,5,GK,-0.1340911864,-12.69495533
+rival,Anam,Morocco 2012-2026,beats,,test half,5,RS,-0.3607099152,-4.335696984
+rival,Anam,Morocco 2012-2026,beats,,test half,5,o2+P,-0.008792590674,-3.079279067
+rival,Anam,Morocco 2012-2026,beats,,test half,5,o2+GK,-0.01307783733,-4.001698622
+rival,Anam,Morocco 2012-2026,beats,,test half,5,YZ (daily form),-0.01266721595,-4.258593512
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,CC,-0.01507495275,-4.531342044
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,P,-0.07187908865,-12.59543035
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,GK,-0.1413504421,-13.43645484
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,RS,-0.367969171,-4.438391962
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,o2+P,-0.01605184645,-4.169433903
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,o2+GK,-0.02033709311,-4.633738467
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,YZ (daily form),-0.01992647173,-4.862272319
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,5,Anam,-0.007259255777,-4.752743663
+rival,Anam,Morocco 2012-2026,no difference,,test half,21,CC,-0.004914062084,-1.004861179
+rival,Anam,Morocco 2012-2026,beats,,test half,21,P,-0.0893311359,-7.321686844
+rival,Anam,Morocco 2012-2026,beats,,test half,21,GK,-0.2032357207,-9.935175204
+rival,Anam,Morocco 2012-2026,beats,,test half,21,RS,-1.287158729,-2.265618973
+rival,Anam,Morocco 2012-2026,no difference,,test half,21,o2+P,-9.985493249e-05,0.1893308258
+rival,Anam,Morocco 2012-2026,no difference,,test half,21,o2+GK,-0.0020420071,-0.5563978502
+rival,Anam,Morocco 2012-2026,no difference,,test half,21,YZ (daily form),-0.00187134837,-0.5301247101
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,no difference,,test half,21,CC,-0.009073235145,-1.940237105
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,21,P,-0.09349030896,-8.060031262
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,21,GK,-0.2073948938,-10.17778238
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,21,RS,-1.291317902,-2.274559492
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,no difference,,test half,21,o2+P,-0.004259027994,-1.298143771
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,no difference,,test half,21,o2+GK,-0.006201180161,-1.775458522
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,no difference,,test half,21,YZ (daily form),-0.006030521432,-1.787368754
+rival,"Anam, open-free special case (b=0)",Morocco 2012-2026,beats,,test half,21,Anam,-0.004159173061,-2.384477798

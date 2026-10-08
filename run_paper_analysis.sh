@@ -45,17 +45,18 @@ do
   echo "===== scripts/${script} ====="
   python "scripts/${script}"
   if [ "${script}" = "41_anam_posthoc.py" ]; then
-    # M17 reads third-party inputs that are not packaged (data/external/README.md); its frozen
-    # tables 107-111 are shipped, so the run continues without them.
+    # M17 and M18 read third-party inputs that are not packaged (data/external/README.md); their
+    # frozen tables 107-116 are shipped, so the run continues without them.
     if [ -d data/external/frontier ]; then
       for optional in \
-        42_anam_frontier.py
+        42_anam_frontier.py \
+        43_anam_morocco.py
       do
         echo "===== scripts/${optional} ====="
         python "scripts/${optional}"
       done
     else
-      echo "===== scripts/42_anam_frontier.py skipped: data/external/frontier/ not present ====="
+      echo "===== scripts/42_anam_frontier.py and 43_anam_morocco.py skipped: data/external/frontier/ not present ====="
     fi
   fi
 done
