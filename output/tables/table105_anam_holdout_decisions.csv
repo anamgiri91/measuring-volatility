@@ -1,0 +1,79 @@
+rule,market,verdict,detail,span,window,rival,dQLIKE_Anam_minus_rival,t
+H1,NEPSE,does not hold,5 sessions on A2+C: Anam no difference CC; Anam beats P,,,,,
+H2,NEPSE,does not hold,"Anam 1.011 (A2), 1.195 (C); o2+P 1.493, 2.761; YZ daily 1.583, 2.848",,,,,
+H3,NEPSE,does not hold,change A2 -> C: Anam +0.184; Yang-Zhang window form +1.170,,,,,
+H4,NIFTY50,holds,5 sessions on the test half: Anam beats CC,,,,,
+H5,SP500,holds,5 sessions on the test half: Anam beats CC,,,,,
+best in market,NEPSE,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+best in market,NIFTY50,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+best in market,SP500,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+rival,NEPSE,Anam no difference CC,,A2+C,5,CC,0.01597785441,1.19191492
+rival,NEPSE,Anam beats P,,A2+C,5,P,-0.01264752768,-3.97456975
+rival,NEPSE,Anam beats GK,,A2+C,5,GK,-0.02662674484,-3.835967375
+rival,NEPSE,Anam beats RS,,A2+C,5,RS,-0.04141309298,-4.469148656
+rival,NEPSE,Anam beats o2+P,,A2+C,5,o2+P,-0.03442907662,-4.493274723
+rival,NEPSE,Anam beats o2+GK,,A2+C,5,o2+GK,-0.04384960142,-5.234017067
+rival,NEPSE,Anam beats YZ (daily form),,A2+C,5,YZ (daily form),-0.04512046489,-5.450600246
+rival,NEPSE,Anam no difference CC,,A2+C,21,CC,0.009252223576,0.3695535165
+rival,NEPSE,Anam beats P,,A2+C,21,P,-0.007595893954,-2.014076941
+rival,NEPSE,Anam beats GK,,A2+C,21,GK,-0.01665948496,-2.749497094
+rival,NEPSE,Anam beats RS,,A2+C,21,RS,-0.02599679813,-3.691126526
+rival,NEPSE,Anam beats o2+P,,A2+C,21,o2+P,-0.02504652798,-2.275091632
+rival,NEPSE,Anam beats o2+GK,,A2+C,21,o2+GK,-0.03024107339,-2.43185046
+rival,NEPSE,Anam beats YZ (daily form),,A2+C,21,YZ (daily form),-0.03130673644,-2.640632792
+rival,NEPSE,Anam no difference CC,,A2,5,CC,-0.01716281896,-1.150055734
+rival,NEPSE,Anam no difference P,,A2,5,P,-0.002944309837,-0.8664381866
+rival,NEPSE,Anam no difference GK,,A2,5,GK,-0.01181792915,-1.318095363
+rival,NEPSE,Anam no difference RS,,A2,5,RS,-0.02348488022,-1.818482524
+rival,NEPSE,Anam no difference o2+P,,A2,5,o2+P,-0.01021101858,-1.345836535
+rival,NEPSE,Anam beats o2+GK,,A2,5,o2+GK,-0.01907398633,-2.070837374
+rival,NEPSE,Anam beats YZ (daily form),,A2,5,YZ (daily form),-0.0217172238,-2.388198874
+rival,NEPSE,Anam no difference CC,,A2,21,CC,-0.02563716044,-1.047956913
+rival,NEPSE,Anam no difference P,,A2,21,P,-7.372429262e-05,-0.05070623931
+rival,NEPSE,Anam no difference GK,,A2,21,GK,-0.004890389536,-1.066715436
+rival,NEPSE,Anam beats RS,,A2,21,RS,-0.01248499821,-2.268803946
+rival,NEPSE,Anam no difference o2+P,,A2,21,o2+P,-0.005090388876,-0.6613910505
+rival,NEPSE,Anam no difference o2+GK,,A2,21,o2+GK,-0.007886065304,-0.8477745078
+rival,NEPSE,Anam no difference YZ (daily form),,A2,21,YZ (daily form),-0.01021279231,-1.147412125
+rival,NEPSE,Anam loses to CC,,C,5,CC,0.06186585532,3.505709524
+rival,NEPSE,Anam beats P,,C,5,P,-0.0260830202,-8.187152074
+rival,NEPSE,Anam beats GK,,C,5,GK,-0.04713166761,-6.416828236
+rival,NEPSE,Anam beats RS,,C,5,RS,-0.066237267,-8.029690511
+rival,NEPSE,Anam beats o2+P,,C,5,o2+P,-0.06796244081,-7.611307927
+rival,NEPSE,Anam beats o2+GK,,C,5,o2+GK,-0.07815498307,-8.589051797
+rival,NEPSE,Anam beats YZ (daily form),,C,5,YZ (daily form),-0.0775255985,-7.960278583
+rival,NEPSE,Anam loses to CC,,C,21,CC,0.06904793921,2.468230337
+rival,NEPSE,Anam beats P,,C,21,P,-0.02048788189,-8.435855666
+rival,NEPSE,Anam beats GK,,C,21,GK,-0.03683013295,-13.21719928
+rival,NEPSE,Anam beats RS,,C,21,RS,-0.04915420742,-13.40514611
+rival,NEPSE,Anam beats o2+P,,C,21,o2+P,-0.05924866863,-5.769534186
+rival,NEPSE,Anam beats o2+GK,,C,21,o2+GK,-0.06855455309,-6.220937887
+rival,NEPSE,Anam beats YZ (daily form),,C,21,YZ (daily form),-0.067458922,-5.870519197
+rival,NIFTY50,Anam beats CC,,test half,5,CC,-0.04106098708,-3.068232343
+rival,NIFTY50,Anam no difference P,,test half,5,P,-0.02322489781,-1.911934073
+rival,NIFTY50,Anam no difference GK,,test half,5,GK,-0.01742987963,-1.789700461
+rival,NIFTY50,Anam beats RS,,test half,5,RS,-0.04601567999,-3.259293241
+rival,NIFTY50,Anam beats o2+P,,test half,5,o2+P,-0.007505883617,-3.185237899
+rival,NIFTY50,Anam no difference o2+GK,,test half,5,o2+GK,-0.005859846321,-1.925228445
+rival,NIFTY50,Anam beats YZ (daily form),,test half,5,YZ (daily form),-0.023109475,-3.991598172
+rival,NIFTY50,Anam no difference CC,,test half,21,CC,-0.0005138031387,-0.03964334195
+rival,NIFTY50,Anam no difference P,,test half,21,P,-0.07009561637,-1.331418734
+rival,NIFTY50,Anam no difference GK,,test half,21,GK,-0.09012527685,-1.636478814
+rival,NIFTY50,Anam beats RS,,test half,21,RS,-0.1313524593,-2.15543292
+rival,NIFTY50,Anam no difference o2+P,,test half,21,o2+P,-0.00691817166,-1.696297752
+rival,NIFTY50,Anam beats o2+GK,,test half,21,o2+GK,-0.0270294534,-2.237415622
+rival,NIFTY50,Anam beats YZ (daily form),,test half,21,YZ (daily form),-0.04793414545,-2.328784559
+rival,SP500,Anam beats CC,,test half,5,CC,-0.05710492661,-6.389225109
+rival,SP500,Anam no difference P,,test half,5,P,0.001643195644,0.4422523186
+rival,SP500,Anam no difference GK,,test half,5,GK,0.007303733277,1.125771519
+rival,SP500,Anam beats RS,,test half,5,RS,-0.02627985553,-2.027752568
+rival,SP500,Anam no difference o2+P,,test half,5,o2+P,7.077118882e-19,1.003822113
+rival,SP500,Anam no difference o2+GK,,test half,5,o2+GK,0.006489487637,1.718109667
+rival,SP500,Anam no difference YZ (daily form),,test half,5,YZ (daily form),0.006176967485,1.403728843
+rival,SP500,Anam no difference CC,,test half,21,CC,-0.002497050717,-0.1989572417
+rival,SP500,Anam no difference P,,test half,21,P,0.006108778039,1.824036609
+rival,SP500,Anam no difference GK,,test half,21,GK,0.0003447841727,0.03861116203
+rival,SP500,Anam no difference RS,,test half,21,RS,-0.007120340517,-0.4152110364
+rival,SP500,Anam no difference o2+P,,test half,21,o2+P,-2.670945528e-19,-0.4018002123
+rival,SP500,Anam no difference o2+GK,,test half,21,o2+GK,-0.005280323381,-0.6374788046
+rival,SP500,Anam no difference YZ (daily form),,test half,21,YZ (daily form),-0.004480251111,-0.4953384726

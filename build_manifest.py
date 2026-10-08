@@ -210,11 +210,26 @@ manifest = {
                       "Yang-Zhang's excess over close-to-close variance is the opening covariance. "
                       "The dose-response leg and the inversion rule were not established.",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-014",
+        "M16_anam_estimator": {
+            "status": "package only; not part of the manuscript",
+            "estimator": "src/nepsevol/estimators/anam.py",
+            "plan": "M16_ANAM_ESTIMATOR_PLAN.md (frozen in commit dc41f1e, after design on NEPSE "
+                    "regimes A1 and B and before any holdout observation was read)",
+            "results": "M16_ANAM_ESTIMATOR_RESULTS.md; output/tables/table98-106b",
+            "result": "No range-based estimator beats Anam's estimator on the NEPSE holdout, NIFTY 50 "
+                      "or the S&P 500; it ranks first on NIFTY 50 and its calibrated level is within "
+                      "1.2% of close-to-close variance where rules were stable. Close-to-close beats it "
+                      "in the 90 sessions after NEPSE's band reform, and the plan's three NEPSE "
+                      "predictions (H1-H3) failed.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-007 to M-015",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
-                        "paper/apply_round14_revisions.py"],
-        "new_modules": ["src/nepsevol/opening.py"],
-        "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py"],
+                        "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
+                        "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py"],
+        "new_modules": ["src/nepsevol/opening.py", "src/nepsevol/estimators/anam.py",
+                        "src/nepsevol/volforecast.py"],
+        "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py",
+                      "tests/test_anam_estimator.py", "tests/test_anam_results.py"],
         "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market "
                     "without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock "
                     "Exchange",

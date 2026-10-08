@@ -1,7 +1,7 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
   "revision": "14 (round 14: the M14 instrumented calibration and the M15 opening-price analysis, both under frozen plans, moved into the manuscript; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-08T07:15:23+00:00",
+  "generated_utc": "2026-10-08T15:52:48+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -15,7 +15,7 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "225 passed in 25.39s",
+    "pytest": "242 passed in 31.37s",
     "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference environment (earlier rounds)",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
@@ -98,18 +98,32 @@
       "results": "M15_OPENING_PRICE_RESULTS.md; output/tables/table89-97; manuscript Section 6.7, Tables 30-32, Figure 8, Appendix A",
       "result": "The session undoes 64-87% of NEPSE's overnight move, an error inside each security's auction (post hoc X6: the market-wide move shows no detectable reversal); the 20 April 2026 rule package, which widened the pre-open band, is a sharp break, unique against 77 placebo dates; band-pinned opens were reversed, not continued; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance. The dose-response leg and the inversion rule were not established."
     },
-    "corrections": "AUDIT-REGISTER.md M-007 to M-014",
+    "M16_anam_estimator": {
+      "status": "package only; not part of the manuscript",
+      "estimator": "src/nepsevol/estimators/anam.py",
+      "plan": "M16_ANAM_ESTIMATOR_PLAN.md (frozen in commit dc41f1e, after design on NEPSE regimes A1 and B and before any holdout observation was read)",
+      "results": "M16_ANAM_ESTIMATOR_RESULTS.md; output/tables/table98-106b",
+      "result": "No range-based estimator beats Anam's estimator on the NEPSE holdout, NIFTY 50 or the S&P 500; it ranks first on NIFTY 50 and its calibrated level is within 1.2% of close-to-close variance where rules were stable. Close-to-close beats it in the 90 sessions after NEPSE's band reform, and the plan's three NEPSE predictions (H1-H3) failed."
+    },
+    "corrections": "AUDIT-REGISTER.md M-007 to M-015",
     "new_scripts": [
       "scripts/37_opening_price.py",
       "scripts/38_opening_price_exploratory.py",
-      "paper/apply_round14_revisions.py"
+      "paper/apply_round14_revisions.py",
+      "scripts/39_anam_development.py",
+      "scripts/40_anam_holdout.py",
+      "scripts/41_anam_posthoc.py"
     ],
     "new_modules": [
-      "src/nepsevol/opening.py"
+      "src/nepsevol/opening.py",
+      "src/nepsevol/estimators/anam.py",
+      "src/nepsevol/volforecast.py"
     ],
     "new_tests": [
       "tests/test_opening_price.py",
-      "tests/test_round14_revisions.py"
+      "tests/test_round14_revisions.py",
+      "tests/test_anam_estimator.py",
+      "tests/test_anam_results.py"
     ],
     "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock Exchange",
     "submission_set": "Cover letters now lead with Journal of Financial Markets, Journal of Empirical Finance and Journal of Financial Econometrics, then the referee's three recommendations."
@@ -123,8 +137,8 @@
     },
     {
       "path": "AUDIT-REGISTER.md",
-      "bytes": 39499,
-      "sha256": "bbd1681e371de44ea833a43680ea122da11bac1efa713172313f92a53e286844"
+      "bytes": 40080,
+      "sha256": "60a087928bae0385da6063eebadb6bb154063bb423ddc613e906b061b935896c"
     },
     {
       "path": "FORENSIC_AUDIT_RESPONSE.md",
@@ -167,6 +181,16 @@
       "sha256": "9b6cb3c111884d808ab0abc1f46ecc295c7afb25620543c4ca9b174b188e2f49"
     },
     {
+      "path": "M16_ANAM_ESTIMATOR_PLAN.md",
+      "bytes": 9305,
+      "sha256": "8c1d37f66c8bcba6ccbc773ecb41b4664c68ba7cbd0d70c65e8304eecbff771d"
+    },
+    {
+      "path": "M16_ANAM_ESTIMATOR_RESULTS.md",
+      "bytes": 8616,
+      "sha256": "32a3b7ac15037884c823db25b53dee5c79744281073c9eadafe7916e3a261b1b"
+    },
+    {
       "path": "M7_ANALYSIS_PLAN.md",
       "bytes": 5293,
       "sha256": "c3ba9301a8bedf45f933677027bb8617788b54649e665797f2bce506a4f10f8c"
@@ -188,8 +212,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18122,
-      "sha256": "262ce37d74efca1ea0351e492b73d42dc4fd68c58d7b766740ab811ae6c4d611"
+      "bytes": 19565,
+      "sha256": "bdc6b20c86a8ff3c99f8ffe2f4206e9c4b8d6b1482e348c0d5d57ba54708e4e0"
     },
     {
       "path": "REFEREE_RESPONSE.md",
@@ -203,13 +227,13 @@
     },
     {
       "path": "REPRODUCIBILITY_MAP.csv",
-      "bytes": 18317,
-      "sha256": "d2c4df344d7b2c2d4c4c18ffd22fe8694c3f5481649c310831c29fdbe8264446"
+      "bytes": 19654,
+      "sha256": "be1196c85a007221cff2bd7c288c7b0d3b66cb9111dd004a6ff6858dc094c830"
     },
     {
       "path": "build_manifest.py",
-      "bytes": 13547,
-      "sha256": "617a58158401d16c6389399852a5f3b8eef902eb78608499910a121effe18b33"
+      "bytes": 14740,
+      "sha256": "084e4fb7b7765abd925bdc1ffc41d1a53f0f914d6f69877077f25e90792e901d"
     },
     {
       "path": "data/audit/README.md",
@@ -223,8 +247,8 @@
     },
     {
       "path": "data/external/README.md",
-      "bytes": 4981,
-      "sha256": "8df3f44119ccbce65de0468b42ad1686a14acaf0e78cca6d7ee7d6c2138e8119"
+      "bytes": 5526,
+      "sha256": "36e9c0ef02751d108b5e3e542f25d2d3cb33d4cb1785da1da2c35c32e28df005"
     },
     {
       "path": "data/external/india_vix.csv",
@@ -545,6 +569,51 @@
       "path": "output/tables/paper_table9_classification_audit.csv",
       "bytes": 135,
       "sha256": "a66206b74c0e34e20f80f35955703fda29e03825f4b501cf270d34fb821c7c7e"
+    },
+    {
+      "path": "output/tables/table100_anam_dev_level.csv",
+      "bytes": 547,
+      "sha256": "f0b020a84e45a869e571430f708e4f8c0761180ef992c4966af22802858cf5f5"
+    },
+    {
+      "path": "output/tables/table100b_anam_dev_noise.csv",
+      "bytes": 776,
+      "sha256": "49d9123f1d02497772ab02b0ad213b0d610b13c6e567cfd37cd18dd7ba880611"
+    },
+    {
+      "path": "output/tables/table101_anam_holdout_forecast.csv",
+      "bytes": 10922,
+      "sha256": "cf20c80048990df4459ee32e521942c2b0990015109a8c83b3b59e2857839c53"
+    },
+    {
+      "path": "output/tables/table102_anam_holdout_level.csv",
+      "bytes": 1811,
+      "sha256": "bb77493c8382bca41f4580b76f20c7c4690f52cd19ff6d2984ef042984019abb"
+    },
+    {
+      "path": "output/tables/table103_anam_holdout_noise.csv",
+      "bytes": 952,
+      "sha256": "a9e07ac1a81e7fc8a273a47833f320256007b547f1d7210932914a3a19a0c34a"
+    },
+    {
+      "path": "output/tables/table104_anam_holdout_implied.csv",
+      "bytes": 896,
+      "sha256": "fbcf59ae24de23c4f978f04d8336119b2218fcc5d322ee91bf6fe0022170bba3"
+    },
+    {
+      "path": "output/tables/table105_anam_holdout_decisions.csv",
+      "bytes": 5972,
+      "sha256": "9f17a1369e0c2948af96521290ebb1ad7b2f0552fb456b98faeabc06b2c08ec5"
+    },
+    {
+      "path": "output/tables/table106_anam_posthoc_calibration.csv",
+      "bytes": 1795,
+      "sha256": "f857835fc8a6bd0a9bad848fda06a0bb70e1fc583ea0ae2f39cab78224dcc0d5"
+    },
+    {
+      "path": "output/tables/table106b_anam_posthoc_trajectory.csv",
+      "bytes": 698,
+      "sha256": "2f522581dbdf87c5f237402a16e479556e445d20a586a10f8313c7bb9b4d96d9"
     },
     {
       "path": "output/tables/table14_cross_market_fingerprint.csv",
@@ -977,6 +1046,31 @@
       "sha256": "b50476fea99b39c0f8448d7699497ea23bba86bfd2180615f29086e4f7cef0a1"
     },
     {
+      "path": "output/tables/table98_anam_dev_forecast.csv",
+      "bytes": 3591,
+      "sha256": "529e148c67606ff7bc04e924d4ae4489cfc32ab0047c40db810680aac1935f5b"
+    },
+    {
+      "path": "output/tables/table98b_anam_dev_calibration.csv",
+      "bytes": 2068,
+      "sha256": "99766c72c225189ff1b95c58ace4cb42a5aea814f3e3a149bc486b26d3eb1afa"
+    },
+    {
+      "path": "output/tables/table98c_anam_dev_lambda.csv",
+      "bytes": 3425,
+      "sha256": "cd257bbbcd9cab165b4249cb0f4ff35b8a89d94a32812bc8f9d6145b646aa400"
+    },
+    {
+      "path": "output/tables/table98d_anam_dev_rejected.csv",
+      "bytes": 2606,
+      "sha256": "2f7e1d592ecebbe8fc82361ae6cd28f809bf6ef6ab994a9d06933c4ce67a928a"
+    },
+    {
+      "path": "output/tables/table99_anam_dev_simulation.csv",
+      "bytes": 5059,
+      "sha256": "e9c1a28535e66a4c5f5c9e0fbe4f2b534671758a0f28b18047eababb2edec8bc"
+    },
+    {
       "path": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
       "bytes": 2225812,
       "sha256": "f6d5da6e3616efb54880bfaf2b94583f56a67973e9e0218922104a4ce26903a2"
@@ -1103,13 +1197,13 @@
     },
     {
       "path": "requirements.txt",
-      "bytes": 749,
-      "sha256": "bf3fdb1ec05572ca84fe26dbdae614f22bec609836d010627d0e6acd6e1db3c5"
+      "bytes": 996,
+      "sha256": "057bbd11832fbcf48216b4bc19578c7c9699e7e65b67ebe9ba299bc819e830b7"
     },
     {
       "path": "run_paper_analysis.sh",
-      "bytes": 2529,
-      "sha256": "aacd5845a39d7c0d300c5b151c894b703412614e1898a089b59f5e0835ea9445"
+      "bytes": 2602,
+      "sha256": "1ec98a5da4d985897ce5b6022f01f59b164ffaea16fad39da8fbf5f5f40be016"
     },
     {
       "path": "scripts/02_build_panel.py",
@@ -1227,6 +1321,21 @@
       "sha256": "b670bdbad6180356b2b9441e3bd7bfc3284db2fc387c4ba8083420f257f0b5ba"
     },
     {
+      "path": "scripts/39_anam_development.py",
+      "bytes": 13396,
+      "sha256": "ee5cfe3b643fc09cb619204dcfdf3b8f00c5c47a5bc8573ee37e7ebbf429e245"
+    },
+    {
+      "path": "scripts/40_anam_holdout.py",
+      "bytes": 16018,
+      "sha256": "534cec92f5d7dd4512dc128fd25eb32e36df0659feec83631d7531da454419bd"
+    },
+    {
+      "path": "scripts/41_anam_posthoc.py",
+      "bytes": 7402,
+      "sha256": "6d4d7ab042a9b2bc215a65b8c2a62cbc9bd900953b0675ed69aafc21a32fc07f"
+    },
+    {
       "path": "scripts/_env.py",
       "bytes": 2216,
       "sha256": "595779cfbb173b7cc7a54a726cfa36120481ea7ab3a24a9df637f57190180e6a"
@@ -1275,6 +1384,11 @@
       "path": "src/nepsevol/estimators/__init__.py",
       "bytes": 242,
       "sha256": "dc52b75121c525f6c40ea203f6ee2207a953338e0d74b051410745e832936f89"
+    },
+    {
+      "path": "src/nepsevol/estimators/anam.py",
+      "bytes": 12025,
+      "sha256": "d8e362d80be19e2caecdd37aa21e78e82351f435755d353253493a5de24fe7f8"
     },
     {
       "path": "src/nepsevol/estimators/microsim.py",
@@ -1342,6 +1456,11 @@
       "sha256": "5610e8a9d017cc1bce9b87c0adea175229ff44761ef45d65410f359ecc986512"
     },
     {
+      "path": "src/nepsevol/volforecast.py",
+      "bytes": 5791,
+      "sha256": "bd6ea09644e7a73045ef525feffbfcb9cda24d33580a4ee3f8ae0964088116b8"
+    },
+    {
       "path": "src/nepsevol.egg-info/PKG-INFO",
       "bytes": 321,
       "sha256": "c25d1929e76548782a610a143622264fd327bd9c6cd8b84e06617a587f0d050d"
@@ -1365,6 +1484,16 @@
       "path": "src/nepsevol.egg-info/top_level.txt",
       "bytes": 9,
       "sha256": "3887b7b8541921225187ea2dffdf07bcb55e9ddf1bfc0b8b0863aefd372c9615"
+    },
+    {
+      "path": "tests/test_anam_estimator.py",
+      "bytes": 6112,
+      "sha256": "4bc2c7e2330d69d3467d13f55837b1a3bde63be6e7e28fc14399d0d9ee9fcbb4"
+    },
+    {
+      "path": "tests/test_anam_results.py",
+      "bytes": 4015,
+      "sha256": "092b3818e5f4325c6b9c9e9516b1f6807aa708f136257a5634bab014197835be"
     },
     {
       "path": "tests/test_audit_invariants.py",

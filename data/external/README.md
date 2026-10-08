@@ -38,3 +38,7 @@ above. Where the manuscript needs a stronger provenance guarantee than "provider
 current access point verified" — for example an exact retrieval timestamp and request log — that
 guarantee does not currently exist for the pre-2026-09 acquisitions and is disclosed as such
 rather than reconstructed after the fact.
+
+## Series used by M16 and not stored here
+
+`scripts/40_anam_holdout.py` reads the S&P 500 daily OHLC series (1999-01-04 to 2018-12-31) and the CBOE VIX (2014-01-03 to 2019-01-03) from the datasets bundled with the `arch` Python package, version 8.0.0 (`arch.data.sp500`, `arch.data.vix`; the package documents them as originally from Yahoo Finance). They are loaded at run time, not copied into this directory, and are pinned through `requirements.txt`. The usual market-data hosts were not reachable from the environment in which M16 was run.

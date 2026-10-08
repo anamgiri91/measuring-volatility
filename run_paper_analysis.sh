@@ -37,6 +37,9 @@ for script in \
   36_calibration_exploratory.py \
   37_opening_price.py \
   38_opening_price_exploratory.py \
+  39_anam_development.py \
+  40_anam_holdout.py \
+  41_anam_posthoc.py \
   25_submission_tables.py
 do
   echo "===== scripts/${script} ====="

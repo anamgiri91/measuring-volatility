@@ -3,13 +3,17 @@
 # The pipeline is additionally verified to run on Python 3.12 / x86-64 (Linux) with the
 # next-nearest available versions; see README "Environment" for the tested matrix.
 #
-# Only direct imports are listed. arch, Markdown and pyyaml were pinned in an earlier
-# revision but are not imported by any shipped code, and have been removed (F-8c).
+# Only direct imports are listed. Markdown and pyyaml were pinned in an earlier revision but are
+# not imported by any shipped code, and have been removed (F-8c); arch was removed then and is
+# pinned again for M16 (below).
 matplotlib==3.11.1
 numpy==2.5.2
 pandas==3.0.5
 statsmodels==0.14.6
 pytest==8.4.2
+# Imported only by scripts/40 and scripts/41 (M16), for the S&P 500 and VIX datasets it ships
+# (arch.data.sp500, arch.data.vix); the holdout cannot reach other market-data hosts.
+arch==8.0.0
 
 # Transitive, pinned deliberately: statsmodels pulls scipy in, and the pin keeps the
 # resolved environment deterministic. No shipped module imports scipy directly.
