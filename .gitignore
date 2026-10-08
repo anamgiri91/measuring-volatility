@@ -25,3 +25,6 @@ env/
 # Raw NEPSE source files are not redistributed; see data/raw/README.md
 data/raw/stock-daily-long/
 data/raw/stock-daily-trades/
+
+# M17 frontier-market inputs are third-party data, fetched or supplied locally; see data/external/README.md
+data/external/frontier/

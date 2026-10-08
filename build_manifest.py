@@ -19,6 +19,9 @@ from datetime import datetime, timezone
 ROOT = pathlib.Path(__file__).resolve().parent
 SKIP_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ipynb_checkpoints"}
 SKIP_NAMES = {"SUBMISSION_MANIFEST.json", ".DS_Store"}
+# third-party inputs placed locally and never packaged (gitignored; pinned by SHA-256 in
+# src/nepsevol/frontier.py and documented in data/external/README.md)
+SKIP_PREFIXES = ("data/external/frontier/",)
 
 
 def sha256(p: pathlib.Path) -> str:
@@ -35,6 +38,8 @@ def files():
             continue
         rel = p.relative_to(ROOT)
         if set(rel.parts) & SKIP_DIRS or rel.name in SKIP_NAMES:
+            continue
+        if str(rel).startswith(SKIP_PREFIXES):
             continue
         yield {"path": str(rel), "bytes": p.stat().st_size, "sha256": sha256(p)}
 

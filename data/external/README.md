@@ -42,3 +42,19 @@ rather than reconstructed after the fact.
 ## Series used by M16 and not stored here
 
 `scripts/40_anam_holdout.py` reads the S&P 500 daily OHLC series (1999-01-04 to 2018-12-31) and the CBOE VIX (2014-01-03 to 2019-01-03) from the datasets bundled with the `arch` Python package, version 8.0.0 (`arch.data.sp500`, `arch.data.vix`; the package documents them as originally from Yahoo Finance). They are loaded at run time, not copied into this directory, and are pinned through `requirements.txt`. The usual market-data hosts were not reachable from the environment in which M16 was run.
+
+## Frontier-market inputs used by M17 and not stored here
+
+`scripts/42_anam_frontier.py` reads three third-party inputs from `data/external/frontier/`, a directory that is
+gitignored and excluded from `SUBMISSION_MANIFEST.json`. Each is pinned by SHA-256 in `src/nepsevol/frontier.py`
+and checked before use; a different file stops the script. Redistribution terms of the underlying exchange data
+were not verified, which is why none of them is copied into the package.
+
+| Path under `data/external/frontier/` | What it is | How to obtain it | SHA-256 |
+|---|---|---|---|
+| `dse_upload/DSE_Data.csv` | Dhaka Stock Exchange daily OHLC and volume, 534 trading codes, stamped 1999-01-02 to 2025-04-08 (columns `Trading_Code, Date, Open, High, Low, Close, Volume`), supplied by the author as `Archive.zip` (SHA-256 `1d6c4cd5412fb33e83e9d6ada4213c3070c327a1881d323ac3333c352d97d04d`) with `Instruments.txt` | Its name, span and columns match "Dhaka Stock Exchange Historical Data (1999-2025)", Sunny, Nafis and Khan, Mendeley Data (2025), <https://data.mendeley.com/datasets/5mww8rb9td>; its row count (1,523,921) does not match that listing's (1,684,249), so check the hash rather than assume the release is the same file. **Its dates before 2023 have day and month exchanged whenever the day is 12 or less**; `nepsevol.frontier` repairs 2009-2021, drops 2022 and documents the evidence | `a619a0ff80ce944414f94f6b1cd88e8ee186e83241a0934c2330036c190c6763` |
+| `dse_mirror/prices.csv` | Dhaka Stock Exchange day-end archive, 2024-09-30 to 2026-10-08, with the exchange's previous close and trade count; identical to the upload on the 52,920 stock-days they share | `git clone https://github.com/nifty1303/dse-data` and check out commit `9f11a766ae8690bdb798f68b077a1ce5449807e0`; copy `data/prices.csv` (and `data/fundamentals.csv`, whose sector field defined the non-equity list) | `552e1a4515e36348a35069fca13067149988e9242e03b0bcac5b1a289b1b9633` |
+| `vietnam/tickers/*.csv` | One file per Vietnamese security (HOSE, HNX, UPCoM, unlabelled), 2000-07-28 to 2020-03-18, prices adjusted for corporate actions and rounded to 0.01 thousand dong; the 936 three-character codes are used | `git clone https://github.com/88d52bdba0366127fffca9dfa93895/vnstock-data` and check out commit `b52e2fe0905417e0d1c7215fbda1d352dde47492`; copy `tickers/*.csv` (the repository's `stocks.csv`, `README.md` and `LICENSE` are Git LFS pointers whose content could not be fetched, so the original source and licence of these files are unknown) | manifest `69caa964702c5152574eba580dc7e406213fbdf41b6824e53584d50c9c7e2691` (SHA-256 of the sorted `"<file> <sha256>"` lines of the 936 files) |
+
+The frontier panels are built by `nepsevol.frontier.market_panel`; its docstring states the cleaning rules, which
+were frozen in `M17_ANAM_FRONTIER_PLAN.md` before any estimator was computed on these data.
