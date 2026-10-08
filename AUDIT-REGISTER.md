@@ -73,6 +73,7 @@ Each of these was a real defect in committed results, not a hypothetical.
 | `M-014` | **An index was set against security-level reversal.** The manuscript and the cover letters contrasted NEPSE's security-level b (the session undoes 64–87% of the overnight move) with b on the NIFTY 50 index (7%), and the abstract printed NIFTY's b beside NEPSE's. An index averages its constituents' opening errors, and the post hoc X6 split finds no detectable reversal of NEPSE's own market-wide opening move (b = 1.060, 0.496, 1.627 and 0.879 in A1, B, A2 and C; every interval contains one or lies above it). The comparison is now drawn at the market level and labelled post hoc where it uses X6, and the abstract drops it. No number changes and H12 carries no decision; the paper no longer implies a security-level difference between NEPSE's and NSE's opening auctions, which index data cannot show. | `paper/apply_round14_revisions.py`, `paper/build_submission_set.py`, `M15_OPENING_PRICE_RESULTS.md`, `build_manifest.py` |
 | `M-015` | **Two details of the M16 holdout were left implicit by the frozen plan.** They were fixed in `scripts/40_anam_holdout.py` before it was run: level ratios by regime use only 21-session windows lying wholly inside the regime (or the index's test half), so no window mixes two rule regimes; and H3's "the Yang–Zhang window form's ratio changes by more" is read as "by more than 0.10". Neither affects a forecast verdict, and H3 fails under either reading because Anam's own change (+0.184) exceeds 0.10. | `scripts/40_anam_holdout.py`, `M16_ANAM_ESTIMATOR_RESULTS.md` |
 | `M-016` | **One sentence of the frozen M17 plan overstated the evidence for the Dhaka date repair.** The plan (item 3) and the module docstring said that every Friday stamp before 2023 in the author's Dhaka file has a day of 12 or less. That holds for all 189 Friday stamps from 2009 to 2022, the years the repair is applied to and the evidence for it rests on; before 2009, 13 of the 153 Friday stamps have a larger day or a day equal to the month (2000-11-17 to 2008-08-08), so they cannot be explained by an exchange of day and month. Those years were already excluded, because the exchange's trading week changed and the weekday evidence cannot separate a repair from a genuine session there. No panel, table or verdict changes; the docstring now states the evidence correctly and the plan's frozen text stands. | `src/nepsevol/frontier.py`, `M17_ANAM_FRONTIER_RESULTS.md` |
+| `M-017` | **Commit authorship corrected; the commit identifiers cited in frozen documents changed.** The 13 commits from the M15 plan to the M17 results were made under the assistant's git identity with co-author trailers. At the author's request they were recreated with the author as author and committer and the trailers removed. Every recreated commit has exactly the same file tree, parent order and timestamps as the original, so the plan-before-results order is unchanged. Documents frozen before the change cite the original identifiers; the table below this register maps each to its replacement. | this file (commit map below) |
 
 ## Standing policies (`SS`)
 
@@ -134,3 +135,23 @@ collapsed:
   obtained, so the proof of exact unbiasedness and the conditions it requires are unverified.
   The maintained model there is a random walk with iid symmetric double-exponential increments,
   not Brownian motion, so "AddRS is unbiased" must never be written unqualified.
+
+## Commit map for `M-017`
+
+Original identifier → identifier on `main` and `anam/anam-research-volatility-novel`. Trees, parent order and timestamps are identical; only the author, committer and co-author trailers differ.
+
+| Original | Now | Commit | Original identifier cited in |
+|---|---|---|---|
+| `6b71646` | `3e8cf74` | docs: freeze the M15 opening-price plan before any real-data result | `M15_OPENING_PRICE_RESULTS.md`, `scripts/37_opening_price.py` |
+| `f2699aa` | `6581933` | test(opening): validate the M15 statistics where the truth is known | `M15_OPENING_PRICE_RESULTS.md`, `scripts/37_opening_price.py` |
+| `1997662` | `24a8a49` | feat(opening): run the frozen M15 plan on NEPSE and NIFTY | — |
+| `9e01674` | `9d9a497` | paper: move the M14 and M15 results into the manuscript (round 14) | — |
+| `3db6929` | `d63e984` | feat(opening): locate the opening error inside each security's auction | — |
+| `27b83fd` | `e91fd68` | paper: derive the opening-error bound in an appendix | — |
+| `b62680c` | `abc82ef` | paper: make close-to-close the primary NEPSE specification in 7.1 | — |
+| `3b65573` | `889737d` | docs: record the round-14 reproduction of the whole pipeline | — |
+| `fe9ab1d` | `2e59ca9` | paper: correct the references, the rule package and the NIFTY contrast | — |
+| `dc41f1e` | `3296dad` | feat(anam): design Anam's estimator and freeze the M16 holdout plan | `M16_ANAM_ESTIMATOR_RESULTS.md`, `M17_ANAM_FRONTIER_PLAN.md`, `README.md`, `build_manifest.py`, `scripts/40_anam_holdout.py` |
+| `3b8af70` | `1bbb6ec` | feat(anam): run the frozen M16 holdout and record every verdict | `M17_ANAM_FRONTIER_PLAN.md` |
+| `db417ac` | `ff124bd` | feat(anam): freeze the M17 plan to test Anam's estimator in Bangladesh and Vietnam | `M17_ANAM_FRONTIER_RESULTS.md`, `README.md`, `build_manifest.py`, `scripts/42_anam_frontier.py` |
+| `a83a197` | `83cb16e` | feat(anam): run the frozen M17 plan in Bangladesh and Vietnam and record every verdict | — |

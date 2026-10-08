@@ -240,7 +240,7 @@ manifest = {
                       "Vietnam at 21 sessions, so the summary claim G fails. Its open-free special case had "
                       "the lowest loss at 5 sessions in every panel (post hoc reading of a reported variant).",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-016",
+        "corrections": "AUDIT-REGISTER.md M-007 to M-017",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
                         "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py"],
