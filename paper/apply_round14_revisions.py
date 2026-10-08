@@ -633,7 +633,7 @@ def main():
         f"returns '{n['v_H10 (consequence)']}', but the asymmetry is the point. The kernel is "
         "unbiased only if the opening error is independent of overnight news, so its shares "
         "are estimates under that assumption. A post hoc bound that assumes nothing about that "
-        f"correlation still puts the open's error at no less than {n['lb_A1']} of the "
+        f"correlation (Appendix A) still puts the open's error at no less than {n['lb_A1']} of the "
         f"open-to-close proxy in the first regime and {n['lb_C']} {n['lb_C_ci']} after the "
         f"reform, against {n['ind_C']} if it is independent of news."), "Normal")
     q6 = para_after(q5, (
@@ -843,6 +843,29 @@ def main():
     for ref in merged[len(slots):]:
         p_last = para_after(p_last, ref, "Normal")
     print(f"  reference list now {len(merged)} entries, alphabetical")
+
+    # ── Appendix A: the bound quoted in Section 6.7, derived where a referee can check it ────
+    paras = list(doc.paragraphs)
+    note = paras[find(paras, "Data and reproducibility note")]
+    ha = para_after(note, "Appendix A. A bound on the opening error that does not assume "
+                          "independence from news", "Heading 1")
+    para_after(ha, (
+        "Write the overnight and intraday returns as o = e_o + η - ε_prev and c = e_c - η + ε, "
+        "where e_o and e_c are efficient returns, η is the open's transient error and ε the "
+        "close's. Assume only what the unbiasedness regression needs: e_o and e_c are "
+        "uncorrelated, and η and ε are uncorrelated with e_c, with each other and with earlier "
+        "closing errors. η may be correlated with e_o in either direction. Then "
+        "-E[o c] = E[e_o η] + E[η²], and E[o²] = E[e_o²] + 2E[e_o η] + E[η²] + E[ε²], all "
+        "raw second moments, as in b. If "
+        "E[e_o η] ≥ 0, then E[e_o²] ≤ E[o²] and, by Cauchy-Schwarz, -E[o c] ≤ (E[o²]E[η²])^½ + "
+        "E[η²]; solving for E[η²] with -E[o c] = (1 - b)E[o²] gives E[η²] ≥ "
+        "E[o²]·((√(5 - 4b) - 1)/2)². If E[e_o η] < 0, then E[η²] > -E[o c] = (1 - b)E[o²], "
+        "which exceeds the same bound because ((√(1 + 4x) - 1)/2)² ≤ x for x ≥ 0. The bound "
+        "therefore holds whatever the sign or size of the error's correlation with news. It is "
+        "attained when η is perfectly correlated with e_o; under independence E[η²] = "
+        "(1 - b)E[o²]. Both are reported as shares of the open-to-close proxy, E[c²], in Table "
+        "32 and in table97_m15_posthoc.csv, where the bound was computed after the frozen "
+        "results were seen."), "Normal")
 
     doc.save(a.out)
     verify(a.out, n)

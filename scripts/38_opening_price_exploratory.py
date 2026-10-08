@@ -22,7 +22,7 @@ X4  A bound that does NOT assume the opening error is independent of overnight n
 
         E[eta^2] >= E[o^2] * ((sqrt(5 - 4b) - 1) / 2)^2        (b < 1),
 
-    by Cauchy-Schwarz when E[e_o eta] >= 0 (then Var(e_o) <= E[o^2]) and directly when it is
+    by Cauchy-Schwarz when E[e_o eta] >= 0 (then E[e_o^2] <= E[o^2]; raw moments, as in b) and directly when it is
     negative (then E[eta^2] > -E[o c] = (1 - b) E[o^2], which exceeds the bound). The bound is
     attained when eta is perfectly correlated with the news; under independence the value is
     (1 - b) E[o^2]. Both are reported as shares of the open-to-close benchmark E[OC], beside the
