@@ -86,8 +86,21 @@ manifest = {
     },
     "validation": {
         "pytest": pytest_result(),
-        "paper_facing_pipeline": "run_paper_analysis.sh completed successfully",
-        "verified_on": ["Python 3.14 / macOS arm64 (reference)"],
+        "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference "
+                                 "environment (earlier rounds)",
+        "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites "
+                          "the build manifest's provenance) was rerun in a clean copy on Python "
+                          "3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-"
+                          "facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv "
+                          "and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 "
+                          "earlier intermediate tables and the two processed samples differed "
+                          "only in floating-point rounding (largest relative difference 9e-13; "
+                          "one Spearman correlation by 1e-7 through the ordering of near-ties), "
+                          "consistent with the newer numpy build; the committed files are the "
+                          "reference-environment outputs and were not replaced.",
+        "verified_on": ["Python 3.14 / macOS arm64 (reference)",
+                        "Python 3.13.16 / numpy 2.5.3 / x86-64 Linux (round 14 rerun; see "
+                        "round_14_rerun)"],
     },
     "revision_3_changes": {
         "critical_item_1_panel_rebuild": {

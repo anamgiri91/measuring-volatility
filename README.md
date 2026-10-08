@@ -31,8 +31,13 @@ The reference environment, recorded in `data/processed/BUILD-MANIFEST.json`, is 
 on macOS arm64 with the exact pins in `requirements.txt`.
 
 The pipeline is additionally verified on **Python 3.12 / x86-64 Linux**, where all frozen tables
-and figures reproduce byte-identically under the next-nearest available package versions. The
-supported floor is Python 3.12; `pyproject.toml` declares the dependency floors and
+and figures reproduce byte-identically under the next-nearest available package versions.
+Round 14 reran every producer step in a clean copy on **Python 3.13.16 / numpy 2.5.3 / x86-64
+Linux**: every manuscript-facing table, `PAPER_RESULTS_CHECK.csv` and every M14/M15 table
+reproduced byte-for-byte, and 36 earlier intermediate tables differed only in floating-point
+rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through near-tie
+ordering), consistent with the newer numpy build. The committed outputs remain the
+reference-environment ones. The supported floor is Python 3.12; `pyproject.toml` declares the dependency floors and
 `requirements.txt` is the exact lock for the reference environment.
 
 ```bash
