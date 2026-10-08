@@ -61,3 +61,15 @@ C,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),24206,0.5618916072,0.
 C,X5,share of closes off the 0.1 price grid,24583,0,0,0
 2025-09-18 (excluded),X5,share of closes off the 0.1 price grid,226,0,0,0
 2025-09-18 (excluded),X5,share of opens pinned at the band,226,0.7389380531,0.6805141303,0.7913343513
+A1,X6,"b, market component (cross-sectional mean move)",58015,1.06004622,0.7552884834,1.395999098
+A1,X6,"b, idiosyncratic component (move minus the session mean)",58015,0.2061616647,0.1675636714,0.2521694653
+A1,X6,market component's share of E[o^2],58015,0.11806779,0.07999110396,0.1636301678
+B,X6,"b, market component (cross-sectional mean move)",28660,0.4955204537,-0.4681638411,1.499170183
+B,X6,"b, idiosyncratic component (move minus the session mean)",28660,0.184806152,0.1375652713,0.2358160944
+B,X6,market component's share of E[o^2],28660,0.1006874595,0.04699994454,0.168411664
+A2,X6,"b, market component (cross-sectional mean move)",31777,1.627113704,1.203991126,2.245329171
+A2,X6,"b, idiosyncratic component (move minus the session mean)",31777,0.2033431827,0.157482897,0.2690421869
+A2,X6,market component's share of E[o^2],31777,0.1070009459,0.06064421636,0.1769363785
+C,X6,"b, market component (cross-sectional mean move)",24518,0.878979569,0.3412151078,1.494246472
+C,X6,"b, idiosyncratic component (move minus the session mean)",24518,0.09701192583,0.05658772642,0.1486412727
+C,X6,market component's share of E[o^2],24518,0.04262809643,0.02882067334,0.07213721806

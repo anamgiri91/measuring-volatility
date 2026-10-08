@@ -124,6 +124,8 @@ Written after the frozen results were seen; none changes a frozen verdict.
   +4.57%.
 * **X3, the open as the session's extreme**: 36.4%, 38.9%, 42.2% and 51.5% of non-stale opens.
 * **X4, the bound above.** Derived in the script's docstring.
+* **X5, the closing-rule fingerprint**: 85.4% of closes lie off the 0.1-rupee price grid in B, at most 0.01% in A1, A2 and C; on the excluded 2025-09-18 session no close is off the grid and 73.9% of opens sit at the band.
+* **X6, market-wide or security by security.** Split by each session's cross-sectional mean, the idiosyncratic part of the opening move carries 88-96% of E[o²] and has b = 0.206 [0.168, 0.252] (A1), 0.185 (B), 0.203 (A2) and 0.097 [0.057, 0.149] (C); the market-wide part is not reversed (1.060 [0.755, 1.396] in A1, 1.627 [1.204, 2.245] in A2, where the market's opening move is even continued). The error lives inside each security's auction.
 
 ## Changes made after the first results were seen
 

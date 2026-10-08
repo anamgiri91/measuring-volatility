@@ -32,6 +32,12 @@ X5  The regime fingerprints the manuscript uses to date the closing rule (descri
     a fifteen-minute VWAP close almost always does, by regime and on the excluded 2025-09-18
     session (the early close on resumption after the September 2025 halt), with that session's
     share of band-pinned opens.
+X6  Market-wide or security by security? An opening overreaction produced inside each security's
+    auction should show up in the idiosyncratic part of the opening move, while a market-wide gap
+    that the session corrects would show up in the cross-sectional average. Each session's
+    equal-weighted cross-sectional means o_m and r_m split the moves; b is reported for the market
+    component (dates weighted by their row weight) and for the idiosyncratic one, o - o_m against
+    r - r_m, with the market component's share of E[o^2].
 
 Outputs: output/tables/table97_m15_posthoc.csv
 """
@@ -111,8 +117,28 @@ def build_stats(d: pd.DataFrame):
     labels.append(("2025-09-18 (excluded)", "X5", "share of closes off the 0.1 price grid"))
     specs.append(("pinned_share", excluded & np.isfinite(g)))
     labels.append(("2025-09-18 (excluded)", "X5", "share of opens pinned at the band"))
+    for reg in REGIMES:
+        m = ok & (regime == reg)
+        for stat, lab in [("b_market", "b, market component (cross-sectional mean move)"),
+                          ("b_idio", "b, idiosyncratic component (move minus the session mean)"),
+                          ("market_share", "market component's share of E[o^2]")]:
+            specs.append((stat, m))
+            labels.append((reg, "X6", lab))
 
     idx = [np.flatnonzero(m) for _, m in specs]
+    date_code = pd.factorize(d["date"], sort=True)[0]
+
+    def split(ii, w):
+        """Weighted per-session means of o and r over rows ii, broadcast back to the rows."""
+        dc = date_code[ii]
+        n_d = date_code.max() + 1
+        sw = np.bincount(dc, weights=w, minlength=n_d)
+        # a session a bootstrap replicate did not draw has zero weight; its mean is set to zero
+        # rather than 0/0, because NaN times a zero weight would still poison every sum
+        safe = np.where(sw > 0, sw, 1.0)
+        om = np.where(sw > 0, np.bincount(dc, weights=w * o[ii], minlength=n_d) / safe, 0.0)
+        rm = np.where(sw > 0, np.bincount(dc, weights=w * r[ii], minlength=n_d) / safe, 0.0)
+        return om[dc], rm[dc]
 
     def evaluate(mult=None):
         w_all = np.ones(len(d)) if mult is None else mult
@@ -151,6 +177,15 @@ def build_stats(d: pd.DataFrame):
                 out.append(float((w * off_grid[ii]).sum() / sw))
             elif stat == "pinned_share":
                 out.append(float((w * pinned[ii]).sum() / sw))
+            elif stat in ("b_market", "b_idio", "market_share"):
+                om, rm = split(ii, w)
+                x, y = o[ii], r[ii]
+                if stat == "b_market":
+                    out.append(float((w * om * rm).sum() / (w * om * om).sum()))
+                elif stat == "b_idio":
+                    out.append(float((w * (x - om) * (y - rm)).sum() / (w * (x - om) ** 2).sum()))
+                else:
+                    out.append(float((w * om * om).sum() / (w * x * x).sum()))
         return np.array(out)
 
     return labels, evaluate, specs

@@ -135,6 +135,15 @@ def test_m15_measurement_figures_are_the_frozen_ones(body):
         assert f"{f3(r.value)} {ci(r.lo, r.hi)}" in body, stat
 
 
+def test_market_and_idiosyncratic_split_is_the_frozen_one(body):
+    x = pd.read_csv(TAB / "table97_m15_posthoc.csv")
+    bi = x[x.statistic.str.startswith("b, idiosyncratic")].set_index("regime").value
+    assert f"has b between {f3(bi.min())} and {f3(bi.max())} across regimes" in body
+    bm = x[(x.regime == "A1") & x.statistic.str.startswith("b, market")].iloc[0]
+    assert f"(b = {f3(bm.value)} {ci(bm.lo, bm.hi)} in the first regime)" in body
+    assert (bi < 0.25).all() and bm.lo > 0.5, "the split's reading needs both"
+
+
 def test_m15_figures_quoted_in_the_abstract_are_the_frozen_ones(doc):
     findings = next(p.text for p in doc.paragraphs if p.text.startswith("Findings:"))
     t = pd.read_csv(TAB / "table78_calibration_full.csv").set_index("measure").loc["P"]
@@ -167,7 +176,7 @@ def test_failed_predictions_are_reported(body):
 def test_post_hoc_results_are_labelled_where_quoted(sentences):
     markers = ("open's error at no less than", "off the exchange's 0.1-rupee price grid",
                "an open pinned at the new upper band", "which a non-stale NEPSE open is on",
-               "of opens sat at the band")
+               "of opens sat at the band", "idiosyncratic part of the opening move")
     for s in sentences:
         for m in markers:
             if m in s:

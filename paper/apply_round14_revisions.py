@@ -251,6 +251,12 @@ def load() -> dict:
     n["o_up5"] = f"+{100 * o_up.value:.2f}%"
     ret = x_("C", "upward band-pinned opens: share of the opening move retained")
     n["ret_up5"], n["ret_up5_ci"] = pct(ret.value, 1), f"[{100 * ret.lo:.1f}%, {100 * ret.hi:.1f}%]"
+    bi = [x_(g, "b, idiosyncratic component").value for g in ["A1", "B", "A2", "C"]]
+    n["bi_lo"], n["bi_hi"] = f3(min(bi)), f3(max(bi))
+    ish = [1 - x_(g, "market component's share").value for g in ["A1", "B", "A2", "C"]]
+    n["ish_lo"], n["ish_hi"] = f"{100 * min(ish):.0f}", f"{100 * max(ish):.0f}"
+    bm = x_("A1", "b, market component")
+    n["bm_A1"], n["bm_A1_ci"] = f3(bm.value), ci(bm.lo, bm.hi)
     n["offgrid_B"] = pct(x_("B", "share of closes off").value, 1)
     other = [x_(g, "share of closes off").value for g in ["A1", "A2", "C"]]
     n["offgrid_other_max"] = pct(max(other), 2)
@@ -590,7 +596,12 @@ def main():
         f"({n['b_interior_C']} against {n['b_interior_A2']}). In a post hoc tabulation, an open "
         f"pinned at the new upper band (mean {n['o_up5']}) is followed by an intraday return of "
         f"{n['c_up5']}, and the close retains {n['ret_up5']} {n['ret_up5_ci']} of the opening "
-        "move: on average, the stock ends where it closed the previous session. The narrow band "
+        "move: on average, the stock ends where it closed the previous session. A second post "
+        "hoc split locates the error inside each security's auction rather than in a market-wide "
+        "gap: the idiosyncratic part of the opening move, which carries "
+        f"{n['ish_lo']}-{n['ish_hi']}% of its variance, has b between {n['bi_lo']} and "
+        f"{n['bi_hi']} across regimes, while the market-wide part is not reversed (b = "
+        f"{n['bm_A1']} {n['bm_A1_ci']} in the first regime). The narrow band "
         "was capping transient opening moves, not holding back information, and widening it let "
         "the open travel further from where the session would close. Two qualifications bound "
         "this reading. The predicted dose-response, a larger effect for securities the old band "
