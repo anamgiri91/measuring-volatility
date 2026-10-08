@@ -13,11 +13,15 @@ abstract, introduction, protocol, discussion, limitations, conclusion and refere
 RULES ENFORCED HERE
   * Every number is interpolated from a frozen table; nothing is typed.
   * Frozen verdicts are quoted from the decision ledgers (table86, table96), never re-derived.
-  * Post hoc results (M14's E1/E2, M15's X1-X5) are labelled post hoc wherever they are quoted.
+  * Post hoc results (M14's E1/E2, M15's X1-X6) are labelled post hoc wherever they are quoted.
   * Failed predictions are reported as failed (M14: H2, H4, H5 slopes; M15: H8, H9(a), H10).
   * The identification devices are credited and not claimed (Christensen & Prabhala 1998;
     Hansen & Lunde 2014; Biais, Hillion & Spatt 1999; Barclay & Hendershott 2003; Zhou 1996);
-    no "first"; the reform is evidence about a rule package, with its confounds named.
+    no "first"; the reform is evidence about a rule package, with every part of it named
+    (AUDIT-REGISTER M-013), and the closest prior evidence on opening auctions is cited
+    (Agarwalla, Jacob & Pandey 2015).
+  * NIFTY 50 is an index. Its b is compared with NEPSE's market-wide opening move, never offered
+    as the security-level contrast it cannot be (M-014).
   * "Transient opening error" or "overreaction", never unqualified "noise".
   * The M13 statements survive: no claim to introduce security-level analysis to Nepal, and the
     measurement question "not identified in the targeted search".
@@ -68,12 +72,19 @@ WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "sev
 ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth",
             "Tenth", "Eleventh", "Twelfth", "Thirteenth", "Fourteenth", "Fifteenth"]
 
-# New references, alphabetised into the list. Their bibliographic records are checked against
-# publisher-deposited metadata, and the outcome is recorded in AUDIT-REGISTER.md (M-012).
+# New references, alphabetised into the list. Their bibliographic records were checked against
+# publisher issue listings and indexing records found by web search, because the session's
+# network could not reach Crossref; the outcome -- one DOI corrected, one dropped as unconfirmed,
+# three references added -- is recorded in AUDIT-REGISTER.md (M-012). The house style gives a DOI
+# only where one has been confirmed.
 REFS = [
+    "Agarwalla, S. K., Jacob, J., & Pandey, A. (2015). Impact of the introduction of call auction "
+    "on price discovery: Evidence from the Indian stock market using high-frequency data. "
+    "International Review of Financial Analysis, 39, 167-178. "
+    "https://doi.org/10.1016/j.irfa.2015.01.012",
     "Amihud, Y., & Mendelson, H. (1987). Trading mechanisms and stock returns: An empirical "
     "investigation. Journal of Finance, 42(3), 533-553. "
-    "https://doi.org/10.1111/j.1540-6261.1987.tb02582.x",
+    "https://doi.org/10.1111/j.1540-6261.1987.tb04567.x",
     "Arellano, M., & Bover, O. (1995). Another look at the instrumental variable estimation of "
     "error-components models. Journal of Econometrics, 68(1), 29-51. "
     "https://doi.org/10.1016/0304-4076(94)01642-D",
@@ -85,16 +96,21 @@ REFS = [
     "Christensen, B. J., & Prabhala, N. R. (1998). The relation between implied and realized "
     "volatility. Journal of Financial Economics, 50(2), 125-150. "
     "https://doi.org/10.1016/S0304-405X(98)00034-8",
+    "Gatchev, V. A., Seth, R., Singh, A., & Vishwanatha, S. R. (2023). Price bands and their "
+    "effects on equity markets: Evidence from a natural experiment. Journal of Financial Markets, "
+    "66, 100840. https://doi.org/10.1016/j.finmar.2023.100840",
     "Hansen, P. R., & Lunde, A. (2014). Estimating the persistence and the autocorrelation "
     "function of a time series that is measured with error. Econometric Theory, 30(1), 60-93. "
     "https://doi.org/10.1017/S0266466613000121",
+    "The Himalayan Times. (2026, April 18). NEPSE amends trading regulations, introduces "
+    "pre-market order queuing and tighter circuit breaker rules.",
     "Kim, K. A., & Rhee, S. G. (1997). Price limit performance: Evidence from the Tokyo Stock "
     "Exchange. Journal of Finance, 52(2), 885-901. "
     "https://doi.org/10.1111/j.1540-6261.1997.tb04827.x",
     "Stoll, H. R., & Whaley, R. E. (1990). Stock market structure and volatility. Review of "
     "Financial Studies, 3(1), 37-71. https://doi.org/10.1093/rfs/3.1.37",
     "Zhou, B. (1996). High-frequency data and volatility in foreign-exchange rates. Journal of "
-    "Business & Economic Statistics, 14(1), 45-52. https://doi.org/10.1080/07350015.1996.10524628",
+    "Business & Economic Statistics, 14(1), 45-52.",
 ]
 
 
@@ -227,6 +243,8 @@ def load() -> dict:
     nf = pd.read_csv(TAB / "table95_m15_nifty.csv")
     nx = nf[nf["sample"].str.startswith("excl")].set_index("statistic")
     n["b_N"], n["bci_N"] = f3(nx.loc["b", "value"]), ci(nx.loc["b", "lo"], nx.loc["b", "hi"])
+    # Section 6.7 calls NIFTY's coefficient "a small reversal": its interval must exclude one
+    assert 0.8 < float(nx.loc["b", "value"]) and float(nx.loc["b", "hi"]) < 1
     n["undo_N"] = f"{100 * (1 - float(nx.loc['b', 'value'])):.0f}"
     n["yz_N"], n["yz_N_ci"] = f3(nx.loc["YZ/Var21(r)", "value"]), ci(nx.loc["YZ/Var21(r)", "lo"], nx.loc["YZ/Var21(r)", "hi"])
     n["kshare_N"] = f3(nx.loc["transient share 1 - E[K]/E[OC]", "value"])
@@ -257,6 +275,8 @@ def load() -> dict:
     n["ish_lo"], n["ish_hi"] = f"{100 * min(ish):.0f}", f"{100 * max(ish):.0f}"
     bm = x_("A1", "b, market component")
     n["bm_A1"], n["bm_A1_ci"] = f3(bm.value), ci(bm.lo, bm.hi)
+    # the text says no regime's market-component interval lies below one; hold it to that
+    assert all(x_(g, "b, market component").hi >= 1 for g in ["A1", "B", "A2", "C"])
     n["offgrid_B"] = pct(x_("B", "share of closes off").value, 1)
     other = [x_(g, "share of closes off").value for g in ["A1", "A2", "C"]]
     n["offgrid_other_max"] = pct(max(other), 2)
@@ -368,8 +388,8 @@ def main():
             f"Range estimators are calibrated to the open-to-close proxy (Parkinson slope "
             f"{n['P_slope']} {n['P_ci']}), but the proxy shares the opening price, and the open "
             f"is mostly transient: the session undoes {n['undo_lo']}-{n['undo_hi']}% of the "
-            f"overnight move (unbiasedness coefficient {n['b_C']}-{n['b_A2']}; NIFTY 50: "
-            f"{n['b_N']}). The band widening produced a sharp break: the coefficient fell by "
+            f"overnight move (unbiasedness coefficient {n['b_C']}-{n['b_A2']}). The band "
+            f"widening produced a sharp break: the coefficient fell by "
             f"{n['jump'].lstrip('-')}, more than at any of {n['n_plac']} placebo dates. Opens "
             "pinned at the old band had already been reversed, so the narrow band capped "
             "overreaction without detectably delaying price discovery. Three-quarters of "
@@ -426,8 +446,11 @@ def main():
     para_after(p, (
         "The fourth answer turns out to matter most. NEPSE's opening price is mostly transient: "
         f"the trading session undoes between {n['undo_lo']}% and {n['undo_hi']}% of the "
-        "overnight move under every rule regime in the sample, against "
-        f"{n['undo_N']}% on NIFTY 50. When the exchange widened its pre-open price band on 20 "
+        "overnight move under every rule regime in the sample. The error belongs to each "
+        "security's own auction: in a post hoc split, the market-wide part of the opening move "
+        "shows no detectable reversal, and on the NIFTY 50 index, which also averages over its "
+        f"constituents, the session undoes {n['undo_N']}%. When the exchange widened its "
+        "pre-open price band on 20 "
         "April 2026, the share of the opening move that survives to the close fell sharply, by "
         f"more than at any of {n['n_plac']} placebo dates; and opens pinned at the old band had "
         "been reversed rather than continued, so the narrow band had been capping overreaction "
@@ -454,6 +477,11 @@ def main():
                "define. They exclude one early-closing session, 18 September 2025, on which "
                "trading resumed after the September 2025 market halt and, in the same post hoc "
                f"check, {n['excl_pinned']} of opens sat at the band.")
+    replace_in(p, "and the market-wide circuit breaker became two-tier.",
+               "and the market-wide circuit breaker became two-tier, with higher thresholds; the "
+               "same amendment widened the band within which continuous-session orders may be "
+               "priced from ±2% to ±3% of the prevailing price, and let orders entered before the "
+               "session be queued for the open (The Himalayan Times, 2026).")
 
     # ── Section 4.5: Yang-Zhang's independence assumption ───────────────────────────────────
     p = para_with(doc, "Yang and Zhang (2000) combine an overnight variance term")
@@ -544,9 +572,12 @@ def main():
         "their benchmark can agree because they share it, while the close-to-close return, "
         "which never reads the open, does not. That opening prices set by call auctions can be "
         "noisier than closing prices is long established (Amihud & Mendelson, 1987; Stoll & "
-        "Whaley, 1990); how much of an opening price survives is measured in the "
-        "price-discovery literature by the unbiasedness regression of the close-to-close return "
-        "on the opening return (Biais, Hillion & Spatt, 1999; Barclay & Hendershott, 2003). Its "
+        "Whaley, 1990), and in India the return set by the opening call auction is negatively "
+        "correlated with the intraday returns that follow it, which Agarwalla, Jacob and Pandey "
+        "(2015) read as excessive price movement in the auction. How much of an opening price "
+        "survives is measured in the price-discovery literature by the unbiasedness regression "
+        "of the close-to-close return on the opening return (Biais, Hillion & Spatt, 1999; "
+        "Barclay & Hendershott, 2003). Its "
         "slope, b = E[o r]/E[o²] with o = ln(O/C_prev) and r = ln(C/C_prev), equals one when "
         "the open anticipates the close. It falls below one when the session undoes part of "
         "the opening move, and rises above one when the session completes a move the open only "
@@ -560,8 +591,11 @@ def main():
         f"{n['b_A1']} {n['bci_A1']} with a last-trade close, {n['b_B']} {n['bci_B']} while the "
         f"close was a fifteen-minute VWAP, and {n['b_A2']} {n['bci_A2']} once the last-trade "
         f"close returned: the session undoes between {100 - round(100 * n['bv_A2'])}% and "
-        f"{100 - round(100 * n['bv_B'])}% of the overnight move. On NIFTY 50, whose open comes "
-        f"from a call auction among liquid constituents, b is {n['b_N']} {n['bci_N']}. The "
+        f"{100 - round(100 * n['bv_B'])}% of the overnight move. On the NIFTY 50 index, b is "
+        f"{n['b_N']} {n['bci_N']}, a small reversal, but an index averages its constituents' "
+        "opening errors, and the post hoc split reported below finds no detectable reversal "
+        "of NEPSE's own market-wide opening move; the NIFTY figure therefore describes a "
+        "market-wide open, not any one security's auction. The "
         "reversal is not confined to thin securities: b is below one in every security-level "
         f"liquidity quintile in every regime, between {n['liq_pre_lo']} and {n['liq_pre_hi']} "
         "under the ±2% band. It is also fast: of the "
@@ -600,17 +634,21 @@ def main():
         "hoc split locates the error inside each security's auction rather than in a market-wide "
         "gap: the idiosyncratic part of the opening move, which carries "
         f"{n['ish_lo']}-{n['ish_hi']}% of its variance, has b between {n['bi_lo']} and "
-        f"{n['bi_hi']} across regimes, while the market-wide part is not reversed (b = "
-        f"{n['bm_A1']} {n['bm_A1_ci']} in the first regime). The narrow band "
+        f"{n['bi_hi']} across regimes, while no regime shows a detectable reversal of the "
+        f"market-wide part (b = {n['bm_A1']} {n['bm_A1_ci']} in the first regime; every "
+        "interval contains one or lies above it). The narrow band "
         "was capping transient opening moves, not holding back information, and widening it let "
         "the open travel further from where the session would close. Two qualifications bound "
         "this reading. The predicted dose-response, a larger effect for securities the old band "
         "bound more often, was not detected (difference-in-differences "
         f"{n['did']} {n['did_ci']}; from lowest to highest exposure, b fell from {n['terc_A2']} "
-        f"to {n['terc_C']}), so the identification rests on timing alone. And the reform changed "
-        "the "
-        "band, the daily limit and the circuit breaker together, in a post-reform window of "
-        f"{n['n_C']} sessions, so the evidence concerns that rule package rather than the band alone."),
+        f"to {n['terc_C']}), so the identification rests on timing alone. And the band was one "
+        "part of a rule package that also widened the daily limit and the band for "
+        "continuous-session orders, raised the circuit-breaker thresholds and let orders be "
+        f"queued before the session (Section 3), with a post-reform window of {n['n_C']} "
+        "sessions. The fall in b is concentrated in opens beyond the old band, where the "
+        "pre-open band acts, but timing cannot separate the band from the rest of the package, "
+        "so the evidence concerns that package rather than the band alone."),
         "Normal")
     q5 = para_after(q4, (
         "Three consequences follow for measurement. First, the exact identity YZ - Var(r) = "
@@ -620,7 +658,7 @@ def main():
         f"{n['yz_sd']} of Section 6.5 on the standard-deviation scale, and {n['cov_share']} "
         f"{n['cov_share_ci']} of the excess is the overnight-intraday covariance. The ratio "
         f"rises from {n['yz_A2']} to {n['yz_C']} across the reform (frozen verdict: "
-        f"{n['v_H11']}), while on NIFTY 50 Yang-Zhang matches close-to-close ({n['yz_N']} "
+        f"{n['v_H11']}), while on the NIFTY 50 index Yang-Zhang matches close-to-close ({n['yz_N']} "
         f"{n['yz_N_ci']}). Second, Parkinson inherits the open's error whenever the open is the "
         f"session's high or low, which a non-stale NEPSE open is on {n['ext_A1']} of sessions "
         f"in the first regime and {n['ext_C']} after the reform (post hoc). Third, a ratio to "
@@ -664,7 +702,7 @@ def main():
          "matched open-to-close proxy, instrumented by lagged realised measures (Section 6.6; "
          "plan M14, frozen before testing).", "paper_table29_calibration_slopes.csv"),
         ("Table 30. What the opening price anticipates: the unbiasedness coefficient of the open "
-         "for the close by market-design regime and opening zone, with NIFTY 50 (Section 6.7; "
+         "for the close by market-design regime and opening zone, with the NIFTY 50 index (Section 6.7; "
          "plan M15, frozen before testing).", "paper_table30_opening_unbiasedness.csv"),
         ("Table 31. The pre-open band reform as a natural experiment: the frozen M15 tests and "
          "their verdicts, applied mechanically.", "paper_table31_band_reform_tests.csv"),
@@ -684,8 +722,9 @@ def main():
     p = para_with(doc, "Compute at least two estimators. A practical pair is close-to-close")
     b1 = para_after(p, (
         "Diagnose the open before trusting any estimator that reads it. Report the unbiasedness "
-        "coefficient b = E[o r]/E[o²] of the open for the close, by market-rule regime. In NEPSE "
-        f"it lies between {n['b_C']} and {n['b_A2']}; on NIFTY 50 it is {n['b_N']}. Where b is "
+        "coefficient b = E[o r]/E[o²] of the open for the close, by market-rule regime and from "
+        "security-level returns, since a market average can hide the error. In NEPSE it lies "
+        f"between {n['b_C']} and {n['b_A2']}; on the NIFTY 50 index it is {n['b_N']}. Where b is "
         "well below one, the open-to-close proxy, Garman-Klass, Rogers-Satchell and Yang-Zhang "
         "all carry the open's transient error, and close-to-close variance is the benchmark."),
         p.style)
@@ -743,7 +782,9 @@ def main():
         "continuously observed price path whose open is an efficient price (Garman & Klass, "
         "1980; Rogers & Satchell, 1991; Yang & Zhang, 2000). In NEPSE the open is mostly "
         f"transient: the session undoes {n['undo_lo']}% or more of the overnight move under "
-        f"every rule regime, against {n['undo_N']}% on NIFTY 50. The estimators' agreement with "
+        "every rule regime, and, on a post hoc split, the error sits in each security's own "
+        "auction, which a market average largely washes out (Section 6.7). The estimators' "
+        "agreement with "
         "the open-to-close proxy, which Section 6.6 shows to be calibration rather than "
         "cancellation, is therefore agreement among measures that share one error. Ratio "
         "comparisons cannot see it, including the ones in earlier versions of this paper. "
@@ -753,12 +794,16 @@ def main():
     para_after(d1, (
         "The band reform adds a market-design reading. Price limits are defended as a check on "
         "overreaction and criticised for delaying price discovery (Kim & Rhee, 1997). At "
-        "NEPSE's opening auction the ±2% band showed no sign of the second cost: the opens it "
+        "NEPSE's opening auction the ±2% band showed no sign of the delay: the opens it "
         "pinned were reversed, not continued. Widening it let transient opening moves grow, "
         "and a stock opening at the new upper band closed, on average, where it had closed the "
         f"day before. That is evidence about one rule package in one market over {n['n_C']} sessions, "
-        "with the daily limit and the circuit breaker changed on the same date, and it says "
-        "nothing about welfare. But it is the kind of evidence a regulator weighing the width "
+        "with the daily limit, the continuous-session order band, the circuit breaker and the "
+        "queuing of orders entered before the session changed on the same date. It says "
+        "nothing about welfare, nor about the liquidity costs a band can carry: when tight "
+        "intraday bands were imposed on newly listed Indian shares, volatility fell but the "
+        "price impact of trades rose (Gatchev, Seth, Singh & Vishwanatha, 2023). But it is the "
+        "kind of evidence a regulator weighing the width "
         "of a pre-open band would want, and it can be updated as the post-reform sample "
         "grows."), "Normal")
     print("  added two Discussion paragraphs")
@@ -794,9 +839,11 @@ def main():
     set_text(p, (
         "Third, the market changed during the sample. Sections 6.6 and 6.7 model the "
         "closing-rule and band regimes explicitly, but the post-reform regime contains only "
-        f"{n['n_C']} sessions, and the band reform changed the pre-open band, the daily limit and the "
-        "circuit breaker on one date, two weeks after a trading-week reform. The evidence "
-        "concerns that rule package, and its dose-response leg was not detected."))
+        f"{n['n_C']} sessions, and the band reform was one part of a package, effective on one "
+        "date two weeks after a trading-week reform, that also widened the daily limit and the "
+        "continuous-session order band, raised the circuit-breaker thresholds and let orders be "
+        "queued before the session. The evidence concerns that rule package, and its "
+        "dose-response leg was not detected."))
     p = para_with(doc, "whose own measurement error is not modelled here.")
     replace_in(p, "whose own measurement error is not modelled here.",
                "whose own measurement error Section 6.7 bounds but cannot fully identify.")
@@ -823,7 +870,8 @@ def main():
         "The paper's second finding qualifies its first. The opening price, which every "
         "within-session estimator and the open-to-close proxy read, is mostly transient in "
         f"NEPSE: the trading session undoes between {n['undo_lo']}% and {n['undo_hi']}% of the "
-        f"overnight move, against {n['undo_N']}% on NIFTY 50. A natural experiment analysed "
+        "overnight move, an error that, on a post hoc split, sits in each security's own "
+        "auction rather than in the market-wide move. A natural experiment analysed "
         "under a frozen plan ties part of this to market design. Widening the pre-open band from "
         "±2% to ±5% produced a sharp break in how much of the open survives to the close, "
         "larger than at any placebo date, and the opens pinned at the old band had been "
@@ -905,8 +953,17 @@ def verify(path, n) -> None:
                    "addresses a measurement question not identified in the targeted search",
                    "Christensen and Prabhala (1998)", "Hansen and Lunde (2014)",
                    "Biais, Hillion & Spatt, 1999", "Barclay & Hendershott, 2003",
-                   "Kim & Rhee, 1997", "Zhou's (1996)", "Arellano & Bover"):
+                   "Kim & Rhee, 1997", "Zhou's (1996)", "Arellano & Bover",
+                   "Agarwalla, Jacob and Pandey (2015)",
+                   "Gatchev, Seth, Singh & Vishwanatha, 2023", "The Himalayan Times, 2026",
+                   "NIFTY 50 index", "from ±2% to ±3% of the prevailing price"):
         assert needle in body, f"missing after round 14: {needle!r}"
+    # M-012: the corrected DOI, and no DOI that could not be confirmed
+    assert "tb04567.x" in body and "tb02582" not in body and "10524628" not in body
+    # M-014: an index is not set against security-level reversal
+    assert f"{n['undo_N']}% on NIFTY 50" not in body
+    # M-013: the rule package is never reduced to three of its parts
+    assert "the daily limit and the circuit breaker on one date" not in body
     # every frozen verdict quoted is the ledger's
     assert n["v_H7"] == "sharp break" and "sharp break" in body
     assert n["v_H11"] in body and n["v_H10 (consequence)"] in body

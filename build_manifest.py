@@ -202,13 +202,15 @@ manifest = {
                     "computed; simulation checks committed next)",
             "results": "M15_OPENING_PRICE_RESULTS.md; output/tables/table89-97; manuscript Section 6.7, "
                        "Tables 30-32, Figure 8, Appendix A",
-            "result": "The session undoes 64-87% of NEPSE's overnight move (NIFTY 50: 7%); the "
-                      "20 April 2026 band reform is a sharp break, unique against 77 placebo dates; "
+            "result": "The session undoes 64-87% of NEPSE's overnight move, an error inside each "
+                      "security's auction (post hoc X6: the market-wide move shows no detectable "
+                      "reversal); the 20 April 2026 rule package, which widened the pre-open band, "
+                      "is a sharp break, unique against 77 placebo dates; "
                       "band-pinned opens were reversed, not continued; three-quarters of "
                       "Yang-Zhang's excess over close-to-close variance is the opening covariance. "
                       "The dose-response leg and the inversion rule were not established.",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-012",
+        "corrections": "AUDIT-REGISTER.md M-007 to M-014",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py"],
         "new_modules": ["src/nepsevol/opening.py"],

@@ -140,8 +140,11 @@ def test_market_and_idiosyncratic_split_is_the_frozen_one(body):
     bi = x[x.statistic.str.startswith("b, idiosyncratic")].set_index("regime").value
     assert f"has b between {f3(bi.min())} and {f3(bi.max())} across regimes" in body
     bm = x[(x.regime == "A1") & x.statistic.str.startswith("b, market")].iloc[0]
-    assert f"(b = {f3(bm.value)} {ci(bm.lo, bm.hi)} in the first regime)" in body
+    assert (f"(b = {f3(bm.value)} {ci(bm.lo, bm.hi)} in the first regime; every interval "
+            "contains one or lies above it)") in body
     assert (bi < 0.25).all() and bm.lo > 0.5, "the split's reading needs both"
+    every = x[x.statistic.str.startswith("b, market")]
+    assert (every.hi >= 1).all(), "'every interval contains one or lies above it' must hold"
 
 
 def test_m15_figures_quoted_in_the_abstract_are_the_frozen_ones(doc):
@@ -195,7 +198,12 @@ def test_identification_devices_are_credited_and_listed(body):
                       ("Kim & Rhee, 1997", "Kim, K. A., & Rhee, S. G. (1997)"),
                       ("Zhou's (1996)", "Zhou, B. (1996)"),
                       ("Amihud & Mendelson, 1987", "Amihud, Y., & Mendelson, H. (1987)"),
-                      ("Stoll & Whaley, 1990", "Stoll, H. R., & Whaley, R. E. (1990)")]:
+                      ("Stoll & Whaley, 1990", "Stoll, H. R., & Whaley, R. E. (1990)"),
+                      ("Agarwalla, Jacob and Pandey (2015)",
+                       "Agarwalla, S. K., Jacob, J., & Pandey, A. (2015)"),
+                      ("Gatchev, Seth, Singh & Vishwanatha, 2023",
+                       "Gatchev, V. A., Seth, R., Singh, A., & Vishwanatha, S. R. (2023)"),
+                      ("The Himalayan Times, 2026", "The Himalayan Times. (2026, April 18)")]:
         assert cite in body, cite
         assert ref in refs, ref
     assert "only its application to daily-bar estimators is new here" in body
@@ -242,6 +250,51 @@ def test_reference_list_is_alphabetical(doc):
     refs = [t for t in paras[i + 1:j] if t.strip()]
     keys = [re.sub(r"^(The )", "", r).lower() for r in refs]
     assert keys == sorted(keys)
+
+
+def _references(doc):
+    paras = [p.text for p in doc.paragraphs]
+    i = paras.index("References")
+    j = next(k for k, t in enumerate(paras) if t.startswith("Data and reproducibility note"))
+    return [t for t in paras[i + 1:j] if t.strip()]
+
+
+def test_reference_records_follow_the_m012_check(doc):
+    refs = _references(doc)
+    amihud = next(r for r in refs if r.startswith("Amihud, Y., & Mendelson, H. (1987)"))
+    assert amihud.endswith("https://doi.org/10.1111/j.1540-6261.1987.tb04567.x")
+    zhou = next(r for r in refs if r.startswith("Zhou, B. (1996)"))
+    assert "doi.org" not in zhou, "Zhou (1996): the DOI could not be confirmed (M-012)"
+    assert not any("tb02582" in r for r in refs)
+
+
+def test_nifty_is_compared_as_an_index(doc, body):
+    """M-014: an index averages its constituents' opening errors, so NIFTY's b is not a
+    security-level contrast; the market-wide comparison is labelled post hoc where it uses X6."""
+    assert not re.search(r"\d+% on NIFTY 50", body)
+    findings = next(p.text for p in doc.paragraphs if p.text.startswith("Findings:"))
+    assert "NIFTY" not in findings
+    assert "On the NIFTY 50 index, b is" in body
+    sub = (ROOT / "paper" / "build_submission_set.py").read_text()
+    assert "% on NIFTY 50" not in sub
+    x = pd.read_csv(TAB / "table97_m15_posthoc.csv")
+    bm = x[x.statistic.str.startswith("b, market component")].set_index("regime")
+    assert (bm.hi >= 1).all(), "the text says no market-component interval lies below one"
+    text = md((ROOT / "M15_OPENING_PRICE_RESULTS.md").read_text())
+    for g in ("A1", "B", "A2", "C"):
+        assert f"{f3(bm.loc[g, 'value'])} {ci(bm.loc[g, 'lo'], bm.loc[g, 'hi'])}" in text, g
+
+
+def test_the_rule_package_is_named_in_full(body):
+    """M-013: the 20 April 2026 amendment also widened the continuous-session order band and
+    allowed pre-session order queuing; no description may stop at three of its parts."""
+    assert "from ±2% to ±3% of the prevailing price" in body
+    assert "queued before the session" in body and "queued for the open" in body
+    stale = "the daily limit and the circuit breaker on one"
+    assert stale not in body
+    assert stale not in (ROOT / "paper" / "build_submission_set.py").read_text()
+    text = (ROOT / "M15_OPENING_PRICE_RESULTS.md").read_text()
+    assert "±2% to ±3% of the prevailing" in text and "`M-013`" in text
 
 
 # ─────────────────────────────────────────────────────────────── results documents (M-010)

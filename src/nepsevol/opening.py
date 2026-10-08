@@ -61,8 +61,10 @@ __all__ = [
     "yz_k",
 ]
 
-#: NEPSE widened the pre-open band from +/-2% to +/-5% (and the daily limit from +/-10% to
-#: +/-15%) effective this session; see nepsevol.clean.limits.REGIMES.
+#: NEPSE widened the pre-open band from +/-2% to +/-5% effective this session, in a package that
+#: also widened the daily limit (+/-10% to +/-15%) and the continuous-session order band (+/-2% to
+#: +/-3% of the prevailing price), raised the circuit-breaker thresholds and allowed pre-session
+#: order queuing (AUDIT-REGISTER M-013); see nepsevol.clean.limits.REGIMES.
 BAND_REFORM = pd.Timestamp("2026-04-20")
 #: The trading week moved to Monday-Friday effective this date (nepsevol.trading_calendar).
 WEEK_REFORM = pd.Timestamp("2026-04-06")

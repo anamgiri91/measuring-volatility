@@ -33,8 +33,10 @@ __all__ = ["REGIMES", "regime_for", "flag_limits", "censoring_summary",
 
 # (effective_from, pre_open_band, daily_price_limit) — fractions of the previous close.
 # The 2026-04-20 revision changed BOTH bands simultaneously, alongside a new two-tier intraday
-# circuit breaker. Treatments in that window are therefore CONFOUNDED and must not be used as a
-# clean natural experiment.
+# circuit breaker with higher thresholds, a wider band for continuous-session order prices
+# (+/-2% to +/-3% of the prevailing price) and pre-session order queuing (AUDIT-REGISTER M-013).
+# Treatments in that window are therefore CONFOUNDED and must not be used as a clean natural
+# experiment.
 #
 # REFEREE ITEM 9. This date is 2026-04-20 and stays there. It is NOT the same event as the
 # trading-week reform, which took effect 2026-04-06 and lives in

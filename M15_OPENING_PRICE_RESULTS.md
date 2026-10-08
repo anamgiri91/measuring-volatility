@@ -31,9 +31,11 @@ security (H8). What the analysis does establish is stated next.
 
 1. **NEPSE's opening price is mostly transient.** The session undoes between two-thirds and
    nine-tenths of the overnight move: b is 0.307 [0.247, 0.376] (A1), 0.216 [0.128, 0.281] (B),
-   0.356 [0.252, 0.512] (A2) and 0.130 [0.082, 0.196] (C) (`table89`). On NIFTY 50, where the
-   open comes from a call auction among liquid constituents, b is 0.929 [0.854, 0.999]
-   (`table95`). The reversal is not a thin-stock phenomenon: b is below one in every security-level
+   0.356 [0.252, 0.512] (A2) and 0.130 [0.082, 0.196] (C) (`table89`). On the NIFTY 50 index,
+   b is 0.929 [0.854, 0.999] (`table95`; 0.929 [0.854, 0.995] excluding 2012-10-05). An index
+   averages its constituents' opening errors, and NEPSE's own market-wide opening move shows no
+   detectable reversal (post hoc X6), so the NIFTY figure describes a market-wide open, not
+   a security-level auction (correction `M-014`). The reversal is not a thin-stock phenomenon: b is below one in every security-level
    liquidity quintile in every regime — between 0.12 and 0.45 under the ±2% band and between 0.12
    and 0.17 after the reform. It is
    fast: of the 69% of the opening move that the session undoes in A1, 58 points are undone before
@@ -65,9 +67,9 @@ security (H8). What the analysis does establish is stated next.
    `YZ − Var(r) = (1 − k)[mean RS − Var(c)] − 2 Cov(o, c)`, 75.6% [66.2, 86.9] of that excess is
    −2 Cov(o, c), the overnight–intraday covariance Yang and Zhang assume to be zero; the rest is
    Rogers–Satchell's own excess over Var(c). The ratio is 1.446, 1.858 and 1.551 under the ±2%
-   band and 2.682 after the widening, a rise of 1.132 [0.689, 1.727]. On NIFTY 50, where the open
-   is nearly unbiased, Yang–Zhang matches close-to-close (0.960 [0.922, 1.006] excluding the 2012
-   flash-crash session).
+   band and 2.682 after the widening, a rise of 1.132 [0.689, 1.727]. On the NIFTY 50 index, whose
+   open is nearly unbiased, Yang–Zhang matches close-to-close (0.960 [0.922, 1.006] excluding the
+   2012 flash-crash session).
 5. **Every estimator that reads the open inherits its error, and a ratio to the open-to-close
    proxy cannot see it (H10).** The open-to-close proxy, Garman–Klass, Rogers–Satchell and the
    VWAP estimators read the open directly; Parkinson reads it whenever the open is the session's
@@ -77,9 +79,9 @@ security (H8). What the analysis does establish is stated next.
    (−0.097 [−0.224, +0.024]); against the noise-robust kernel K it moves from 1.191 to 2.009, a
    rise of 0.818 [0.362, 1.413] (`table93`). The conventional evaluation reports the estimator
    roughly where it was; the kernel, under its maintained assumption, reports it doubling its
-   distance from efficient within-session variance. On NIFTY, E[P]/E[K] and E[P]/E[OC] coincide
-   (0.921 and 0.920 excluding 2012-10-05), as they should where the open carries no transient
-   error.
+   distance from efficient within-session variance. On the NIFTY 50 index, E[P]/E[K] and
+   E[P]/E[OC] coincide (0.921 and 0.920 excluding 2012-10-05), as they should where the open
+   carries no transient error.
 
 ## What the frozen analysis does not establish
 
@@ -101,9 +103,14 @@ security (H8). What the analysis does establish is stated next.
   5.0% [3.8, 6.5] (A1), 7.8% (B), 5.4% (A2) and 17.2% [13.9, 19.8] (C) of the open-to-close
   benchmark, against 15.6%, 23.0%, 17.6% and 48.0% if the error is independent of news
   (`table97`). The model-free facts — b, E[o c] and the Yang–Zhang identity — need neither.
-* **Causality reaches the rule package, not the band alone.** The reform changed the pre-open
-  band, the daily limit and the circuit breaker on one date, two weeks after the trading-week
-  reform, and C holds 90 sessions. The share of opens equal to the previous close also rose, from
+* **Causality reaches the rule package, not the band alone.** The amended trading regulations
+  that took effect on 20 April 2026 widened the pre-open band (±2% to ±5%), the daily limit
+  (±10% to ±15%) and the band for continuous-session order prices (±2% to ±3% of the prevailing
+  price), raised the circuit-breaker thresholds, and let orders entered before the session be
+  queued for the open — two weeks after the trading-week reform — and C holds 90 sessions. The
+  plan named only the first three (correction `M-013`). The fall in b is concentrated in opens
+  beyond the old band, where the pre-open band acts (H9(c)), but timing cannot separate the band
+  from the rest of the package. The share of opens equal to the previous close also rose, from
   11.8% (A2) to 17.4% (C); b is invariant to such opens by construction, but the other moments
   are not.
 * **The mechanism inside the auction.** Without pre-open order-book or auction-volume data the
@@ -125,7 +132,7 @@ Written after the frozen results were seen; none changes a frozen verdict.
 * **X3, the open as the session's extreme**: 36.4%, 38.9%, 42.2% and 51.5% of non-stale opens.
 * **X4, the bound above.** Derived in the script's docstring.
 * **X5, the closing-rule fingerprint**: 85.4% of closes lie off the 0.1-rupee price grid in B, at most 0.01% in A1, A2 and C; on the excluded 2025-09-18 session no close is off the grid and 73.9% of opens sit at the band.
-* **X6, market-wide or security by security.** Split by each session's cross-sectional mean, the idiosyncratic part of the opening move carries 88-96% of E[o²] and has b = 0.206 [0.168, 0.252] (A1), 0.185 (B), 0.203 (A2) and 0.097 [0.057, 0.149] (C); the market-wide part is not reversed (1.060 [0.755, 1.396] in A1, 1.627 [1.204, 2.245] in A2, where the market's opening move is even continued). The error lives inside each security's auction.
+* **X6, market-wide or security by security.** Split by each session's cross-sectional mean, the idiosyncratic part of the opening move carries 88-96% of E[o²] and has b = 0.206 [0.168, 0.252] (A1), 0.185 (B), 0.203 (A2) and 0.097 [0.057, 0.149] (C); no regime shows a detectable reversal of the market-wide part: 1.060 [0.755, 1.396] (A1), 0.496 [−0.468, 1.499] (B), 1.627 [1.204, 2.245] (A2, where the market's opening move is even continued) and 0.879 [0.341, 1.494] (C). The error lives inside each security's auction, which is also why the NIFTY 50 index cannot serve as a security-level contrast (`M-014`).
 
 ## Changes made after the first results were seen
 
@@ -134,3 +141,5 @@ Written after the frozen results were seen; none changes a frozen verdict.
 | M-007 | M14's E2 (`M14_CALIBRATION_RESULTS.md`, `scripts/36`) called the kernel-based transient shares lower bounds, considering only band censoring. An opening error that overreacts in proportion to news biases the kernel the other way. The claim is withdrawn and replaced by the X4 bound, which assumes nothing about that correlation. | The E2 figures stand as point estimates under independence; their description changes. No verdict depends on them. |
 | M-008 | H12 planned to report the covariance *share* of the Yang–Zhang gap on NIFTY. The gap there is near zero, so the share is a ratio of two near-zero sums (2.7 [−29.0, 7.0]). The same decomposition is added scaled by Var₂₁(r): −2 Cov(o, c) = 0.041 [0.003, 0.090] and the RS term −0.026 [−0.091, 0.106] of Var₂₁(r). | Presentation only; H12 carries no decision. |
 | M-009 | The figure's rule-date labels collided with the series and with each other; they became numbered tags with a key. | Layout only. |
+| M-013 | The plan and the first write-up named three parts of the 20 April 2026 rule package (pre-open band, daily limit, circuit breaker). Contemporaneous reports of the amended regulations show two more on the same date: the continuous-session order band widened from ±2% to ±3% of the prevailing price, and orders entered before the session could be queued for the open. Every description of the package now names all five. | The H7 timing evidence is unchanged; what it can be attributed to is the package, as already stated, now described in full. |
+| M-014 | The NEPSE–NIFTY contrast set security-level b (0.130–0.356) against b on the NIFTY 50 index (0.929). An index averages its constituents' opening errors, and X6 finds no detectable reversal of NEPSE's own market-wide opening move. The contrast is now drawn at the market level, and the cross-market comparison is removed from the abstract. | No number changes; H12 carries no decision. The manuscript no longer implies that NEPSE's auction is worse than NSE's at the security level, which these data cannot show. |

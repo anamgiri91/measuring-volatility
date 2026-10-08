@@ -41,7 +41,8 @@ __all__ = ["SCHEDULES", "WEEK_REFORM", "expected_weekdays", "detect_sessions",
 #               public holidays. This is a CALENDAR change: it alters which weekdays are
 #               sessions, and nothing else.
 #   2026-04-20  PRICE REGIME. The daily price limit widened from +/-10% to +/-15%, the pre-open
-#               band from +/-2% to +/-5%, and the market-wide circuit breaker became two-tier.
+#               band from +/-2% to +/-5%, and the market-wide circuit breaker became two-tier
+#               (with further order-handling changes; AUDIT-REGISTER M-013).
 #               This is a CENSORING change: it alters how far a price may travel within a
 #               session. See nepsevol.clean.limits.REGIMES, which keeps 2026-04-20.
 #
