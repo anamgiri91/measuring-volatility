@@ -1,0 +1,57 @@
+world,estimator,n,b_market,raw_level_vs_truth,calibrated_QLIKE_vs_truth
+clean continuous market,CC,28800,0.9822069613,1.005136562,0.06762713162
+clean continuous market,P,28800,0.9822069613,0.7292441047,0.01212697323
+clean continuous market,GK,28800,0.9822069613,0.7167447451,0.00797037304
+clean continuous market,o2+P,28800,0.9822069613,0.9836613667,0.01055002708
+clean continuous market,o2+GK,28800,0.9822069613,0.9711620071,0.008285960032
+clean continuous market,YZ (daily form),28800,0.9822069613,0.9766277573,0.008545339032
+clean continuous market,"Anam, open-free special case (b=0)",28800,0.9822069613,0.8889742764,0.01857554188
+clean continuous market,Anam,28800,0.9822069613,0.970688607,0.01068590325
+simulator defaults,CC,28800,1.015173751,1.034871438,0.06281399258
+simulator defaults,P,28800,1.015173751,0.8341427623,0.02164926937
+simulator defaults,GK,28800,1.015173751,0.8403920882,0.02394239893
+simulator defaults,o2+P,28800,1.015173751,1.045249431,0.02195825444
+simulator defaults,o2+GK,28800,1.015173751,1.051498757,0.02432687645
+simulator defaults,YZ (daily form),28800,1.015173751,1.065397451,0.02389948407
+simulator defaults,"Anam, open-free special case (b=0)",28800,1.015173751,0.9600969257,0.02352058232
+simulator defaults,Anam,28800,1.015173751,1.041186115,0.02192347103
+moderate opening error (0.7 overnight sd),CC,28800,0.692909159,1.034870705,0.0628122866
+moderate opening error (0.7 overnight sd),P,28800,0.692909159,0.8735250563,0.02029167429
+moderate opening error (0.7 overnight sd),GK,28800,0.692909159,0.8616066431,0.02279391686
+moderate opening error (0.7 overnight sd),o2+P,28800,0.692909159,1.215963545,0.01944179267
+moderate opening error (0.7 overnight sd),o2+GK,28800,0.692909159,1.204045131,0.02116701874
+moderate opening error (0.7 overnight sd),YZ (daily form),28800,0.692909159,1.236693144,0.02104777861
+moderate opening error (0.7 overnight sd),"Anam, open-free special case (b=0)",28800,0.692909159,0.9872208869,0.02231921713
+moderate opening error (0.7 overnight sd),Anam,28800,0.692909159,1.045489915,0.01895455195
+"heavy opening error (2.2 overnight sd), +/-2% band",CC,28800,0.2655425345,1.034870309,0.062811378
+"heavy opening error (2.2 overnight sd), +/-2% band",P,28800,0.2655425345,1.056931347,0.02566217268
+"heavy opening error (2.2 overnight sd), +/-2% band",GK,28800,0.2655425345,0.9728807051,0.02521079656
+"heavy opening error (2.2 overnight sd), +/-2% band",o2+P,28800,0.2655425345,1.573419236,0.03815346041
+"heavy opening error (2.2 overnight sd), +/-2% band",o2+GK,28800,0.2655425345,1.489368593,0.03902501111
+"heavy opening error (2.2 overnight sd), +/-2% band",YZ (daily form),28800,0.2655425345,1.565863916,0.03892250514
+"heavy opening error (2.2 overnight sd), +/-2% band","Anam, open-free special case (b=0)",28800,0.2655425345,1.112984174,0.02466142757
+"heavy opening error (2.2 overnight sd), +/-2% band",Anam,28800,0.2655425345,1.116417438,0.02483305476
+"heavy opening error (2.2 overnight sd), no band",CC,28800,0.1867339317,1.034870309,0.062811378
+"heavy opening error (2.2 overnight sd), no band",P,28800,0.1867339317,1.325653255,0.02076582317
+"heavy opening error (2.2 overnight sd), no band",GK,28800,0.1867339317,1.135292314,0.01994602641
+"heavy opening error (2.2 overnight sd), no band",o2+P,28800,0.1867339317,2.577824118,0.0315163416
+"heavy opening error (2.2 overnight sd), no band",o2+GK,28800,0.1867339317,2.387463177,0.03036410598
+"heavy opening error (2.2 overnight sd), no band",YZ (daily form),28800,0.1867339317,2.492829759,0.03016660039
+"heavy opening error (2.2 overnight sd), no band","Anam, open-free special case (b=0)",28800,0.1867339317,1.335739926,0.01984355993
+"heavy opening error (2.2 overnight sd), no band",Anam,28800,0.1867339317,1.347191594,0.01984167312
+stale opens (60%),CC,28800,1.006672453,1.03506182,0.06318549271
+stale opens (60%),P,28800,1.006672453,0.8887729611,0.02145219905
+stale opens (60%),GK,28800,1.006672453,0.8721023784,0.02357105383
+stale opens (60%),o2+P,28800,1.006672453,0.9903298647,0.02223814029
+stale opens (60%),o2+GK,28800,1.006672453,0.973659282,0.02451031242
+stale opens (60%),YZ (daily form),28800,1.006672453,1.007030923,0.02473670837
+stale opens (60%),"Anam, open-free special case (b=0)",28800,1.006672453,0.9595463453,0.02382764623
+stale opens (60%),Anam,28800,1.006672453,0.9862524824,0.02212012414
+very thin trading (20 trades median),CC,28800,1.062923659,1.053321041,0.06251185241
+very thin trading (20 trades median),P,28800,1.062923659,0.5530865682,0.06024306759
+very thin trading (20 trades median),GK,28800,1.062923659,0.4652094486,0.1333231046
+very thin trading (20 trades median),o2+P,28800,1.062923659,0.7942339605,0.0233561805
+very thin trading (20 trades median),o2+GK,28800,1.062923659,0.7063568409,0.0304019576
+very thin trading (20 trades median),YZ (daily form),28800,1.062923659,0.7446442641,0.02811780562
+very thin trading (20 trades median),"Anam, open-free special case (b=0)",28800,1.062923659,0.777311243,0.02902281524
+very thin trading (20 trades median),Anam,28800,1.062923659,0.7929804976,0.02322942126

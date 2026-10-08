@@ -1,0 +1,21 @@
+regime,estimator,raw_mean_over_mean_r2
+A1,CC,1
+A1,P,1.147273752
+A1,GK,1.16746942
+A1,RS,1.250703798
+A1,o2+P,1.393342086
+A1,o2+GK,1.413537753
+A1,YZ (daily form),1.475074759
+A1,"Anam, open-free special case (b=0)",1.159247571
+A1,Anam,1.167176326
+A1,"Anam (calibrated, 21-session window)",0.9991265489
+B,CC,1
+B,P,1.292885628
+B,GK,1.328791342
+B,RS,1.431871635
+B,o2+P,1.644999614
+B,o2+GK,1.680905327
+B,YZ (daily form),1.751666794
+B,"Anam, open-free special case (b=0)",1.277734758
+B,Anam,1.293497282
+B,"Anam (calibrated, 21-session window)",1.022849332
