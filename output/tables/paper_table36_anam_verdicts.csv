@@ -1,0 +1,30 @@
+Plan,Rule,Test sample,Estimator tested,"Verdict (frozen rule, applied mechanically)",Evidence
+M16,H1,NEPSE,Anam,does not hold,5 sessions on A2+C: Anam no difference CC; Anam beats P
+M16,H2,NEPSE,Anam,does not hold,"Anam 1.011 (A2), 1.195 (C); overnight² + Parkinson 1.493, 2.761; YZ daily 1.583, 2.848"
+M16,H3,NEPSE,Anam,does not hold,change A2 -> C: Anam +0.184; Yang-Zhang window form +1.170
+M16,H4,NIFTY 50,Anam,holds,5 sessions on the test half: Anam beats CC
+M16,H5,S&P 500,Anam,holds,5 sessions on the test half: Anam beats CC
+M16,best in market,NEPSE,Anam,yes,no rival beats Anam at 5 or 21 sessions
+M16,best in market,NIFTY 50,Anam,yes,no rival beats Anam at 5 or 21 sessions
+M16,best in market,S&P 500,Anam,yes,no rival beats Anam at 5 or 21 sessions
+M17,F1,Dhaka 2023-2026,Anam,does not hold,5 sessions: Anam no difference CC
+M17,F2,Dhaka 2023-2026,Anam,holds,5 sessions: Anam beats P
+M17,F3,Dhaka 2023-2026,Anam,holds,Anam (calibrated) 1.002; overnight² + Parkinson 1.662; YZ daily form 1.709
+M17,best in panel,Dhaka 2023-2026,Anam,yes,no rival beats Anam at 5 or 21 sessions
+M17,F1,Vietnam 2007-2020,Anam,does not hold,5 sessions: Anam no difference CC
+M17,F2,Vietnam 2007-2020,Anam,holds,5 sessions: Anam beats P
+M17,F3,Vietnam 2007-2020,Anam,holds,Anam (calibrated) 1.009; overnight² + Parkinson 1.556; YZ daily form 1.594
+M17,best in panel,Vietnam 2007-2020,Anam,no,Anam loses to CC at 21
+M17,F1,Dhaka 2009-2021 (dates repaired),Anam,holds,5 sessions: Anam beats CC
+M17,F2,Dhaka 2009-2021 (dates repaired),Anam,holds,5 sessions: Anam beats P
+M17,F3,Dhaka 2009-2021 (dates repaired),Anam,holds,Anam (calibrated) 1.004; overnight² + Parkinson 1.392; YZ daily form 1.418
+M17,best in panel,Dhaka 2009-2021 (dates repaired),Anam,yes,no rival beats Anam at 5 or 21 sessions
+M17,G,Dhaka 2023-2026 and Vietnam 2007-2020,Anam,does not hold,"DSE 2023-2026: F1, F2 and best in panel not all hold; Vietnam 2007-2020: F1, F2 and best in panel not all hold"
+M18,F1,Morocco 2012-2026,Anam,holds,5 sessions: Anam beats CC
+M18,F2,Morocco 2012-2026,Anam,holds,5 sessions: Anam beats P
+M18,F3,Morocco 2012-2026,Anam,holds,Anam (calibrated) 1.005; overnight² + Parkinson 1.283; YZ daily form 1.273
+M18,best in panel,Morocco 2012-2026,Anam,yes,no rival beats Anam at 5 or 21 sessions
+M18,V1,Morocco 2012-2026,open-free form,holds,5 sessions: open-free form beats CC
+M18,V2,Morocco 2012-2026,open-free form,holds,5 sessions: open-free form beats Anam
+M18,V3,Morocco 2012-2026,open-free form,holds,no estimator beats the open-free form at 5 or 21 sessions
+M18,O,Morocco 2012-2026,open-free form,holds,V1 holds; V3 holds

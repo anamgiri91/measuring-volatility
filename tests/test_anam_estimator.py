@@ -138,3 +138,20 @@ def test_estimates_true_total_variance_under_a_heavy_opening_error():
     raw_alt = alt.groupby(s.symbol).transform(lambda z: z.rolling(21, min_periods=21).mean())
     raw_anam = out["kernel"].groupby(s.symbol).transform(lambda z: z.rolling(21, min_periods=21).mean())
     assert abs(raw_anam[m].mean() / truth[m].mean() - 1) < abs(raw_alt[m].mean() / truth[m].mean() - 1)
+
+
+def test_open_free_option_is_the_b_zero_kernel_calibrated_the_same_way(sim):
+    """The open-free form (b = 0) is reachable through the public function and equals the kernel at
+    b = 0 with the same pooled calibration; the default is the frozen M16 estimator, unchanged."""
+    d = sim
+    of = A.anam_estimator(d, window=21, mode="panel", by="symbol", date="day", open_free=True)
+    full = A.anam_estimator(d, window=21, mode="panel", by="symbol", date="day")
+    co = A.bar_coordinates(d["open"], d["high"], d["low"], d["close"], d["prev_close"])
+    A0 = A.kernel(co["o"], co["c"], co["u"], co["d"], pd.Series(0.0, index=d.index))
+    assert (of["b"] == 0).all() and np.allclose(of["kernel"].dropna(), A0.dropna())
+    k0 = A.calibration_panel(A0, co["r"] ** 2, d["day"])
+    ok = of["kappa"].notna()
+    assert np.allclose(of["kappa"][ok], k0[ok])
+    j = full["kernel"].notna() & of["kernel"].notna()     # the full form waits for its pooled b
+    assert not np.allclose(full["kernel"][j], of["kernel"][j])
+

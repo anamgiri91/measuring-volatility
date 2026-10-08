@@ -187,7 +187,8 @@ def calibration_series(A: pd.Series, r2: pd.Series, by: pd.Series | None = None,
 
 
 def anam_estimator(df: pd.DataFrame, window: int = 21, mode: str = "panel", by: str = "symbol",
-                   date: str = "date", prev_close: str = "prev_close", lam0: float = LAMBDA0) -> pd.DataFrame:
+                   date: str = "date", prev_close: str = "prev_close", lam0: float = LAMBDA0,
+                   open_free: bool = False) -> pd.DataFrame:
     """Anam's estimator for every row of a daily-bar frame.
 
     ``df`` needs open/high/low/close, ``prev_close`` (NaN across gaps) and, in panel mode, ``by`` and
@@ -196,12 +197,19 @@ def anam_estimator(df: pd.DataFrame, window: int = 21, mode: str = "panel", by: 
     Returns columns b, kernel, kappa and ``var`` -- the calibrated variance of the window of
     ``window`` observed sessions ending at the row (daily units; multiply by the market's session
     count to annualise).
+
+    ``open_free=True`` gives the open-free form, b = 0 throughout: 0.8 x true-range Parkinson plus
+    0.2 r^2, calibrated the same way. It is the special case the frozen M16 plan reported as a
+    variant; M18 tested it as a hypothesis fixed in advance, and it is the form the frontier-market
+    evidence supports (manuscript Section 6.8). The default, ``False``, is the estimator frozen in M16.
     """
     if mode not in ("panel", "series"):
         raise ValueError(f"mode must be 'panel' or 'series', got {mode!r}")
     co = bar_coordinates(df["open"], df["high"], df["low"], df["close"], df[prev_close])
     grp = df[by] if by in df else pd.Series(0, index=df.index)
-    if mode == "panel":
+    if open_free:
+        b = pd.Series(0.0, index=df.index)
+    elif mode == "panel":
         b = open_quality_panel(co["o"], co["r"], df[date])
     else:
         b = open_quality_series(co["o"], co["r"], grp)

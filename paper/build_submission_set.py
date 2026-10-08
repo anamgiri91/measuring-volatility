@@ -35,9 +35,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PAPER = ROOT / "paper"
 OUT = PAPER / "submission"
 
-# Must match paper/apply_round14_revisions.py, which writes them into the manuscript.
-TITLE = "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market without Options"
-SUBTITLE = "Evidence from a Pre-Open Band Reform on the Nepal Stock Exchange"
+# Must match paper/apply_round15_revisions.py, which writes them into the manuscript.
+TITLE = "When the Open Overreacts: Measuring Daily Volatility in Frontier Markets without Options"
+SUBTITLE = "Evidence from Nepal's Pre-Open Band Reform and an Estimator Tested in Four Frontier Markets"
 
 # MANDATORY ITEM 10 (submission gate). The author's name was hard-coded here as
 # ``AUTHOR = "Anam Giri"``. This script SHIPS INSIDE the reproducibility package, and the
@@ -86,12 +86,15 @@ TOP_TIER = [
      "a reform of its price band, analysed as a natural experiment under a frozen plan."),
     ("Journal_of_Empirical_Finance", "Journal of Empirical Finance", "Editors",
      "It publishes empirical work on volatility measurement and market design, and this paper "
-     "combines both: a calibration test for daily-bar volatility estimators and evidence that a "
-     "market-design rule determines what those estimators measure."),
+     "combines both: a calibration test for daily-bar volatility estimators, evidence that a "
+     "market-design rule determines what those estimators measure, and an estimator built on that "
+     "evidence and tested out of sample in four frontier markets."),
     ("Journal_of_Financial_Econometrics", "Journal of Financial Econometrics", "Editors",
      "It publishes research on the measurement of volatility, and this paper identifies daily-"
      "bar estimators' calibration from volatility persistence without a high-frequency "
-     "benchmark and documents a failure of the independence assumption behind Yang-Zhang."),
+     "benchmark, documents a failure of the independence assumption behind Yang-Zhang, and "
+     "proposes an estimator for markets whose opening price overreacts, validated out of sample "
+     "under frozen plans."),
 ]
 
 # The referee's recommended submission order, with the reason each was recommended. Kept here so
@@ -116,10 +119,11 @@ JOURNALS = [
 ABSTRACT_SHORT = (
     "Nepal has no exchange-traded options and no public intraday data, so its volatility must be "
     "measured from daily open-high-low-close bars. This paper shows that the bar's opening price "
-    "is mostly transient -- the trading session undoes two-thirds or more of the overnight move -- "
-    "and uses NEPSE's 2026 widening of its pre-open price band as a natural experiment showing "
-    "that market design shapes what daily bars measure. It is a measurement study rather than a "
-    "search for a universally superior estimator.")
+    "is mostly transient: the trading session undoes two-thirds or more of the overnight move. It "
+    "uses NEPSE's 2026 widening of its pre-open price band as a natural experiment showing that "
+    "market design shapes what daily bars measure, and it builds an estimator for markets whose "
+    "open overreacts, tested out of sample in four frontier markets and two benchmark indices. No "
+    "estimator is claimed to dominate close-to-close everywhere.")
 
 
 def anonymise(doc):
@@ -170,6 +174,50 @@ def anonymise(doc):
     return removed
 
 
+def neutralise_eponym(doc) -> int:
+    """Replace the estimator's eponym in the anonymous copy, in body text and table cells.
+
+    Section 6.8 names the estimator after the author, so in a double-anonymous submission the name is
+    itself identifying. The name is taken from ``apply_round15_revisions.NAME`` rather than typed
+    here, and replaced run by run so that bold labels and other character formatting survive. Returns
+    the number of replacements; :func:`check_clean` then confirms that no trace of the name remains.
+    """
+    import re
+    sys.path.insert(0, str(PAPER))
+    from apply_round15_revisions import NAME
+    stem = NAME.split("'")[0]
+    rules = [(re.compile(r"(^|(?<=[.!?]\s))" + re.escape(NAME)), "The proposed estimator"),
+             (re.compile(re.escape(NAME)), "the proposed estimator"),
+             (re.compile(r"\b" + re.escape(stem) + r"\b"), "Proposed")]
+    count = 0
+
+    def fix(paragraph):
+        nonlocal count
+        for run in paragraph.runs:
+            text = run.text
+            for pattern, replacement in rules:
+                text, k = pattern.subn(replacement, text)
+                count += k
+            if text != run.text:
+                run.text = text
+
+    for paragraph in doc.paragraphs:
+        fix(paragraph)
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    fix(paragraph)
+    return count
+
+
+def eponym_tokens() -> list[str]:
+    """The estimator's eponym, which is identifying whether or not the author sidecar is present."""
+    sys.path.insert(0, str(PAPER))
+    from apply_round15_revisions import NAME
+    return [NAME.split("'")[0]]
+
+
 def identity_tokens() -> list[str]:
     """Strings whose presence in an anonymous file is a leak.
 
@@ -201,7 +249,7 @@ def check_clean(path):
     """
     import zipfile
     hits = []
-    tokens = identity_tokens()
+    tokens = sorted(set(identity_tokens()) | set(eponym_tokens()))
     with zipfile.ZipFile(path) as z:
         for name in z.namelist():
             if not name.endswith((".xml", ".rels")):
@@ -322,7 +370,14 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "and shows the range estimators' near-unit ratios to be calibration, not offsetting "
         "distortions. The earlier results remain: range estimators do not collapse in thin "
         "ordinary equity, and apparent estimator failure in a pooled frontier-market universe is "
-        "largely an instrument-composition artifact.")
+        "largely an instrument-composition artifact. The paper then builds on this evidence: a new "
+        "daily-bar estimator that weights the overnight move by the open's measured reliability, "
+        "extends the range to the effective open and calibrates to close-to-close variance, designed "
+        "on part of the NEPSE sample and tested out of sample under three further frozen plans. No "
+        "classical range estimator beats it in any of seven test samples across Nepal, Bangladesh, "
+        "Vietnam, Morocco and two benchmark indices, and outside NEPSE's post-reform regime its level "
+        f"is within {numbers['lev_dev']}% of close-to-close variance; its open-free form passed a "
+        "pre-registered test in Morocco.")
     add("")
     add("What the paper does not claim. Latent variance is unobserved, so results are reported "
         "relative to stated benchmarks, and no estimator is claimed to dominate generally. The "
@@ -333,7 +388,9 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "not detected, and without auction order-book data the mechanism inside the auction is not "
         "identified; the paper reports these limits and its failed predictions alongside the "
         "results. The India VIX exercise is co-movement and forecasting evidence about India, and "
-        "its estimator comparison is inconclusive.")
+        "its estimator comparison is inconclusive. The new estimator does not beat close-to-close at "
+        "short horizons in three of the four frontier markets, and close-to-close beat it "
+        "immediately after NEPSE's rule change; those failed predictions are reported as such.")
     add("")
     add("Reproducibility. A complete package accompanies the submission: frozen data, producer "
         "scripts, a claim-to-output reproducibility map, an audit register recording defects "
@@ -364,6 +421,8 @@ def main():
     from apply_round14_revisions import load as load_round14
     r14 = load_round14()
     numbers.update({k: r14[k] for k in ("undo_lo", "undo_hi", "undo_N", "n_plac")})
+    from apply_round15_revisions import load as load_round15
+    numbers["lev_dev"] = load_round15()["lev_dev"]
 
     if AUTHOR == AUTHOR_PLACEHOLDER:
         print(f"  NOTE: {AUTHOR_FILE.relative_to(ROOT)} is absent, so the title page carries")
@@ -377,6 +436,8 @@ def main():
     anon_path = OUT / "02_manuscript_anonymous.docx"
     d = docx.Document(str(src))
     removed = anonymise(d)
+    k = neutralise_eponym(d)
+    removed.append(f"{k} occurrences of the estimator's eponym")
     d.save(anon_path)
     hits = check_clean(anon_path)
     print(f"  wrote {OUT.name}/02_manuscript_anonymous.docx  (cleared: {', '.join(removed)})")

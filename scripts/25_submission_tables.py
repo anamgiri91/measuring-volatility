@@ -858,6 +858,116 @@ checks += [
      "38_opening_price_exploratory.py (post hoc)"],
 ]
 
+# ─────────────────────────── Manuscript Tables 33-36: Anam's estimator, under plans M16-M18
+# Every cell is read from the frozen outputs of scripts/40 (M16), 42 (M17) and 43 (M18); verdicts
+# are copied from the decision ledgers (table105, table111, table116), never re-derived. The
+# definition table is written from the estimator module's own constants, so the paper cannot
+# describe a different estimator from the one the package runs.
+from nepsevol.estimators import anam as _AN  # noqa: E402
+
+_VAR = "Anam, open-free special case (b=0)"
+_NAMES = {"CC": "close-to-close", "P": "Parkinson", "GK": "Garman-Klass", "RS": "Rogers-Satchell",
+          "o2+P": "overnight² + Parkinson", "o2+GK": "overnight² + Garman-Klass",
+          "YZ (daily form)": "Yang-Zhang (daily form)", "YZ (window form)": "Yang-Zhang (window form)",
+          "Anam": "Anam", _VAR: "Anam, open-free form", "Anam (calibrated)": "Anam (calibrated)"}
+_t33 = [
+    ["Bar coordinates", "o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC), R = ln(H/L); PC is the "
+     "previous session's close, adjusted for corporate actions and undefined across a gap", "-"],
+    ["Open quality b", "b = Σ o r / Σ o², clipped to [0, 1], and 0 where Σ o² = 0: the share of the "
+     "overnight move that the session keeps",
+     f"panel: pooled over the cross-section and the last {_AN.POOL_SESSIONS} dates (at least "
+     f"{_AN.MIN_POOL_DATES}); one series: its own last {_AN.SERIES_SESSIONS} sessions (at least "
+     f"{_AN.MIN_SERIES_SESSIONS})"],
+    ["Extended range", "R* = R + max(0, b o - h) + max(0, l - b o): the range extended to reach the "
+     "effective open PC·exp(b o)", "-"],
+    ["Daily kernel", "A = (1 - w)[(b o)² + R*²/(4 ln 2)] + w r², with w = λ₀(1 - b)", f"λ₀ = {_AN.LAMBDA0}"],
+    ["Calibration", "κ = Σ r² / Σ A over the same trailing set as b", "as for b"],
+    ["Window variance", "σ̂² = κ × the mean of A over the window", "5 or 21 sessions in Tables 34-36"],
+    ["Special cases", "b = 1 gives o² + Parkinson. b = 0, the open-free form, gives 0.8 TR²/(4 ln 2) + 0.2 r², "
+     "where TR = ln(max(H, PC)/min(L, PC)) is Wilder's (1978) true range", "-"],
+]
+pd.DataFrame(_t33, columns=["Step", "Definition", "Constant (frozen in plan M16)"]).to_csv(
+    TAB / "paper_table33_anam_definition.csv", index=False)
+
+_f101 = pd.read_csv(TAB / "table101_anam_holdout_forecast.csv")
+_f108 = pd.read_csv(TAB / "table108_anam_frontier_forecast.csv")
+_f113 = pd.read_csv(TAB / "table113_anam_morocco_forecast.csv")
+_SAMPLES = [  # label, plan, forecast frame, market, test span
+    ("NEPSE, regimes A2 and C", "M16", _f101, "NEPSE", "A2+C"),
+    ("NIFTY 50 (index)", "M16", _f101, "NIFTY50", "test half"),
+    ("S&P 500 (index)", "M16", _f101, "SP500", "test half"),
+    ("Dhaka 2023-2026", "M17", _f108, "DSE 2023-2026", "test half"),
+    ("Vietnam 2007-2020", "M17", _f108, "Vietnam 2007-2020", "test half"),
+    ("Dhaka 2009-2021 (dates repaired)", "M17", _f108, "DSE 2009-2021", "test half"),
+    ("Morocco 2012-2026", "M18", _f113, "Morocco 2012-2026", "test half"),
+]
+_t34 = []
+for _lab, _plan, _fr, _mk, _sp in _SAMPLES:
+    for _w in (5, 21):
+        _g = _fr[(_fr.market == _mk) & (_fr.test_span == _sp) & (_fr.window == _w)].set_index("estimator")
+        _oth = _g.loc[["GK", "RS", "o2+P", "o2+GK", "YZ (daily form)"], "QLIKE"]
+        _t34.append([_lab, _plan, _w, f"{_g.loc['CC', 'QLIKE']:.4f}", f"{_g.loc['P', 'QLIKE']:.4f}",
+                     f"{_NAMES[_oth.idxmin()]} {_oth.min():.4f}", f"{_g.loc['Anam', 'QLIKE']:.4f}",
+                     f"{_g.loc[_VAR, 'QLIKE']:.4f}", f"{_g.loc['Anam', 't_vs_CC']:+.2f}",
+                     f"{_g.loc[_VAR, 't_vs_CC']:+.2f}"])
+pd.DataFrame(_t34, columns=[
+    "Test sample", "Plan", "Horizon (sessions)", "Close-to-close", "Parkinson",
+    "Best other range estimator", "Anam", "Anam, open-free form",
+    "Anam minus close-to-close: t", "Open-free form minus close-to-close: t",
+]).to_csv(TAB / "paper_table34_anam_forecasts.csv", index=False)
+
+_l102 = pd.read_csv(TAB / "table102_anam_holdout_level.csv")
+_l109 = pd.read_csv(TAB / "table109_anam_frontier_level.csv")
+_l114 = pd.read_csv(TAB / "table114_anam_morocco_level.csv")
+_LEVELS = [("NEPSE, regime A2", "M16", _l102, "NEPSE", "A2"), ("NEPSE, regime C (after the reform)", "M16", _l102, "NEPSE", "C"),
+           ("NIFTY 50 (index)", "M16", _l102, "NIFTY50", "test half"), ("S&P 500 (index)", "M16", _l102, "SP500", "test half"),
+           ("Dhaka 2023-2026", "M17", _l109, "DSE 2023-2026", "test half"),
+           ("Vietnam 2007-2020", "M17", _l109, "Vietnam 2007-2020", "test half"),
+           ("Dhaka 2009-2021 (dates repaired)", "M17", _l109, "DSE 2009-2021", "test half"),
+           ("Morocco 2012-2026", "M18", _l114, "Morocco 2012-2026", "test half")]
+_t35 = []
+for _lab, _plan, _fr, _mk, _sp in _LEVELS:
+    _g = _fr[(_fr.market == _mk) & (_fr.span == _sp)].set_index("estimator")["ratio_to_close_to_close"]
+    _t35.append([_lab, _plan] + [f"{_g[k]:.3f}" for k in ("Anam (calibrated)", "P", "GK", "o2+P",
+                                                           "YZ (daily form)", "YZ (window form)")])
+pd.DataFrame(_t35, columns=[
+    "Test sample", "Plan", "Anam (calibrated)", "Parkinson", "Garman-Klass", "overnight² + Parkinson",
+    "Yang-Zhang (daily form)", "Yang-Zhang (window form)",
+]).to_csv(TAB / "paper_table35_anam_level.csv", index=False)
+
+_d105 = pd.read_csv(TAB / "table105_anam_holdout_decisions.csv")
+_d111 = pd.read_csv(TAB / "table111_anam_frontier_decisions.csv")
+_d116 = pd.read_csv(TAB / "table116_anam_morocco_decisions.csv")
+_MK = {"NEPSE": "NEPSE", "NIFTY50": "NIFTY 50", "SP500": "S&P 500", "DSE 2023-2026": "Dhaka 2023-2026",
+       "Vietnam 2007-2020": "Vietnam 2007-2020", "DSE 2009-2021": "Dhaka 2009-2021 (dates repaired)",
+       "DSE 2023-2026 + Vietnam 2007-2020": "Dhaka 2023-2026 and Vietnam 2007-2020",
+       "Morocco 2012-2026": "Morocco 2012-2026"}
+_t36 = []
+for _plan, _fr in (("M16", _d105), ("M17", _d111), ("M18", _d116)):
+    for _r in _fr[_fr.rule != "rival"].itertuples():
+        _who = ("open-free form" if getattr(_r, "estimator", "Anam") == _VAR else "Anam")
+        _t36.append([_plan, _r.rule, _MK[_r.market], _who, _r.verdict,
+                     str(_r.detail).replace("o2+P", "overnight² + Parkinson").replace(_VAR, "open-free form")])
+pd.DataFrame(_t36, columns=["Plan", "Rule", "Test sample", "Estimator tested",
+                            "Verdict (frozen rule, applied mechanically)", "Evidence"]).to_csv(
+    TAB / "paper_table36_anam_verdicts.csv", index=False)
+print("wrote paper_table33, paper_table34, paper_table35, paper_table36 (M16-M18)")
+
+checks += [
+    ["M16_holdout_verdicts", "; ".join(f"{r.rule} {r.market} {r.verdict}" for r in _d105[_d105.rule != "rival"].itertuples()),
+     "verdict", "40_anam_holdout.py"],
+    ["M17_frontier_verdicts", "; ".join(f"{r.rule} {r.market} {r.verdict}" for r in _d111[_d111.rule != "rival"].itertuples()),
+     "verdict", "42_anam_frontier.py"],
+    ["M18_morocco_verdicts", "; ".join(f"{r.rule} {r.verdict}" for r in _d116[_d116.rule != "rival"].itertuples()),
+     "verdict", "43_anam_morocco.py"],
+    ["Anam_calibrated_level_by_test_sample", "; ".join(f"{row[0]} {row[2]}" for row in _t35), "ratio",
+     "40_anam_holdout.py; 42_anam_frontier.py; 43_anam_morocco.py"],
+    ["Anam_minus_CC_t_at_5_sessions", "; ".join(f"{row[0]} {row[8]}" for row in _t34 if row[2] == 5), "t",
+     "40_anam_holdout.py; 42_anam_frontier.py; 43_anam_morocco.py"],
+    ["Anam_open_free_minus_CC_t_at_5_sessions", "; ".join(f"{row[0]} {row[9]}" for row in _t34 if row[2] == 5), "t",
+     "40_anam_holdout.py; 42_anam_frontier.py; 43_anam_morocco.py"],
+]
+
 pd.DataFrame(checks, columns=["Result", "Value", "Scale", "Producer"]).to_csv(
     ROOT / "PAPER_RESULTS_CHECK.csv", index=False)
 

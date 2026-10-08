@@ -64,18 +64,21 @@ def md(s: str) -> str:
 # ─────────────────────────────────────────────────────────────── structure and title
 
 def test_title_matches_the_submission_builder(doc):
-    r14 = _load(ROOT / "paper" / "apply_round14_revisions.py", "r14")
+    # round 15 retitled the paper when the estimator of Section 6.8 joined it; the latest round's
+    # constants are the ones the manuscript and the submission builder must share
+    r15 = _load(ROOT / "paper" / "apply_round15_revisions.py", "r15")
     sub = (ROOT / "paper" / "build_submission_set.py").read_text()
-    assert doc.paragraphs[0].text == r14.TITLE
-    assert doc.paragraphs[1].text == r14.SUBTITLE
-    assert f'TITLE = "{r14.TITLE}"' in sub and f'SUBTITLE = "{r14.SUBTITLE}"' in sub
+    assert doc.paragraphs[0].text == r15.TITLE
+    assert doc.paragraphs[1].text == r15.SUBTITLE
+    assert f'TITLE = "{r15.TITLE}"' in sub
+    assert 'SUBTITLE = "' + r15.SUBTITLE + '"' in sub
 
 
 def test_new_sections_tables_and_figures_are_present(doc, body):
     heads = [p.text for p in doc.paragraphs if p.style.name == "Heading 2"]
     assert "6.6 Calibration slopes: what a ratio cannot see" in heads
     assert "6.7 What the opening price measures: a pre-open band reform" in heads
-    assert len(doc.tables) == 32
+    assert len(doc.tables) >= 32          # round 15 appends Tables 33-36 after them
     assert len(doc.inline_shapes) == 8
     for cap in ("Table 29.", "Table 30.", "Table 31.", "Table 32.", "Figure 7.", "Figure 8."):
         assert sum(p.text.startswith(cap) for p in doc.paragraphs) == 1, cap
@@ -239,8 +242,8 @@ def test_limitations_run_contiguously_through_fourteenth(doc):
     j = next(k for k, t in enumerate(paras) if t == "11. Conclusion")
     ords = ["Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth",
             "Eleventh", "Twelfth", "Thirteenth", "Fourteenth"]
-    found = [t.split(",")[0] for t in paras[i + 1:j] if t.split(",")[0] in ords]
-    assert found == ords
+    found = [t.split(",")[0] for t in paras[i + 1:j] if t.split(",")[0] in ords + ["Fifteenth"]]
+    assert found[:len(ords)] == ords      # round 15 adds a fifteenth
 
 
 def test_reference_list_is_alphabetical(doc):

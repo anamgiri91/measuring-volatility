@@ -58,9 +58,11 @@ def pytest_result() -> str:
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "14 (round 14: the M14 instrumented calibration and the M15 opening-price "
-                "analysis, both under frozen plans, moved into the manuscript; earlier rounds "
-                "answered the referee report of 2026-09-02 and the audits that followed it)",
+    "revision": "15 (round 15: Anam's estimator and its out-of-sample tests under plans M16-M18 "
+                "moved into the manuscript as Section 6.8 and Tables 33-36, with a new title; round "
+                "14 added the M14 instrumented calibration and the M15 opening-price analysis; "
+                "earlier rounds answered the referee report of 2026-09-02 and the audits that "
+                "followed it)",
     "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     "manuscript": {
         "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
@@ -78,7 +80,7 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round14_revisions.py, in order",
+                          "through paper/apply_round15_revisions.py, in order",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -216,7 +218,7 @@ manifest = {
                       "The dose-response leg and the inversion rule were not established.",
         },
         "M16_anam_estimator": {
-            "status": "package only; not part of the manuscript",
+            "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
             "estimator": "src/nepsevol/estimators/anam.py",
             "plan": "M16_ANAM_ESTIMATOR_PLAN.md (frozen in commit dc41f1e, after design on NEPSE "
                     "regimes A1 and B and before any holdout observation was read)",
@@ -228,7 +230,7 @@ manifest = {
                       "predictions (H1-H3) failed.",
         },
         "M17_anam_frontier": {
-            "status": "package only; not part of the manuscript",
+            "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
             "panels": "src/nepsevol/frontier.py (Dhaka Stock Exchange 2023-2026 and 2009-2021, Vietnam "
                       "2007-2020; third-party inputs pinned by SHA-256, not packaged)",
             "plan": "M17_ANAM_FRONTIER_PLAN.md (frozen in commit db417ac, before any estimator was "
@@ -241,7 +243,7 @@ manifest = {
                       "the lowest loss at 5 sessions in every panel (post hoc reading of a reported variant).",
         },
         "M18_anam_morocco": {
-            "status": "package only; not part of the manuscript",
+            "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
             "panel": "src/nepsevol/frontier.py (Casablanca Stock Exchange 2012-2026, data supplied by the author, "
                      "pinned by SHA-256, not packaged; daily limits by AMMC regime)",
             "plan": "M18_ANAM_MOROCCO_PLAN.md (frozen in commit b4de86d, before any estimator was computed on "
@@ -251,17 +253,19 @@ manifest = {
                       "beats close-to-close and the full estimator at 5 sessions; the full estimator beats "
                       "close-to-close and Parkinson at 5 sessions; both calibrated levels are 1.005.",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-018",
+        "corrections": "AUDIT-REGISTER.md M-007 to M-019",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
                         "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py",
-                        "scripts/43_anam_morocco.py"],
+                        "scripts/43_anam_morocco.py",
+                        "paper/apply_round15_revisions.py"],
         "new_modules": ["src/nepsevol/opening.py", "src/nepsevol/estimators/anam.py",
                         "src/nepsevol/volforecast.py", "src/nepsevol/frontier.py"],
         "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py",
                       "tests/test_anam_estimator.py", "tests/test_anam_results.py",
                       "tests/test_frontier_panels.py", "tests/test_anam_frontier_results.py",
-                      "tests/test_anam_morocco_results.py"],
+                      "tests/test_anam_morocco_results.py",
+                      "tests/test_round15_revisions.py"],
         "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market "
                     "without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock "
                     "Exchange",

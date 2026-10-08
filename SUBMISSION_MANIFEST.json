@@ -1,13 +1,13 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-  "revision": "14 (round 14: the M14 instrumented calibration and the M15 opening-price analysis, both under frozen plans, moved into the manuscript; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-08T20:22:24+00:00",
+  "revision": "15 (round 15: Anam's estimator and its out-of-sample tests under plans M16-M18 moved into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
+  "generated_utc": "2026-10-08T20:59:08+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
     "as_reviewed_note": "This PDF is the PRE-revision manuscript the first-round referee actually read, retained ONLY so the revision can be checked against it. It is NOT the current manuscript -- 'revised_source' above is -- and was renamed from the ambiguous 'NEPSE_Volatility_Final_Manuscript.pdf' after a forensic audit found the old name was being mistaken for the current file. No PDF rendering of the current .docx exists in this package as of this manifest: the environment that produced this revision has no docx-to-PDF renderer (Word/LibreOffice/pandoc) available, so a camera-ready PDF must still be exported from 'revised_source' before submission.",
     "double_anonymous_set": "paper/submission/",
-    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round14_revisions.py, in order",
+    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round15_revisions.py, in order",
     "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv by the revision scripts, which fail if a superseded value survives in the text or if a headline number does not reach it."
   },
   "referee_response": "REFEREE_RESPONSE.md",
@@ -15,7 +15,7 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "262 passed in 43.83s",
+    "pytest": "273 passed in 39.89s",
     "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference environment (earlier rounds)",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
@@ -99,27 +99,27 @@
       "result": "The session undoes 64-87% of NEPSE's overnight move, an error inside each security's auction (post hoc X6: the market-wide move shows no detectable reversal); the 20 April 2026 rule package, which widened the pre-open band, is a sharp break, unique against 77 placebo dates; band-pinned opens were reversed, not continued; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance. The dose-response leg and the inversion rule were not established."
     },
     "M16_anam_estimator": {
-      "status": "package only; not part of the manuscript",
+      "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
       "estimator": "src/nepsevol/estimators/anam.py",
       "plan": "M16_ANAM_ESTIMATOR_PLAN.md (frozen in commit dc41f1e, after design on NEPSE regimes A1 and B and before any holdout observation was read)",
       "results": "M16_ANAM_ESTIMATOR_RESULTS.md; output/tables/table98-106b",
       "result": "No range-based estimator beats Anam's estimator on the NEPSE holdout, NIFTY 50 or the S&P 500; it ranks first on NIFTY 50 and its calibrated level is within 1.2% of close-to-close variance where rules were stable. Close-to-close beats it in the 90 sessions after NEPSE's band reform, and the plan's three NEPSE predictions (H1-H3) failed."
     },
     "M17_anam_frontier": {
-      "status": "package only; not part of the manuscript",
+      "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
       "panels": "src/nepsevol/frontier.py (Dhaka Stock Exchange 2023-2026 and 2009-2021, Vietnam 2007-2020; third-party inputs pinned by SHA-256, not packaged)",
       "plan": "M17_ANAM_FRONTIER_PLAN.md (frozen in commit db417ac, before any estimator was computed on these data)",
       "results": "M17_ANAM_FRONTIER_RESULTS.md; output/tables/table107-111",
       "result": "Anam's estimator beats every classical range-based estimator in all three panels at both horizons and its calibrated level is within 1% of close-to-close variance; it does not beat close-to-close at 5 sessions in either primary panel and loses to it in Vietnam at 21 sessions, so the summary claim G fails. Its open-free special case had the lowest loss at 5 sessions in every panel (post hoc reading of a reported variant)."
     },
     "M18_anam_morocco": {
-      "status": "package only; not part of the manuscript",
+      "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
       "panel": "src/nepsevol/frontier.py (Casablanca Stock Exchange 2012-2026, data supplied by the author, pinned by SHA-256, not packaged; daily limits by AMMC regime)",
       "plan": "M18_ANAM_MOROCCO_PLAN.md (frozen in commit b4de86d, before any estimator was computed on these data; the open-free form tested as a hypothesis fixed in advance)",
       "results": "M18_ANAM_MOROCCO_RESULTS.md; output/tables/table112-116",
       "result": "Every binding hypothesis holds: the open-free form has the lowest loss at both horizons and beats close-to-close and the full estimator at 5 sessions; the full estimator beats close-to-close and Parkinson at 5 sessions; both calibrated levels are 1.005."
     },
-    "corrections": "AUDIT-REGISTER.md M-007 to M-018",
+    "corrections": "AUDIT-REGISTER.md M-007 to M-019",
     "new_scripts": [
       "scripts/37_opening_price.py",
       "scripts/38_opening_price_exploratory.py",
@@ -128,7 +128,8 @@
       "scripts/40_anam_holdout.py",
       "scripts/41_anam_posthoc.py",
       "scripts/42_anam_frontier.py",
-      "scripts/43_anam_morocco.py"
+      "scripts/43_anam_morocco.py",
+      "paper/apply_round15_revisions.py"
     ],
     "new_modules": [
       "src/nepsevol/opening.py",
@@ -143,7 +144,8 @@
       "tests/test_anam_results.py",
       "tests/test_frontier_panels.py",
       "tests/test_anam_frontier_results.py",
-      "tests/test_anam_morocco_results.py"
+      "tests/test_anam_morocco_results.py",
+      "tests/test_round15_revisions.py"
     ],
     "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock Exchange",
     "submission_set": "Cover letters now lead with Journal of Financial Markets, Journal of Empirical Finance and Journal of Financial Econometrics, then the referee's three recommendations."
@@ -157,8 +159,8 @@
     },
     {
       "path": "AUDIT-REGISTER.md",
-      "bytes": 44146,
-      "sha256": "ec28c9eec155a88de03bd9860dd79cbfc8511857fba5446f613e215d2ee2ae64"
+      "bytes": 44761,
+      "sha256": "f0471eb154d166b93de395b523df1404398d5cd9cb72d00fac535c7620244c90"
     },
     {
       "path": "FORENSIC_AUDIT_RESPONSE.md",
@@ -242,8 +244,8 @@
     },
     {
       "path": "PAPER_RESULTS_CHECK.csv",
-      "bytes": 5355,
-      "sha256": "dd4b2e32d0f03d9381c586ab3b6a802de5665c4e86750053aaf6e80331313422"
+      "bytes": 7077,
+      "sha256": "8be75021383198167e53ffc2f6cefc93e00cd453c1be469a9abc596f11a0025a"
     },
     {
       "path": "PAPER_REVISIONS.md",
@@ -252,8 +254,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21746,
-      "sha256": "67f1b120f7163b5f014d3c919c623ca8c84e56ccc47339bf5c2a0d538f946196"
+      "bytes": 31380,
+      "sha256": "8ff13f4ba0622523edd16a63b87d47c290d00fd99cc620e8741c893ba7e1371e"
     },
     {
       "path": "REFEREE_RESPONSE.md",
@@ -267,13 +269,13 @@
     },
     {
       "path": "REPRODUCIBILITY_MAP.csv",
-      "bytes": 20843,
-      "sha256": "0d6eaf49904df1daf66022ac84ed23d32d525ec838a06a5da8647f7472cdb571"
+      "bytes": 22329,
+      "sha256": "063104dd32f7bd50bb4c93210490fd6a87613921307443ab746a7f122b222613"
     },
     {
       "path": "build_manifest.py",
-      "bytes": 17288,
-      "sha256": "e2a266f6623dc5ec6a0d7ba693c7a64fe9b67a7b7f741234878c9da8908d9e98"
+      "bytes": 17578,
+      "sha256": "4448cd0bb1d7abf4adf952ec1d65f67194eec45e8170415f62ded7f4db8dfacc"
     },
     {
       "path": "data/audit/README.md",
@@ -574,6 +576,26 @@
       "path": "output/tables/paper_table32_open_and_estimators.csv",
       "bytes": 1174,
       "sha256": "db63c5dbfe6b86d91a053974dc1f2abff83d1271dc8f8feb71f9fadb666bb8c5"
+    },
+    {
+      "path": "output/tables/paper_table33_anam_definition.csv",
+      "bytes": 1051,
+      "sha256": "d66ba35f1a80e4c4ea1a40721e8fbd6875ef620f4cf014b10d9697b40fe2a952"
+    },
+    {
+      "path": "output/tables/paper_table34_anam_forecasts.csv",
+      "bytes": 1483,
+      "sha256": "5c4c42bbd23aaaafc8fb94a0c1e22e7f0afc4caef53e82ad636290d4ad065f99"
+    },
+    {
+      "path": "output/tables/paper_table35_anam_level.csv",
+      "bytes": 625,
+      "sha256": "e387d267faf2f4378a1689e5408d1fc1fa18e2629349e1f9b53e263010a90d6f"
+    },
+    {
+      "path": "output/tables/paper_table36_anam_verdicts.csv",
+      "bytes": 2617,
+      "sha256": "7e61fb3b99ed65e91e1e879026b9152eccd0f72fc3b55ea38b8fbd9e5313148d"
     },
     {
       "path": "output/tables/paper_table3_instrument_classification_effect.csv",
@@ -1162,8 +1184,8 @@
     },
     {
       "path": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
-      "bytes": 2225812,
-      "sha256": "f6d5da6e3616efb54880bfaf2b94583f56a67973e9e0218922104a4ce26903a2"
+      "bytes": 2233979,
+      "sha256": "21551b7b8e5fe28f34b4e82daf82e0192cee92059b4ec9ad15a95b99e08de5e7"
     },
     {
       "path": "paper/apply_referee_revisions.py",
@@ -1194,6 +1216,11 @@
       "path": "paper/apply_round14_revisions.py",
       "bytes": 69267,
       "sha256": "9dabf2d597b508929010b1779d397dc9cfd3b8a823d2837467049e5989c28230"
+    },
+    {
+      "path": "paper/apply_round15_revisions.py",
+      "bytes": 42751,
+      "sha256": "c71b19febf21acda8060f50deeac2dd0ac10eb8cac672b660cebe578a59be1e6"
     },
     {
       "path": "paper/apply_round3_revisions.py",
@@ -1232,8 +1259,8 @@
     },
     {
       "path": "paper/build_submission_set.py",
-      "bytes": 20365,
-      "sha256": "ba6d0dfb8281d4319c8bfa8913d648d44183c4d7c14f4c0be384517ba293c796"
+      "bytes": 23634,
+      "sha256": "19eb771c4463812ca812bba69d29ab9d7f20066621f3e82f69b9cd8b8a75d3d5"
     },
     {
       "path": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -1242,43 +1269,43 @@
     },
     {
       "path": "paper/submission/01_title_page.docx",
-      "bytes": 37658,
-      "sha256": "6dfaa16848ddd397e7f6a368265fc3e541d51af2293e9b27e5ad8b50da0b5422"
+      "bytes": 37712,
+      "sha256": "786a53bedbc71cd5917a1269706fd2784a5cdfc87c9a045280b3eaf3132d1170"
     },
     {
       "path": "paper/submission/02_manuscript_anonymous.docx",
-      "bytes": 2225665,
-      "sha256": "beac63407a06090ccfb945734e1b0eebe61eee2734d564f0c2ffc9d03b9794e5"
+      "bytes": 2233848,
+      "sha256": "5f3f821bf0e34ae3c4dde1c7bd6c3fa67500e3d69bc501d76c6da74341ba5f65"
     },
     {
       "path": "paper/submission/03_cover_letter_Asian_Journal_of_Economics_and_Banking.docx",
-      "bytes": 38493,
-      "sha256": "38bf10ce29ba791ff0c3d693fdfdc301ecdc2e759e07bbea34c7d8dd524e24fc"
+      "bytes": 38811,
+      "sha256": "cd4cfa987cc35b267b65f3275a1a229133d0fcfd6fb89d51648f2f7e54a976b8"
     },
     {
       "path": "paper/submission/03_cover_letter_Investment_Management_and_Financial_Innovations.docx",
-      "bytes": 38479,
-      "sha256": "503bff907964ca77f443c52d7fc9e4e6333b745c3e796275e693d3f828b4ec99"
+      "bytes": 38796,
+      "sha256": "08b195bd3031293b3122401d266a3ec8961f4ec3a11efdaba2461cc2c760fb76"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Empirical_Finance.docx",
-      "bytes": 38481,
-      "sha256": "be34061727b1a775cba8c69cfdf6965033486404df29137b4cf3d24e73723e02"
+      "bytes": 38817,
+      "sha256": "2a1ceeab4741373d0c999a8b8b9c890c63e580fc04efe2f0a3bca6380099a896"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Econometrics.docx",
-      "bytes": 38472,
-      "sha256": "8443aeed1a6721967c2596c9208e28a0cbebaf4e0daa9be1a0abe8281a52abc3"
+      "bytes": 38825,
+      "sha256": "0d8addaebdf2b3b1ceaa0d2dbe1561245e9c65df740dafdfeeca5147336306be"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Markets.docx",
-      "bytes": 38482,
-      "sha256": "940536db24df2ae7f15f4df783dc679cf0871f0a47f564ddf1516ff05b3d82d4"
+      "bytes": 38798,
+      "sha256": "285386122344e44496b7f19e9ac257ec99f4a8af11ee615a8bf35de29e341fc3"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Risk_and_Financial_Management.docx",
-      "bytes": 38494,
-      "sha256": "7e79592932c37a4f95dab1d5b259aac3b7afb40b1b7b55854f640a26f60802c1"
+      "bytes": 38810,
+      "sha256": "9a0720bfb9367faed930e50d3a33c61f3049ab170886d58ed65067c943369120"
     },
     {
       "path": "pyproject.toml",
@@ -1342,8 +1369,8 @@
     },
     {
       "path": "scripts/25_submission_tables.py",
-      "bytes": 49479,
-      "sha256": "fe66a331799cfacd840e2bd13281c6a6f9db240e5bfe310aa082a40267e7bafe"
+      "bytes": 57234,
+      "sha256": "96481a0237a05beb435d74dfdfb7cd3e8e0b3f6e2f116aa4dfed39421905e029"
     },
     {
       "path": "scripts/26_robustness.py",
@@ -1487,8 +1514,8 @@
     },
     {
       "path": "src/nepsevol/estimators/anam.py",
-      "bytes": 12025,
-      "sha256": "d8e362d80be19e2caecdd37aa21e78e82351f435755d353253493a5de24fe7f8"
+      "bytes": 12531,
+      "sha256": "4df1ea0eedb4dd261aabbbd655a03e7d14957e78755959747f48b2e6ab822f1e"
     },
     {
       "path": "src/nepsevol/estimators/microsim.py",
@@ -1592,8 +1619,8 @@
     },
     {
       "path": "tests/test_anam_estimator.py",
-      "bytes": 6112,
-      "sha256": "4bc2c7e2330d69d3467d13f55837b1a3bde63be6e7e28fc14399d0d9ee9fcbb4"
+      "bytes": 7130,
+      "sha256": "58daa0d0adb594a72c959310119935d5a53119d7fafc8d4328801c837e75e54a"
     },
     {
       "path": "tests/test_anam_frontier_results.py",
@@ -1642,8 +1669,13 @@
     },
     {
       "path": "tests/test_round14_revisions.py",
-      "bytes": 19094,
-      "sha256": "af62b37dcd56af9a843224a443717e0e2fbbe9fe674328e74e971c07db85a4c0"
+      "bytes": 19399,
+      "sha256": "e8430c2d849027781156e16476192d1f1ba44780f7d9b2d18ba693e9634b3924"
+    },
+    {
+      "path": "tests/test_round15_revisions.py",
+      "bytes": 7797,
+      "sha256": "4388aba896029327716e47d4e17985ebb2a21f6c267394e28ca51768c38ada54"
     },
     {
       "path": "tests/test_round3_revisions.py",

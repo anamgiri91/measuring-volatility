@@ -1,0 +1,8 @@
+Step,Definition,Constant (frozen in plan M16)
+Bar coordinates,"o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC), R = ln(H/L); PC is the previous session's close, adjusted for corporate actions and undefined across a gap",-
+Open quality b,"b = Σ o r / Σ o², clipped to [0, 1], and 0 where Σ o² = 0: the share of the overnight move that the session keeps",panel: pooled over the cross-section and the last 60 dates (at least 20); one series: its own last 250 sessions (at least 60)
+Extended range,"R* = R + max(0, b o - h) + max(0, l - b o): the range extended to reach the effective open PC·exp(b o)",-
+Daily kernel,"A = (1 - w)[(b o)² + R*²/(4 ln 2)] + w r², with w = λ₀(1 - b)",λ₀ = 0.2
+Calibration,κ = Σ r² / Σ A over the same trailing set as b,as for b
+Window variance,σ̂² = κ × the mean of A over the window,5 or 21 sessions in Tables 34-36
+Special cases,"b = 1 gives o² + Parkinson. b = 0, the open-free form, gives 0.8 TR²/(4 ln 2) + 0.2 r², where TR = ln(max(H, PC)/min(L, PC)) is Wilder's (1978) true range",-
