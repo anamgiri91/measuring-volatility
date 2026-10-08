@@ -24,7 +24,11 @@ the NEPSE manuscript documents:
 * a session VWAP from lognormal trade sizes; and a close equal to the last trade or, under
   ``close_rule="vwap_tail"``, to the VWAP of the trades in the final ``close_tail`` of the session
   (falling back to the last trade when none occurs there) -- NEPSE's rule between 20 March and
-  21 September 2025.
+  21 September 2025;
+* optionally, a RULE SWITCH on day ``switch_day``: from that day the band, the daily limit and
+  the scale of the auction error take their ``*_post`` values -- the shape of NEPSE's 20 April
+  2026 reform, used to check the M15 event-window and dose-response statistics where the effect
+  is known. Without a switch the draws, and so every frozen Monte Carlo table, are unchanged.
 
 Everything is reproducible from ``seed``. Nothing here is calibrated to RESULTS: the frictions
 are set from the descriptive features of the panel (trade-count quantiles, the stale-open share,
@@ -72,6 +76,12 @@ class MicroParams:
     close_rule: str = "last"             # "last": the last trade; "vwap_tail": VWAP of the final
     close_tail: float = 1.0 / 16.0       #   close_tail of the session (NEPSE 20 Mar - 21 Sep 2025:
                                          #   14:45-15:00 of an 11:00-15:00 session, i.e. 1/16)
+    # rule switch: from day ``switch_day`` (None = never) these replace band, limit and
+    # auction_noise_frac
+    switch_day: int | None = None
+    band_post: float | None = 0.05
+    limit_post: float | None = 0.15
+    auction_noise_frac_post: float = 0.25
     seed: int = 20261004
 
 
@@ -91,7 +101,9 @@ def simulate_panel(params: MicroParams | None = None, **overrides) -> pd.DataFra
     Columns: symbol, day, date, open, high, low, close, vwap, n_trades, prev_close,
     iv (true intraday integrated variance of the efficient log price), v_pred (its predictable
     part, E[iv_t | latent state at t-1]), on (true overnight variance), lam (the security's trade intensity), spread_bp, open_stale, open_clamped,
-    session_ord.
+    open_err and close_err (log observed minus log efficient price at the open and the close;
+    on a stale open the "error" is the whole unobserved overnight move), session_ord, and
+    post_switch when a rule switch is set.
     """
     p = params or MicroParams()
     if overrides:
@@ -166,7 +178,12 @@ def simulate_panel(params: MicroParams | None = None, **overrides) -> pd.DataFra
         # observed trades: efficient + bounce (continuous session); auction: efficient + error
         bounce = rng.choice([-1.0, 1.0], size=(T, nmax)) * spread_i[i] / 2
         x = p_open[:, None] + path + bounce
-        auction_err = p.auction_noise_frac * np.sqrt(on[i]) * rng.standard_normal(T)
+        # the auction-error scale, by day; the standard-normal draws are the same with or
+        # without a switch, so a panel with no switch is identical to one built before it existed
+        frac = np.full(T, p.auction_noise_frac)
+        if p.switch_day is not None:
+            frac[p.switch_day:] = p.auction_noise_frac_post
+        auction_err = frac * np.sqrt(on[i]) * rng.standard_normal(T)
 
         # previous observed close (log) and the rule-based clamps
         rows_i = []
@@ -175,16 +192,19 @@ def simulate_panel(params: MicroParams | None = None, **overrides) -> pd.DataFra
             n = n_tr[t]
             xt = x[t, :n].copy()
             clamped = False
+            post = p.switch_day is not None and t >= p.switch_day
+            band_t = p.band_post if post else p.band
+            limit_t = p.limit_post if post else p.limit
             if not stale[t]:
                 a = p_open[t] + auction_err[t]
-                if p.band is not None:
-                    lo_b, hi_b = prev_c + np.log(1 - p.band), prev_c + np.log(1 + p.band)
+                if band_t is not None:
+                    lo_b, hi_b = prev_c + np.log(1 - band_t), prev_c + np.log(1 + band_t)
                     if a < lo_b or a > hi_b:
                         clamped = True
                         a = min(max(a, lo_b), hi_b)
                 xt[0] = a
-            if p.limit is not None:
-                lo_l, hi_l = prev_c + np.log(1 - p.limit), prev_c + np.log(1 + p.limit)
+            if limit_t is not None:
+                lo_l, hi_l = prev_c + np.log(1 - limit_t), prev_c + np.log(1 + limit_t)
                 xt = np.clip(xt, lo_l, hi_l)
             if p.tick_bp > 0:
                 tk = p.tick_bp * 1e-4
@@ -203,10 +223,11 @@ def simulate_panel(params: MicroParams | None = None, **overrides) -> pd.DataFra
             H = max(xt.max(), O, C)
             L = min(xt.min(), O, C)
             vwap = np.log(np.sum(v * np.exp(xt)) / v.sum())
-            rows_i.append((O, H, L, C, vwap, n, prev_c, stale[t], clamped))
+            rows_i.append((O, H, L, C, vwap, n, prev_c, O - p_open[t], C - p_close[t],
+                           stale[t], clamped))
             prev_c = C
-        arr = np.array([r_[:7] for r_ in rows_i], dtype=float)
-        flags = np.array([r_[7:] for r_ in rows_i], dtype=bool)
+        arr = np.array([r_[:9] for r_ in rows_i], dtype=float)
+        flags = np.array([r_[9:] for r_ in rows_i], dtype=bool)
         df = pd.DataFrame({
             "symbol": f"S{i:03d}", "day": np.arange(T),
             "open": np.exp(arr[:, 0]), "high": np.exp(arr[:, 1]), "low": np.exp(arr[:, 2]),
@@ -214,10 +235,13 @@ def simulate_panel(params: MicroParams | None = None, **overrides) -> pd.DataFra
             "prev_close": np.exp(arr[:, 6]), "iv": iv[i], "v_pred": v_pred[i], "on": on[i],
             "lam": lam_i[i],
             "spread_bp": spread_i[i] * 1e4, "open_stale": flags[:, 0], "open_clamped": flags[:, 1],
+            "open_err": arr[:, 7], "close_err": arr[:, 8],
         })
         df.loc[0, "prev_close"] = np.nan          # no observed close before the first session
         rows.append(df)
     out = pd.concat(rows, ignore_index=True)
     out["date"] = pd.Timestamp("2020-01-01") + pd.to_timedelta(out["day"], unit="D")
     out["session_ord"] = out["day"] + 1
+    if p.switch_day is not None:
+        out["post_switch"] = out["day"] >= p.switch_day
     return out
