@@ -1,0 +1,15 @@
+plan,rule,market,estimator,reference,t,p_one_sided,beats under t_NW_2h,beats under t_NW_4h,beats under t_nonoverlapping,beats under t_MSE_NW_h,beats under t_first_half,beats under t_second_half,frozen verdict: beats,Holm p within plan,Holm p across plans,beats after Holm within plan,beats after Holm across plans
+M16,H1 (vs close-to-close),NEPSE,Anam,CC,1.19191492,0.8833526963,False,False,False,True,False,False,False,0.8833526963,1,False,False
+M16,H1 (vs Parkinson),NEPSE,Anam,P,-3.97456975,3.525329891e-05,True,True,True,True,False,True,True,0.0001057598967,0.0002115197935,True,True
+M16,H4,NIFTY50,Anam,CC,-3.068232343,0.00107664564,True,True,False,False,True,False,True,0.002153291279,0.005383228198,True,True
+M16,H5,SP500,Anam,CC,-6.389225109,8.336423271e-11,True,True,True,True,True,True,True,3.334569308e-10,9.170065598e-10,True,True
+M17,F1,DSE 2023-2026,Anam,CC,-0.9017507307,0.1835946488,False,False,False,False,False,False,False,0.3671892976,0.5507839463,False,False
+M17,F2,DSE 2023-2026,Anam,P,-5.562119188,1.332590785e-08,True,True,True,True,True,True,True,3.997772354e-08,1.199331706e-07,True,True
+M17,F1,Vietnam 2007-2020,Anam,CC,0.204780321,0.5811281186,False,False,False,False,False,False,False,0.5811281186,1,False,False
+M17,F2,Vietnam 2007-2020,Anam,P,-22.42247657,1.187958126e-111,True,True,True,True,True,True,True,7.127748757e-111,1.663141377e-110,True,True
+M17,F1,DSE 2009-2021,Anam,CC,-6.171332256,3.385847483e-10,True,True,True,False,True,True,True,1.354338993e-09,3.385847483e-09,True,True
+M17,F2,DSE 2009-2021,Anam,P,-9.553254871,6.284210469e-22,True,True,True,True,True,True,True,3.142105235e-21,7.541052563e-21,True,True
+M18,F1,Morocco 2012-2026,Anam,CC,-2.056403176,0.01987183523,False,False,False,False,True,False,True,0.01987183523,0.07948734092,True,False
+M18,F2,Morocco 2012-2026,Anam,P,-11.01084449,1.694064326e-28,True,True,True,True,True,True,True,6.776257306e-28,2.202283624e-27,True,True
+M18,V1,Morocco 2012-2026,"Anam, open-free special case (b=0)",CC,-4.531342044,2.930507613e-06,True,True,True,False,True,False,True,5.861015226e-06,2.051355329e-05,True,True
+M18,V2,Morocco 2012-2026,"Anam, open-free special case (b=0)",Anam,-4.752743663,1.003373516e-06,True,True,True,True,True,True,True,3.010120549e-06,8.026988131e-06,True,True

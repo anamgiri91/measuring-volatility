@@ -50,6 +50,10 @@ gitignored and excluded from `SUBMISSION_MANIFEST.json`. Each is pinned by SHA-2
 and checked before use; a different file stops the script. Redistribution terms of the underlying exchange data
 were not verified, which is why none of them is copied into the package.
 
+`scripts/44_anam_recheck.py`, the post hoc recheck of M16-M18, reads the same inputs (Dhaka, Vietnam and
+Casablanca) through the same checked readers; it also reads the Dhaka mirror's `ltp` column, to count how
+often the exchange's official close differs from the last trade.
+
 | Path under `data/external/frontier/` | What it is | How to obtain it | SHA-256 |
 |---|---|---|---|
 | `dse_upload/DSE_Data.csv` | Dhaka Stock Exchange daily OHLC and volume, 534 trading codes, stamped 1999-01-02 to 2025-04-08 (columns `Trading_Code, Date, Open, High, Low, Close, Volume`), supplied by the author as `Archive.zip` (SHA-256 `1d6c4cd5412fb33e83e9d6ada4213c3070c327a1881d323ac3333c352d97d04d`) with `Instruments.txt` | Its name, span and columns match "Dhaka Stock Exchange Historical Data (1999-2025)", Sunny, Nafis and Khan, Mendeley Data (2025), <https://data.mendeley.com/datasets/5mww8rb9td>; its row count (1,523,921) does not match that listing's (1,684,249), so check the hash rather than assume the release is the same file. **Its dates before 2023 have day and month exchanged whenever the day is 12 or less**; `nepsevol.frontier` repairs 2009-2021, drops 2022 and documents the evidence | `a619a0ff80ce944414f94f6b1cd88e8ee186e83241a0934c2330036c190c6763` |

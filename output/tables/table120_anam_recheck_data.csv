@@ -1,0 +1,105 @@
+market,span,check,value,note
+NEPSE,A2+C,zero-range share (high = low),0.002753352873,
+NEPSE,A2+C,stale-open share (o = 0),0.1423927525,
+NEPSE,A2+C,single-price share (open = high = low = close),0.002753352873,
+NEPSE,A2+C,"pooled b, whole span, unclipped",0.208262939,
+NEPSE,A2+C,median trailing b used by the estimator (clipped),0.2658698583,60 pooled dates
+NEPSE,A2,zero-range share (high = low),0.002454605532,
+NEPSE,A2,stale-open share (o = 0),0.1181042893,
+NEPSE,A2,single-price share (open = high = low = close),0.002454605532,
+NEPSE,A2,"pooled b, whole span, unclipped",0.3556879752,
+NEPSE,A2,median trailing b used by the estimator (clipped),0.280043654,60 pooled dates
+NEPSE,C,zero-range share (high = low),0.0031405498,
+NEPSE,C,stale-open share (o = 0),0.1738722571,
+NEPSE,C,single-price share (open = high = low = close),0.0031405498,
+NEPSE,C,"pooled b, whole span, unclipped",0.1303457179,
+NEPSE,C,median trailing b used by the estimator (clipped),0.1637326221,60 pooled dates
+NIFTY50,test half,zero-range share (high = low),0,
+NIFTY50,test half,stale-open share (o = 0),0,
+NIFTY50,test half,single-price share (open = high = low = close),0,
+NIFTY50,test half,"pooled b, whole span, unclipped",0.94744456,
+NIFTY50,test half,median trailing b used by the estimator (clipped),0.953011839,250 own sessions
+NIFTY50,test half,median trailing b before clipping,0.953011839,250 own sessions
+NIFTY50,test half,share of sessions with trailing b clipped at 1,0.1952428147,
+SP500,test half,zero-range share (high = low),0,
+SP500,test half,stale-open share (o = 0),0.06401590457,
+SP500,test half,single-price share (open = high = low = close),0,
+SP500,test half,"pooled b, whole span, unclipped",2.213043903,
+SP500,test half,median trailing b used by the estimator (clipped),1,250 own sessions
+SP500,test half,median trailing b before clipping,3.516372935,250 own sessions
+SP500,test half,share of sessions with trailing b clipped at 1,1,
+DSE 2023-2026,test half,zero-range share (high = low),0.005743792795,
+DSE 2023-2026,test half,stale-open share (o = 0),0.2343858366,
+DSE 2023-2026,test half,single-price share (open = high = low = close),0.005743792795,
+DSE 2023-2026,test half,"pooled b, whole span, unclipped",0.3434024043,
+DSE 2023-2026,test half,median trailing b used by the estimator (clipped),0.3279081059,60 pooled dates
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: mean r^2,0.0007144988709,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: mean Parkinson,0.0007565967293,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: median |o|,0.00600602406,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: share |r| > 0.05,0.07384116206,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),"date repair: pooled b, unclipped",0.3965718531,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: dates,359,
+DSE 2023-2026,day <= 12 (repaired in 2009-2021),date repair: dates on a Friday or Saturday,0,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: mean r^2,0.0006499988518,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: mean Parkinson,0.0007433242864,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: median |o|,0.006116227017,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: share |r| > 0.05,0.0641466717,
+DSE 2023-2026,day > 12 (stamped correctly),"date repair: pooled b, unclipped",0.329582119,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: dates,542,
+DSE 2023-2026,day > 12 (stamped correctly),date repair: dates on a Friday or Saturday,3,
+DSE 2009-2021,test half,zero-range share (high = low),0.03823056717,
+DSE 2009-2021,test half,stale-open share (o = 0),0.2268236097,
+DSE 2009-2021,test half,single-price share (open = high = low = close),0.03823056717,
+DSE 2009-2021,test half,"pooled b, whole span, unclipped",0.4874569189,
+DSE 2009-2021,test half,median trailing b used by the estimator (clipped),0.4771232219,60 pooled dates
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: mean r^2,0.0007878809976,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: mean Parkinson,0.0007425849046,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: median |o|,0.0080841184,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: share |r| > 0.05,0.08737072902,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),"date repair: pooled b, unclipped",0.5345814072,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: dates,1240,
+DSE 2009-2021,day <= 12 (repaired in 2009-2021),date repair: dates on a Friday or Saturday,0,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: mean r^2,0.0007768696523,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: mean Parkinson,0.0007451888096,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: median |o|,0.008032171697,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: share |r| > 0.05,0.0850090433,
+DSE 2009-2021,day > 12 (stamped correctly),"date repair: pooled b, unclipped",0.5164771403,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: dates,1854,
+DSE 2009-2021,day > 12 (stamped correctly),date repair: dates on a Friday or Saturday,2,
+Vietnam 2007-2020,test half,zero-range share (high = low),0.132466712,
+Vietnam 2007-2020,test half,stale-open share (o = 0),0.3523298645,
+Vietnam 2007-2020,test half,single-price share (open = high = low = close),0.132466712,
+Vietnam 2007-2020,test half,"pooled b, whole span, unclipped",0.5385699679,
+Vietnam 2007-2020,test half,median trailing b used by the estimator (clipped),0.5377412423,60 pooled dates
+Vietnam 2007-2020,"test half, 7% limit (HOSE-like)",exchange mix: share of test stock-days,0.3825996257,236 tickers
+Vietnam 2007-2020,"test half, 7% limit (HOSE-like)","exchange mix: pooled b, unclipped",0.4947815007,
+Vietnam 2007-2020,"test half, 7% limit (HOSE-like)",exchange mix: stale-open share (o = 0),0.349561782,
+Vietnam 2007-2020,"test half, 10% limit (HNX-like)",exchange mix: share of test stock-days,0.341696766,249 tickers
+Vietnam 2007-2020,"test half, 10% limit (HNX-like)","exchange mix: pooled b, unclipped",0.490645864,
+Vietnam 2007-2020,"test half, 10% limit (HNX-like)",exchange mix: stale-open share (o = 0),0.3522358589,
+Vietnam 2007-2020,"test half, 15% limit (UPCoM-like)",exchange mix: share of test stock-days,0.2598421724,292 tickers
+Vietnam 2007-2020,"test half, 15% limit (UPCoM-like)","exchange mix: pooled b, unclipped",0.5540607988,
+Vietnam 2007-2020,"test half, 15% limit (UPCoM-like)",exchange mix: stale-open share (o = 0),0.3606494204,
+Morocco 2012-2026,test half,zero-range share (high = low),0.2091278841,
+Morocco 2012-2026,test half,stale-open share (o = 0),0.1927068155,
+Morocco 2012-2026,test half,single-price share (open = high = low = close),0.2091278841,
+Morocco 2012-2026,test half,"pooled b, whole span, unclipped",0.6526252878,
+Morocco 2012-2026,test half,median trailing b used by the estimator (clipped),0.6418255335,60 pooled dates
+Morocco 2012-2026,10% to 2020-03-16,band schedule: share |r| > 0.04 + 0.01 (no band screen),0.08217897216,n = 57752
+Morocco 2012-2026,10% to 2020-03-16,band schedule: share |r| > 0.06 + 0.01 (no band screen),0.02024172323,n = 57752
+Morocco 2012-2026,10% to 2020-03-16,band schedule: share |r| > 0.10 + 0.01 (no band screen),0.0002077850118,n = 57752
+Morocco 2012-2026,10% to 2020-03-16,band schedule: 99.9th percentile of |r| (no band screen),0.1052657984,n = 57752
+Morocco 2012-2026,4% 2020-03-17 to 2021-10-11,band schedule: share |r| > 0.04 + 0.01 (no band screen),0.000784570121,n = 15295
+Morocco 2012-2026,4% 2020-03-17 to 2021-10-11,band schedule: share |r| > 0.06 + 0.01 (no band screen),0.0002615233737,n = 15295
+Morocco 2012-2026,4% 2020-03-17 to 2021-10-11,band schedule: share |r| > 0.10 + 0.01 (no band screen),0,n = 15295
+Morocco 2012-2026,4% 2020-03-17 to 2021-10-11,band schedule: 99.9th percentile of |r| (no band screen),0.04225983501,n = 15295
+Morocco 2012-2026,6% 2021-10-12 to 2023-10-08,band schedule: share |r| > 0.04 + 0.01 (no band screen),0.05446048492,n = 21612
+Morocco 2012-2026,6% 2021-10-12 to 2023-10-08,band schedule: share |r| > 0.06 + 0.01 (no band screen),0.0001850823617,n = 21612
+Morocco 2012-2026,6% 2021-10-12 to 2023-10-08,band schedule: share |r| > 0.10 + 0.01 (no band screen),0,n = 21612
+Morocco 2012-2026,6% 2021-10-12 to 2023-10-08,band schedule: 99.9th percentile of |r| (no band screen),0.06183402174,n = 21612
+Morocco 2012-2026,10% from 2023-10-09,band schedule: share |r| > 0.04 + 0.01 (no band screen),0.06803035112,n = 34661
+Morocco 2012-2026,10% from 2023-10-09,band schedule: share |r| > 0.06 + 0.01 (no band screen),0.02680245809,n = 34661
+Morocco 2012-2026,10% from 2023-10-09,band schedule: share |r| > 0.10 + 0.01 (no band screen),0,n = 34661
+Morocco 2012-2026,10% from 2023-10-09,band schedule: 99.9th percentile of |r| (no band screen),0.1052194483,n = 34661
+DSE 2023-2026,"mirror, 2024-09-30 to 2026-10-08",close equals last-trade price (share),0.8170684272,n = 190246 stock-days with trades
+DSE 2023-2026,"mirror, 2024-09-30 to 2026-10-08","close inside [low, high] (share)",1,

@@ -51,7 +51,7 @@ def test_structure_title_and_new_section(doc, body):
     assert doc.paragraphs[0].text == r15.TITLE and doc.paragraphs[1].text == r15.SUBTITLE
     heads = [p.text for p in doc.paragraphs if p.style.name == "Heading 2"]
     assert "6.8 An estimator for an overreacting open: Anam's estimator" in heads
-    assert len(doc.tables) == 36 and len(doc.inline_shapes) == 8
+    assert len(doc.tables) >= 36 and len(doc.inline_shapes) == 8  # round 16 adds Tables 37-38
     for cap in ("Table 33.", "Table 34.", "Table 35.", "Table 36."):
         assert sum(p.text.startswith(cap) for p in doc.paragraphs) == 1, cap
     assert "This paper asks five questions" in body

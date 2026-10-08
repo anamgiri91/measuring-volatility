@@ -87,13 +87,13 @@ TOP_TIER = [
     ("Journal_of_Empirical_Finance", "Journal of Empirical Finance", "Editors",
      "It publishes empirical work on volatility measurement and market design, and this paper "
      "combines both: a calibration test for daily-bar volatility estimators, evidence that a "
-     "market-design rule determines what those estimators measure, and an estimator built on that "
+     "market-design rule change altered what those estimators measure, and an estimator built on that "
      "evidence and tested out of sample in four frontier markets."),
     ("Journal_of_Financial_Econometrics", "Journal of Financial Econometrics", "Editors",
      "It publishes research on the measurement of volatility, and this paper identifies daily-"
      "bar estimators' calibration from volatility persistence without a high-frequency "
      "benchmark, documents a failure of the independence assumption behind Yang-Zhang, and "
-     "proposes an estimator for markets whose opening price overreacts, validated out of sample "
+     "proposes an estimator for markets whose opening price is unreliable, tested out of sample "
      "under frozen plans."),
 ]
 
@@ -119,10 +119,10 @@ JOURNALS = [
 ABSTRACT_SHORT = (
     "Nepal has no exchange-traded options and no public intraday data, so its volatility must be "
     "measured from daily open-high-low-close bars. This paper shows that the bar's opening price "
-    "is mostly transient: the trading session undoes two-thirds or more of the overnight move. It "
-    "uses NEPSE's 2026 widening of its pre-open price band as a natural experiment showing that "
-    "market design shapes what daily bars measure, and it builds an estimator for markets whose "
-    "open overreacts, tested out of sample in four frontier markets and two benchmark indices. No "
+    "is mostly transient: the trading session undoes most of the overnight move. It uses NEPSE's "
+    "2026 widening of its pre-open price band as a natural experiment indicating that market design "
+    "shapes what daily bars measure, and it builds an estimator for markets whose open is "
+    "unreliable, tested out of sample in four frontier markets and two benchmark indices. No "
     "estimator is claimed to dominate close-to-close everywhere.")
 
 
@@ -374,10 +374,9 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "daily-bar estimator that weights the overnight move by the open's measured reliability, "
         "extends the range to the effective open and calibrates to close-to-close variance, designed "
         "on part of the NEPSE sample and tested out of sample under three further frozen plans. No "
-        "classical range estimator beats it in any of seven test samples across Nepal, Bangladesh, "
-        "Vietnam, Morocco and two benchmark indices, and outside NEPSE's post-reform regime its level "
-        f"is within {numbers['lev_dev']}% of close-to-close variance; its open-free form passed a "
-        "pre-registered test in Morocco.")
+        "classical range estimator forecasts significantly better than it in any of seven test samples "
+        "across Nepal, Bangladesh, Vietnam, Morocco and two benchmark indices, and its open-free form "
+        "passed a test fixed in advance in Morocco.")
     add("")
     add("What the paper does not claim. Latent variance is unobserved, so results are reported "
         "relative to stated benchmarks, and no estimator is claimed to dominate generally. The "
@@ -389,8 +388,11 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "identified; the paper reports these limits and its failed predictions alongside the "
         "results. The India VIX exercise is co-movement and forecasting evidence about India, and "
         "its estimator comparison is inconclusive. The new estimator does not beat close-to-close at "
-        "short horizons in three of the four frontier markets, and close-to-close beat it "
-        "immediately after NEPSE's rule change; those failed predictions are reported as such.")
+        "short horizons in the primary panels of three of the four frontier markets, and close-to-close beat it "
+        "immediately after NEPSE's rule change; those failed predictions are reported as such. Its "
+        "level on the close-to-close scale comes from its calibration, which the classical estimators "
+        "can be given too, and its record against close-to-close changes with the loss function; a "
+        "post hoc recheck reports both.")
     add("")
     add("Reproducibility. A complete package accompanies the submission: frozen data, producer "
         "scripts, a claim-to-output reproducibility map, an audit register recording defects "
@@ -421,8 +423,6 @@ def main():
     from apply_round14_revisions import load as load_round14
     r14 = load_round14()
     numbers.update({k: r14[k] for k in ("undo_lo", "undo_hi", "undo_N", "n_plac")})
-    from apply_round15_revisions import load as load_round15
-    numbers["lev_dev"] = load_round15()["lev_dev"]
 
     if AUTHOR == AUTHOR_PLACEHOLDER:
         print(f"  NOTE: {AUTHOR_FILE.relative_to(ROOT)} is absent, so the title page carries")

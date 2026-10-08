@@ -29,14 +29,18 @@ each day's open, high, low and close. The paper answers five questions:
    designed on part of the NEPSE sample and tested out of sample under three frozen plans. It was tested
    in Nepal, Bangladesh, Vietnam and Morocco and on the NIFTY 50 and S&P 500 indices.
 
-Every analysis ran under a plan frozen and committed before its results existed. The predictions that
-failed are reported alongside the ones that held.
+The forward India VIX test and the calibration, opening-price and estimator analyses (questions 2 to 5)
+ran under plans frozen and committed before their results existed; the earlier estimator comparison and
+its robustness checks did not. The predictions that failed are reported alongside the ones that held, and a post hoc recheck of
+every claim made for the estimator is in [`ANAM_RECHECK_POSTHOC.md`](ANAM_RECHECK_POSTHOC.md).
 
 ## Anam's estimator
 
 Classical daily-bar estimators either trust the opening price completely (Garman–Klass, Rogers–Satchell,
 Yang–Zhang) or ignore it (Parkinson, close-to-close). Anam's estimator instead **measures how far the open
-can be trusted**, then reads it only that far. For a bar (O, H, L, C) with previous close PC,
+can be trusted**, then reads it only that far. (Hansen and Lunde (2005) also weight the overnight return
+by an amount estimated from data, chosen for efficiency from intraday returns; here the weight is the
+open's unbiasedness coefficient, from daily bars alone.) For a bar (O, H, L, C) with previous close PC,
 write o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC) and R = ln(H/L).
 
 | Step | Definition |
@@ -49,12 +53,14 @@ write o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC) and R = ln(H/L).
 
 **Two forms.**
 
-- **Full form** (b measured from the data). Where the open is efficient, b ≈ 1 and the estimator
-  reduces to overnight² + Parkinson. Use it where the open is close to efficient, such as the NIFTY 50
-  and S&P 500.
+- **Full form** (b measured from the data). Where the open is close to unbiased, b ≈ 1 and the estimator
+  approaches overnight² + Parkinson. On the S&P 500, whose index open lags the overnight move (b above
+  one, capped at one), it *is* overnight² + Parkinson. Of the two forms it had the lower loss on the
+  NIFTY 50 and the S&P 500, though not significantly.
 - **Open-free form** (b set to 0). It becomes 0.8 × true-range Parkinson + 0.2 r² and reads only the
-  previous close, the high, the low and the close. Use it where the open overreacts, as it did in every
-  frontier market tested.
+  previous close, the high, the low and the close. Of the two forms it did better wherever the open was
+  unreliable (b well below one), as in every frontier market tested. In NEPSE neither form beat
+  close-to-close, which remains the primary measure there.
 
 ### Using it
 
@@ -89,8 +95,14 @@ The table is paper Table 34, which also reports the 21-session horizon.
 | Dhaka 2009-2021 (dates repaired) | M17 | 0.6214 | 0.6162 | overnight² + Parkinson 0.6228 | 0.6044 | 0.6008 | -6.17 | -8.30 |
 | Morocco 2012-2026 | M18 | 0.6784 | 0.7352 | overnight² + Parkinson 0.6794 | 0.6706 | 0.6633 | -2.06 | -4.53 |
 
+Against close-to-close these verdicts depend on the loss function. Under MSE, a post hoc check,
+close-to-close beats both forms in Vietnam, while both forms beat close-to-close in NEPSE's holdout and on
+the S&P 500 (paper Table 37).
+
 **Level.** The table shows the 21-session variance divided by close-to-close variance on each test span
-(paper Table 35). Anam's estimator is calibrated; the classical estimators are raw.
+(paper Table 35). Anam's estimator is calibrated; the classical estimators are raw. Given the same
+calibration, every classical range estimator is also within 2.2% of close-to-close variance outside
+regime C (paper Table 38), so the level comes from the calibration, not from the kernel.
 
 | Test sample | Anam (calibrated) | Parkinson | Garman-Klass | overnight² + Parkinson | Yang-Zhang (daily form) |
 |---|---|---|---|---|---|
@@ -105,28 +117,36 @@ The table is paper Table 34, which also reports the 21-session horizon.
 
 **What this shows:**
 
-- **Against the classical estimators.** No classical range estimator beats Anam's estimator in any test
-  sample at either horizon. In every frontier-market sample it beats all six at 5 sessions.
+- **Against the classical estimators.** Under the plans' QLIKE loss, no classical range estimator has
+  significantly lower loss than Anam's estimator in any test sample at either horizon, and in every
+  frontier-market sample it beats all six at 5 sessions. This survives longer Newey–West lags and
+  non-overlapping origins. Two caveats: on the S&P 500 it coincides with overnight² + Parkinson, and four
+  classical estimators had nominally lower loss there; under MSE, the three classical estimators with a
+  full overnight term beat it in Vietnam at 21 sessions.
 - **Level.** Its level is within 1.1% of close-to-close variance everywhere except NEPSE's
-  post-reform regime. The classical formulas miss by up to 71% upward and 55%
-  downward on the same samples.
-- **Against plain close-to-close the record is mixed.** It wins on both indices, in Morocco and in the
-  long Dhaka history. It ties in NEPSE, in Dhaka 2023–2026 and in Vietnam at 5 sessions. It loses in
+  post-reform regime. That is the calibration's doing: uncalibrated, the classical formulas miss by up
+  to 71% upward and 55% downward, but calibrated the same way they come within 2.2%.
+- **Against plain close-to-close the record is mixed.** It wins on both indices (as several classical
+  range estimators also do), in the long Dhaka history and in Morocco. The Morocco win comes from one band
+  regime (2020–21) and does not survive longer Newey–West lags, an MSE loss or a Holm correction across
+  the three plans. It ties in NEPSE, in Dhaka 2023–2026 and in Vietnam at 5 sessions. It loses in
   NEPSE's 90 sessions after the April 2026 band reform, and in Vietnam at 21 sessions.
 - **The open-free form.** It had the lowest 5-session loss in every M17 panel; that reading is post hoc.
   It then passed a test fixed in advance in Morocco (M18): there it beat close-to-close and the full form,
-  and no estimator beat it. It is the form the frontier-market evidence supports.
+  and no estimator beat it. Of the two forms, it is the one the frontier-market evidence favours.
 - **After a sudden rule change, use close-to-close.** The 60-date calibration needs time to catch up.
 
-Details: paper Section 6.8 and Tables 33–36; `M16_ANAM_ESTIMATOR_*`, `M17_ANAM_FRONTIER_*` and
-`M18_ANAM_MOROCCO_*` (plan and results for each test).
+Details: paper Section 6.8 and Tables 33–38; `M16_ANAM_ESTIMATOR_*`, `M17_ANAM_FRONTIER_*` and
+`M18_ANAM_MOROCCO_*` (plan and results for each test); `ANAM_RECHECK_POSTHOC.md` (the post hoc recheck).
 
 ## Manuscript and submission set
 
 - **The manuscript.** `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` is rebuilt from the frozen
-  tables by `paper/apply_referee_revisions.py`, then rounds 3–15, applied in order. Round 15
+  tables by `paper/apply_referee_revisions.py`, then rounds 3–16, applied in order. Round 15
   (`paper/apply_round15_revisions.py`) adds Anam's estimator: Section 6.8, Tables 33–36, a new title, and
   changes to the abstract, introduction, protocol, discussion, limitations, conclusion and references.
+  Round 16 (`paper/apply_round16_revisions.py`) corrects what a recheck of those claims found
+  (`AUDIT-REGISTER.md` M-020 to M-025) and adds the post hoc recheck as Tables 37–38.
   Every figure the manuscript quotes is interpolated from `output/tables/*.csv`.
 - **The submission set.** `paper/submission/` is the double-anonymous submission set, rebuilt by
   `paper/build_submission_set.py`. Because the estimator carries the author's name, the anonymous copy
@@ -203,7 +223,8 @@ final formatting step, which runs last.
 21. `scripts/41_anam_posthoc.py` — M16 post hoc follow-ups Y1-Y2 on calibration speed after the band reform, labelled as such (package Tables 106-106b).
 22. `scripts/42_anam_frontier.py` — M17, frozen plan: Anam's estimator on the Dhaka and Vietnam panels and the decision ledger (package Tables 107-111). Needs the third-party inputs under `data/external/frontier/` (see `data/external/README.md`); `run_paper_analysis.sh` skips it when they are absent.
 23. `scripts/43_anam_morocco.py` — M18, frozen plan: both forms of Anam's estimator on the Casablanca panel, by band regime, and the decision ledger (package Tables 112-116). Needs `data/external/frontier/casablanca/`; skipped when absent.
-24. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–36, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
+24. `scripts/44_anam_recheck.py` — POST HOC recheck of the M16-M18 claims, run after every verdict was known: every estimator under the same calibration, longer Newey-West lags, non-overlapping origins, an MSE loss, halves of each test span, Holm corrections, and the data assumptions (package Tables 117-120; paper Tables 37-38). Needs `data/external/frontier/`; skipped when absent.
+25. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–38, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
 
 ## Implementation conventions
 
@@ -235,7 +256,7 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 
 ## Repository map
 
-- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-15). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) adds Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18. Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
+- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-16). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) added Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18; round 16 (`apply_round16_revisions.py`) corrects the overstatements a recheck found and adds Tables 37-38. Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
 - `paper/submission/` — the double-anonymous submission set: anonymised manuscript (with the estimator's eponym replaced by "the proposed estimator"), separate title page, and a cover letter for each target journal (three field journals, then the referee's three recommendations), rebuilt by `paper/build_submission_set.py`.
 - `paper/manuscript_as_reviewed_pre_revision.pdf` — the manuscript **as reviewed** (the PRE-revision PDF the first-round referee actually read), retained only so the revision can be checked against it. **This is not the current manuscript; `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` above is.** (Renamed from the earlier, misleadingly generic `NEPSE_Volatility_Final_Manuscript.pdf` after a forensic audit found the old name being mistaken for the current file.) No PDF rendering of the current `.docx` ships in this package — this development environment has no docx-to-PDF renderer available; export one from the `.docx` before submitting to a journal.
 - `PAPER_REVISIONS.md` — **superseded**; the pre-referee revision notes, retained for provenance.
@@ -246,9 +267,10 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 - `M7_ANALYSIS_PLAN.md` — the analysis plan and decision rule for the forward-looking India VIX test, **frozen before any forward result was computed**.
 - `M14_CALIBRATION_ANALYSIS_PLAN.md` / `M14_CALIBRATION_RESULTS.md` — the instrumented calibration of the daily-bar estimators (manuscript Section 6.6): plan frozen and committed before any slope was computed; results, mechanical verdicts and every post-result correction.
 - `M15_OPENING_PRICE_ANALYSIS_PLAN.md` / `M15_OPENING_PRICE_RESULTS.md` — what the opening price measures, with NEPSE's 20 April 2026 pre-open band reform as a natural experiment (manuscript Section 6.7): plan frozen and committed before any outcome statistic was computed, then the simulation checks, then the results. **Headline:** the trading session undoes 64-87% of NEPSE's overnight move (unbiasedness coefficient 0.13-0.36), an error inside each security's own auction (post hoc: NEPSE's market-wide opening move shows no detectable reversal; the NIFTY 50 index, an average like it, has b 0.93; `M-014`); the 20 April 2026 rule package, which widened the pre-open band among other changes (`M-013`), produced a sharp break, unique against 77 placebo dates; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance it assumes away.
-- `M16_ANAM_ESTIMATOR_PLAN.md` / `M16_ANAM_ESTIMATOR_RESULTS.md` — **Anam's estimator** (`src/nepsevol/estimators/anam.py`), a daily-bar volatility estimator for markets whose opening price cannot be trusted: the overnight move weighted by the open's measured unbiasedness b, the range extended to the effective open, a close-to-close blend that grows as the open degrades, and calibration to close-to-close variance across the market's cross-section. Designed on NEPSE regimes A1 and B only; plan frozen (commit `3296dad`; cited as `dc41f1e` in the frozen documents, see the commit map under `M-017` in `AUDIT-REGISTER.md`) before the holdout was read. **Holdout:** no range-based estimator beats it on the NEPSE holdout, NIFTY 50 or the S&P 500, it ranks first on NIFTY 50, and its level is within 1.2% of close-to-close where rules were stable; but plain close-to-close beats it in the 90 sessions after NEPSE's April 2026 band reform, and three of the plan's NEPSE predictions failed. Manuscript Section 6.8.
-- `M17_ANAM_FRONTIER_PLAN.md` / `M17_ANAM_FRONTIER_RESULTS.md` — Anam's estimator, unchanged, in two more frontier markets: Bangladesh (Dhaka Stock Exchange, 2023-2026 and, with repaired dates, 2009-2021) and Vietnam (2007-2020), panels built by `src/nepsevol/frontier.py`. Plan frozen (commit `ff124bd`; cited as `db417ac`, see `M-017`) before any estimator was computed on these data. **Result:** it beats every classical range-based estimator in all three panels at both horizons (36 of 36 comparisons) and its calibrated level is within 1% of close-to-close variance, but it does not beat plain close-to-close at 5 sessions in either primary panel and loses to it in Vietnam at 21 sessions, so the plan's summary claim G fails. Its open-free special case, a reported variant, had the lowest loss at 5 sessions in every panel (post hoc reading). The author's Dhaka file has day and month exchanged in pre-2023 dates; see the plan and `data/external/README.md`. Inputs are third-party and not packaged. Manuscript Section 6.8.
-- `M18_ANAM_MOROCCO_PLAN.md` / `M18_ANAM_MOROCCO_RESULTS.md` — both forms of Anam's estimator on the Casablanca Stock Exchange (Morocco, 77 shares, 2012-2026, data supplied by the author), with the open-free form tested as a hypothesis fixed before the data were read. Plan frozen (commit `b4de86d`). **Result:** every binding hypothesis holds. The open-free form has the lowest loss of all nine estimators at 5 and 21 sessions and beats close-to-close (t = -4.53) and the full estimator (t = -4.75) at 5; the full estimator also beats close-to-close at 5 (t = -2.06); both calibrated levels are 1.005. Manuscript Section 6.8.
+- `M16_ANAM_ESTIMATOR_PLAN.md` / `M16_ANAM_ESTIMATOR_RESULTS.md` — **Anam's estimator** (`src/nepsevol/estimators/anam.py`), a daily-bar volatility estimator for markets whose opening price cannot be trusted: the overnight move weighted by the open's measured unbiasedness b, the range extended to the effective open, a close-to-close blend that grows as the open degrades, and calibration to close-to-close variance across the market's cross-section. Designed on NEPSE regimes A1 and B, with M15's full-sample findings already known (the plan lists them); plan frozen (commit `3296dad`; cited as `dc41f1e` in the frozen documents, see the commit map under `M-017` in `AUDIT-REGISTER.md`) before the estimator was computed on the holdout. **Holdout:** no range-based estimator has significantly lower loss on the NEPSE holdout, NIFTY 50 or the S&P 500 (where b̂ is capped at one and the estimator is exactly overnight² + Parkinson), it ranks first on NIFTY 50, and its calibrated level is within 1.1% of close-to-close where rules were stable (as any estimator's is under the same calibration; see `ANAM_RECHECK_POSTHOC.md`); but plain close-to-close beats it in the 90 sessions after NEPSE's April 2026 band reform, and three of the plan's NEPSE predictions failed. Manuscript Section 6.8.
+- `M17_ANAM_FRONTIER_PLAN.md` / `M17_ANAM_FRONTIER_RESULTS.md` — Anam's estimator, unchanged, in two more frontier markets: Bangladesh (Dhaka Stock Exchange, 2023-2026 and, with repaired dates, 2009-2021) and Vietnam (2007-2020), panels built by `src/nepsevol/frontier.py`. Plan frozen (commit `ff124bd`; cited as `db417ac`, see `M-017`) before any estimator was computed on these data. **Result:** it beats every classical range-based estimator in all three panels at both horizons (36 of 36 comparisons, under the plan's QLIKE loss) and its calibrated level is within 1% of close-to-close variance, but it does not beat plain close-to-close at 5 sessions in either primary panel and loses to it in Vietnam at 21 sessions, so the plan's summary claim G fails. Its open-free special case, a reported variant, had the lowest loss at 5 sessions in every panel (post hoc reading). The author's Dhaka file has day and month exchanged in pre-2023 dates; see the plan and `data/external/README.md`. Inputs are third-party and not packaged. Manuscript Section 6.8.
+- `M18_ANAM_MOROCCO_PLAN.md` / `M18_ANAM_MOROCCO_RESULTS.md` — both forms of Anam's estimator on the Casablanca Stock Exchange (Morocco, 77 shares, 2012-2026, data supplied by the author), with the open-free form tested as a hypothesis fixed before any return or estimator was computed on the data. Plan frozen (commit `b4de86d`). **Result:** every binding hypothesis holds. The open-free form has the lowest loss of all nine estimators at 5 and 21 sessions and beats close-to-close (t = -4.53) and the full estimator (t = -4.75) at 5; the full estimator also beats close-to-close at 5 (t = -2.06); both calibrated levels are 1.005. Manuscript Section 6.8.
+- `ANAM_RECHECK_POSTHOC.md` — the POST HOC recheck of every claim made for Anam's estimator, run after all M16-M18 verdicts were known (`scripts/44_anam_recheck.py`, package Tables 117-120, paper Tables 37-38): what was overstated and how it was corrected (`M-020` to `M-025`), which verdicts survive other inference, another loss function and a Holm correction, the level under a shared calibration, and the data assumptions tested. No frozen verdict changes.
 - `OPTIONAL_ITEMS_FOLLOWUP.md` — follow-up on the remaining optional items: literature-integration confirmation, the structured abstract, the master-coverage sensitivity check (Table 17), JEL/data-availability/funding/conflict-of-interest statements, and the table-header/CI-precision fixes.
 - `data/processed/` — frozen paper-facing stock-day panels in CSV format (see `data/processed/README.md`).
 - `data/external/` — NIFTY 50, India VIX, the NEPSE index series, and the NEPSE security master used to validate the instrument classification (see `data/external/README.md`).

@@ -58,8 +58,10 @@ def pytest_result() -> str:
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "15 (round 15: Anam's estimator and its out-of-sample tests under plans M16-M18 "
-                "moved into the manuscript as Section 6.8 and Tables 33-36, with a new title; round "
+    "revision": "16 (round 16: a post hoc recheck of every claim made for Anam's estimator, with the "
+                "overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added "
+                "as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans "
+                "M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round "
                 "14 added the M14 instrumented calibration and the M15 opening-price analysis; "
                 "earlier rounds answered the referee report of 2026-09-02 and the audits that "
                 "followed it)",
@@ -80,7 +82,7 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round15_revisions.py, in order",
+                          "through paper/apply_round16_revisions.py, in order",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -195,6 +197,30 @@ manifest = {
             "bound on total uncertainty (disclosed in Section 10).",
         ],
     },
+    "revision_16_changes": {
+        "recheck": {
+            "script": "scripts/44_anam_recheck.py (POST HOC, written after every M16-M18 verdict was known; "
+                      "not pre-registered)",
+            "outputs": "output/tables/table117-120; manuscript Tables 37-38 "
+                       "(output/tables/paper_table37_anam_robustness.csv, "
+                       "paper_table38_anam_level_same_calibration.csv)",
+            "document": "ANAM_RECHECK_POSTHOC.md",
+            "result": "Every committed table reproduces byte for byte, and the recheck reproduces every frozen "
+                      "t before varying one choice at a time. Under QLIKE no classical range estimator beats "
+                      "Anam's estimator under any inference variant. Against close-to-close the verdicts "
+                      "depend on the loss function, and Morocco's full-form win does not survive longer lags, "
+                      "an MSE loss or a Holm correction across the plans. Given the same calibration every "
+                      "classical range estimator is within 2.2% of close-to-close variance, so the level is the "
+                      "calibration's doing. The Dhaka date repair, the Moroccan band schedule and the pooling "
+                      "of Vietnam's exchanges pass their checks. No frozen verdict changes.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-020 to M-025: pre-registration stated too broadly; comparisons "
+                       "stated without their qualifications; the level credited to the kernel; causal, "
+                       "novelty and interpretive wording; the protocol for Nepal; the recheck itself",
+        "new_scripts": ["scripts/44_anam_recheck.py", "paper/apply_round16_revisions.py"],
+        "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
+        "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
+    },
     "revision_14_changes": {
         "M14_instrumented_calibration": {
             "plan": "M14_CALIBRATION_ANALYSIS_PLAN.md (frozen before any slope was computed)",
@@ -221,11 +247,14 @@ manifest = {
             "status": "manuscript Section 6.8 and Tables 33-36 (round 15)",
             "estimator": "src/nepsevol/estimators/anam.py",
             "plan": "M16_ANAM_ESTIMATOR_PLAN.md (frozen in commit dc41f1e, after design on NEPSE "
-                    "regimes A1 and B and before any holdout observation was read)",
+                    "regimes A1 and B, with M15's full-sample findings known, and before the estimator "
+                    "was computed on the holdout)",
             "results": "M16_ANAM_ESTIMATOR_RESULTS.md; output/tables/table98-106b",
-            "result": "No range-based estimator beats Anam's estimator on the NEPSE holdout, NIFTY 50 "
-                      "or the S&P 500; it ranks first on NIFTY 50 and its calibrated level is within "
-                      "1.2% of close-to-close variance where rules were stable. Close-to-close beats it "
+            "result": "No range-based estimator has significantly lower loss than Anam's estimator on "
+                      "the NEPSE holdout, NIFTY 50 or the S&P 500 (where it coincides with overnight^2 + "
+                      "Parkinson); it ranks first on NIFTY 50 and its calibrated level is within 1.1% of "
+                      "close-to-close variance where rules were stable, as any estimator's is under the "
+                      "same calibration (post hoc recheck, M-022). Close-to-close beats it "
                       "in the 90 sessions after NEPSE's band reform, and the plan's three NEPSE "
                       "predictions (H1-H3) failed.",
         },
@@ -253,7 +282,7 @@ manifest = {
                       "beats close-to-close and the full estimator at 5 sessions; the full estimator beats "
                       "close-to-close and Parkinson at 5 sessions; both calibrated levels are 1.005.",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-019",
+        "corrections": "AUDIT-REGISTER.md M-007 to M-019 (round 16 adds M-020 to M-025)",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
                         "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py",

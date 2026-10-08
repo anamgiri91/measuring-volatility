@@ -953,6 +953,49 @@ pd.DataFrame(_t36, columns=["Plan", "Rule", "Test sample", "Estimator tested",
     TAB / "paper_table36_anam_verdicts.csv", index=False)
 print("wrote paper_table33, paper_table34, paper_table35, paper_table36 (M16-M18)")
 
+# ─────────────────────────── Manuscript Tables 37-38: the POST HOC recheck of Tables 34-36
+# Written after every M16-M18 verdict was known (scripts/44, not pre-registered). Table 37 varies the
+# inference and the loss behind each plan rule; Table 38 gives every estimator the calibration Anam's
+# estimator has, which Table 35 does not. Neither changes a frozen verdict.
+_r117 = pd.read_csv(TAB / "table117_anam_recheck_level.csv")
+_r118 = pd.read_csv(TAB / "table118_anam_recheck_inference.csv")
+_r119 = pd.read_csv(TAB / "table119_anam_recheck_multiplicity.csv")
+_SHORT = {"Anam": "Anam", _VAR: "open-free form", "CC": "close-to-close", "P": "Parkinson"}
+_ROWS37 = [(r["plan"], r["rule"], r["market"], "test half" if r["market"] != "NEPSE" else "A2+C", r["estimator"],
+            r["reference"], 5, f"{r['Holm p across plans']:.3f}") for _, r in _r119.iterrows()]
+_ROWS37 += [("M16", "reported", "NEPSE", "C", "Anam", "CC", 5, "-"),
+            ("M17", "reported", "Vietnam 2007-2020", "test half", "Anam", "CC", 21, "-")]
+_t37 = []
+for _plan, _rule, _mk, _sp, _e, _ref, _w, _holm in _ROWS37:
+    _g = _r118[(_r118.market == _mk) & (_r118.test_span == _sp) & (_r118.window == _w)
+               & (_r118.estimator == _e) & (_r118.reference == _ref)].iloc[0]
+    _lab = _MK[_mk] + (", regime C" if _sp == "C" else "")
+    _t37.append([_plan, _rule.replace(" (vs close-to-close)", "").replace(" (vs Parkinson)", ""), _lab,
+                 f"{_SHORT[_e]} vs {_SHORT[_ref]}, {_w} sessions"]
+                + [f"{_g[c]:+.2f}" for c in ("t_frozen_NW_h", "t_NW_2h", "t_NW_4h", "t_nonoverlapping", "t_MSE_NW_h",
+                                             "t_first_half", "t_second_half")] + [_holm])
+pd.DataFrame(_t37, columns=[
+    "Plan", "Rule", "Test sample", "Comparison", "Frozen t (lags = horizon)", "Lags 2 x horizon",
+    "Lags 4 x horizon", "Non-overlapping origins", "MSE loss", "First half", "Second half",
+    "Holm p, all plans (one-sided)",
+]).to_csv(TAB / "paper_table37_anam_robustness.csv", index=False)
+
+_RANGE = ["P", "GK", "RS", "o2+P", "o2+GK", "YZ (daily form)"]
+_t38 = []
+for _lab, _plan, _fr, _mk, _sp in _LEVELS:
+    _g = _r117[(_r117.market == _mk) & (_r117.span == _sp)].set_index("estimator")
+    _cal = _g.loc[_RANGE, "calibrated_ratio"]
+    _lag = _g.loc[_RANGE, "calibrated_before_window_ratio"]
+    _t38.append([_lab] + [f"{_g.loc[k, 'calibrated_ratio']:.3f}" for k in ["Anam", _VAR, "P", "GK", "o2+P", "YZ (daily form)"]]
+                + [f"{_cal.min():.3f} to {_cal.max():.3f}", f"{_g.loc['Anam', 'calibrated_before_window_ratio']:.3f}",
+                   f"{_lag.min():.3f} to {_lag.max():.3f}"])
+pd.DataFrame(_t38, columns=[
+    "Test sample", "Anam", "Anam, open-free form", "Parkinson", "Garman-Klass", "overnight² + Parkinson",
+    "Yang-Zhang (daily form)", "All six classical range estimators", "Anam, calibration ending before the window",
+    "Six classical, calibration ending before the window",
+]).to_csv(TAB / "paper_table38_anam_level_same_calibration.csv", index=False)
+print("wrote paper_table37, paper_table38 (post hoc recheck)")
+
 checks += [
     ["M16_holdout_verdicts", "; ".join(f"{r.rule} {r.market} {r.verdict}" for r in _d105[_d105.rule != "rival"].itertuples()),
      "verdict", "40_anam_holdout.py"],
@@ -966,6 +1009,10 @@ checks += [
      "40_anam_holdout.py; 42_anam_frontier.py; 43_anam_morocco.py"],
     ["Anam_open_free_minus_CC_t_at_5_sessions", "; ".join(f"{row[0]} {row[9]}" for row in _t34 if row[2] == 5), "t",
      "40_anam_holdout.py; 42_anam_frontier.py; 43_anam_morocco.py"],
+    ["Posthoc_recheck_Holm_p_all_plans", "; ".join(f"{row[0]} {row[1]} {row[2]}: {row[11]}" for row in _t37 if row[11] != "-"),
+     "one-sided p", "44_anam_recheck.py"],
+    ["Posthoc_recheck_level_same_calibration_six_classical", "; ".join(f"{row[0]} {row[7]}" for row in _t38), "ratio",
+     "44_anam_recheck.py"],
 ]
 
 pd.DataFrame(checks, columns=["Result", "Value", "Scale", "Producer"]).to_csv(

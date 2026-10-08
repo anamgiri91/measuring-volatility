@@ -1,0 +1,17 @@
+Plan,Rule,Test sample,Comparison,Frozen t (lags = horizon),Lags 2 x horizon,Lags 4 x horizon,Non-overlapping origins,MSE loss,First half,Second half,"Holm p, all plans (one-sided)"
+M16,H1,NEPSE,"Anam vs close-to-close, 5 sessions",+1.19,+1.00,+0.86,+1.16,-3.19,-1.06,+2.69,1.000
+M16,H1,NEPSE,"Anam vs Parkinson, 5 sessions",-3.97,-3.23,-2.73,-3.21,-2.52,-0.91,-5.76,0.000
+M16,H4,NIFTY 50,"Anam vs close-to-close, 5 sessions",-3.07,-2.91,-2.80,-1.90,-1.38,-2.61,-1.88,0.005
+M16,H5,S&P 500,"Anam vs close-to-close, 5 sessions",-6.39,-6.08,-5.80,-3.24,-5.00,-6.15,-2.98,0.000
+M17,F1,Dhaka 2023-2026,"Anam vs close-to-close, 5 sessions",-0.90,-0.88,-0.87,-0.55,+2.76,-1.85,+0.17,0.551
+M17,F2,Dhaka 2023-2026,"Anam vs Parkinson, 5 sessions",-5.56,-4.85,-4.27,-4.00,-7.85,-3.23,-4.87,0.000
+M17,F1,Vietnam 2007-2020,"Anam vs close-to-close, 5 sessions",+0.20,+0.18,+0.16,+0.01,+14.48,+1.46,-0.59,1.000
+M17,F2,Vietnam 2007-2020,"Anam vs Parkinson, 5 sessions",-22.42,-19.63,-16.45,-14.06,-42.26,-18.43,-14.01,0.000
+M17,F1,Dhaka 2009-2021 (dates repaired),"Anam vs close-to-close, 5 sessions",-6.17,-5.42,-4.77,-4.43,+0.87,-3.74,-4.97,0.000
+M17,F2,Dhaka 2009-2021 (dates repaired),"Anam vs Parkinson, 5 sessions",-9.55,-8.22,-6.97,-5.87,-7.16,-9.76,-3.91,0.000
+M18,F1,Morocco 2012-2026,"Anam vs close-to-close, 5 sessions",-2.06,-1.85,-1.66,-1.10,+1.12,-3.04,-0.10,0.079
+M18,F2,Morocco 2012-2026,"Anam vs Parkinson, 5 sessions",-11.01,-9.72,-8.83,-7.46,-9.01,-9.33,-7.27,0.000
+M18,V1,Morocco 2012-2026,"open-free form vs close-to-close, 5 sessions",-4.53,-4.03,-3.67,-3.07,-1.22,-4.49,-1.84,0.000
+M18,V2,Morocco 2012-2026,"open-free form vs Anam, 5 sessions",-4.75,-4.23,-3.84,-3.45,-4.45,-2.82,-5.15,0.000
+M16,reported,"NEPSE, regime C","Anam vs close-to-close, 5 sessions",+3.51,+3.28,+3.16,+2.90,-1.19,+4.31,+1.36,-
+M17,reported,Vietnam 2007-2020,"Anam vs close-to-close, 21 sessions",+7.27,+6.16,+5.47,+5.19,+15.87,+5.67,+4.81,-
