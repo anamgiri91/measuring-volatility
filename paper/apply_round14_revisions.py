@@ -708,7 +708,24 @@ def main():
                "opening price is mostly transient. The comparisons in this section are "
                "therefore comparisons among estimators that share that error; close-to-close "
                "does not share it, which is why it anchors the scale.")
-    print("  revised the protocol (Section 7) and the estimator choice (Section 7.2)")
+    p = para_with(doc, "a transparent primary specification for an ordinary NEPSE equity is the")
+    replace_in(p, "For a 21-session risk measure, a transparent primary specification for an "
+                  "ordinary NEPSE equity is the annualized rolling Parkinson or Rogers-Satchell "
+                  "volatility:",
+               "For a 21-session risk measure the annualized rolling form below applies to any "
+               "daily variance estimator. In NEPSE, where the opening price is mostly transient "
+               "(Section 6.7), the primary specification should be close-to-close variance, which "
+               "never reads the open, with Parkinson or Rogers-Satchell reported beside it as a "
+               "cross-check; where the open is close to unbiased, the range estimators' "
+               "efficiency makes them the natural primary:")
+    p = para_with(doc, "The report should show close-to-close volatility beside the range measure")
+    replace_in(p, "The report should show close-to-close volatility beside the range measure and "
+                  "disclose the security's median trade count and zero-range rate,",
+               "The report should show close-to-close volatility beside the range measure, "
+               "disclose the security's median trade count and zero-range rate, and report the "
+               "unbiasedness coefficient of the open,")
+    print("  revised the protocol (Section 7), the reporting formula (7.1) and the estimator "
+          "choice (7.2)")
 
     # ── Discussion ───────────────────────────────────────────────────────────────────────────
     p = para_with(doc, "The main result is more optimistic than the usual intuition")

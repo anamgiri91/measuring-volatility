@@ -81,7 +81,7 @@ final formatting step, which runs last.
 15. `scripts/35_calibration_simulation.py` — M14's Monte Carlo validation where the truth is known (package Tables 74-77). About ten minutes.
 16. `scripts/36_calibration_exploratory.py` — M14 post hoc follow-ups E1 and E2, labelled as such (package Tables 87-88).
 17. `scripts/37_opening_price.py` — M15, frozen plan: the unbiasedness coefficient of the open, the band-reform event window and placebo breaks, dose-response, mechanism, estimator evaluation, the Yang-Zhang decomposition, NIFTY, and the decision ledger (package Tables 89-96; manuscript Tables 30-32, Figure 8).
-18. `scripts/38_opening_price_exploratory.py` — M15 post hoc follow-ups X1-X5, labelled as such (package Table 97).
+18. `scripts/38_opening_price_exploratory.py` — M15 post hoc follow-ups X1-X6, labelled as such (package Table 97).
 19. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–32, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
 
 ## Important implementation conventions

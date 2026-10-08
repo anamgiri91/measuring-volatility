@@ -53,7 +53,9 @@ def pytest_result() -> str:
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "3 (response to the referee report of 2026-09-02)",
+    "revision": "14 (round 14: the M14 instrumented calibration and the M15 opening-price "
+                "analysis, both under frozen plans, moved into the manuscript; earlier rounds "
+                "answered the referee report of 2026-09-02 and the audits that followed it)",
     "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     "manuscript": {
         "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
@@ -70,7 +72,8 @@ manifest = {
                             "camera-ready PDF must still be exported from 'revised_source' "
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
-        "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py",
+        "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
+                          "through paper/apply_round14_revisions.py, in order",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -171,6 +174,38 @@ manifest = {
             "model the measurement error of the open-to-close proxy itself, so they are a lower "
             "bound on total uncertainty (disclosed in Section 10).",
         ],
+    },
+    "revision_14_changes": {
+        "M14_instrumented_calibration": {
+            "plan": "M14_CALIBRATION_ANALYSIS_PLAN.md (frozen before any slope was computed)",
+            "results": "M14_CALIBRATION_RESULTS.md; output/tables/table74-88; manuscript Section 6.6, "
+                       "Table 29, Figure 7",
+            "result": "Range estimators' near-unit ratios are calibration (Parkinson slope 0.919 "
+                      "[0.760, 1.056]); AddRS and the VWAP estimator are amplified; the "
+                      "liquidity-gradient, closing-rule and band-slope predictions were not detected.",
+        },
+        "M15_opening_price": {
+            "plan": "M15_OPENING_PRICE_ANALYSIS_PLAN.md (frozen before any outcome statistic was "
+                    "computed; simulation checks committed next)",
+            "results": "M15_OPENING_PRICE_RESULTS.md; output/tables/table89-97; manuscript Section 6.7, "
+                       "Tables 30-32, Figure 8, Appendix A",
+            "result": "The session undoes 64-87% of NEPSE's overnight move (NIFTY 50: 7%); the "
+                      "20 April 2026 band reform is a sharp break, unique against 77 placebo dates; "
+                      "band-pinned opens were reversed, not continued; three-quarters of "
+                      "Yang-Zhang's excess over close-to-close variance is the opening covariance. "
+                      "The dose-response leg and the inversion rule were not established.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-007 to M-012",
+        "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
+                        "paper/apply_round14_revisions.py"],
+        "new_modules": ["src/nepsevol/opening.py"],
+        "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py"],
+        "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market "
+                    "without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock "
+                    "Exchange",
+        "submission_set": "Cover letters now lead with Journal of Financial Markets, Journal of "
+                          "Empirical Finance and Journal of Financial Econometrics, then the "
+                          "referee's three recommendations.",
     },
     "manifest_note": "SHA-256 hashes cover every packaged file except this manifest itself.",
     "files": list(files()),
