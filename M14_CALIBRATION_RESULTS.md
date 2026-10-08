@@ -13,7 +13,7 @@ tables named in brackets; none is typed from memory.
 | H1 | Parkinson: slope; additive share | 0.919 [0.760, 1.056]; 0.069 [−0.052, 0.203] | **no detectable attenuation** |
 | H1 | Garman–Klass | 0.887 [0.668, 1.078]; 0.096 [−0.072, 0.282] | **no detectable attenuation** |
 | H1 | Rogers–Satchell | 0.912 [0.650, 1.135]; 0.161 [−0.040, 0.386] | **no detectable attenuation** |
-| H2 | Parkinson slope, thinnest − most active quintile | +0.082 [−0.164, +0.343] | **not detected** (point estimate reversed) |
+| H2 | Parkinson slope, thinnest − most active quintile | +0.082 [−0.163, +0.342] | **not detected** (point estimate reversed) |
 | H3 | out-of-sample noise, composite − k (share of OC's scaled variance) | RS −0.504, GKV −0.467 (intervals below 0); OC −0.439, GK −0.161, P −0.025 (intervals include 0) | **improvement over RS and GKV; not established over OC, P, GK** |
 | H4 | Parkinson slope, B − A1 and B − A2 (predicted > 0) | −0.252 [−0.421, 0.077]; −0.240 [−0.414, 0.116] | **not detected** (point estimates opposite to prediction) |
 | H4 (reported) | E[c_t o_t+1]/E[P], B − A1 and B − A2 | −0.011 [−0.036, 0.016]; +0.004 [−0.045, 0.046] | not detected |
@@ -54,9 +54,13 @@ reported as found. What the analysis does establish is stated next.
    Parkinson or Garman–Klass, which are therefore close to optimal for this market.
 5. **The opening-band widening changed what the open measures.** Across the regimes the share of
    opening returns at the band is 28.1% (A1), 22.9% (B), 22.5% (A2) and 8.2% (C). The
-   overnight–intraday reversal E[o_t c_t]/E[P] is −0.149, −0.214, −0.180 under the ±2% band and
-   **−0.545** under ±5% (`table83`). The band had been censoring the open; once it widened, the
-   auction price overshot and reverted within the session instead.
+   overnight–intraday reversal E[o_t c_t]/E[P] is −0.149, −0.213, −0.180 under the ±2% band and
+   **−0.545** under ±5% (`table83`). *[Interpretation corrected by `M-011`.]* This file first read
+   the change as the band having censored the open. The frozen M15 test of exactly that reading
+   rejects it: opens pinned at the ±2% band were themselves mostly reversed (unbiasedness
+   coefficient 0.447 [0.274, 0.668] in A2, below one), so the band was capping transient opening
+   moves, not holding back information; once it widened, the opening price travelled further and
+   the session took the extra distance back (`M15_OPENING_PRICE_RESULTS.md`, H9).
 6. **The identification is corroborated by an economically distinct instrument.** On NIFTY 50,
    India VIX — an options-implied forecast built from information unrelated to the daily bar's
    sampling error — identifies the same slopes as the lagged realised measures (`table84`):
@@ -98,11 +102,15 @@ change no frozen verdict.
   the market's rules.
 * **E2, the share of the proxy that is transient endpoint noise** (`table88`),
   1 − E[K]/E[OC] with K the endpoint-noise kernel: 14.4% [9.8, 20.3] (A1), 23.4% [18.7, 29.2] (B),
-  17.9% [7.4, 27.9] (A2) and **56.2% [46.1, 66.3]** (C). The kernel is biased upward wherever the
-  band censors the open or the open is stale, so every figure is a lower bound, and the regime-C
-  figure — where only 8% of opens sit at the band — is the most credible. After the reform, at
-  least half of the squared open-to-close return, the benchmark this literature scores
-  within-session estimators against, is transient noise that reverses within the day.
+  17.9% [7.4, 27.9] (A2) and **56.2% [46.1, 66.3]** (C). *[Description corrected by `M-007`.]*
+  These are point estimates under the kernel's maintained assumption, an opening error
+  independent of overnight news. This file first called them lower bounds, because a band that
+  censors the open or a stale open biases the kernel upward; but an open that overreacts in
+  proportion to the news biases it downward, and M15 finds the opening error to be overreaction,
+  not censoring. The "lower bound" and "at least half" readings are withdrawn. M15's post hoc X4
+  gives a bound that holds whatever the error's correlation with news: the open's error alone is
+  at least 17.2% [13.9, 19.8] of the regime-C proxy, and 48.0% if it is independent of news
+  (`table97`).
 
 ## Corrections made after the first results were seen
 
@@ -116,4 +124,12 @@ Each is an implementation defect, not a change of specification; each is also in
 | M-003 | For the single NIFTY series the two-way-clustered J collapses to rank one (J ≈ 0, p = 1), because the "security" cluster is the whole sample. A single series is now clustered on date. | NIFTY J statistics become informative (and reject); H6, which is stated on slope differences, is unchanged. |
 | M-004 | Introduced while fixing M-001 and caught before adoption: the interval helper dropped any bootstrap replicate containing a NaN, so once GK's composite weight became NaN by design every interval in table 78 became NaN and the H1 rule fell through to a non-plan label. The helper now works element-wise. | The adopted run reproduces the first run's slopes, intervals and bounds to within 5×10⁻¹⁰. |
 | M-005 | The last floating-point bits of the new CSVs varied with BLAS threading. Written at ten significant digits. | None beyond byte-reproducibility. |
-| M-006 | The plan described the Monte Carlo's error under a nonlinear measurement relation as 0.02–0.03, from five replications. The full twelve-replication Monte Carlo gives +0.025 to +0.051 for the range estimators and −0.090 for AP. | Disclosed; no verdict depends on it. The error remains toward one for the range estimators, i.e. conservative for an attenuation claim. |
+| M-006 | The plan described the Monte Carlo's error under a nonlinear measurement relation as 0.02–0.03, from five replications. The full twelve-replication Monte Carlo gives +0.025 to +0.052 for the range estimators and −0.090 for AP. | Disclosed; no verdict depends on it. The error remains toward one for the range estimators, i.e. conservative for an attenuation claim. |
+
+### Corrections made after the M15 results were seen
+
+| ID | Correction | Effect |
+|---|---|---|
+| M-007 | E2's shares were called lower bounds; the kernel is biased downward when the opening error overreacts in proportion to news, which M15 finds is the opening error's character. The bound reading is withdrawn (E2 above, M15's X4). | Description only; no frozen verdict depends on E2. |
+| M-010 | Three figures in this file did not match the frozen tables they cite: the H2 interval (written [−0.164, +0.343]; `table79b` and the ledger `table86` give [−0.163, +0.342]), regime B's E[o c]/E[P] (written −0.214; `table83` gives −0.213), and M-006's upper error (written +0.051; `table74` gives +0.052, Garman–Klass under the VWAP close). All three now read from the tables. | None on any verdict. |
+| M-011 | Point 5 read the reversal's tripling as the band having censored the open; M15's frozen H9 rejects censoring at the band. Reworded in place. | Interpretation only. |

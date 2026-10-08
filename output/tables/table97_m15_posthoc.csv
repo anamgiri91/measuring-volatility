@@ -1,0 +1,57 @@
+regime,analysis,statistic,n_stock_days,value,lo,hi
+A1,X1,b as an OLS slope with an intercept,58015,0.2954872404,0.2404905849,0.3468650207
+A1,X1,b with the published (unadjusted) previous close,58331,0.3283176698,0.2661750911,0.4052948174
+A1,X2,upward band-pinned opens: mean opening return,10027,0.01960537383,0.0195706046,0.0196702154
+A1,X2,upward band-pinned opens: mean intraday return,10027,-0.01180126283,-0.01429384803,-0.009093524556
+A1,X2,"upward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",10027,0.3980597908,0.2699771787,0.5367450511
+A1,X2,downward band-pinned opens: mean opening return,5627,-0.01997603588,-0.01999809253,-0.01995121053
+A1,X2,downward band-pinned opens: mean intraday return,5627,0.01482860175,0.01221233538,0.01723767992
+A1,X2,"downward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",5627,0.2576804608,0.1375408079,0.3883751514
+A1,X3,share of non-stale opens that are the session high or low,51789,0.3634941783,0.3253882366,0.3967256316
+A1,X4,E[o^2]/E[OC],58015,0.2247213265,0.1896081584,0.2725064242
+A1,X4,b,58015,0.306977927,0.2473038507,0.3758633669
+A1,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",58015,0.04987214264,0.03796247507,0.06454820147
+A1,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",58015,0.1557368395,0.1256520605,0.1969188398
+A1,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),57724,0.1444772189,0.1010276762,0.200754238
+B,X1,b as an OLS slope with an intercept,28660,0.2176604667,0.1258552799,0.2819783986
+B,X1,b with the published (unadjusted) previous close,28726,0.2112325863,0.1198876057,0.2773556
+B,X2,upward band-pinned opens: mean opening return,3865,0.01968027301,0.01953832959,0.01993286875
+B,X2,upward band-pinned opens: mean intraday return,3865,-0.01504042688,-0.01806078576,-0.01230174871
+B,X2,"upward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",3865,0.2357612685,0.08106037037,0.3776535516
+B,X2,downward band-pinned opens: mean opening return,2419,-0.01995835679,-0.01998257746,-0.01993075744
+B,X2,downward band-pinned opens: mean intraday return,2419,0.01519053613,0.01191673109,0.01992081139
+B,X2,"downward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",2419,0.2388884368,0.001654401143,0.4021870174
+B,X3,share of non-stale opens that are the session high or low,27801,0.3887629941,0.3649382541,0.4167031386
+B,X4,E[o^2]/E[OC],28660,0.2934438427,0.2525107204,0.3332497968
+B,X4,b,28660,0.2160911857,0.1282981433,0.2813953592
+B,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",28660,0.07837760229,0.06442154869,0.09379206417
+B,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",28660,0.2300332148,0.1966467312,0.2680558427
+B,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),28389,0.234107964,0.1848103806,0.2951785958
+A2,X1,b as an OLS slope with an intercept,31777,0.3590235368,0.2593444997,0.5104151487
+A2,X1,b with the published (unadjusted) previous close,31852,0.3572261444,0.2531956756,0.5138006564
+A2,X2,upward band-pinned opens: mean opening return,3503,0.01958705328,0.0195616784,0.01960825482
+A2,X2,upward band-pinned opens: mean intraday return,3503,-0.007518884003,-0.01238349651,-0.001993277676
+A2,X2,"upward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",3503,0.616129905,0.367198456,0.8983456696
+A2,X2,downward band-pinned opens: mean opening return,3251,-0.01994735395,-0.01997480638,-0.0199152685
+A2,X2,downward band-pinned opens: mean intraday return,3251,0.0145641605,0.00933003582,0.01868752111
+A2,X2,"downward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",3251,0.2698700522,0.06402097616,0.5319915218
+A2,X3,share of non-stale opens that are the session high or low,28024,0.4217456466,0.3829148632,0.4499244142
+A2,X4,E[o^2]/E[OC],31777,0.273693738,0.2294531389,0.3162434871
+A2,X4,b,31777,0.3556879752,0.2516663989,0.5116271191
+A2,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",31777,0.0543641442,0.03162877887,0.0741814679
+A2,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",31777,0.1763441665,0.1184230611,0.2242198098
+A2,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),31467,0.1794142073,0.08417296967,0.2583298408
+C,X1,b as an OLS slope with an intercept,24518,0.1226579025,0.07554372302,0.1833217993
+C,X1,b with the published (unadjusted) previous close,24583,0.1323144101,0.08342916468,0.1986474644
+C,X2,upward band-pinned opens: mean opening return,895,0.0486362978,0.04860536293,0.04866012172
+C,X2,upward band-pinned opens: mean intraday return,895,-0.0484624598,-0.05252852241,-0.04280439569
+C,X2,"upward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",895,0.003574244004,-0.07993219449,0.1202414952
+C,X2,downward band-pinned opens: mean opening return,877,-0.05111038418,-0.05114950179,-0.05107498697
+C,X2,downward band-pinned opens: mean intraday return,877,0.04573483469,0.0417003169,0.04942403152
+C,X2,"downward band-pinned opens: share of the opening move retained by the close, E[r]/E[o]",877,0.1051752901,0.03262950963,0.1840568737
+C,X3,share of non-stale opens that are the session high or low,20255,0.5149345841,0.4878649192,0.5365619666
+C,X4,E[o^2]/E[OC],24518,0.5516770265,0.4875588781,0.610252453
+C,X4,b,24518,0.1303457179,0.08174085531,0.1964587818
+C,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",24518,0.1718568311,0.1385341168,0.1983512425
+C,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",24518,0.4797682884,0.3972108474,0.5430727616
+C,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),24206,0.5618916072,0.4508503761,0.6547328744

@@ -1,0 +1,60 @@
+block,regime,group,statistic,n_stock_days,value,lo,hi
+regime,A1,all,unbiasedness coefficient b = E[o r]/E[o^2],58015,0.306977927,0.2473038507,0.3758633669
+regime,A1,all,E[o c]/E[P],58015,-0.1486400139,-0.1832779037,-0.120266269
+regime,A1,all,E[o a]/E[o^2] (undone before the VWAP centre),58015,-0.5749362852,-0.6329542321,-0.5153063226
+regime,A1,all,E[o q]/E[o^2] (undone after the VWAP centre),58015,-0.1180857878,-0.1571767223,-0.08277241225
+regime,A1,all,share of opens equal to the previous close,58015,0.1073170732,0.09960063161,0.1165981143
+regime,A1,all,share of opens pinned at the band in force,58015,0.2698267689,0.2454749838,0.2908525123
+zone,A1,interior,b,36135,0.2533104561,0.1943997883,0.3144772232
+zone,A1,pinned,b,15654,0.3485992681,0.2770689085,0.433561316
+regime,B,all,unbiasedness coefficient b = E[o r]/E[o^2],28660,0.2160911857,0.1282981433,0.2813953592
+regime,B,all,E[o c]/E[P],28660,-0.2134954949,-0.2469091013,-0.1872109938
+regime,B,all,E[o a]/E[o^2] (undone before the VWAP centre),28660,-0.6999662963,-0.782763304,-0.6421053438
+regime,B,all,E[o q]/E[o^2] (undone after the VWAP centre),28660,-0.08394251799,-0.1395847845,-0.04469846125
+regime,B,all,share of opens equal to the previous close,28660,0.02997208653,0.0230047862,0.04196189577
+regime,B,all,share of opens pinned at the band in force,28660,0.2192602931,0.1929860427,0.2490521431
+zone,B,interior,b,21517,0.1878798318,0.09786100047,0.2620643962
+zone,B,pinned,b,6284,0.2421636755,0.1159572352,0.3311951399
+regime,A2,all,unbiasedness coefficient b = E[o r]/E[o^2],31777,0.3556879752,0.2516663989,0.5116271191
+regime,A2,all,E[o c]/E[P],31777,-0.1803161206,-0.2262728,-0.1273929219
+regime,A2,all,E[o a]/E[o^2] (undone before the VWAP centre),31777,-0.555425462,-0.6515653622,-0.407158581
+regime,A2,all,E[o q]/E[o^2] (undone after the VWAP centre),31777,-0.0888865628,-0.1651080271,-0.016337337
+regime,A2,all,share of opens equal to the previous close,31777,0.1181042893,0.1035541063,0.1346892442
+regime,A2,all,share of opens pinned at the band in force,31777,0.2125436637,0.184854355,0.2449689302
+zone,A2,interior,b,21270,0.2606559323,0.1820575667,0.3858696716
+zone,A2,pinned,b,6754,0.4472898964,0.2737882092,0.6683600594
+regime,C,all,unbiasedness coefficient b = E[o r]/E[o^2],24518,0.1303457179,0.08174085531,0.1964587818
+regime,C,all,E[o c]/E[P],24518,-0.5450507752,-0.6211600065,-0.4561420712
+regime,C,all,E[o a]/E[o^2] (undone before the VWAP centre),24518,-0.7897971182,-0.8430180521,-0.7165642719
+regime,C,all,E[o q]/E[o^2] (undone after the VWAP centre),24518,-0.07985716388,-0.106807716,-0.05422052705
+regime,C,all,share of opens equal to the previous close,24518,0.1738722571,0.1411923323,0.2469372222
+regime,C,all,share of opens pinned at the band in force,24518,0.07227343176,0.05805495662,0.08537048883
+zone,C,interior,b,13830,0.2494179247,0.09986355682,0.385267313
+zone,C,old-band zone,b,4653,0.1735273497,0.1118588767,0.2488592251
+zone,C,pinned,b,1772,0.05650997702,0.007998430246,0.1212291503
+"zone, sensitivity",C,"old-band zone, excl. first 5 sessions",b,,0.1772108357,0.1097688033,0.2691401795
+"zone, sensitivity",C,"interior, excl. first 5 sessions",b,,0.2588813391,0.1143019583,0.4023934836
+liquidity quintile,A1,Q1,b,,0.355539154,0.2759680086,0.4462009262
+liquidity quintile,B,Q1,b,,0.2816555211,0.1938014881,0.374976122
+liquidity quintile,A2,Q1,b,,0.3709106399,0.2741629097,0.5096045591
+liquidity quintile,C,Q1,b,,0.1662980994,0.06687036993,0.2852722857
+liquidity quintile,A1,Q2,b,,0.2854192064,0.2053445356,0.3579424407
+liquidity quintile,B,Q2,b,,0.2099561271,0.1254635279,0.3210663383
+liquidity quintile,A2,Q2,b,,0.2987200674,0.1758395503,0.4679362449
+liquidity quintile,C,Q2,b,,0.1324285565,0.04698269629,0.2668995415
+liquidity quintile,A1,Q3,b,,0.2925645103,0.213478336,0.3875062252
+liquidity quintile,B,Q3,b,,0.2123195481,0.06546467809,0.330470894
+liquidity quintile,A2,Q3,b,,0.3269801476,0.2021831755,0.4867018984
+liquidity quintile,C,Q3,b,,0.1166184591,0.04620421596,0.1954955325
+liquidity quintile,A1,Q4,b,,0.3095872358,0.2042321455,0.4061887487
+liquidity quintile,B,Q4,b,,0.2227270775,0.008971387446,0.4215708389
+liquidity quintile,A2,Q4,b,,0.3664408579,0.2178180639,0.5689188703
+liquidity quintile,C,Q4,b,,0.119348326,0.004861745144,0.2432838371
+liquidity quintile,A1,Q5,b,,0.2802076609,0.136682307,0.4309413991
+liquidity quintile,B,Q5,b,,0.1189227139,-0.09182324517,0.2738038413
+liquidity quintile,A2,Q5,b,,0.4515629987,0.2668406081,0.7222263312
+liquidity quintile,C,Q5,b,,0.1225157434,0.03832608223,0.2730492816
+difference,C - A2,all,difference in b,,-0.2253422572,-0.3885775665,-0.1061414858
+difference,B - A1,all,difference in b,,-0.0908867413,-0.213081868,-0.006276602204
+difference,A2 - A1,all,difference in b,,0.04871004816,-0.0695450907,0.2208858118
+difference,"interior opens, C - A2",interior,difference in b,,-0.01123800764,-0.1922355423,0.1560350274

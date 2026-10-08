@@ -1,0 +1,22 @@
+windows,statistic,n_windows,value,lo,hi
+A1,sum YZ / sum Var21(r) (variance scale),52744,1.446367454,1.334130168,1.585680299
+A1,"share of sum(YZ - Var21(r)) carried by -2 Cov(o, c)",52744,0.6430045891,0.5849483416,0.7247633024
+A1,share carried by (1 - k)[mean RS - Var(c)],52744,0.3569954109,0.2752366976,0.4150516584
+A1,"sum(-2 Cov(o, c)) / sum Var21(r)",52744,0.2870163212,0.2188453204,0.3740219074
+B,sum YZ / sum Var21(r) (variance scale),23303,1.85827395,1.717559343,2.087792145
+B,"share of sum(YZ - Var21(r)) carried by -2 Cov(o, c)",23303,0.6109945209,0.5605392903,0.6589549979
+B,share carried by (1 - k)[mean RS - Var(c)],23303,0.3890054791,0.3410450021,0.4394607097
+B,"sum(-2 Cov(o, c)) / sum Var21(r)",23303,0.5244006806,0.4441923915,0.6344062459
+A2,sum YZ / sum Var21(r) (variance scale),26038,1.550814344,1.317742913,1.793384494
+A2,"share of sum(YZ - Var21(r)) carried by -2 Cov(o, c)",26038,0.7212376921,0.6113288149,0.8933575443
+A2,share carried by (1 - k)[mean RS - Var(c)],26038,0.2787623079,0.1066424557,0.3886711851
+A2,"sum(-2 Cov(o, c)) / sum Var21(r)",26038,0.3972680661,0.2772755551,0.5168597659
+C,sum YZ / sum Var21(r) (variance scale),18749,2.682343575,2.313347839,3.266745587
+C,"share of sum(YZ - Var21(r)) carried by -2 Cov(o, c)",18749,1.012702673,0.940440016,1.091482941
+C,share carried by (1 - k)[mean RS - Var(c)],18749,-0.01270267307,-0.09148294136,0.05955998396
+C,"sum(-2 Cov(o, c)) / sum Var21(r)",18749,1.703713836,1.330105755,2.275058479
+all windows,sum YZ / sum Var21(r) (variance scale),135899,1.637437117,1.480756062,1.84665223
+all windows,"share of sum(YZ - Var21(r)) carried by -2 Cov(o, c)",135899,0.7560960054,0.661822992,0.8686187736
+all windows,share carried by (1 - k)[mean RS - Var(c)],135899,0.2439039946,0.1313812264,0.338177008
+all windows,"sum(-2 Cov(o, c)) / sum Var21(r)",135899,0.4819636581,0.3378612087,0.6974494941
+C - A2,change in sum YZ / sum Var21(r),,1.131529231,0.6893317572,1.726847127

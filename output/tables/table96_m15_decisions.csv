@@ -1,0 +1,11 @@
+hypothesis,statistic,estimate,verdict
+H7,"jump in b, 40 sessions from 2026-04-20 minus the 40 ending 2026-04-05 (predicted < 0)","-0.333 [-0.627, -0.067]; placebo jumps 77, min -0.176, max 0.289; placebos at or below the actual jump: 0",sharp break
+H8,"DiD in b, top minus bottom tercile of pre-reform pinned share, C minus A2 (predicted < 0)","DiD -0.019 [-0.173, 0.104]; placebo DiD -0.011 [-0.242, 0.179]",not detected
+H9(a),"b, pinned opens in A2 (predicted > 1)","0.447 [0.274, 0.668]",not detected
+H9(b),"b, opens in the old-band zone in C (predicted < 1)","0.174 [0.112, 0.249]",overshoot where the band used to bind
+H9,joint verdict,,overshoot only
+H9(c) (reported),"b, interior opens, C minus A2","-0.011 [-0.192, 0.156]",concentrated where the band bound
+H10 (consequence),change A2 to C in E[P]/E[OC] and in E[P]/E[K] (point estimates known before freezing),"E[P]/E[OC] -0.097 [-0.224, 0.024]; E[P]/E[K] 0.818 [0.362, 1.413]",no inversion established
+H11,"sum YZ / sum Var21(r), C minus A2 (predicted > 0)","1.132 [0.689, 1.727]",confirmed
+H12 (reported),"NIFTY 50, full (incl. 2012-10-05)","b 0.929 [0.854, 0.999]; E[o c]/E[P] -0.038 [-0.077, -0.001]; transient share 1 - E[K]/E[OC] 0.001 [-0.043, 0.036]; YZ/Var21(r) 1.015 [0.940, 1.158]","reported, no decision"
+H12 (reported),"NIFTY 50, excl. 2012-10-05","b 0.929 [0.854, 0.995]; E[o c]/E[P] -0.039 [-0.078, -0.003]; transient share 1 - E[K]/E[OC] 0.001 [-0.040, 0.040]; YZ/Var21(r) 0.960 [0.922, 1.006]","reported, no decision"
