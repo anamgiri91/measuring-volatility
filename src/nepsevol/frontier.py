@@ -28,8 +28,9 @@ THE UPLOAD'S DATES
 Before 2023 the upload's dates have day and month exchanged whenever the day is 12 or less: 2020-04-02
 holds 4 February 2020, and the stamps from 2 April to 11 May 2020 fall inside the exchange's
 COVID-19 closure (26 March to 30 May 2020). The evidence, all from the calendar and none from prices:
-every Friday stamp before 2023 has a day of 12 or less; reversing day and month for every such stamp
-from 2009 to 2021 leaves no Friday session and no collision with an existing date; in 2022 the file
+every one of the 189 Friday stamps from 2009 to 2022 has a day of 12 or less (before 2009, 13 of 153
+do not, M-016); reversing day and month for every such stamp from 2009 to 2021 leaves no Friday
+session and no collision with an existing date; in 2022 the file
 holds two copies of the same months, one exchanged and one not (all 9,650 conflicting records are
 2022 stamps with a day of 12 or less); from 2023 on there is no Friday or Saturday stamp and the file
 agrees exactly with the mirror. The panels therefore use 2009-2021 with the dates repaired

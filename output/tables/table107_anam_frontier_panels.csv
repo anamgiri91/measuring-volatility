@@ -1,0 +1,4 @@
+panel,role,records,no-trade records,envelope violations dropped,envelope violations repaired,"dates dropped (carried forward, thin, closed)",bars without a previous close,bars outside the band,stock-days,securities,sessions,first session,last session,first test session,train stock-days,test stock-days,b median (test span),b mean (test span),"stale opens (o = 0, test span)"
+DSE 2023-2026,primary,319840,12731,0,0,0,7139,177,299793,368,901,2023-01-02,2026-10-08,2024-11-20,141187,158606,0.3279081059,0.3448876237,0.2343858366
+Vietnam 2007-2020,primary,1583027,199,1625,104648,1,123391,2286,1455525,927,3290,2007-01-03,2020-03-18,2013-08-14,616635,838890,0.5377412423,0.5392234531,0.3523298645
+DSE 2009-2021,secondary,831805,2,51,19,0,12979,5930,812843,418,3094,2009-01-04,2021-12-30,2015-06-17,349915,462928,0.4771232219,0.4889269747,0.2268236097

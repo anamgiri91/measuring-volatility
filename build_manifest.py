@@ -227,14 +227,28 @@ manifest = {
                       "in the 90 sessions after NEPSE's band reform, and the plan's three NEPSE "
                       "predictions (H1-H3) failed.",
         },
-        "corrections": "AUDIT-REGISTER.md M-007 to M-015",
+        "M17_anam_frontier": {
+            "status": "package only; not part of the manuscript",
+            "panels": "src/nepsevol/frontier.py (Dhaka Stock Exchange 2023-2026 and 2009-2021, Vietnam "
+                      "2007-2020; third-party inputs pinned by SHA-256, not packaged)",
+            "plan": "M17_ANAM_FRONTIER_PLAN.md (frozen in commit db417ac, before any estimator was "
+                    "computed on these data)",
+            "results": "M17_ANAM_FRONTIER_RESULTS.md; output/tables/table107-111",
+            "result": "Anam's estimator beats every classical range-based estimator in all three panels at "
+                      "both horizons and its calibrated level is within 1% of close-to-close variance; it "
+                      "does not beat close-to-close at 5 sessions in either primary panel and loses to it in "
+                      "Vietnam at 21 sessions, so the summary claim G fails. Its open-free special case had "
+                      "the lowest loss at 5 sessions in every panel (post hoc reading of a reported variant).",
+        },
+        "corrections": "AUDIT-REGISTER.md M-007 to M-016",
         "new_scripts": ["scripts/37_opening_price.py", "scripts/38_opening_price_exploratory.py",
                         "paper/apply_round14_revisions.py", "scripts/39_anam_development.py",
-                        "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py"],
+                        "scripts/40_anam_holdout.py", "scripts/41_anam_posthoc.py", "scripts/42_anam_frontier.py"],
         "new_modules": ["src/nepsevol/opening.py", "src/nepsevol/estimators/anam.py",
-                        "src/nepsevol/volforecast.py"],
+                        "src/nepsevol/volforecast.py", "src/nepsevol/frontier.py"],
         "new_tests": ["tests/test_opening_price.py", "tests/test_round14_revisions.py",
-                      "tests/test_anam_estimator.py", "tests/test_anam_results.py"],
+                      "tests/test_anam_estimator.py", "tests/test_anam_results.py",
+                      "tests/test_frontier_panels.py", "tests/test_anam_frontier_results.py"],
         "retitled": "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market "
                     "without Options -- Evidence from a Pre-Open Band Reform on the Nepal Stock "
                     "Exchange",

@@ -1,0 +1,34 @@
+market,span,estimator,n,ratio_to_close_to_close
+DSE 2023-2026,test half,CC,151386,1
+DSE 2023-2026,test half,P,151386,1.128072972
+DSE 2023-2026,test half,GK,151386,1.115556579
+DSE 2023-2026,test half,RS,151386,1.176777182
+DSE 2023-2026,test half,o2+P,151386,1.662130308
+DSE 2023-2026,test half,o2+GK,151386,1.649613916
+DSE 2023-2026,test half,YZ (daily form),151386,1.708562785
+DSE 2023-2026,test half,"Anam, open-free special case (b=0)",151386,1.163847343
+DSE 2023-2026,test half,Anam,151386,1.196071173
+DSE 2023-2026,test half,YZ (window form),151386,1.604080194
+DSE 2023-2026,test half,Anam (calibrated),151386,1.002449951
+Vietnam 2007-2020,test half,CC,821164,1
+Vietnam 2007-2020,test half,P,821164,0.7207550247
+Vietnam 2007-2020,test half,GK,821164,0.6332523772
+Vietnam 2007-2020,test half,RS,821164,0.7281501509
+Vietnam 2007-2020,test half,o2+P,821164,1.555929769
+Vietnam 2007-2020,test half,o2+GK,821164,1.468427121
+Vietnam 2007-2020,test half,YZ (daily form),821164,1.593858418
+Vietnam 2007-2020,test half,"Anam, open-free special case (b=0)",821164,0.9169720539
+Vietnam 2007-2020,test half,Anam,821164,1.000619784
+Vietnam 2007-2020,test half,YZ (window form),821164,1.530683937
+Vietnam 2007-2020,test half,Anam (calibrated),821164,1.009418161
+DSE 2009-2021,test half,CC,455828,1
+DSE 2009-2021,test half,P,455828,0.9947556668
+DSE 2009-2021,test half,GK,455828,0.9880185072
+DSE 2009-2021,test half,RS,455828,1.022034845
+DSE 2009-2021,test half,o2+P,455828,1.392064297
+DSE 2009-2021,test half,o2+GK,455828,1.385327137
+DSE 2009-2021,test half,YZ (daily form),455828,1.417972509
+DSE 2009-2021,test half,"Anam, open-free special case (b=0)",455828,1.068622768
+DSE 2009-2021,test half,Anam,455828,1.106496063
+DSE 2009-2021,test half,YZ (window form),455828,1.352131128
+DSE 2009-2021,test half,Anam (calibrated),455828,1.003904986

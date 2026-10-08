@@ -1,0 +1,56 @@
+rule,market,role,verdict,detail,span,window,rival,dQLIKE_Anam_minus_rival,t
+F1,DSE 2023-2026,primary,does not hold,5 sessions: Anam no difference CC,,,,,
+F2,DSE 2023-2026,primary,holds,5 sessions: Anam beats P,,,,,
+F3,DSE 2023-2026,primary,holds,Anam (calibrated) 1.002; o2+P 1.662; YZ daily form 1.709,,,,,
+best in panel,DSE 2023-2026,primary,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+F1,Vietnam 2007-2020,primary,does not hold,5 sessions: Anam no difference CC,,,,,
+F2,Vietnam 2007-2020,primary,holds,5 sessions: Anam beats P,,,,,
+F3,Vietnam 2007-2020,primary,holds,Anam (calibrated) 1.009; o2+P 1.556; YZ daily form 1.594,,,,,
+best in panel,Vietnam 2007-2020,primary,no,Anam loses to CC at 21,,,,,
+F1,DSE 2009-2021,secondary,holds,5 sessions: Anam beats CC,,,,,
+F2,DSE 2009-2021,secondary,holds,5 sessions: Anam beats P,,,,,
+F3,DSE 2009-2021,secondary,holds,Anam (calibrated) 1.004; o2+P 1.392; YZ daily form 1.418,,,,,
+best in panel,DSE 2009-2021,secondary,yes,no rival beats Anam at 5 or 21 sessions,,,,,
+G,DSE 2023-2026 + Vietnam 2007-2020,primary,does not hold,"DSE 2023-2026: F1, F2 and best in panel not all hold; Vietnam 2007-2020: F1, F2 and best in panel not all hold",,,,,
+rival,DSE 2023-2026,,Anam no difference CC,,test half,5,CC,-0.002487812306,-0.9017507307
+rival,DSE 2023-2026,,Anam beats P,,test half,5,P,-0.02041809675,-5.562119188
+rival,DSE 2023-2026,,Anam beats GK,,test half,5,GK,-0.01966028151,-6.823462493
+rival,DSE 2023-2026,,Anam beats RS,,test half,5,RS,-0.02771012626,-9.64542411
+rival,DSE 2023-2026,,Anam beats o2+P,,test half,5,o2+P,-0.02743459242,-9.610750936
+rival,DSE 2023-2026,,Anam beats o2+GK,,test half,5,o2+GK,-0.03018933606,-10.54300089
+rival,DSE 2023-2026,,Anam beats YZ (daily form),,test half,5,YZ (daily form),-0.03423466678,-10.22710404
+rival,DSE 2023-2026,,Anam beats CC,,test half,21,CC,-0.007965572622,-2.217844552
+rival,DSE 2023-2026,,Anam beats P,,test half,21,P,-0.01894308024,-3.631996301
+rival,DSE 2023-2026,,Anam beats GK,,test half,21,GK,-0.01548972572,-3.932142362
+rival,DSE 2023-2026,,Anam beats RS,,test half,21,RS,-0.0219108565,-4.68437569
+rival,DSE 2023-2026,,Anam beats o2+P,,test half,21,o2+P,-0.02266161331,-4.596031143
+rival,DSE 2023-2026,,Anam beats o2+GK,,test half,21,o2+GK,-0.02311728899,-4.852791963
+rival,DSE 2023-2026,,Anam beats YZ (daily form),,test half,21,YZ (daily form),-0.02685905798,-4.796779391
+rival,Vietnam 2007-2020,,Anam no difference CC,,test half,5,CC,0.0005481071729,0.204780321
+rival,Vietnam 2007-2020,,Anam beats P,,test half,5,P,-0.05202066348,-22.42247657
+rival,Vietnam 2007-2020,,Anam beats GK,,test half,5,GK,-0.1089303466,-33.94228502
+rival,Vietnam 2007-2020,,Anam beats RS,,test half,5,RS,-0.1661051736,-40.92114312
+rival,Vietnam 2007-2020,,Anam beats o2+P,,test half,5,o2+P,-0.0232556654,-7.214426173
+rival,Vietnam 2007-2020,,Anam beats o2+GK,,test half,5,o2+GK,-0.02793300512,-9.607771052
+rival,Vietnam 2007-2020,,Anam beats YZ (daily form),,test half,5,YZ (daily form),-0.03193631848,-10.06778897
+rival,Vietnam 2007-2020,,Anam loses to CC,,test half,21,CC,0.01130811049,7.266020954
+rival,Vietnam 2007-2020,,Anam beats P,,test half,21,P,-0.06599100896,-21.73820367
+rival,Vietnam 2007-2020,,Anam beats GK,,test half,21,GK,-0.1509466883,-30.10552005
+rival,Vietnam 2007-2020,,Anam beats RS,,test half,21,RS,-0.2483804116,-23.08304355
+rival,Vietnam 2007-2020,,Anam beats o2+P,,test half,21,o2+P,-0.01513768279,-3.364636713
+rival,Vietnam 2007-2020,,Anam beats o2+GK,,test half,21,o2+GK,-0.01704010614,-4.169834858
+rival,Vietnam 2007-2020,,Anam beats YZ (daily form),,test half,21,YZ (daily form),-0.02092283206,-4.743438234
+rival,DSE 2009-2021,,Anam beats CC,,test half,5,CC,-0.0169871751,-6.171332256
+rival,DSE 2009-2021,,Anam beats P,,test half,5,P,-0.01177502462,-9.553254871
+rival,DSE 2009-2021,,Anam beats GK,,test half,5,GK,-0.02131897716,-12.45193661
+rival,DSE 2009-2021,,Anam beats RS,,test half,5,RS,-0.03228592551,-13.83616503
+rival,DSE 2009-2021,,Anam beats o2+P,,test half,5,o2+P,-0.01845166609,-12.53954817
+rival,DSE 2009-2021,,Anam beats o2+GK,,test half,5,o2+GK,-0.02455179346,-13.23042504
+rival,DSE 2009-2021,,Anam beats YZ (daily form),,test half,5,YZ (daily form),-0.02781506181,-13.55707396
+rival,DSE 2009-2021,,Anam beats CC,,test half,21,CC,-0.01074676343,-3.016788135
+rival,DSE 2009-2021,,Anam beats P,,test half,21,P,-0.007102696889,-3.651977606
+rival,DSE 2009-2021,,Anam beats GK,,test half,21,GK,-0.01051745699,-3.733220709
+rival,DSE 2009-2021,,Anam beats RS,,test half,21,RS,-0.01297417002,-4.083663826
+rival,DSE 2009-2021,,Anam beats o2+P,,test half,21,o2+P,-0.01291495858,-5.504464255
+rival,DSE 2009-2021,,Anam beats o2+GK,,test half,21,o2+GK,-0.01422850172,-5.46325489
+rival,DSE 2009-2021,,Anam beats YZ (daily form),,test half,21,YZ (daily form),-0.01704419364,-5.66554809
