@@ -58,3 +58,9 @@ were not verified, which is why none of them is copied into the package.
 
 The frontier panels are built by `nepsevol.frontier.market_panel`; its docstring states the cleaning rules, which
 were frozen in `M17_ANAM_FRONTIER_PLAN.md` before any estimator was computed on these data.
+
+### Added for M18: Casablanca Stock Exchange
+
+| Path under `data/external/frontier/` | What it is | How to obtain it | SHA-256 |
+|---|---|---|---|
+| `casablanca/stock/*.csv` (and `casablanca/info.csv`) | One file per Casablanca Stock Exchange share, 77 shares, 2012-03-26 to 2026-03-27, columns `Time, Open, High, Low, Close, Volume`, not adjusted for corporate actions | Supplied by the author as `archive_2.zip` (SHA-256 `c9cc8888fec542a2aafc6d2a2458c88508ea7761f18b422c8f1aa4e02e0ef1be`), folder `cse-data/`; the original source is not stated. The `index/` folder is not used | manifest `41a7ecdef86b23491dbf1571dfcc718a4cc59a649dbfab4e29a72fb75ebd5e0e` (sorted `"<file> <sha256>"` lines of the 77 share files) |

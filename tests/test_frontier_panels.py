@@ -127,3 +127,31 @@ def test_split_is_at_the_median_session_and_estimators_are_consistent():
     R = np.log(panel["high"] / panel["low"])
     assert np.allclose(panel["P"], R ** 2 / (4 * np.log(2)))
     assert set(F.SPANS) == {"DSE 2023-2026", "DSE 2009-2021", "Vietnam 2007-2020"}
+
+
+# ── M18: Casablanca's dated band schedule and share files ─────────────────────────────────
+
+def test_band_schedule_applies_the_limit_in_force_on_each_day():
+    dates = pd.Series(pd.to_datetime(["2019-12-31", "2020-03-16", "2020-03-17", "2021-10-12", "2023-10-08", "2023-10-09"]))
+    assert list(F.band_on(dates, F.MA_BANDS)) == [0.10, 0.10, 0.04, 0.06, 0.06, 0.10]
+    assert list(F.band_on(dates, 0.15)) == [0.15] * 6
+
+
+def test_band_screen_follows_the_schedule():
+    d = pd.to_datetime(["2020-03-13", "2020-03-16", "2020-03-17", "2020-03-18"])
+    a = _bars("A", d, [10, 10, 10, 10], spread=0.0)
+    a.loc[1, ["high", "close"]] = 10 * 1.08     # +8% on 16 March: inside the 10% limit then in force
+    a.loc[2, ["open", "high", "low", "close"]] = 10.8                    # 17 March: flat at the new level
+    a.loc[3, ["open", "low"]] = 10.8
+    a.loc[3, ["high", "close"]] = 10.8 * 1.07   # +7% on 18 March: outside the new 4% limit plus margin
+    panel, log = F.build_panel(a, band=F.MA_BANDS, unit=0.01, min_securities=1)
+    assert d[1] in set(panel["date"]) and d[3] not in set(panel["date"])
+    assert log["bars outside the band"] == 1
+
+
+def test_casablanca_reader_takes_one_file_per_share(tmp_path):
+    for sym, rows in (("ATW", [("2024-01-02", 450, 455, 449, 452, 1000)]), ("IAM", [("2024-01-02", 99, 100, 98, 99.5, 500)])):
+        pd.DataFrame(rows, columns=["Time", "Open", "High", "Low", "Close", "Volume"]).to_csv(tmp_path / f"{sym}.csv", index=False)
+    x = F.read_casablanca(tmp_path, check=False)
+    assert sorted(x["symbol"]) == ["ATW", "IAM"] and list(x.columns) == ["symbol", "date", "open", "high", "low", "close", "volume"]
+    assert "Morocco 2012-2026" in F.SPANS_M18 and "Morocco 2012-2026" not in F.SPANS

@@ -22,6 +22,9 @@ SOURCES
                 2000-07-28 to 2020-03-18, prices adjusted for corporate actions and rounded to 0.01
                 (thousand dong). The three-character codes are ordinary shares; the six longer codes
                 are exchange-traded and real-estate funds.
+``CSE_STOCKS``  (M18) ``cse-data/stock/*.csv`` as supplied by the author (``archive_2.zip``): one file per
+                Casablanca Stock Exchange share, 77 shares, 2012-03-26 to 2026-03-27, daily open, high,
+                low, close and volume, not adjusted for corporate actions. Its ``index/`` files are not used.
 
 THE UPLOAD'S DATES
 ------------------
@@ -55,7 +58,8 @@ RULES (frozen in ``M17_ANAM_FRONTIER_PLAN.md``)
    listing gap, the record-date suspension that precedes a Dhaka corporate action, a long closure).
 7. Band screen: a bar whose high or low lies further from the previous close than the market's widest
    regular daily limit plus ``BAND_MARGIN`` is dropped (an unadjusted corporate action or a data
-   error; Dhaka 10%, Vietnam 15%, the UPCoM limit).
+   error; Dhaka 10%, Vietnam 15%, the UPCoM limit). Where the limit changed by regulatory decision
+   inside the sample, the limit in force on the day applies (Casablanca, ``MA_BANDS``).
 8. Train/test: sessions before the panel's median session train the forecast shrinkage; the median
    session and later are the test span.
 """
@@ -70,8 +74,9 @@ import pandas as pd
 
 from nepsevol.estimators import anam as AN
 
-__all__ = ["DSE_NON_EQUITY", "SPANS", "unswap_day_month", "read_dse_upload", "read_dse_mirror", "read_vietnam",
-           "build_panel", "market_panel", "sha256_file", "sha256_manifest"]
+__all__ = ["DSE_NON_EQUITY", "SPANS", "SPANS_M18", "MA_BANDS", "unswap_day_month", "read_dse_upload",
+           "read_dse_mirror", "read_vietnam", "read_casablanca", "band_on", "build_panel", "market_panel",
+           "sha256_file", "sha256_manifest"]
 
 LN2 = float(np.log(2.0))
 PRICES = ["open", "high", "low", "close"]
@@ -82,6 +87,9 @@ DSE_MIRROR_SHA256 = "552e1a4515e36348a35069fca13067149988e9242e03b0bcac5b1a289b1
 DSE_MIRROR_COMMIT = "9f11a766ae8690bdb798f68b077a1ce5449807e0"
 VN_MANIFEST_SHA256 = "69caa964702c5152574eba580dc7e406213fbdf41b6824e53584d50c9c7e2691"
 VN_COMMIT = "b52e2fe0905417e0d1c7215fbda1d352dde47492"
+#: (M18) digest of the sorted "<file> <sha256>" lines of the 77 Casablanca share files, and of the archive
+CSE_MANIFEST_SHA256 = "41a7ecdef86b23491dbf1571dfcc718a4cc59a649dbfab4e29a72fb75ebd5e0e"
+CSE_ARCHIVE_SHA256 = "c9cc8888fec542a2aafc6d2a2458c88508ea7761f18b422c8f1aa4e02e0ef1be"
 
 CARRY_FORWARD_SHARE = 0.90
 MIN_SECURITIES = 10
@@ -93,16 +101,26 @@ DSE_MIXED_YEAR = 2022
 #: the mirror continues the upload after its last stamp
 DSE_UPLOAD_LAST = pd.Timestamp("2025-04-08")
 
-#: market -> widest regular daily limit, price unit for the envelope repair, regulatory closures
+#: (M18) Casablanca's daily limit for shares in continuous trading, the wider of its two regimes (fixing
+#: has the narrower one), by the date each AMMC decision took effect: 4% from 17 March 2020, 6% from
+#: 12 October 2021, 10% again from 9 October 2023.
+MA_BANDS = ((None, 0.10), ("2020-03-17", 0.04), ("2021-10-12", 0.06), ("2023-10-09", 0.10))
+
+#: market -> widest regular daily limit (or its schedule), price unit for the envelope repair, closures
 MARKETS = {
     "DSE": dict(band=0.10, unit=0.1, closures=(("2020-03-26", "2020-05-30"),)),
     "VN": dict(band=0.15, unit=0.01, closures=()),
+    "MA": dict(band=MA_BANDS, unit=0.01, closures=()),
 }
 #: panel -> (market, first date, last date)
 SPANS = {
     "DSE 2023-2026": ("DSE", "2023-01-01", "2026-10-08"),
     "DSE 2009-2021": ("DSE", "2009-01-01", "2021-12-31"),
     "Vietnam 2007-2020": ("VN", "2007-01-01", "2020-03-18"),
+}
+#: (M18) panel -> (market, first date, last date)
+SPANS_M18 = {
+    "Morocco 2012-2026": ("MA", "2012-03-26", "2026-03-27"),
 }
 
 #: Dhaka codes that are not ordinary equity: mutual funds, corporate bonds, debentures and Sukuk by the
@@ -198,9 +216,36 @@ def read_vietnam(ticker_dir, check: bool = True) -> pd.DataFrame:
     return _dedupe(pd.concat(parts, ignore_index=True)).reset_index(drop=True)
 
 
+def read_casablanca(stock_dir, check: bool = True) -> pd.DataFrame:
+    """(M18) The Casablanca share files: ``Time, Open, High, Low, Close, Volume``, one file per share."""
+    files = sorted(pathlib.Path(stock_dir).glob("*.csv"))
+    if check:
+        _check(sha256_manifest(files), CSE_MANIFEST_SHA256, "Casablanca share files")
+    parts = []
+    for f in files:
+        t = pd.read_csv(f)
+        parts.append(pd.DataFrame({"symbol": f.stem, "date": pd.to_datetime(t["Time"]),
+                                   "open": t["Open"], "high": t["High"], "low": t["Low"], "close": t["Close"],
+                                   "volume": t["Volume"]}))
+    return _dedupe(pd.concat(parts, ignore_index=True)).reset_index(drop=True)
+
+
 # --------------------------------------------------------------------------------------------
 # Panel
 # --------------------------------------------------------------------------------------------
+
+def band_on(dates: pd.Series, band) -> pd.Series:
+    """The daily limit in force on each date: ``band`` is a number, or a schedule of
+    ``(first date or None, limit)`` pairs in date order."""
+    dates = pd.to_datetime(pd.Series(dates))
+    if np.isscalar(band):
+        return pd.Series(float(band), index=dates.index)
+    out = pd.Series(np.nan, index=dates.index)
+    for start, value in band:
+        m = dates.notna() if start is None else dates >= pd.Timestamp(start)
+        out[m] = float(value)
+    return out
+
 
 def build_panel(x: pd.DataFrame, *, band: float, unit: float, closures=(), start=None, end=None,
                 min_securities: int = MIN_SECURITIES):
@@ -248,7 +293,7 @@ def build_panel(x: pd.DataFrame, *, band: float, unit: float, closures=(), start
     x = x[x["pc"].notna()].reset_index(drop=True)
 
     co = AN.bar_coordinates(x["open"], x["high"], x["low"], x["close"], x["pc"])
-    lim = band + BAND_MARGIN
+    lim = band_on(x["date"], band) + BAND_MARGIN
     out = (co["h"] > np.log1p(lim)) | (co["l"] < np.log1p(-lim))
     log["bars outside the band"] = int(out.sum())
     x, co = x[~out].reset_index(drop=True), co[~out].reset_index(drop=True)
@@ -273,8 +318,10 @@ def market_panel(name: str, root, check: bool = True):
     """The panel ``name`` of :data:`SPANS`, built from the inputs under ``root``
     (``data/external/frontier``)."""
     root = pathlib.Path(root)
-    market, start, end = SPANS[name]
-    if market == "DSE":
+    market, start, end = {**SPANS, **SPANS_M18}[name]
+    if market == "MA":
+        x = read_casablanca(root / "casablanca" / "stock", check=check)
+    elif market == "DSE":
         up = read_dse_upload(root / "dse_upload" / "DSE_Data.csv", check=check)
         x = up
         if pd.Timestamp(end) > DSE_UPLOAD_LAST:
