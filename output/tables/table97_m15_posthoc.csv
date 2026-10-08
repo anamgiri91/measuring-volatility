@@ -13,6 +13,7 @@ A1,X4,b,58015,0.306977927,0.2473038507,0.3758633669
 A1,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",58015,0.04987214264,0.03796247507,0.06454820147
 A1,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",58015,0.1557368395,0.1256520605,0.1969188398
 A1,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),57724,0.1444772189,0.1010276762,0.200754238
+A1,X5,share of closes off the 0.1 price grid,58331,6.857417154e-05,0,0.0002216928336
 B,X1,b as an OLS slope with an intercept,28660,0.2176604667,0.1258552799,0.2819783986
 B,X1,b with the published (unadjusted) previous close,28726,0.2112325863,0.1198876057,0.2773556
 B,X2,upward band-pinned opens: mean opening return,3865,0.01968027301,0.01953832959,0.01993286875
@@ -27,6 +28,7 @@ B,X4,b,28660,0.2160911857,0.1282981433,0.2813953592
 B,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",28660,0.07837760229,0.06442154869,0.09379206417
 B,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",28660,0.2300332148,0.1966467312,0.2680558427
 B,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),28389,0.234107964,0.1848103806,0.2951785958
+B,X5,share of closes off the 0.1 price grid,28726,0.8542087308,0.836590014,0.870776632
 A2,X1,b as an OLS slope with an intercept,31777,0.3590235368,0.2593444997,0.5104151487
 A2,X1,b with the published (unadjusted) previous close,31852,0.3572261444,0.2531956756,0.5138006564
 A2,X2,upward band-pinned opens: mean opening return,3503,0.01958705328,0.0195616784,0.01960825482
@@ -41,6 +43,7 @@ A2,X4,b,31777,0.3556879752,0.2516663989,0.5116271191
 A2,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",31777,0.0543641442,0.03162877887,0.0741814679
 A2,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",31777,0.1763441665,0.1184230611,0.2242198098
 A2,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),31467,0.1794142073,0.08417296967,0.2583298408
+A2,X5,share of closes off the 0.1 price grid,31852,3.139520281e-05,0,0.0001600491164
 C,X1,b as an OLS slope with an intercept,24518,0.1226579025,0.07554372302,0.1833217993
 C,X1,b with the published (unadjusted) previous close,24583,0.1323144101,0.08342916468,0.1986474644
 C,X2,upward band-pinned opens: mean opening return,895,0.0486362978,0.04860536293,0.04866012172
@@ -55,3 +58,6 @@ C,X4,b,24518,0.1303457179,0.08174085531,0.1964587818
 C,X4,"lower bound on E[eta^2]/E[OC], any correlation with news",24518,0.1718568311,0.1385341168,0.1983512425
 C,X4,"E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]",24518,0.4797682884,0.3972108474,0.5430727616
 C,X4,kernel-based transient share 1 - E[K]/E[OC] (table88),24206,0.5618916072,0.4508503761,0.6547328744
+C,X5,share of closes off the 0.1 price grid,24583,0,0,0
+2025-09-18 (excluded),X5,share of closes off the 0.1 price grid,226,0,0,0
+2025-09-18 (excluded),X5,share of opens pinned at the band,226,0.7389380531,0.6805141303,0.7913343513

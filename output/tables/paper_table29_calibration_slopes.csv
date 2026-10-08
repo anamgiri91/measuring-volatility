@@ -1,0 +1,6 @@
+Estimator,Mean ratio to proxy (variance scale),Calibration slope,95% CI,Additive share,95% CI (additive),OLS slope on proxy,Correlation with proxy,Reading
+Parkinson,0.988,0.919,"[0.760, 1.056]",0.069,"[-0.052, 0.203]",0.469,0.722,frozen H1 verdict: no detectable attenuation
+Garman-Klass,0.983,0.887,"[0.668, 1.078]",0.096,"[-0.072, 0.282]",0.264,0.390,frozen H1 verdict: no detectable attenuation
+Rogers-Satchell,1.073,0.912,"[0.650, 1.135]",0.161,"[-0.040, 0.386]",0.159,0.192,frozen H1 verdict: no detectable attenuation
+AddRS,1.501,1.344,"[1.092, 1.534]",0.157,"[-0.020, 0.369]",0.691,0.652,slope interval above one (reported; not a decision hypothesis)
+Average-price (VWAP) estimator,1.585,1.655,"[1.276, 1.959]",-0.070,"[-0.346, 0.256]",1.082,0.667,slope interval above one (reported; not a decision hypothesis)

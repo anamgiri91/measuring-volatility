@@ -27,6 +27,11 @@ X4  A bound that does NOT assume the opening error is independent of overnight n
     attained when eta is perfectly correlated with the news; under independence the value is
     (1 - b) E[o^2]. Both are reported as shares of the open-to-close benchmark E[OC], beside the
     kernel-based share.
+X5  The regime fingerprints the manuscript uses to date the closing rule (descriptive): the share
+    of closes off the exchange's 0.1-rupee price grid, which a last-trade close cannot produce and
+    a fifteen-minute VWAP close almost always does, by regime and on the excluded 2025-09-18
+    session (the early close on resumption after the September 2025 halt), with that session's
+    share of band-pinned opens.
 
 Outputs: output/tables/table97_m15_posthoc.csv
 """
@@ -68,6 +73,11 @@ def build_stats(d: pd.DataFrame):
     regime, zone, g = d["regime"].to_numpy(), d["zone"].to_numpy(), d["g"].to_numpy()
     extreme = ((d["open"] == d["high"]) | (d["open"] == d["low"])).to_numpy().astype(float)
     nonstale = ok & (zone != "stale")
+    # X5: a close is on the 0.1 grid when 10 x close is an integer (to floating-point tolerance)
+    tenths = d["close"].to_numpy() * 10.0
+    off_grid = (np.abs(tenths - np.round(tenths)) > 1e-6).astype(float)
+    pinned = (zone == "pinned").astype(float)
+    excluded = (d["date"] == s37.EXCLUDED).to_numpy()
     labels, specs = [], []
 
     for reg in REGIMES:
@@ -95,6 +105,12 @@ def build_stats(d: pd.DataFrame):
             labels.append((reg, "X4", lab))
         specs.append(("kernel", mk))
         labels.append((reg, "X4", "kernel-based transient share 1 - E[K]/E[OC] (table88)"))
+        specs.append(("off_grid", np.isfinite(d["close"].to_numpy()) & (regime == reg)))
+        labels.append((reg, "X5", "share of closes off the 0.1 price grid"))
+    specs.append(("off_grid", excluded))
+    labels.append(("2025-09-18 (excluded)", "X5", "share of closes off the 0.1 price grid"))
+    specs.append(("pinned_share", excluded & np.isfinite(g)))
+    labels.append(("2025-09-18 (excluded)", "X5", "share of opens pinned at the band"))
 
     idx = [np.flatnonzero(m) for _, m in specs]
 
@@ -131,6 +147,10 @@ def build_stats(d: pd.DataFrame):
                             "indep": (1.0 - bb) * o2_oc}[stat])
             elif stat == "kernel":
                 out.append(float(1.0 - (w * K[ii]).sum() / (w * OC[ii]).sum()))
+            elif stat == "off_grid":
+                out.append(float((w * off_grid[ii]).sum() / sw))
+            elif stat == "pinned_share":
+                out.append(float((w * pinned[ii]).sum() / sw))
         return np.array(out)
 
     return labels, evaluate, specs

@@ -1,11 +1,11 @@
 # NEPSE Volatility — Journal Submission Reproducibility Package
 
-This package accompanies **Calculating Volatility in Frontier Markets Without Options: Evidence and a Practical Framework from the Nepal Stock Exchange**.
+This package accompanies **When the Open Overreacts: Measuring Daily Volatility in a Frontier Market without Options — Evidence from a Pre-Open Band Reform on the Nepal Stock Exchange** (retitled in round 14; earlier versions circulated as *Calculating Volatility in Frontier Markets Without Options* and *Daily OHLC Volatility Measurement in a Cash-Only Frontier Market*).
 
 ## What is included
 
-- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-8). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
-- `paper/submission/` — the double-anonymous submission set: anonymised manuscript, separate title page, and a cover letter for each recommended journal.
+- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-14; round 14, `apply_round14_revisions.py`, adds Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses below). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
+- `paper/submission/` — the double-anonymous submission set: anonymised manuscript, separate title page, and a cover letter for each target journal (three field journals matched to the round-14 contribution, then the referee's three recommendations), rebuilt by `paper/build_submission_set.py`.
 - `paper/manuscript_as_reviewed_pre_revision.pdf` — the manuscript **as reviewed** (the PRE-revision PDF the first-round referee actually read), retained only so the revision can be checked against it. **This is not the current manuscript; `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` above is.** (Renamed from the earlier, misleadingly generic `NEPSE_Volatility_Final_Manuscript.pdf` after a forensic audit found the old name being mistaken for the current file.) No PDF rendering of the current `.docx` ships in this package — this development environment has no docx-to-PDF renderer available; export one from the `.docx` before submitting to a journal.
 - `PAPER_REVISIONS.md` — **superseded**; the pre-referee revision notes, retained for provenance.
 - `REFEREE_RESPONSE.md` — item-by-item response to the 2026-09-02 referee report, with what changed, where, and what did not change and why.
@@ -13,6 +13,8 @@ This package accompanies **Calculating Volatility in Frontier Markets Without Op
 - `FORENSIC_AUDIT_RESPONSE.md` — response to the third-round forensic packaging/provenance audit: manifest-stability fixes, the historical-vs-current cleaning-hash distinction, and the still-open PDF-regeneration and archive-cleanup items.
 - `FOURTH_ROUND_AUDIT_RESPONSE.md` — response to the 4 September independent editorial/methodological review: the Yang-Zhang mixed-previous-close defect (adopted ratio corrected 1.309 → **1.280**), and an honest triage of the remaining mandatory items.
 - `M7_ANALYSIS_PLAN.md` — the analysis plan and decision rule for the forward-looking India VIX test, **frozen before any forward result was computed**.
+- `M14_CALIBRATION_ANALYSIS_PLAN.md` / `M14_CALIBRATION_RESULTS.md` — the instrumented calibration of the daily-bar estimators (manuscript Section 6.6): plan frozen and committed before any slope was computed; results, mechanical verdicts and every post-result correction.
+- `M15_OPENING_PRICE_ANALYSIS_PLAN.md` / `M15_OPENING_PRICE_RESULTS.md` — what the opening price measures, with NEPSE's 20 April 2026 pre-open band reform as a natural experiment (manuscript Section 6.7): plan frozen and committed before any outcome statistic was computed, then the simulation checks, then the results. **Headline:** the trading session undoes 64-87% of NEPSE's overnight move (unbiasedness coefficient 0.13-0.36, NIFTY 50 0.93); the band reform produced a sharp break, unique against 77 placebo dates; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance it assumes away.
 - `OPTIONAL_ITEMS_FOLLOWUP.md` — follow-up on the remaining optional items: literature-integration confirmation, the structured abstract, the master-coverage sensitivity check (Table 17), JEL/data-availability/funding/conflict-of-interest statements, and the table-header/CI-precision fixes.
 - `data/processed/` — frozen paper-facing stock-day panels in CSV format (see `data/processed/README.md`).
 - `data/external/` — NIFTY 50, India VIX, the NEPSE index series, and the NEPSE security master used to validate the instrument classification (see `data/external/README.md`).
@@ -75,7 +77,12 @@ final formatting step, which runs last.
 11. `scripts/29_calendar_validation.py` — the detected trading calendar cross-checked against an independent session record, and its sensitivity to the staleness threshold (Table 16).
 12. `scripts/31_lagged_thinness_screen.py` — the lagged, outcome-independent liquidity screen for the thin tail and its sensitivity grids (Tables 21-22).
 13. `scripts/32_vix_forward_validation.py` — India VIX as a forward forecast of realised NIFTY volatility, lead-lag profile, overlapping-window sensitivity, and the reconciliation of the circulated 0.776/0.832 correlations (Tables 23-25).
-14. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–25, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
+14. `scripts/34_instrumented_calibration.py` — M14, frozen plan: instrumented calibration slopes, additive shares, the empirical composite, regimes, NIFTY with India VIX as an external instrument, and the decision ledger (Tables 74-86 of the package; manuscript Table 29, Figure 7). About ten minutes.
+15. `scripts/35_calibration_simulation.py` — M14's Monte Carlo validation where the truth is known (package Tables 74-77). About ten minutes.
+16. `scripts/36_calibration_exploratory.py` — M14 post hoc follow-ups E1 and E2, labelled as such (package Tables 87-88).
+17. `scripts/37_opening_price.py` — M15, frozen plan: the unbiasedness coefficient of the open, the band-reform event window and placebo breaks, dose-response, mechanism, estimator evaluation, the Yang-Zhang decomposition, NIFTY, and the decision ledger (package Tables 89-96; manuscript Tables 30-32, Figure 8).
+18. `scripts/38_opening_price_exploratory.py` — M15 post hoc follow-ups X1-X5, labelled as such (package Table 97).
+19. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–32, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
 
 ## Important implementation conventions
 

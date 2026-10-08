@@ -56,3 +56,12 @@ VIX_forward_vs_backward_corr_Parkinson,0.629 forward vs 0.778 backward,correlati
 VIX_forward_decision_rule_outcome,inconclusive: the difference interval contains zero,verdict,32_vix_forward_validation.py
 VIX_forward_n_nonoverlapping_windows,190,count,32_vix_forward_validation.py
 lagged_screen_specifications_showing_collapse,1,count,31_lagged_thinness_screen.py
+M14_H1_Parkinson_calibration_slope,"0.919 [0.760, 1.056]",slope,34_instrumented_calibration.py
+M14_H1_verdicts,P no detectable attenuation; GK no detectable attenuation; RS no detectable attenuation,verdict,34_instrumented_calibration.py
+M14_AddRS_calibration_slope,"1.344 [1.092, 1.534]",slope,34_instrumented_calibration.py
+M15_unbiasedness_coefficient_by_regime,A1 0.307; B 0.216; A2 0.356; C 0.130,coefficient,37_opening_price.py
+M15_unbiasedness_coefficient_NIFTY_excl_flash_crash,0.929,coefficient,37_opening_price.py
+M15_H7_band_reform_jump,"-0.333 [-0.627, -0.067]; placebo jumps 77, min -0.176, max 0.289; placebos at or below the actual jump: 0",difference,37_opening_price.py
+M15_decision_verdicts,H7 sharp break; H8 not detected; H9(a) not detected; H9(b) overshoot where the band used to bind; H9 overshoot only; H9(c) (reported) concentrated where the band bound; H10 (consequence) no inversion established; H11 confirmed,verdict,37_opening_price.py
+M15_YZ_excess_share_from_opening_covariance,"0.756 [0.662, 0.869]",share,37_opening_price.py
+M15_posthoc_open_error_lower_bound_C,"0.172 [0.139, 0.198]",share,38_opening_price_exploratory.py (post hoc)

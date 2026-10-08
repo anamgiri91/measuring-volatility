@@ -11,6 +11,10 @@ mkdir -p output/tables output/figures
 # 30 runs first and depends on nothing: it repairs the build manifest's provenance fields, and
 # a reader who opens the package should not find a stale manifest even if the run stops early.
 # 28 and 29 run after 03 (they read the equity sample) and before 25 (which reformats them).
+# 34-38 are the two analyses run under frozen plans (M14, M15; see the *_ANALYSIS_PLAN.md
+# files): 34 before 36 and 37 (which import its data build), 37 before 38 (which imports
+# 37's), and all of them before 25, which builds manuscript Tables 29-32 from their outputs.
+# 34 and 35 are the slow steps (about ten minutes each).
 for script in \
   30_repair_build_manifest.py \
   27_classification_audit.py \
@@ -28,6 +32,11 @@ for script in \
   31_lagged_thinness_screen.py \
   32_vix_forward_validation.py \
   33_nepal_literature_matrix.py \
+  34_instrumented_calibration.py \
+  35_calibration_simulation.py \
+  36_calibration_exploratory.py \
+  37_opening_price.py \
+  38_opening_price_exploratory.py \
   25_submission_tables.py
 do
   echo "===== scripts/${script} ====="

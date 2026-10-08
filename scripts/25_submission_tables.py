@@ -708,6 +708,156 @@ checks += [
 ]
 print("wrote paper_table18, paper_table19, paper_table20, paper_table21, paper_table22")
 
+# ─────────────────────────── Manuscript Tables 29-32: M14 and M15, both under frozen plans
+# Every cell is read from the frozen analysis tables of scripts/34 (M14), 37 (M15) and 38 (M15,
+# post hoc); verdicts are copied from the decision ledgers (table86, table96), never re-derived.
+_c78 = pd.read_csv(TAB / "table78_calibration_full.csv").set_index("measure")
+_l86 = pd.read_csv(TAB / "table86_m14_decisions.csv")
+_h1 = {r.statistic.rsplit(", ", 1)[-1]: r.verdict for r in _l86[_l86.hypothesis == "H1"].itertuples()}
+_t29 = []
+for _k, _nm in [("P", "Parkinson"), ("GK", "Garman-Klass"), ("RS", "Rogers-Satchell"),
+                ("AddRS", "AddRS"), ("AP", "Average-price (VWAP) estimator")]:
+    _r = _c78.loc[_k]
+    _read = (f"frozen H1 verdict: {_h1[_k]}" if _k in _h1 else
+             ("slope interval above one (reported; not a decision hypothesis)"
+              if _r.iv_slope_lo > 1 else "reported; not a decision hypothesis"))
+    _t29.append([_nm, f"{_r.mean_ratio_var:.3f}", f"{_r.iv_slope:.3f}",
+                 _ci(_r.iv_slope_lo, _r.iv_slope_hi), f"{_r.additive_share:.3f}",
+                 _ci(_r.additive_share_lo, _r.additive_share_hi), f"{_r.ols_slope:.3f}",
+                 f"{_r.corr_with_ref:.3f}", _read])
+pd.DataFrame(_t29, columns=[
+    "Estimator", "Mean ratio to proxy (variance scale)", "Calibration slope", "95% CI",
+    "Additive share", "95% CI (additive)", "OLS slope on proxy", "Correlation with proxy",
+    "Reading",
+]).to_csv(TAB / "paper_table29_calibration_slopes.csv", index=False)
+
+_u89 = pd.read_csv(TAB / "table89_m15_unbiasedness.csv")
+_n95 = pd.read_csv(TAB / "table95_m15_nifty.csv")
+_rules = {"A1": "last-trade close; ±2% band; ±10% limit",
+          "B": "15-minute VWAP close; ±2% band; ±10% limit",
+          "A2": "last-trade close; ±2% band; ±10% limit",
+          "C": "last-trade close; ±5% band; ±15% limit"}
+_dates = {"A1": "2024-03-04 to 2025-03-19", "B": "2025-03-20 to 2025-09-21",
+          "A2": "2025-09-23 to 2026-04-19", "C": "2026-04-20 to 2026-08-26"}
+
+
+def _u(regime, group, statistic_prefix):
+    q = _u89[(_u89.regime == regime) & (_u89.group == group)
+             & _u89.statistic.str.startswith(statistic_prefix)]
+    if q.empty:
+        return "", ""
+    r = q.iloc[0]
+    return f"{r.value:.3f}", _ci(r.lo, r.hi)
+
+
+_t30 = []
+for _g in ["A1", "B", "A2", "C"]:
+    _b, _bci = _u(_g, "all", "unbiasedness")
+    _bp, _bpci = _u(_g, "pinned", "b")
+    _bi, _bici = _u(_g, "interior", "b")
+    _bz, _bzci = _u(_g, "old-band zone", "b")
+    _oc, _occi = _u(_g, "all", "E[o c]/E[P]")
+    _pin, _ = _u(_g, "all", "share of opens pinned")
+    _st, _ = _u(_g, "all", "share of opens equal")
+    _n = int(_u89[(_u89.regime == _g) & (_u89.group == "all")].n_stock_days.iloc[0])
+    _t30.append([f"NEPSE {_g}", _dates[_g], _rules[_g], f"{_n:,}", _b, _bci,
+                 f"{_bp} {_bpci}", f"{_bi} {_bici}", (f"{_bz} {_bzci}" if _bz else "n/a"),
+                 f"{_oc} {_occi}", f"{100 * float(_pin):.1f}%", f"{100 * float(_st):.1f}%"])
+_nx = _n95[_n95["sample"].str.startswith("excl")].set_index("statistic")
+_t30.append(["NIFTY 50 (excl. 2012-10-05)",
+             f"{_nx.loc['b', 'from']} to {_nx.loc['b', 'to']}", "index; call-auction open",
+             f"{int(_nx.loc['b', 'n_sessions']):,}", f"{_nx.loc['b', 'value']:.3f}",
+             _ci(_nx.loc["b", "lo"], _nx.loc["b", "hi"]), "n/a", "n/a", "n/a",
+             f"{_nx.loc['E[o c]/E[P]', 'value']:.3f} "
+             + _ci(_nx.loc["E[o c]/E[P]", "lo"], _nx.loc["E[o c]/E[P]", "hi"]), "n/a", "n/a"])
+pd.DataFrame(_t30, columns=[
+    "Market and regime", "Dates", "Rules", "Stock-days", "b, all opens", "95% CI",
+    "b, band-pinned opens [95% CI]", "b, opens inside ±1.9% [95% CI]",
+    "b, opens between ±1.9% and ±4.9% [95% CI]", "E[o c]/E[P] [95% CI]",
+    "Opens pinned at the band", "Opens equal to the previous close",
+]).to_csv(TAB / "paper_table30_opening_unbiasedness.csv", index=False)
+
+_l96 = pd.read_csv(TAB / "table96_m15_decisions.csv")
+_l96[~_l96.hypothesis.str.startswith("H12")].rename(columns={
+    "hypothesis": "Hypothesis", "statistic": "Statistic", "estimate": "Estimate [95% CI]",
+    "verdict": "Verdict (frozen rule, applied mechanically)",
+}).to_csv(TAB / "paper_table31_band_reform_tests.csv", index=False)
+
+_y94 = pd.read_csv(TAB / "table94_m15_yang_zhang.csv")
+_e93 = pd.read_csv(TAB / "table93_m15_estimator_evaluation.csv")
+_x97 = pd.read_csv(TAB / "table97_m15_posthoc.csv")
+
+
+def _pick(frame, value_ci=True, **kw):
+    q = frame
+    for k_, v_ in kw.items():
+        q = q[q[k_] == v_] if not callable(v_) else q[q[k_].map(v_)]
+    if q.empty:
+        return ""
+    r = q.iloc[0]
+    return f"{r.value:.3f} {_ci(r.lo, r.hi)}" if value_ci else f"{r.value:.3f}"
+
+
+_t32 = []
+for _g in ["A1", "B", "A2", "C", "all windows"]:
+    _t32.append([
+        f"NEPSE {_g}" if _g != "all windows" else "NEPSE, all 21-session windows",
+        _pick(_y94, windows=_g, statistic=lambda s: s.startswith("sum YZ / sum Var21")),
+        _pick(_y94, windows=_g, statistic=lambda s: s.startswith("share of sum(YZ")),
+        _pick(_e93, regime=_g, measure="P", statistic="E[X]/E[OC]") if _g != "all windows" else "",
+        _pick(_e93, regime=_g, measure="P", statistic="E[X]/E[K]") if _g != "all windows" else "",
+        _pick(_e93, regime=_g, measure="OC", statistic=lambda s: s.startswith("transient share"))
+        if _g != "all windows" else "",
+        _pick(_x97, regime=_g, statistic=lambda s: s.startswith("lower bound")) if _g != "all windows" else "",
+        _pick(_x97, regime=_g, statistic=lambda s: s.startswith("share of non-stale"), value_ci=False)
+        if _g != "all windows" else "",
+    ])
+_t32.append(["NIFTY 50 (excl. 2012-10-05)",
+             f"{_nx.loc['YZ/Var21(r)', 'value']:.3f} " + _ci(_nx.loc["YZ/Var21(r)", "lo"], _nx.loc["YZ/Var21(r)", "hi"]),
+             "n/a (gap ≈ 0)",
+             f"{_nx.loc['E[P]/E[OC]', 'value']:.3f} " + _ci(_nx.loc["E[P]/E[OC]", "lo"], _nx.loc["E[P]/E[OC]", "hi"]),
+             f"{_nx.loc['E[P]/E[K]', 'value']:.3f} " + _ci(_nx.loc["E[P]/E[K]", "lo"], _nx.loc["E[P]/E[K]", "hi"]),
+             f"{_nx.loc['transient share 1 - E[K]/E[OC]', 'value']:.3f} "
+             + _ci(_nx.loc["transient share 1 - E[K]/E[OC]", "lo"], _nx.loc["transient share 1 - E[K]/E[OC]", "hi"]),
+             "", ""])
+pd.DataFrame(_t32, columns=[
+    "Market and regime", "Yang-Zhang / Var21(r) (variance scale) [95% CI]",
+    "Share of the excess that is -2 Cov(o, c) [95% CI]", "E[P]/E[OC] [95% CI]",
+    "E[P]/E[K], noise-robust kernel [95% CI]", "Kernel transient share of the proxy [95% CI]",
+    "Open's error, lower bound on its share of the proxy (post hoc) [95% CI]",
+    "Open is the session high or low (post hoc)",
+]).to_csv(TAB / "paper_table32_open_and_estimators.csv", index=False)
+print("wrote paper_table29, paper_table30, paper_table31, paper_table32 (M14, M15)")
+
+_b = {g: float(_u89[(_u89.regime == g) & (_u89.group == "all")
+                    & _u89.statistic.str.startswith("unbiasedness")].value.iloc[0])
+      for g in ["A1", "B", "A2", "C"]}
+_d7 = _l96[_l96.hypothesis == "H7"].iloc[0]
+checks += [
+    ["M14_H1_Parkinson_calibration_slope",
+     f"{_c78.loc['P', 'iv_slope']:.3f} {_ci(_c78.loc['P', 'iv_slope_lo'], _c78.loc['P', 'iv_slope_hi'])}",
+     "slope", "34_instrumented_calibration.py"],
+    ["M14_H1_verdicts", "; ".join(f"{k} {v}" for k, v in _h1.items()), "verdict",
+     "34_instrumented_calibration.py"],
+    ["M14_AddRS_calibration_slope",
+     f"{_c78.loc['AddRS', 'iv_slope']:.3f} {_ci(_c78.loc['AddRS', 'iv_slope_lo'], _c78.loc['AddRS', 'iv_slope_hi'])}",
+     "slope", "34_instrumented_calibration.py"],
+    ["M15_unbiasedness_coefficient_by_regime",
+     "; ".join(f"{g} {v:.3f}" for g, v in _b.items()), "coefficient", "37_opening_price.py"],
+    ["M15_unbiasedness_coefficient_NIFTY_excl_flash_crash", f"{_nx.loc['b', 'value']:.3f}",
+     "coefficient", "37_opening_price.py"],
+    ["M15_H7_band_reform_jump", _d7.estimate, "difference", "37_opening_price.py"],
+    ["M15_decision_verdicts",
+     "; ".join(f"{r.hypothesis} {r.verdict}" for r in _l96.itertuples()
+               if not r.hypothesis.startswith("H12")), "verdict", "37_opening_price.py"],
+    ["M15_YZ_excess_share_from_opening_covariance",
+     _pick(_y94, windows="all windows", statistic=lambda s: s.startswith("share of sum(YZ")),
+     "share", "37_opening_price.py"],
+    ["M15_posthoc_open_error_lower_bound_C",
+     _pick(_x97, regime="C", statistic=lambda s: s.startswith("lower bound")), "share",
+     "38_opening_price_exploratory.py (post hoc)"],
+]
+
 pd.DataFrame(checks, columns=["Result", "Value", "Scale", "Producer"]).to_csv(
     ROOT / "PAPER_RESULTS_CHECK.csv", index=False)
 

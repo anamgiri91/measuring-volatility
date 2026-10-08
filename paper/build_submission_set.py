@@ -35,8 +35,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PAPER = ROOT / "paper"
 OUT = PAPER / "submission"
 
-TITLE = "Daily OHLC Volatility Measurement in a Cash-Only Frontier Market"
-SUBTITLE = "Evidence from the Nepal Stock Exchange"
+# Must match paper/apply_round14_revisions.py, which writes them into the manuscript.
+TITLE = "When the Open Overreacts: Measuring Daily Volatility in a Frontier Market without Options"
+SUBTITLE = "Evidence from a Pre-Open Band Reform on the Nepal Stock Exchange"
 
 # MANDATORY ITEM 10 (submission gate). The author's name was hard-coded here as
 # ``AUTHOR = "Anam Giri"``. This script SHIPS INSIDE the reproducibility package, and the
@@ -75,6 +76,24 @@ def author_details() -> tuple[str, list[str]]:
 
 AUTHOR, AUTHOR_EXTRA = author_details()
 
+# Round 14 changed what the paper contributes: its central evidence is now about an opening call
+# auction, a price-band reform and what daily bars measure (Sections 6.6-6.7). The field journals
+# that publish that kind of work come first; each fit statement names only what the paper does.
+TOP_TIER = [
+    ("Journal_of_Financial_Markets", "Journal of Financial Markets", "Editors",
+     "Its scope is market microstructure -- trading mechanisms, call auctions, price limits and "
+     "price discovery -- and this paper's central evidence concerns an opening call auction and "
+     "a reform of its price band, analysed as a natural experiment under a frozen plan."),
+    ("Journal_of_Empirical_Finance", "Journal of Empirical Finance", "Editors",
+     "It publishes empirical work on volatility measurement and market design, and this paper "
+     "combines both: a calibration test for daily-bar volatility estimators and evidence that a "
+     "market-design rule determines what those estimators measure."),
+    ("Journal_of_Financial_Econometrics", "Journal of Financial Econometrics", "Editors",
+     "It publishes research on the measurement of volatility, and this paper identifies daily-"
+     "bar estimators' calibration from volatility persistence without a high-frequency "
+     "benchmark and documents a failure of the independence assumption behind Yang-Zhang."),
+]
+
 # The referee's recommended submission order, with the reason each was recommended. Kept here so
 # the cover letters cannot drift from the report they answer.
 JOURNALS = [
@@ -95,10 +114,12 @@ JOURNALS = [
 ]
 
 ABSTRACT_SHORT = (
-    "Nepal has no exchange-traded equity options, so no NEPSE analogue of the VIX can be read "
-    "from an option chain. This paper asks what can be measured instead from daily OHLC data, "
-    "and how reliable those measurements are. It is a measurement and data-design study rather "
-    "than a search for a universally superior estimator.")
+    "Nepal has no exchange-traded options and no public intraday data, so its volatility must be "
+    "measured from daily open-high-low-close bars. This paper shows that the bar's opening price "
+    "is mostly transient -- the trading session undoes two-thirds or more of the overnight move -- "
+    "and uses NEPSE's 2026 widening of its pre-open price band as a natural experiment showing "
+    "that market design shapes what daily bars measure. It is a measurement study rather than a "
+    "search for a universally superior estimator.")
 
 
 def anonymise(doc):
@@ -272,7 +293,8 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
     add("")
     add(f"Dear {salutation},")
     add("")
-    add(f'I am submitting "{TITLE}: {SUBTITLE}" for consideration at {journal_name}.')
+    # the title carries its own colon, so the subtitle is joined with a dash
+    add(f'I am submitting "{TITLE} \u2014 {SUBTITLE}" for consideration at {journal_name}.')
     add(f"{fit}")
     add("")
     add("What the paper does. Nepal's exchange has no listed equity options, so a VIX-style "
@@ -282,21 +304,33 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "evaluated on the same observations, on "
         f"{numbers['eq_days']} stock-days covering {numbers['eq_secs']} ordinary equities.")
     add("")
-    add("What is new. Three things. First, a measurement result: range-based estimators do not "
-        "collapse in thin ordinary equity, and that holds under same-day, security-level and "
-        "lagged liquidity sorts alike. Second, a methodological result that generalises beyond "
-        "this market: apparent estimator failure in a pooled frontier-market universe is largely "
-        "an instrument-composition artifact rather than a microstructure effect, so sample "
-        "construction can masquerade as an illiquidity finding. Third, a benchmark-scope "
-        "argument: comparing a within-session estimator to close-to-close variance mechanically "
-        "manufactures the downward bias that bias corrections are then applied to remove.")
+    add("What is new. The central evidence is about the opening price, which every within-"
+        "session estimator and the usual open-to-close benchmark read. In NEPSE it is mostly "
+        f"transient: the trading session undoes {numbers['undo_lo']}-{numbers['undo_hi']}% of the "
+        f"overnight move, against {numbers['undo_N']}% on NIFTY 50. NEPSE's 20 April 2026 widening "
+        "of its pre-open band from +/-2% to +/-5% is used as a natural experiment, under an "
+        "analysis plan frozen before testing: it produced a sharp break in how much of the open "
+        f"survives to the close, larger than at any of {numbers['n_plac']} placebo dates, and opens "
+        "pinned at the old band had been reversed rather than continued -- the narrow band capped "
+        "overreaction without detectably delaying price discovery. Three consequences follow for "
+        "measurement: three-quarters of Yang-Zhang's excess over close-to-close variance is the "
+        "overnight-intraday covariance it assumes away; ratio comparisons against the open-to-"
+        "close benchmark cannot see the open's error; and close-to-close returns, which never "
+        "read the open, are the robust benchmark. A second frozen analysis identifies each "
+        "estimator's calibration from volatility persistence without a high-frequency benchmark "
+        "and shows the range estimators' near-unit ratios to be calibration, not offsetting "
+        "distortions. The earlier results remain: range estimators do not collapse in thin "
+        "ordinary equity, and apparent estimator failure in a pooled frontier-market universe is "
+        "largely an instrument-composition artifact.")
     add("")
-    add("What the paper does not claim. The open-to-close proxy is imperfect and the latent "
-        "variance is unobserved, so results are reported as deviations from a matched proxy "
-        "rather than as accuracy, and no estimator is claimed to dominate generally. The "
-        "cross-market India VIX exercise is reported as co-movement evidence, not validation; "
-        "its apparent estimator ordering reverses when a single 2012 flash-crash session is "
-        "excluded, and the paper says so rather than choosing the ordering it prefers.")
+    add("What the paper does not claim. Latent variance is unobserved, so results are reported "
+        "relative to stated benchmarks, and no estimator is claimed to dominate generally. The "
+        "band reform changed the pre-open band, the daily limit and the circuit breaker on one "
+        "date, the post-reform sample is short, the predicted dose-response across securities was "
+        "not detected, and without auction order-book data the mechanism inside the auction is not "
+        "identified; the paper reports these limits and its failed predictions alongside the "
+        "results. The India VIX exercise is co-movement and forecasting evidence about India, and "
+        "its estimator comparison is inconclusive.")
     add("")
     add("Reproducibility. A complete package accompanies the submission: frozen data, producer "
         "scripts, a claim-to-output reproducibility map, an audit register recording defects "
@@ -324,6 +358,9 @@ def main():
     sys.path.insert(0, str(PAPER))
     from apply_referee_revisions import load_numbers
     numbers = load_numbers()
+    from apply_round14_revisions import load as load_round14
+    r14 = load_round14()
+    numbers.update({k: r14[k] for k in ("undo_lo", "undo_hi", "undo_N", "n_plac")})
 
     if AUTHOR == AUTHOR_PLACEHOLDER:
         print(f"  NOTE: {AUTHOR_FILE.relative_to(ROOT)} is absent, so the title page carries")
@@ -350,7 +387,7 @@ def main():
           + (f", and none of the {len(_tok)} identity tokens appears anywhere in the file"
              if _tok else " (structural check only: no identity sidecar on this machine)"))
 
-    for slug, name, salutation, fit in JOURNALS:
+    for slug, name, salutation, fit in TOP_TIER + JOURNALS:
         p = OUT / f"03_cover_letter_{slug}.docx"
         cover_letter(str(src), name, salutation, fit, numbers).save(p)
         print(f"  wrote {OUT.name}/{p.name}")
