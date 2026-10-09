@@ -1,7 +1,8 @@
 """A machine-learning volatility forecaster built on Anam's estimator.
 
-EXPERIMENTAL. It has been checked on simulated data only; its evaluation on real markets, under a plan
-frozen before testing (M19), has not been run. Nothing here claims it forecasts better than
+EXPERIMENTAL. It has been checked on simulated data only; its evaluation on real markets, under a plan to
+be frozen before testing, has not been run (the paper's plan M19 turned out to be the theory checks, and
+M20 the corrected evaluation of the estimator). Nothing here claims it forecasts better than
 :class:`anam_estimator.AnamModel` or close-to-close variance.
 
 Gradient-boosted trees (scikit-learn's ``HistGradientBoostingRegressor``) forecast the mean squared
@@ -16,9 +17,12 @@ close-to-close return over the next ``horizon`` sessions from features of the da
 
 Every feature uses only sessions up to the forecast origin. The trees are fitted with the gamma
 deviance, which is exactly twice the QLIKE loss by which the paper scores forecasts, so the model is
-trained on the paper's own criterion. The number of boosting rounds is chosen on the last
-``validation_share`` of the training dates, with the training targets purged so that none reaches into
-the validation dates (or past ``train_end``); the model is then refitted on the whole training span.
+trained on the paper's own criterion; the gamma deviance needs a positive target, so the few origins whose
+target is zero are left out of training (they are scored, with QLIKE as y/f + ln f). The target is the one of
+:func:`anam_estimator.evaluation.forward_target`: h consecutive exchange sessions, never h bars stitched across
+a gap. The number of boosting rounds is chosen on the last ``validation_share`` of the training dates, with
+the training targets purged so that none reaches into the validation dates (or past ``train_end``); the model
+is then refitted on the whole training span.
 
 Needs scikit-learn::
 
@@ -36,6 +40,7 @@ from ._version import __version__
 from .core import LAMBDA0, LN2, bar_coordinates
 from .data import prepare, resolve_mode
 from .estimator import annualization, estimate
+from .evaluation import forward_target, qlike_canonical, session_ordinal
 from .model import LONGRUN_MIN, LONGRUN_SESSIONS, qlike
 
 __all__ = ["AnamMLModel", "build_features", "future_mean", "FEATURES", "WINDOWS"]
@@ -100,14 +105,19 @@ def build_features(prepared: pd.DataFrame, mode: str, lam0: float = LAMBDA0) -> 
     return F[FEATURES].reindex(prepared.index), base["r2"].reindex(prepared.index)
 
 
-def future_mean(r2: pd.Series, prepared: pd.DataFrame, h: int) -> tuple[pd.Series, pd.Series]:
-    """The forecast target -- the mean squared close-to-close return over the next ``h`` usable sessions
-    of the same security -- and the date of the last of those sessions (for purging)."""
-    use = r2.notna()
-    s, sym = r2[use], prepared.loc[use, "symbol"]
-    fut = s.groupby(sym, sort=False).transform(lambda z: z[::-1].rolling(h, min_periods=h).mean()[::-1].shift(-1))
-    end = prepared.loc[use, "date"].groupby(sym, sort=False).shift(-h)
-    return fut.reindex(prepared.index), end.reindex(prepared.index)
+def future_mean(r2: pd.Series, prepared: pd.DataFrame, h: int, calendar=None) -> tuple[pd.Series, pd.Series]:
+    """The forecast target -- the mean squared close-to-close return over the next ``h`` exchange sessions
+    of the same security, observed only if it has a return on each of them -- and the date of the last of
+    those sessions (for purging). ``calendar`` defaults to every date in ``prepared``."""
+    ses = session_ordinal(prepared["date"], calendar)
+    tgt = forward_target(r2, prepared["symbol"], ses, h)
+    cal = np.sort(pd.DatetimeIndex(pd.to_datetime(prepared["date"] if calendar is None else
+                                                  pd.Series(calendar))).unique().to_numpy())
+    k = tgt["end_session"].to_numpy()
+    inside = k < len(cal)
+    end = np.full(len(k), np.datetime64("NaT", "ns"))
+    end[inside] = cal[k[inside].astype(int)]
+    return tgt["y"], pd.Series(end, index=tgt.index).where(tgt["y"].notna())
 
 
 class AnamMLModel:
@@ -237,7 +247,7 @@ class AnamMLModel:
             raise RuntimeError("backtest needs the fitted data")
         p, _, F, y = self._fitted
         start = self.train_end_ if start is None else pd.Timestamp(start)
-        rows = F[READY].notna() & y.notna() & (y > 0)
+        rows = F[READY].notna() & y.notna()
         if start is not None:
             rows &= p["date"] >= start
         if end is not None:
@@ -245,13 +255,20 @@ class AnamMLModel:
         f = self.predict_features(F[rows])
         yr = y[rows].to_numpy()
         return pd.DataFrame({"symbol": p.loc[rows, "symbol"].to_numpy(), "date": p.loc[rows, "date"].to_numpy(),
-                             "forecast": f, "realised": yr, "qlike": qlike(yr, f)})
+                             "forecast": f, "realised": yr, "qlike": qlike(yr, f),
+                             "qlike_canonical": qlike_canonical(yr, f)})
 
-    def score(self, *, start=None, end=None) -> float:
-        """Mean QLIKE loss of :meth:`backtest`; the number of origins is left in ``n_scored_``."""
+    def score(self, *, start=None, end=None, loss: str = "normalized") -> float:
+        """Mean loss of :meth:`backtest`: the normalised QLIKE over origins with a positive target
+        (default), or ``loss="canonical"`` for y/f + ln f over every origin. The number of origins is left in
+        ``n_scored_`` and the number with a zero target in ``n_zero_targets_``."""
+        if loss not in ("normalized", "canonical"):
+            raise ValueError("loss must be 'normalized' or 'canonical'")
         bt = self.backtest(start=start, end=end)
         self.n_scored_ = int(len(bt))
-        return float(bt["qlike"].mean()) if len(bt) else float("nan")
+        self.n_zero_targets_ = int((bt["realised"] == 0).sum())
+        v = bt["qlike" if loss == "normalized" else "qlike_canonical"].dropna()
+        return float(v.mean()) if len(v) else float("nan")
 
     def feature_importance(self, *, n_repeats: int = 3, max_rows: int = 50_000, start=None) -> pd.Series:
         """Permutation importance of each feature: the rise in mean QLIKE loss when it is shuffled, on the

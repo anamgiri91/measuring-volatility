@@ -1,15 +1,25 @@
 """Anam's estimator as a forecasting model: fit it to history, then forecast the coming sessions' volatility.
 
-The forecast is the one the paper evaluated (Section 6.8, Table 34). For a horizon of h sessions, at the
-last session t,
+For a horizon of h sessions, at the last session t,
 
-    forecast = kappa_t * (phi * mean of A over the last h sessions + (1 - phi) * mean of A over the last 250)
+    forecast = kappa_t * (phi * mean of A over the last h bars + (1 - phi) * mean of A over the last 250)
 
 where A is the estimator's daily kernel and kappa_t its calibration to close-to-close variance. The
 shrinkage phi toward the long-run level is the one model parameter: ``fit`` chooses it from a grid by
-minimising the QLIKE loss of past forecasts of the mean squared close-to-close return over the next h
-sessions. The arithmetic is that of the paper's forecast test (``nepsevol.volforecast``), so a model
-fitted on a paper's training span reproduces the paper's test losses.
+minimising the QLIKE loss of past forecasts of the target, the mean squared close-to-close return over the
+next h exchange sessions.
+
+Since version 0.2.0 the target, the fitting sample and the loss follow the corrected evaluation of the
+paper's plan M20 (:mod:`anam_estimator.evaluation`), which repaired four defects that an audit found in
+version 0.1.0 and in the paper's original forecast test:
+
+* a target of h sessions is h consecutive exchange sessions, never h bars stitched across a gap;
+* with ``train_end``, phi is chosen only from origins whose whole outcome window ends before it;
+* zero targets are kept, scored with QLIKE in the form y/f + ln f;
+* phi is chosen from [0, 0.95], so every candidate forecast is positive and all are compared on one sample.
+
+The forecasts are therefore not the ones the paper's frozen tables (34-36) report; they are those of the
+corrected evaluation (paper Section 6.8, ``scripts/47_corrected_evaluation.py``).
 """
 from __future__ import annotations
 
@@ -24,20 +34,26 @@ from ._version import __version__
 from .core import LAMBDA0, MIN_POOL_DATES, MIN_SERIES_SESSIONS, POOL_SESSIONS, SERIES_SESSIONS
 from .data import prepare, resolve_mode
 from .estimator import annualization, estimate, resolve_form
+from .evaluation import forward_target, purged, qlike_canonical, qlike_normalized, select_by_loss, session_ordinal
 
-__all__ = ["AnamModel", "qlike", "PHI_GRID", "LONGRUN_SESSIONS", "LONGRUN_MIN"]
+__all__ = ["AnamModel", "qlike", "qlike_canonical", "PHI_GRID", "LONGRUN_SESSIONS", "LONGRUN_MIN"]
 
 #: the long-run level the forecast shrinks toward: the kernel's mean over the last 250 sessions (at least 60)
 LONGRUN_SESSIONS = 250
 LONGRUN_MIN = 60
-#: shrinkage weights tried by ``fit`` (phi > 1 extrapolates recent changes)
-PHI_GRID = tuple(float(x) for x in np.linspace(0.0, 2.0, 41))
+#: shrinkage weights tried by ``fit``: convex combinations that keep weight on the long-run level, so every
+#: candidate forecast is positive wherever the calibration and the long-run level are (version 0.1.0 tried
+#: 0 to 2, and a candidate above one could turn negative and be scored on fewer origins)
+PHI_GRID = tuple(float(x) for x in np.round(np.arange(0.0, 0.951, 0.05), 2))
 
 
 def qlike(realised, forecast):
-    """QLIKE loss of a variance forecast: q - ln q - 1 with q = realised / forecast (zero when exact)."""
-    q = np.asarray(realised, dtype=float) / np.asarray(forecast, dtype=float)
-    return q - np.log(q) - 1.0
+    """Normalised QLIKE loss of a variance forecast: q - ln q - 1 with q = realised / forecast.
+
+    Zero when the forecast is exact; NaN where ``realised`` is zero, for which the loss is not defined in
+    this form (:func:`qlike_canonical` is).
+    """
+    return qlike_normalized(realised, forecast)
 
 
 def _trailing_sum(s: pd.Series, by: pd.Series, n: int, minp: int) -> pd.Series:
@@ -62,6 +78,11 @@ class AnamModel:
     annualize : None, float or "observed"
         Report annualised volatility too, using this many sessions per year, or the market's own
         observed count.
+    calendar : sequence of dates, optional
+        The market's trading sessions. By default every date that appears in the data is a session, which
+        is right for a panel in which some security trades every session; pass the exchange calendar for a
+        single thinly traded series, so that a session without a trade breaks the target rather than being
+        skipped.
 
     Examples
     --------
@@ -70,7 +91,7 @@ class AnamModel:
     """
 
     def __init__(self, form: str = "full", window: int = 21, horizon: int = 5, mode: str = "auto",
-                 annualize=None, lam0: float = LAMBDA0, phi_grid=PHI_GRID):
+                 annualize=None, lam0: float = LAMBDA0, phi_grid=PHI_GRID, calendar=None):
         self.form = resolve_form(form)
         self.window, self.horizon = int(window), int(horizon)
         if self.window < 1 or self.horizon < 1:
@@ -83,6 +104,10 @@ class AnamModel:
         self.phi_grid = tuple(float(x) for x in phi_grid)
         if not self.phi_grid:
             raise ValueError("phi_grid is empty")
+        if any(not (0.0 <= x < 1.0) for x in self.phi_grid):
+            raise ValueError("every phi must lie in [0, 1): a weight of one or more on the recent mean can give a "
+                             "forecast of zero or below")
+        self.calendar = None if calendar is None else pd.DatetimeIndex(pd.to_datetime(list(calendar)))
         self.phis_: dict[int, float] = {}
         self.train_end_ = None
         self._fitted = None
@@ -94,9 +119,9 @@ class AnamModel:
             prev_close: str | None = None, max_gap_days: float | None = None, on_invalid: str = "nan"):
         """Fit the model to daily bars.
 
-        ``train_end`` (optional): choose phi only from forecast origins dated before it, so that
-        :meth:`score` can measure the loss after it out of sample. The other arguments are passed to
-        :func:`anam_estimator.prepare`.
+        ``train_end`` (optional): choose phi only from forecast origins whose whole outcome window ends
+        before it, so that :meth:`score` can measure the loss after it out of sample. The other arguments
+        are passed to :func:`anam_estimator.prepare`.
         """
         self._fitted = self._load(data, symbol=symbol, date=date, prev_close=prev_close,
                                   max_gap_days=max_gap_days, on_invalid=on_invalid)
@@ -112,8 +137,8 @@ class AnamModel:
         return p, mode, path
 
     def _components(self, p: pd.DataFrame, mode: str, path: pd.DataFrame, h: int) -> pd.DataFrame:
-        # The bars with a full set of coordinates are the frame the paper's forecast test ran on; within
-        # it the kernel is still undefined until b has enough history, exactly as there.
+        # Origins and features: the bars with a full set of coordinates (a previous close), as in the
+        # paper's evaluation; within them the kernel is undefined until b has enough history.
         use = path["r2"].notna()
         q, X, r2 = p[use], path.loc[use, "kernel"], path.loc[use, "r2"]
         sym, date = q["symbol"], q["date"]
@@ -130,12 +155,17 @@ class AnamModel:
         else:
             L, m = SERIES_SESSIONS, min(MIN_SERIES_SESSIONS, SERIES_SESSIONS)
             kappa = _trailing_sum(rv, sym, L, m) / _trailing_sum(Xv, sym, L, m)
-        fut = r2.groupby(sym, sort=False).transform(
-            lambda z: z[::-1].rolling(h, min_periods=h).mean()[::-1].shift(-1))
-        ready = kappa.notna() & cur.notna() & lr.notna() & (kappa * cur > 0) & (lr > 0)
-        out = pd.DataFrame({"kappa": kappa, "cur": cur, "lr": lr, "fut": fut, "ready": ready}, index=q.index)
+        # Target: h consecutive exchange sessions of every bar, so a bar without a previous close or a
+        # session without a bar inside the window leaves the target unobserved.
+        ses = session_ordinal(p["date"], self.calendar)
+        tgt = forward_target(path["r2"], p["symbol"], ses, h)
+        ready = kappa.notna() & cur.notna() & lr.notna() & (kappa > 0) & (lr > 0)
+        out = pd.DataFrame({"kappa": kappa, "cur": cur, "lr": lr, "ready": ready}, index=q.index)
         out = out.reindex(p.index)
         out["ready"] = out["ready"].fillna(False).astype(bool)
+        out["fut"] = tgt["y"]
+        out["end_session"] = tgt["end_session"]
+        out["session"] = ses
         return out
 
     def _comps_fitted(self, h: int) -> pd.DataFrame:
@@ -144,10 +174,12 @@ class AnamModel:
         return self._comps[h]
 
     @staticmethod
-    def _losses(c: pd.DataFrame, phi: float, rows: pd.Series) -> pd.Series:
-        f = c["kappa"] * (phi * c["cur"] + (1 - phi) * c["lr"])
-        ok = rows & c["ready"] & c["fut"].notna() & (c["fut"] > 0) & (f > 0)
-        return pd.Series(qlike(c.loc[ok, "fut"], f[ok]), index=c.index[ok])
+    def _forecast(c: pd.DataFrame, phi: float) -> pd.Series:
+        return c["kappa"] * (phi * c["cur"] + (1 - phi) * c["lr"])
+
+    @staticmethod
+    def _scorable(c: pd.DataFrame, rows: pd.Series) -> pd.Series:
+        return rows & c["ready"] & c["fut"].notna()
 
     def phi(self, horizon: int | None = None) -> float:
         """The fitted shrinkage weight for ``horizon`` sessions (fitted on first use for a new horizon)."""
@@ -157,14 +189,19 @@ class AnamModel:
         if self._fitted is None:
             raise RuntimeError(f"phi for a {h}-session horizon is not fitted: call fit() first")
         c = self._comps_fitted(h)
-        dates = self._fitted[0]["date"]
-        train = pd.Series(True, index=c.index) if self.train_end_ is None else dates < self.train_end_
-        n = len(self._losses(c, self.phi_grid[0], train))
-        if n == 0:
+        rows = pd.Series(True, index=c.index)
+        if self.train_end_ is not None:
+            # the first session on or after train_end: its ordinal is the number of sessions before it
+            cal = (self.calendar if self.calendar is not None else pd.DatetimeIndex(self._fitted[0]["date"])).unique()
+            cutoff = int((cal < self.train_end_).sum())
+            rows &= purged(c["end_session"], cutoff).to_numpy()
+        rows = self._scorable(c, rows)
+        if not rows.any():
             raise ValueError("not enough history to fit: each series needs about 120 valid sessions in "
                              "series mode (b and the calibration need 60, the long-run level 60 more), "
-                             f"plus {h} to score a {h}-session forecast")
-        self.phis_[h] = float(min(self.phi_grid, key=lambda ph: self._losses(c, ph, train).mean()))
+                             f"plus {h} consecutive sessions to score a {h}-session forecast")
+        best, _, _ = select_by_loss(self.phi_grid, c["fut"], rows, lambda ph: self._forecast(c, ph))
+        self.phis_[h] = float(best)
         return self.phis_[h]
 
     # ── using the model ────────────────────────────────────────────────────────────────────
@@ -227,10 +264,11 @@ class AnamModel:
         """Every forecast the fitted model would have made on the fitted data, beside what followed.
 
         One row per forecast origin dated from ``start`` (default: ``train_end`` if one was given, else
-        the beginning) and before ``end``: ``symbol``, ``date`` (the origin), ``forecast`` (mean daily
-        variance over the next ``horizon`` sessions), ``realised`` (the mean squared close-to-close
-        return over those sessions) and its ``qlike`` loss. Origins before ``train_end`` are in sample:
-        phi was chosen on them.
+        the beginning) and before ``end`` whose target is observed: ``symbol``, ``date`` (the origin),
+        ``forecast`` (mean daily variance over the next ``horizon`` sessions), ``realised`` (the mean
+        squared close-to-close return over those sessions), ``qlike`` (the normalised loss, NaN where
+        ``realised`` is zero) and ``qlike_canonical`` (y/f + ln f, defined there too). Origins whose
+        outcome ends before ``train_end`` are in sample: phi was chosen on them.
         """
         if self._fitted is None:
             raise RuntimeError("call fit() first")
@@ -243,19 +281,31 @@ class AnamModel:
             rows &= p["date"] >= start
         if end is not None:
             rows &= p["date"] < pd.Timestamp(end)
+        rows = self._scorable(c, rows)
         ph = self.phi(h)
-        loss = self._losses(c, ph, rows)
-        i = loss.index
-        f = c.loc[i, "kappa"] * (ph * c.loc[i, "cur"] + (1 - ph) * c.loc[i, "lr"])
+        i = c.index[rows]
+        f = self._forecast(c, ph)[i]
+        y = c.loc[i, "fut"]
         return pd.DataFrame({"symbol": p.loc[i, "symbol"], "date": p.loc[i, "date"], "forecast": f,
-                             "realised": c.loc[i, "fut"], "qlike": loss}).reset_index(drop=True)
+                             "realised": y, "qlike": qlike_normalized(y, f),
+                             "qlike_canonical": qlike_canonical(y, f)}).reset_index(drop=True)
 
-    def score(self, *, start=None, end=None, horizon: int | None = None) -> float:
-        """Mean QLIKE loss of :meth:`backtest` (same arguments); the number of origins scored is left
-        in ``n_scored_``."""
+    def score(self, *, start=None, end=None, horizon: int | None = None, loss: str = "normalized") -> float:
+        """Mean loss of :meth:`backtest` (same arguments).
+
+        ``loss="normalized"`` (default) averages the normalised QLIKE over origins with a positive target;
+        ``loss="canonical"`` averages y/f + ln f over every origin, which is what ``fit`` minimises. The
+        number of origins scored is left in ``n_scored_`` and the number with a zero target in
+        ``n_zero_targets_``.
+        """
+        if loss not in ("normalized", "canonical"):
+            raise ValueError("loss must be 'normalized' or 'canonical'")
         bt = self.backtest(start=start, end=end, horizon=horizon)
         self.n_scored_ = int(len(bt))
-        return float(bt["qlike"].mean()) if len(bt) else float("nan")
+        self.n_zero_targets_ = int((bt["realised"] == 0).sum())
+        col = "qlike" if loss == "normalized" else "qlike_canonical"
+        v = bt[col].dropna()
+        return float(v.mean()) if len(v) else float("nan")
 
     def summary(self) -> dict:
         """What was fitted, on what."""
@@ -273,7 +323,8 @@ class AnamModel:
 
     def get_params(self) -> dict:
         return {"form": self.form, "window": self.window, "horizon": self.horizon, "mode": self.mode,
-                "annualize": self.annualize, "lam0": self.lam0, "phi_grid": list(self.phi_grid)}
+                "annualize": self.annualize, "lam0": self.lam0, "phi_grid": list(self.phi_grid),
+                "calendar": None if self.calendar is None else [str(x.date()) for x in self.calendar]}
 
     def to_dict(self) -> dict:
         """The model's settings and fitted weights (not the data) as plain JSON types."""
@@ -284,7 +335,8 @@ class AnamModel:
     @classmethod
     def from_dict(cls, d: dict) -> "AnamModel":
         m = cls(form=d["form"], window=d["window"], horizon=d["horizon"], mode=d["mode"],
-                annualize=d.get("annualize"), lam0=d.get("lam0", LAMBDA0), phi_grid=d.get("phi_grid", PHI_GRID))
+                annualize=d.get("annualize"), lam0=d.get("lam0", LAMBDA0), phi_grid=d.get("phi_grid", PHI_GRID),
+                calendar=d.get("calendar"))
         m.phis_ = {int(k): float(v) for k, v in d.get("phis", {}).items()}
         m.train_end_ = None if d.get("train_end") is None else pd.Timestamp(d["train_end"])
         if m.horizon in m.phis_:

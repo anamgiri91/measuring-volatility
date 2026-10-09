@@ -1,11 +1,13 @@
-"""The installable package (``anam-estimator/``) gives the numbers the paper reports.
+"""The installable package (``anam-estimator/``) and the research code agree.
 
 * Its estimator equals the frozen research module (``nepsevol.estimators.anam``) on every NEPSE stock-day
   and on both indices, in both forms.
-* Its model's forecasts equal the paper's forecast test (``nepsevol.volforecast.fair_forecast_test``)
-  origin by origin, with the same shrinkage, and so reproduce Table 34's losses wherever the paper
-  scored the same origins. (The paper scored all nine estimators on the origins where every one of them
-  was defined; for the NIFTY 50 and the S&P 500, and for NEPSE at 21 sessions, those are the model's own.)
+* Its model (version 0.2.0) is the corrected evaluation of plan M20 for one forecast: the same target over
+  h consecutive exchange sessions, purged training origins, canonical QLIKE and the convex phi grid. The
+  research side is rebuilt here from ``nepsevol.forecast_baselines`` and the shared target, and the two
+  agree origin by origin.
+* The frozen evaluation (``nepsevol.volforecast``), whose defects M20 corrects, still reproduces the frozen
+  Table 34, which stays in the record.
 """
 from __future__ import annotations
 
@@ -24,6 +26,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import anam_estimator as ae  # noqa: E402
 from nepsevol.estimators import anam as AN  # noqa: E402
+from anam_estimator import evaluation as EV  # noqa: E402
+from nepsevol import forecast_baselines as FB  # noqa: E402
 from nepsevol.volforecast import fair_forecast_test  # noqa: E402
 
 VARIANT = "Anam, open-free special case (b=0)"
@@ -78,56 +82,75 @@ def test_estimator_equals_the_frozen_module_on_both_indices(indices):
             np.testing.assert_array_equal(mine["variance"].to_numpy(), frozen["var"].to_numpy())
 
 
-def _paper_test(d, kernel, train, test, win, scheme):
-    t, losses = fair_forecast_test(d, {"X": kernel}, train, test, win=win, scheme=scheme, refs=("X",))
-    return t.loc["X"], losses["X"]
+def _nepse_calendar():
+    cal = pd.read_csv(ROOT / "data" / "processed" / "nepse_trading_calendar.csv", parse_dates=["date"])
+    return pd.DatetimeIndex(cal.loc[cal["is_session"], "date"])
 
 
-def _check_against_the_paper_test(d, kernel, train, test, train_end, win, scheme, form, mode):
-    t, losses = _paper_test(d, kernel, train, test, win, scheme)
-    m = ae.AnamModel(form=form, horizon=win, mode=mode).fit(d[COLS], prev_close="pc", train_end=train_end)
-    assert m.phi_ == pytest.approx(t["phi"], abs=1e-12)
+def _research_single(d, kernel, train, test_start, win, scheme, calendar):
+    """M20's corrected evaluation of one forecast, from the research module's features."""
+    sym, r2, date = d["symbol"], d["CC"], d["date"]
+    valid = kernel.notna() & r2.notna()
+    Xv = kernel.where(valid)
+    cur = FB.rolling_rows(Xv, sym, win)
+    lr = FB.rolling_rows(Xv, sym, FB.LONGRUN_SESSIONS, FB.LONGRUN_MIN)
+    if scheme == "pool":
+        kappa = FB.pooled_kappa(Xv, r2, date, AN.POOL_SESSIONS, AN.MIN_POOL_DATES)
+    else:
+        kappa = FB.series_kappa(Xv, r2, sym, AN.SERIES_SESSIONS, AN.MIN_SERIES_SESSIONS)
+    ses = EV.session_ordinal(date, calendar)
+    tgt = EV.forward_target(r2, sym, ses, win)
+    ready = kappa.notna() & lr.notna() & cur.notna() & (kappa > 0) & (lr > 0) & tgt["y"].notna()
+    cutoff = int(ses[date >= test_start].min())
+    tr = train & ready & EV.purged(tgt["end_session"], cutoff)
+    fc = lambda ph: kappa * (ph * cur + (1 - ph) * lr)
+    phi, _, _ = EV.select_by_loss(ae.PHI_GRID, tgt["y"], tr, fc)
+    te = (date >= test_start) & ready
+    f = fc(phi)[te]
+    return phi, d.loc[te, ["symbol", "date"]].assign(research=EV.qlike_canonical(tgt["y"][te], f))
+
+
+def _check_against_the_research_evaluation(d, kernel, train, test_start, win, scheme, form, mode, calendar):
+    phi, ref = _research_single(d, kernel, train, test_start, win, scheme, calendar)
+    m = ae.AnamModel(form=form, horizon=win, mode=mode, calendar=calendar).fit(
+        d[COLS], prev_close="pc", train_end=test_start)
+    assert m.phi_ == pytest.approx(phi, abs=1e-12)
     bt = m.backtest()
-    assert len(bt) == int(t["n"])
-    assert bt["qlike"].mean() == pytest.approx(t["QLIKE"], rel=1e-12)
-    ref = d.loc[losses.index, ["symbol", "date"]].assign(paper=losses.to_numpy())
     both = bt.merge(ref, on=["symbol", "date"])
-    assert len(both) == len(bt)
-    assert np.max(np.abs(both["qlike"] - both["paper"])) < 1e-12
+    assert len(both) == len(bt) == len(ref)
+    assert np.max(np.abs(both["qlike_canonical"] - both["research"])) < 1e-9
 
 
 @pytest.mark.parametrize("win", [5, 21])
-def test_model_forecasts_are_the_paper_test_on_the_indices(indices, s40, win):
+def test_model_is_the_corrected_evaluation_on_the_indices(indices, s40, win):
     for x in indices.values():
         est, _ = s40.estimator_set(x, "series")
         half = x.loc[x["span"] == "test", "date"].min()
         for name, form in (("Anam", "full"), (VARIANT, "open-free")):
-            _check_against_the_paper_test(x, est[name], x["span"] == "train", x["span"] == "test", half, win,
-                                          ("series", AN.SERIES_SESSIONS), form, "series")
+            _check_against_the_research_evaluation(x, est[name], x["span"] == "train", half, win, "series", form,
+                                                   "series", pd.DatetimeIndex(x["date"]))
 
 
 @pytest.mark.parametrize("win", [5, 21])
-def test_model_forecasts_are_the_paper_test_on_nepse(nepse, s40, win):
+def test_model_is_the_corrected_evaluation_on_nepse(nepse, s40, win):
     d = nepse
     est, _ = s40.estimator_set(d, "panel")
-    train, test = d["regime"].isin(["A1", "B"]), d["regime"].isin(["A2", "C"])
+    train = d["regime"].isin(["A1", "B"])
     a2 = d.loc[d["regime"] == "A2", "date"].min()
-    assert d.loc[train, "date"].max() < a2 <= d.loc[test, "date"].min()
+    assert d.loc[train, "date"].max() < a2
     for name, form in (("Anam", "full"), (VARIANT, "open-free")):
-        _check_against_the_paper_test(d, est[name], train, test, a2, win, ("pool", AN.POOL_SESSIONS), form, "panel")
+        _check_against_the_research_evaluation(d, est[name], train, a2, win, "pool", form, "panel",
+                                               _nepse_calendar())
 
 
-def test_model_reproduces_table_34_where_the_paper_scored_the_same_origins(indices, nepse):
+def test_the_frozen_evaluation_still_reproduces_table_34(indices, s40):
     f = pd.read_csv(ROOT / "output" / "tables" / "table101_anam_holdout_forecast.csv")
-
-    def paper(mk, span, w):
-        return f[(f.market == mk) & (f.test_span == span) & (f.window == w) & (f.estimator == "Anam")].iloc[0]
-    cases = [(mk, x, "test half", w, x.loc[x["span"] == "test", "date"].min(), "series")
-             for mk, x in indices.items() for w in (5, 21)]
-    cases.append(("NEPSE", nepse, "A2+C", 21, nepse.loc[nepse["regime"] == "A2", "date"].min(), "panel"))
-    for mk, x, span, w, start, mode in cases:
-        m = ae.AnamModel(form="full", horizon=w, mode=mode).fit(x[COLS], prev_close="pc", train_end=start)
-        row = paper(mk, span, w)
-        assert m.phi_ == pytest.approx(row.phi, abs=1e-9), (mk, w)
-        assert m.score() == pytest.approx(row.QLIKE, rel=1e-9), (mk, w)
-        assert m.n_scored_ == int(row.n), (mk, w)
+    for mk, x in indices.items():
+        est, _ = s40.estimator_set(x, "series")
+        for w in (5, 21):
+            t, _ = fair_forecast_test(x, est, x["span"] == "train", x["span"] == "test", win=w,
+                                      scheme=("series", AN.SERIES_SESSIONS), refs=("Anam", "P", "CC"))
+            row = f[(f.market == mk) & (f.test_span == "test half") & (f.window == w) & (f.estimator == "Anam")].iloc[0]
+            assert t.loc["Anam", "phi"] == pytest.approx(row.phi, abs=1e-9)
+            assert t.loc["Anam", "QLIKE"] == pytest.approx(row.QLIKE, rel=1e-9)
+            assert int(t.loc["Anam", "n"]) == int(row.n)
