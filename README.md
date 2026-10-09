@@ -17,25 +17,40 @@ each day's open, high, low and close. The paper answers five questions:
    on 292 ordinary equities and 143,718 stock-days, they do. The apparent failure of range estimators in a
    pooled frontier-market file is mostly an instrument-composition artifact: bonds, funds and promoter
    shares mistaken for thin stocks.
-2. **Is their agreement with the benchmark calibration or cancelling errors?** Calibration: instrumented
-   slopes identified from volatility persistence put Parkinson at 0.919 [0.760, 1.056].
+2. **Is their agreement with the benchmark calibration or cancelling errors?** A unit calibration slope is
+   not rejected: instrumented slopes put Parkinson at 0.919 [0.760, 1.056]. That rests on instruments whose
+   validity is assumed, and whose first stage is weak once errors are clustered by security and date
+   (effective F 19.4; 29.9 for instruments dated two sessions back).
 3. **What does the opening price measure?** Mostly a transient error. The trading session undoes
-   64–87% of NEPSE's overnight move. When NEPSE widened its pre-open band on
-   20 April 2026, the share of the open that survives to the close fell by 0.333, more
-   than at any of 77 placebo dates. Three-quarters of Yang–Zhang's excess over close-to-close
+   64–87% of NEPSE's overnight move (1 − b, a projection pooled across securities and dates). When NEPSE's
+   20 April 2026 rule package widened its pre-open band, among other changes, the share of the open that
+   survives to the close fell by 0.333, more than at any of 77 placebo dates. The band's separate effect is
+   not identified. Three-quarters of Yang–Zhang's excess over close-to-close
    variance is the overnight–intraday covariance it assumes away.
 4. **So which benchmark survives?** Close-to-close returns, which never read the open.
 5. **Can an estimator do better?** **Anam's estimator**, introduced in Section 6.8 of the paper, was
-   designed on part of the NEPSE sample and tested out of sample under three frozen plans. It was tested
-   in Nepal, Bangladesh, Vietnam and Morocco and on the NIFTY 50 and S&P 500 indices.
+   designed on part of the NEPSE sample and tested out of sample under three frozen plans, in Nepal,
+   Bangladesh, Vietnam and Morocco and on the NIFTY 50 and S&P 500 indices. An independent audit then found
+   defects in that forecast evaluation. The corrected evaluation (plan M20) finds:
+   * its open-free form beats plain close-to-close at five sessions in six of seven samples;
+   * forecasts built from returns alone are about as accurate in most of them (below).
 
 The forward India VIX test and the calibration, opening-price and estimator analyses (questions 2 to 5)
 ran under plans frozen and committed before their results existed; the earlier estimator comparison and
-its robustness checks did not. The predictions that failed are reported alongside the ones that held, and a post hoc recheck of
-every claim made for the estimator is in [`ANAM_RECHECK_POSTHOC.md`](ANAM_RECHECK_POSTHOC.md).
+its robustness checks did not. The predictions that failed are reported alongside the ones that held.
+
+The record of checks and corrections:
+
+* **A post hoc recheck** of every claim made for the estimator: [`ANAM_RECHECK_POSTHOC.md`](ANAM_RECHECK_POSTHOC.md).
+* **An independent audit of 9 October 2026**, kept as received in [`audits/`](audits/), and the answer to each
+  of its fifteen findings: [`RESEARCH_AUDIT_RESPONSE.md`](RESEARCH_AUDIT_RESPONSE.md).
+* **What each claim is about**, and what it is not: [`ESTIMAND_NOTE.md`](ESTIMAND_NOTE.md). For example, the
+  forecast comparisons concern the second moment of observed close-to-close returns, not integrated variance.
+* **A prospective test** on sessions after the audit, with every parameter frozen now:
+  [`M21_PROSPECTIVE_PLAN.md`](M21_PROSPECTIVE_PLAN.md).
 
 **The theory.** The statistics behind these answers are in a theory supplement written in LaTeX,
-[`paper/theory/theory.pdf`](paper/theory/theory.pdf). It states six propositions, with proofs:
+[`paper/theory/theory.pdf`](paper/theory/theory.pdf). It states seven propositions, with proofs:
 
 1. what the open's unbiasedness coefficient b identifies, with a sharp bound on the opening error
    that corrects the paper's Appendix A;
@@ -43,13 +58,18 @@ every claim made for the estimator is in [`ANAM_RECHECK_POSTHOC.md`](ANAM_RECHEC
 3. what a price band does to b;
 4. why one b pooled across securities penalises reading the open;
 5. how a rolling calibration lags a rule change;
-6. when lagged realised measures identify an estimator's calibration.
+6. when lagged realised measures identify an estimator's calibration;
+7. what Anam's kernel does with a noisy open, added after the audit:
+   * its overnight term understates the efficient overnight second moment unless the opening error is
+     proportional to the move;
+   * the extended range cannot remove an error already in the high or low;
+   * the open-free form still absorbs about a quarter to two-fifths of the error's variance.
 
 `scripts/45_theory_checks.py` checks every closed form, identity and inequality against simulation or
-numerical integration (187 checks, all passing). `scripts/46_theory_proofs.py` then verifies every
-step of every proof, together with the paper's own mathematical claims (251 steps, all passing). Of
-those steps, 138 are verified symbolically with SymPy; the rest numerically, by simulation,
-pathwise or on the data. The supplement's one prediction about real data was
+numerical integration (187 checks, all passing). `scripts/48_kernel_theory.py` does the same for the seventh
+proposition (63 checks, all passing). `scripts/46_theory_proofs.py` then verifies every step of every proof,
+together with the paper's own mathematical claims (321 steps, all passing). Of those steps, 166 are verified
+symbolically with SymPy; the rest numerically, by simulation, pathwise or on the data. The supplement's one prediction about real data was
 fixed in advance under [`M19_THEORY_CHECKS_PLAN.md`](M19_THEORY_CHECKS_PLAN.md) and was not
 supported.
 
@@ -64,7 +84,7 @@ write o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC) and R = ln(H/L).
 
 | Step | Definition |
 |---|---|
-| Open quality | b = Σ o·r / Σ o², clipped to [0, 1]. It is the share of the overnight move the session keeps, pooled over the cross-section and the last 60 dates (a single series uses its own last 250 sessions) |
+| Open quality | b = Σ o·r / Σ o², clipped to [0, 1]: the share of the overnight move the session keeps on average, a projection pooled over the cross-section and the last 60 dates in which large opening moves weigh most (a single series uses its own last 250 sessions). b·o is a shrinkage predictor of the efficient overnight log move, not the move itself |
 | Extended range | R* = R + max(0, b·o − h) + max(0, l − b·o): the range extended to the effective open PC·exp(b·o) |
 | Daily kernel | A = (1 − w)·[(b·o)² + R*²/(4 ln 2)] + w·r², with w = 0.2·(1 − b) |
 | Calibration | κ = Σ r² / Σ A over the same trailing set, which puts the level on the close-to-close scale |
@@ -107,15 +127,75 @@ and its model card. Annualise with the market's own session count (`annualize="o
 imported 252.
 
 Inside this repository, `src/nepsevol/estimators/anam.py` is the original that produced the paper's
-tables, with property tests in `tests/test_anam_estimator.py`. The package reproduces it exactly, and its
-forecasts reproduce the paper's forecast test (`tests/test_anam_package.py`).
+tables, with property tests in `tests/test_anam_estimator.py`.
+
+* **The estimator.** The package reproduces it exactly.
+* **The forecasting model** (version 0.2.0). It uses the corrected evaluation of plan M20: outcomes purged at
+  the training cutoff, calendar targets, zero targets scored. `tests/test_anam_package.py` checks both against
+  the research code.
+
+The construction is a heuristic whose level the calibration sets (theory supplement, Proposition 7).
 
 ### How it did out of sample
 
-**Forecasts.** Each estimator forecasts the next 5 sessions' close-to-close variance and is scored by
+**The corrected evaluation (plan M20, paper Table 39).** An independent audit (9 October 2026) found four
+defects in the forecast evaluation of plans M16–M18:
+
+* training outcomes crossed into the test span;
+* 5- and 21-session targets stitched sessions across trading gaps;
+* zero targets were dropped;
+* the reported mean and its t statistic weighted forecast origins differently.
+
+Plan M20 was frozen before any corrected loss was computed. It removes the four defects and adds:
+
+* forecasts built from returns alone: EWMA, GARCH, GJR-GARCH, and a HAR on squared returns;
+* true-range Parkinson;
+* a HAR on the open-free kernel;
+* a model confidence set over all seventeen forecasts.
+
+Every forecast predicts the mean squared close-to-close return over the next 5 sessions and is scored by QLIKE
+(lower is better). A negative t favours the first-named forecast, and |t| > 1.96 is significant.
+
+| Test sample | Anam vs CC: t | Open-free vs CC: t | Holm p (Anam / open-free) | Best return-only | Best range-based | Range-based minus return-only: t | Lowest test loss of 17 |
+|---|---|---|---|---|---|---|---|
+| NEPSE, regimes A2 and C | +0.82 | +0.63 | 1.000 / 0.736 | GARCH | HAR on the open-free kernel | +0.35 (no significant difference) | HAR on r² |
+| NIFTY 50 (index) | -2.91 | -2.99 | 0.009 / 0.006 | GJR-GARCH | HAR on the open-free kernel | -0.08 (no significant difference) | HAR on the open-free kernel |
+| S&P 500 (index) | -6.08 | -6.65 | 0.000 / 0.000 | GJR-GARCH | HAR on the open-free kernel | -1.18 (no significant difference) | true-range Parkinson |
+| Dhaka 2023-2026 | +1.45 | -2.56 | 1.000 / 0.013 | GJR-GARCH | HAR on the open-free kernel | +2.66 (returns suffice) | GJR-GARCH |
+| Vietnam 2007-2020 | -0.86 | -3.94 | 0.785 / 0.000 | GARCH | HAR on the open-free kernel | -1.51 (no significant difference) | HAR on the open-free kernel |
+| Dhaka 2009-2021 (dates repaired) | -6.52 | -8.02 | 0.000 / 0.000 | GJR-GARCH | HAR on the open-free kernel | -6.31 (range adds information) | HAR on the open-free kernel |
+| Morocco 2012-2026 | -0.53 | -2.62 | 0.890 / 0.013 | HAR on r² | HAR on the open-free kernel | -2.30 (range adds information) | HAR on the open-free kernel |
+
+**What this shows:**
+
+- **Against the classical estimators.** A classical range estimator beats the full form in 1 of 84 primary
+  comparisons (Parkinson in Dhaka 2023–2026 at 5 sessions) and beats the open-free form in none. Of the frozen
+  record's 288 per-rival verdicts, 47 change.
+- **Against plain close-to-close.** After Holm's adjustment across the seven samples:
+  - the open-free form wins at 5 sessions in six of seven, all but NEPSE;
+  - the full form wins in three: Dhaka 2009–2021 and both indices.
+- **Against forecasts built from returns alone.** The best range-based forecast beats the best return-only
+  one in Dhaka 2009–2021 and Morocco only, and Morocco's verdict depends on how securities and dates are
+  weighted. Returns suffice in Dhaka 2023–2026 and after NEPSE's reform. Elsewhere there is no detectable
+  difference.
+- **The best single forecast** is a HAR on the open-free kernel. It has the lowest test loss in 10 of 14
+  sample-horizon cells and is in every 90% model confidence set. So is GJR-GARCH; plain close-to-close is in
+  only six.
+- **What helps** (ablations):
+  - calibration;
+  - the previous-close anchor (true range);
+  - the 0.2 r² blend;
+  - leaving the open out. Estimating b never beats setting it to zero.
+
+  The overnight term with residual uncertainty from the theory supplement's Proposition 7 does not help.
+- **After a sudden rule change, use close-to-close.** The 60-date calibration needs time to catch up.
+- **Coverage.** Thin securities are under-represented, because a target over sessions without trading cannot
+  be scored. In Morocco's least liquid tercile, only 44% of 5-session origins are.
+
+**Forecasts, as the plans found them.** Each estimator forecasts the next 5 sessions' close-to-close variance and is scored by
 QLIKE loss (lower is better). Every estimator gets the same calibration and its own shrinkage, and all
 are scored on common forecast origins. A negative t favours the estimator; |t| > 1.96 is significant.
-The table is paper Table 34, which also reports the 21-session horizon.
+The table is paper Table 34, which also reports the 21-session horizon. These are the plans' results, with the defects the audit found; in the Bangladeshi, Vietnamese and Moroccan panels the loss levels also include floating-point residues of equal prices, which inflate them (the full form's by 0.02 to 0.19; post hoc, `scripts/51_frozen_residue_check.py`).
 
 | Test sample | Plan | Close-to-close | Parkinson | Best other classical | Anam | Anam, open-free | Anam vs CC: t | Open-free vs CC: t |
 |---|---|---|---|---|---|---|---|---|
@@ -147,34 +227,28 @@ regime C (paper Table 38), so the level comes from the calibration, not from the
 | Dhaka 2009-2021 (dates repaired) | **1.004** | 0.995 | 0.988 | 1.392 | 1.418 |
 | Morocco 2012-2026 | **1.005** | 0.544 | 0.453 | 1.283 | 1.273 |
 
-**What this shows:**
+**What the frozen record showed.** It is superseded where the corrected evaluation differs:
 
-- **Against the classical estimators.** Under the plans' QLIKE loss, no classical range estimator has
-  significantly lower loss than Anam's estimator in any test sample at either horizon, and in every
-  frontier-market sample it beats all six at 5 sessions. This survives longer Newey–West lags and
-  non-overlapping origins. Two caveats: on the S&P 500 it coincides with overnight² + Parkinson, and four
-  classical estimators had nominally lower loss there; under MSE, the three classical estimators with a
-  full overnight term beat it in Vietnam at 21 sessions.
-- **Level.** Its level is within 1.1% of close-to-close variance everywhere except NEPSE's
-  post-reform regime. That is the calibration's doing: uncalibrated, the classical formulas miss by up
-  to 71% upward and 55% downward, but calibrated the same way they come within 2.2%.
-- **Against plain close-to-close the record is mixed.** It wins on both indices (as several classical
-  range estimators also do), in the long Dhaka history and in Morocco. The Morocco win comes from one band
-  regime (2020–21) and does not survive longer Newey–West lags, an MSE loss or a Holm correction across
-  the three plans. It ties in NEPSE, in Dhaka 2023–2026 and in Vietnam at 5 sessions. It loses in
-  NEPSE's 90 sessions after the April 2026 band reform, and in Vietnam at 21 sessions.
-- **The open-free form.** It had the lowest 5-session loss in every M17 panel; that reading is post hoc.
-  It then passed a test fixed in advance in Morocco (M18): there it beat close-to-close and the full form,
-  and no estimator beat it. Of the two forms, it is the one the frontier-market evidence favours.
-- **After a sudden rule change, use close-to-close.** The 60-date calibration needs time to catch up.
+- **Against the classical estimators.** Under the plans' QLIKE loss, no classical range estimator had
+  significantly lower loss than Anam's estimator. Two caveats: on the S&P 500 it coincides with
+  overnight² + Parkinson, and under MSE the three classical estimators with a full overnight term beat it in
+  Vietnam at 21 sessions.
+- **Level.** Its level is within 1.1% of close-to-close variance everywhere except NEPSE's post-reform regime.
+  That is the calibration's doing: uncalibrated, the classical formulas miss by up to 71% upward and 55%
+  downward, but calibrated the same way they come within 2.2%. The audit's corrections do not touch the level
+  comparisons.
+- **The open-free form.** It had the lowest 5-session loss of the plans' nine estimators in every M17 panel,
+  a post hoc reading, and then passed a test fixed in advance in Morocco (M18).
 
-Details: paper Section 6.8 and Tables 33–38; `M16_ANAM_ESTIMATOR_*`, `M17_ANAM_FRONTIER_*` and
+Details: paper Section 6.8 and Tables 33–39; `M20_CORRECTED_EVALUATION_*` (the corrected evaluation); `M16_ANAM_ESTIMATOR_*`, `M17_ANAM_FRONTIER_*` and
 `M18_ANAM_MOROCCO_*` (plan and results for each test); `ANAM_RECHECK_POSTHOC.md` (the post hoc recheck).
 
 ## Manuscript and submission set
 
-- **The manuscript.** `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` is rebuilt from the frozen
-  tables by `paper/apply_referee_revisions.py`, then rounds 3–18, applied in order. Round 15
+- **The manuscript.** `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` is the canonical editable source.
+  Its revisions since the pre-revision draft are recorded as scripts: `paper/apply_referee_revisions.py`, then
+  rounds 3–19, applied in order. The pre-revision draft is not distributed (it is the `--base` those scripts
+  require), so the scripts document every edit and its checks rather than rebuild the file from nothing. Round 15
   (`paper/apply_round15_revisions.py`) adds Anam's estimator: Section 6.8, Tables 33–36, a new title, and
   changes to the abstract, introduction, protocol, discussion, limitations, conclusion and references.
   Round 16 (`paper/apply_round16_revisions.py`) corrects what a recheck of those claims found
@@ -182,10 +256,16 @@ Details: paper Section 6.8 and Tables 33–38; `M16_ANAM_ESTIMATOR_*`, `M17_ANAM
   (`paper/apply_round17_revisions.py`) corrects Appendix A's bound on the opening error, which the
   theory supplement showed is not sharp (M-026), and points Section 9 to the supplement. Round 18
   (`paper/apply_round18_revisions.py`) states Appendix A's attainment condition exactly (M-027) and
-  adds the step-by-step verification to Section 9.
+  adds the step-by-step verification to Section 9. Round 19 (`paper/apply_round19_revisions.py`) answers the
+  audit of 9 October 2026 (M-028 to M-034). It:
+  - frames Tables 34–38 as the plans' record and adds the corrected evaluation as Table 39;
+  - corrects the overstated wording ("natural experiment", "genuine calibration", the QLIKE target, the
+    reading of b·o);
+  - adds Proposition 7 and the prospective plan M21 to Section 9;
+  - says which results the package reproduces.
 - **The theory supplement.** `paper/theory/` holds the LaTeX theory section and its proof appendix,
   with the compiled `theory.pdf`. Every number in it is a macro written to `paper/theory/generated/` by
-  `scripts/45_theory_checks.py` and `scripts/46_theory_proofs.py`. Build it with
+  `scripts/45_theory_checks.py`, `scripts/46_theory_proofs.py` and `scripts/48_kernel_theory.py`. Build it with
   `latexmk -pdf theory.tex` in that directory.
   Every figure the manuscript quotes is interpolated from `output/tables/*.csv`.
 - **The submission set.** `paper/submission/` is the double-anonymous submission set, rebuilt by
@@ -266,7 +346,14 @@ final formatting step, which runs last.
 24. `scripts/44_anam_recheck.py` — POST HOC recheck of the M16-M18 claims, run after every verdict was known: every estimator under the same calibration, longer Newey-West lags, non-overlapping origins, an MSE loss, halves of each test span, Holm corrections, and the data assumptions (package Tables 117-120; paper Tables 37-38). Needs `data/external/frontier/`; skipped when absent.
 25. `scripts/45_theory_checks.py` — plan M19: every proposition of the theory supplement checked against simulation or numerical integration (Part A), its applications to the NEPSE data (Part B), and the pooling test across the five panel test spans (Part C) (package Tables 121-123; `paper/theory/generated/`). Post hoc relative to M14-M18; Part C needs `data/external/frontier/` and is skipped with the script when absent. About five minutes.
 26. `scripts/46_theory_proofs.py` — every step of every proof in the theory supplement, and the paper's own mathematical claims. Each step is verified symbolically with SymPy where it is algebra or calculus, and otherwise numerically, by simulation, pathwise or on every NEPSE stock-day it applies to (package Table 124; `paper/theory/generated/proofs.tex`). It reads script 45's committed outputs, so it always runs. About two minutes.
-27. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–38, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
+27. `scripts/47_corrected_evaluation.py` — plan M20, frozen: the forecast evaluation of M16–M18 corrected step by step (S0 must reproduce the frozen tables), seventeen forecasts with return-only baselines, the model confidence set, Holm, the practical margin, ablations, coverage by liquidity and inference sensitivity (package Tables 125–132; manuscript Table 39). Needs `data/external/frontier/` for four of its seven samples; skipped when absent. About twenty minutes.
+28. `scripts/48_kernel_theory.py` — the theory supplement's Proposition 7: how much of the opening error each kernel absorbs, checked against simulation and numerical integration, and the exposures at each sample's implied scales (package Tables 133–134; `paper/theory/generated/kernel.tex`). Its Part C needs `data/external/frontier/`; skipped when absent.
+29. `scripts/49_audit_sensitivities.py` — POST HOC, after the audit: the calibration weight's floor without future observations, the cluster-robust and effective first-stage F, the corporate-action tolerance, and the processed row counts (package Table 135). Reads the NEPSE sample only, so it always runs.
+30. `scripts/50_m21_freeze.py` — plan M21: every forecast's parameters fixed on all current data for the prospective test (package Table 136, whose digest the plan records). It never overwrites the frozen table: a rerun reports whether it reproduces it. Needs `data/external/frontier/`; skipped when absent.
+31. `scripts/51_frozen_residue_check.py` — POST HOC: floating-point residues of equal prices in the frozen forecast tables, and those tables recomputed with the residues set to zero (package Table 137). Needs `data/external/frontier/`; skipped when absent.
+32. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–39, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
+
+A run without `data/external/frontier/` is a **partial reproduction**. It regenerates every NEPSE and index result, reuses the committed tables of the skipped analyses, and writes what ran and what was skipped to `output/run_status.json`, which the manifest copies.
 
 ## Implementation conventions
 
@@ -298,7 +385,7 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 
 ## Repository map
 
-- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-18). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) added Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18; round 16 (`apply_round16_revisions.py`) corrects the overstatements a recheck found and adds Tables 37-38; round 17 (`apply_round17_revisions.py`) corrects Appendix A's bound on the opening error (M-026); round 18 (`apply_round18_revisions.py`) states its attainment condition exactly and cites the step-by-step verification (M-027). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
+- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-19; the pre-revision draft they start from is not distributed, so the `.docx` itself is the canonical source). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) added Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18; round 16 (`apply_round16_revisions.py`) corrects the overstatements a recheck found and adds Tables 37-38; round 17 (`apply_round17_revisions.py`) corrects Appendix A's bound on the opening error (M-026); round 18 (`apply_round18_revisions.py`) states its attainment condition exactly and cites the step-by-step verification (M-027); round 19 (`apply_round19_revisions.py`) answers the audit of 9 October 2026 and adds the corrected evaluation as Table 39 (M-028 to M-034). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
 - `paper/submission/` — the double-anonymous submission set: anonymised manuscript (with the estimator's eponym replaced by "the proposed estimator"), separate title page, and a cover letter for each target journal (three field journals, then the referee's three recommendations), rebuilt by `paper/build_submission_set.py`.
 - `paper/manuscript_as_reviewed_pre_revision.pdf` — the manuscript **as reviewed** (the PRE-revision PDF the first-round referee actually read), retained only so the revision can be checked against it. **This is not the current manuscript; `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` above is.** (Renamed from the earlier, misleadingly generic `NEPSE_Volatility_Final_Manuscript.pdf` after a forensic audit found the old name being mistaken for the current file.) No PDF rendering of the current `.docx` ships in this package — this development environment has no docx-to-PDF renderer available; export one from the `.docx` before submitting to a journal.
 - `PAPER_REVISIONS.md` — **superseded**; the pre-referee revision notes, retained for provenance.
@@ -308,20 +395,21 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 - `FOURTH_ROUND_AUDIT_RESPONSE.md` — response to the 4 September independent editorial/methodological review: the Yang-Zhang mixed-previous-close defect (adopted ratio corrected 1.309 → **1.280**), and an honest triage of the remaining mandatory items.
 - `M7_ANALYSIS_PLAN.md` — the analysis plan and decision rule for the forward-looking India VIX test, **frozen before any forward result was computed**.
 - `M14_CALIBRATION_ANALYSIS_PLAN.md` / `M14_CALIBRATION_RESULTS.md` — the instrumented calibration of the daily-bar estimators (manuscript Section 6.6): plan frozen and committed before any slope was computed; results, mechanical verdicts and every post-result correction.
-- `M15_OPENING_PRICE_ANALYSIS_PLAN.md` / `M15_OPENING_PRICE_RESULTS.md` — what the opening price measures, with NEPSE's 20 April 2026 pre-open band reform as a natural experiment (manuscript Section 6.7): plan frozen and committed before any outcome statistic was computed, then the simulation checks, then the results. **Headline:** the trading session undoes 64-87% of NEPSE's overnight move (unbiasedness coefficient 0.13-0.36), an error inside each security's own auction (post hoc: NEPSE's market-wide opening move shows no detectable reversal; the NIFTY 50 index, an average like it, has b 0.93; `M-014`); the 20 April 2026 rule package, which widened the pre-open band among other changes (`M-013`), produced a sharp break, unique against 77 placebo dates; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance it assumes away.
+- `M15_OPENING_PRICE_ANALYSIS_PLAN.md` / `M15_OPENING_PRICE_RESULTS.md` — what the opening price measures, with NEPSE's 20 April 2026 rule package, which widened the pre-open band, analysed as an event (manuscript Section 6.7): plan frozen and committed before any outcome statistic was computed, then the simulation checks, then the results. **Headline:** the trading session undoes 64-87% of NEPSE's overnight move (unbiasedness coefficient 0.13-0.36), an error inside each security's own auction (post hoc: NEPSE's market-wide opening move shows no detectable reversal; the NIFTY 50 index, an average like it, has b 0.93; `M-014`); the 20 April 2026 rule package, which widened the pre-open band among other changes (`M-013`), produced a sharp break, unique against 77 placebo dates; three-quarters of Yang-Zhang's excess over close-to-close variance is the opening covariance it assumes away.
 - `M16_ANAM_ESTIMATOR_PLAN.md` / `M16_ANAM_ESTIMATOR_RESULTS.md` — **Anam's estimator** (`src/nepsevol/estimators/anam.py`), a daily-bar volatility estimator for markets whose opening price cannot be trusted: the overnight move weighted by the open's measured unbiasedness b, the range extended to the effective open, a close-to-close blend that grows as the open degrades, and calibration to close-to-close variance across the market's cross-section. Designed on NEPSE regimes A1 and B, with M15's full-sample findings already known (the plan lists them); plan frozen (commit `3296dad`; cited as `dc41f1e` in the frozen documents, see the commit map under `M-017` in `AUDIT-REGISTER.md`) before the estimator was computed on the holdout. **Holdout:** no range-based estimator has significantly lower loss on the NEPSE holdout, NIFTY 50 or the S&P 500 (where b̂ is capped at one and the estimator is exactly overnight² + Parkinson), it ranks first on NIFTY 50, and its calibrated level is within 1.1% of close-to-close where rules were stable (as any estimator's is under the same calibration; see `ANAM_RECHECK_POSTHOC.md`); but plain close-to-close beats it in the 90 sessions after NEPSE's April 2026 band reform, and three of the plan's NEPSE predictions failed. Manuscript Section 6.8.
 - `M17_ANAM_FRONTIER_PLAN.md` / `M17_ANAM_FRONTIER_RESULTS.md` — Anam's estimator, unchanged, in two more frontier markets: Bangladesh (Dhaka Stock Exchange, 2023-2026 and, with repaired dates, 2009-2021) and Vietnam (2007-2020), panels built by `src/nepsevol/frontier.py`. Plan frozen (commit `ff124bd`; cited as `db417ac`, see `M-017`) before any estimator was computed on these data. **Result:** it beats every classical range-based estimator in all three panels at both horizons (36 of 36 comparisons, under the plan's QLIKE loss) and its calibrated level is within 1% of close-to-close variance, but it does not beat plain close-to-close at 5 sessions in either primary panel and loses to it in Vietnam at 21 sessions, so the plan's summary claim G fails. Its open-free special case, a reported variant, had the lowest loss at 5 sessions in every panel (post hoc reading). The author's Dhaka file has day and month exchanged in pre-2023 dates; see the plan and `data/external/README.md`. Inputs are third-party and not packaged. Manuscript Section 6.8.
 - `M18_ANAM_MOROCCO_PLAN.md` / `M18_ANAM_MOROCCO_RESULTS.md` — both forms of Anam's estimator on the Casablanca Stock Exchange (Morocco, 77 shares, 2012-2026, data supplied by the author), with the open-free form tested as a hypothesis fixed before any return or estimator was computed on the data. Plan frozen (commit `b4de86d`). **Result:** every binding hypothesis holds. The open-free form has the lowest loss of all nine estimators at 5 and 21 sessions and beats close-to-close (t = -4.53) and the full estimator (t = -4.75) at 5; the full estimator also beats close-to-close at 5 (t = -2.06); both calibrated levels are 1.005. Manuscript Section 6.8.
-- `anam-estimator/` — **the installable package**: Anam's estimator and the `AnamModel` forecasting model, a command line, simulated data and a model card (`anam-estimator/README.md`); numpy and pandas only, installable straight from GitHub with pip. Its arithmetic is a verbatim copy of `src/nepsevol/estimators/anam.py`, and `tests/test_anam_package.py` checks that it reproduces the research code and the paper's forecasts exactly; its own tests are in `anam-estimator/tests/`.
-- `paper/theory/` — **the theory supplement**, in LaTeX: the theory section (`section_theory.tex`), Appendix B with the proofs (`appendix_proofs.tex`), the bibliography, the wrapper `theory.tex` and the compiled `theory.pdf`. Its six propositions cover:
+- `anam-estimator/` — **the installable package**: Anam's estimator and the `AnamModel` forecasting model, a command line, simulated data and a model card (`anam-estimator/README.md`); numpy and pandas only, installable straight from GitHub with pip. The estimator's arithmetic is a verbatim copy of `src/nepsevol/estimators/anam.py`. The model (version 0.2.0) uses the corrected evaluation of plan M20 through `anam_estimator.evaluation`, which the research code shares. `tests/test_anam_package.py` checks both against the research code; the package's own tests are in `anam-estimator/tests/`.
+- `paper/theory/` — **the theory supplement**, in LaTeX: the theory section (`section_theory.tex`), Appendix B with the proofs (`appendix_proofs.tex`), the bibliography, the wrapper `theory.tex` and the compiled `theory.pdf`. Its seven propositions cover:
   - identification of the open's unbiasedness coefficient b, with the sharp bound on the opening error;
   - the classical estimators' exact biases under a noisy open;
   - band censoring;
   - pooling across securities;
   - calibration lag;
-  - instrumented calibration.
+  - instrumented calibration;
+  - what Anam's kernel does with a noisy open (Proposition 7, added after the audit).
 
-  Every number is a macro in `paper/theory/generated/`, written by `scripts/45_theory_checks.py` and `scripts/46_theory_proofs.py`. The second of these verifies every step of every proof and writes one row per step to `output/tables/table124_theory_proof_steps.csv` (251 steps, 138 of them symbolic).
+  Every number is a macro in `paper/theory/generated/`, written by `scripts/45_theory_checks.py`, `scripts/46_theory_proofs.py` and `scripts/48_kernel_theory.py`. Script 46 verifies every step of every proof and writes one row per step to `output/tables/table124_theory_proof_steps.csv` (321 steps, 166 of them symbolic).
 - `M19_THEORY_CHECKS_PLAN.md` / `M19_THEORY_CHECKS_RESULTS.md` — the plan for checking the theory, frozen in its own commit before `scripts/45_theory_checks.py` existed, and its results. It sets out:
   - Part A, the propositions against simulation;
   - Part B, the applications to frozen data;
@@ -331,6 +419,10 @@ series used by M16 is read from the `arch` package (version 8.0.0).
   - All checks pass.
   - The prediction (that the open-free form gains most where a security's own open is noisiest) was not supported. It was confirmed in NEPSE and recent Dhaka data, not detected in Vietnam and Morocco, and reversed once in the repaired Dhaka panel.
   - The open-free form's lower loss always had a level component, but in most panels its forecasts also tracked better.
+- `M20_CORRECTED_EVALUATION_PLAN.md` / `M20_CORRECTED_EVALUATION_RESULTS.md` — the forecast evaluation of M16–M18 corrected after the audit of 9 October 2026, under a plan frozen before any corrected loss was computed (`scripts/47_corrected_evaluation.py`, package Tables 125–132, manuscript Table 39). The results are summarised above under "How it did out of sample". The M16–M18 entries above describe the frozen evaluation.
+- `M21_PROSPECTIVE_PLAN.md` — the prospective test. Every forecast's parameters are frozen on the current data (`scripts/50_m21_freeze.py`, package Table 136) and will be scored, unchanged, on sessions after 9 October 2026. The plan recommends lodging it with an external registry before any new data is read.
+- `ESTIMAND_NOTE.md` — the four objects the paper's claims concern: the observed-return second moment, conditional return variance, integrated variance and quadratic variation. It also says which claim concerns which.
+- `audits/` and `RESEARCH_AUDIT_RESPONSE.md` — the independent audit and publication plan of 9 October 2026, kept as received, and the answer to each finding (A01–A15). It says what was accepted, what was disputed and why, what was changed, and what needs the author.
 - `ANAM_RECHECK_POSTHOC.md` — the POST HOC recheck of every claim made for Anam's estimator, run after all M16-M18 verdicts were known (`scripts/44_anam_recheck.py`, package Tables 117-120, paper Tables 37-38): what was overstated and how it was corrected (`M-020` to `M-025`), which verdicts survive other inference, another loss function and a Holm correction, the level under a shared calibration, and the data assumptions tested. No frozen verdict changes.
 - `OPTIONAL_ITEMS_FOLLOWUP.md` — follow-up on the remaining optional items: literature-integration confirmation, the structured abstract, the master-coverage sensitivity check (Table 17), JEL/data-availability/funding/conflict-of-interest statements, and the table-header/CI-precision fixes.
 - `data/processed/` — frozen paper-facing stock-day panels in CSV format (see `data/processed/README.md`).
@@ -340,4 +432,4 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 - `src/nepsevol/` — cleaning, calendar, universe-classification, validation, and volatility-estimator code.
 - `output/tables/` and `output/figures/` — frozen outputs generated for the submitted manuscript.
 - `REPRODUCIBILITY_MAP.csv` — manuscript claim/figure/table → producer → output mapping.
-- `AUDIT-REGISTER.md` — resolves the `D-`, `A-`, `SS` and `PAP-` identifiers cited in code comments, and records every post-result correction (`M-` entries), including the map from the original commit identifiers cited in frozen documents to the current ones (`M-017`).
+- `AUDIT-REGISTER.md` — resolves the `D-`, `A-`, `SS` and `PAP-` identifiers cited in code comments, and records every post-result correction (`M-` entries, through `M-034` for the audit of 9 October 2026), including the map from the original commit identifiers cited in frozen documents to the current ones (`M-017`).

@@ -5,14 +5,16 @@ THE PROBLEM IT ADDRESSES
 Every classical daily-bar estimator treats the opening price as an efficient price. Garman-Klass and
 Rogers-Satchell anchor the session at the open; Yang-Zhang adds the squared overnight return to an
 open-anchored intraday estimate and assumes the two are independent. In the Nepal Stock Exchange the
-session undoes 64-87% of the overnight move (M15), so the open carries a large transient error. In
+pooled projection of the close-to-close return on the overnight return has slope b = 0.13-0.36 (M15): by
+that statistic, which weights days by the size of their opening move, the session reverses 64-87% of the
+overnight move, and under the model of the theory supplement the open carries a large transient error. In
 the development sample this makes overnight^2 + Parkinson overstate close-to-close variance by 39%
 (regime A1) and 65% (regime B), and the daily form of Yang-Zhang by 48% and 75% (table100); and it
 makes every open-anchored estimator a worse forecaster than Parkinson, which reads only the high and
 the low (table98). Parkinson in turn ignores overnight variance,
 carries an additive floor (bid-ask bounce, tick size, an open that sets an extreme) and collapses
-when few trades print a range. Close-to-close variance is unbiased whatever the open does, but it
-uses one price a day and is the noisiest of all.
+when few trades print a range. Close-to-close variance does not read the open, so an opening error
+cannot bias it; it still carries the errors of the close, and it uses one price a day.
 
 THE ESTIMATOR
 -------------
@@ -24,23 +26,31 @@ r = ln(C/PC), h = ln(H/PC), l = ln(L/PC) and range R = ln(H/L):
    overnight move that the session keeps (M15's central statistic). In a panel it is pooled over all
    securities and the last ``POOL_SESSIONS`` dates; for a single series it is the series' own
    trailing ``SERIES_SESSIONS`` sessions.
-2. **Effective open**: ``O* = PC exp(b o)``, the best linear predictor of the efficient opening
-   price. ``b o`` is the permanent overnight move.
-3. **Extended range**: the day's range extended to reach the effective open,
-   ``R* = R + max(0, b o - h) + max(0, l - b o)``. With b = 1 the open lies inside [L, H], so
-   R* = R (Parkinson's range); with b = 0 the anchor is the previous close and R* is Wilder's (1978)
-   true range. In between, the extension measures the part of the permanent overnight move that the
-   session never traded back through -- set by the FAR extreme, so an overshooting open cannot
-   inflate it.
+2. **Anchor**: ``PC exp(b o)``. Under the theory supplement's Assumption 1, ``b o`` is the best
+   through-origin linear predictor of the efficient overnight LOG move given the printed one: a shrinkage
+   predictor, not the permanent move itself, and ``PC exp(b o)`` is the anchor price it implies, not a
+   predictor of the efficient opening price (audit item A04, 9 October 2026).
+3. **Extended range**: the day's range extended to reach the anchor,
+   ``R* = R + max(0, b o - h) + max(0, l - b o) = max(h, b o) - min(l, b o)``. With b = 1 the open lies
+   inside [L, H], so R* = R (Parkinson's range); with b = 0 the anchor is the previous close and R* is
+   Wilder's (1978) true range; R <= R* <= TR in between. The extension moves the anchor, never the
+   extremes: an opening print that sets the high or the low stays in R*, and so in the kernel. (An
+   earlier version said "an overshooting open cannot inflate it", true only of the extension term with
+   the high and low held fixed; audit item A05. Proposition 7 of the theory supplement measures how much
+   of the opening error's variance each form absorbs.)
 4. **Daily kernel**:
    ``A = (1 - w) [ (b o)^2 + R*^2 / (4 ln 2) ] + w r^2``,  ``w = LAMBDA0 (1 - b)``.
-   The permanent overnight move enters squared; the extended range enters with Parkinson's constant;
-   the close-to-close return is blended in exactly in proportion to how unreliable the open is.
-   A >= 0 always.
+   The shrunk overnight move enters squared; the extended range enters with Parkinson's constant;
+   the close-to-close return is blended in in proportion to 1 - b. A >= 0 always. The overnight term
+   has expectation b^2 E[o^2], the lower end of the identified set for the efficient overnight second
+   moment: under an opening error uncorrelated with the news it carries only the fraction b of that
+   moment (theory supplement, Proposition 7(a)). The construction is a heuristic, not an unbiased
+   estimator of any component; the calibration below sets its overall level.
 5. **Market calibration** ``kappa``: the trailing ratio ``sum(r^2) / sum(A)``, pooled over the
    cross-section in a panel (``POOL_SESSIONS`` dates) or over the series' own history. The window
-   estimate is ``sigma^2 = kappa * mean(A over the window)``: the LEVEL comes from close-to-close
-   variance, which no opening error can bias, and the DYNAMICS from the range, which is precise.
+   estimate is ``sigma^2 = kappa_t * mean(A over the window)`` (the calibration of the window's last
+   session applied to the whole window): the LEVEL comes from close-to-close variance, which no
+   opening error can bias (closing errors still enter it), and the DYNAMICS from the range.
 
 Special cases: b = 1 gives kappa * (o^2 + Parkinson) -- the overnight-plus-Parkinson estimator of a
 market with a clean open. b = 0 gives kappa * (0.8 true-range Parkinson + 0.2 r^2) -- a market whose
@@ -66,8 +76,11 @@ In a perfectly clean, continuous market the estimator reduces to overnight^2 + P
 efficient than open-anchored Garman-Klass; that is the price of not trusting the open, and it is
 reported, not hidden.
 
-The constants (LAMBDA0, POOL_SESSIONS, SERIES_SESSIONS) were chosen on the development sample only
-and frozen in ``M16_ANAM_ESTIMATOR_PLAN.md`` before any holdout data were read.
+The constants (LAMBDA0, POOL_SESSIONS, SERIES_SESSIONS) were chosen on the development sample and
+frozen in ``M16_ANAM_ESTIMATOR_PLAN.md`` before the estimator was computed on the holdout. The holdout
+was not unseen: M15's findings, which informed the design, use the whole NEPSE sample, as the plan
+discloses (an earlier version of this docstring said "before any holdout data were read"; audit item
+A12, and M-020 for the same wording in the manuscript).
 """
 
 from __future__ import annotations

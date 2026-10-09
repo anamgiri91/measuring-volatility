@@ -996,6 +996,45 @@ pd.DataFrame(_t38, columns=[
 ]).to_csv(TAB / "paper_table38_anam_level_same_calibration.csv", index=False)
 print("wrote paper_table37, paper_table38 (post hoc recheck)")
 
+# ─────────────────────────── Manuscript Table 39: the corrected forecast evaluation (plan M20)
+# Plan M20 was frozen after the 9 October 2026 audit and before any corrected loss was computed
+# (scripts/47). One row per test sample's primary span and horizon: each form against close-to-close,
+# the Holm-adjusted p of Rule B3 (5 sessions only), Rule B1's best return-only and range-based forecasts
+# (chosen on the training span) with the t of their test-loss difference, the lowest test loss of the 17,
+# and membership of the 90% model confidence set (Rule B2).
+_c127 = pd.read_csv(TAB / "table127_m20_comparison.csv")
+_c128 = pd.read_csv(TAB / "table128_m20_mcs.csv")
+_c129 = pd.read_csv(TAB / "table129_m20_claims.csv")
+_M20NAME = {"CC": "close-to-close", "EWMA": "EWMA", "GARCH": "GARCH", "GJR": "GJR-GARCH", "HAR-CC": "HAR on r²",
+            "P": "Parkinson", "GK": "Garman-Klass", "RS": "Rogers-Satchell", "o2+P": "overnight² + Parkinson",
+            "o2+GK": "overnight² + Garman-Klass", "YZ (daily form)": "Yang-Zhang (daily form)", "Anam": "Anam",
+            _VAR: "Anam, open-free form", "TR-P": "true-range Parkinson", "HAR-open-free": "HAR on the open-free kernel",
+            "Anam posterior (exploratory)": "Anam, posterior overnight term", "1/2 CC + 1/2 open-free": "½ close-to-close + ½ open-free"}
+_t39 = []
+for _lab, _plan, _fr, _mk, _sp in _SAMPLES:
+    for _w in (5, 21):
+        _g = _c127[(_c127.market == _mk) & (_c127.span == _sp) & (_c127.window == _w)].set_index("model")
+        _b1 = _c129[(_c129.rule == "B1") & (_c129.market == _mk) & (_c129.span == _sp) & (_c129.window == _w)].iloc[0]
+        _gstar, _rstar = [x.split("=")[1].strip() for x in _b1["detail"].split(";")]
+        _holm = "-"
+        if _w == 5:
+            _b3 = _c129[(_c129.rule == "B3") & (_c129.market == _mk) & (_c129.span == _sp)]
+            _pa = _b3[_b3.detail.str.startswith("Anam beats")].p_holm.iloc[0]
+            _po = _b3[_b3.detail.str.startswith(_VAR)].p_holm.iloc[0]
+            _holm = f"{_pa:.3f} / {_po:.3f}"
+        _m = _c128[(_c128.market == _mk) & (_c128.span == _sp) & (_c128.window == _w)].set_index("model")
+        _in = " / ".join("yes" if bool(_m.loc[k, "in_mcs_90"]) else "no" for k in ("CC", "Anam", _VAR, "HAR-open-free"))
+        _t39.append([_lab, _w, f"{_g.loc['Anam', 't_vs_CC']:+.2f}", f"{_g.loc[_VAR, 't_vs_CC']:+.2f}", _holm,
+                     _M20NAME[_rstar], _M20NAME[_gstar], f"{_b1['t']:+.2f} ({_b1['verdict']})",
+                     _M20NAME[_m["loss"].idxmin()], _in])
+pd.DataFrame(_t39, columns=[
+    "Test sample", "Horizon (sessions)", "Anam minus close-to-close: t", "Open-free form minus close-to-close: t",
+    "Holm p, beats close-to-close (Anam / open-free)", "Best return-only (training)", "Best range-based (training)",
+    "Range-based minus return-only: t (verdict)", "Lowest test loss of 17",
+    "In the 90% confidence set (close-to-close / Anam / open-free / HAR on open-free)",
+]).to_csv(TAB / "paper_table39_m20_corrected.csv", index=False)
+print("wrote paper_table39 (the corrected evaluation, plan M20)")
+
 checks += [
     ["M16_holdout_verdicts", "; ".join(f"{r.rule} {r.market} {r.verdict}" for r in _d105[_d105.rule != "rival"].itertuples()),
      "verdict", "40_anam_holdout.py"],
@@ -1013,6 +1052,12 @@ checks += [
      "one-sided p", "44_anam_recheck.py"],
     ["Posthoc_recheck_level_same_calibration_six_classical", "; ".join(f"{row[0]} {row[7]}" for row in _t38), "ratio",
      "44_anam_recheck.py"],
+    ["M20_forms_minus_CC_t_corrected", "; ".join(f"{row[0]} h={row[1]} {row[2]} / {row[3]}" for row in _t39), "t",
+     "47_corrected_evaluation.py"],
+    ["M20_rule_B1_range_against_returns", "; ".join(f"{row[0]} h={row[1]} {row[7]}" for row in _t39), "t (verdict)",
+     "47_corrected_evaluation.py"],
+    ["M20_rule_B3_Holm_p_5_sessions", "; ".join(f"{row[0]} {row[4]}" for row in _t39 if row[1] == 5), "one-sided p",
+     "47_corrected_evaluation.py"],
 ]
 
 pd.DataFrame(checks, columns=["Result", "Value", "Scale", "Producer"]).to_csv(

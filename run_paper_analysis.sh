@@ -4,6 +4,13 @@ set -euo pipefail
 cd "$(dirname "$0")"
 mkdir -p output/tables output/figures
 
+# Every analysis that runs, and every one that is skipped, is recorded in output/run_status.json, which
+# build_manifest.py copies into the manifest. A run without the third-party frontier inputs is a PARTIAL
+# reproduction: the analyses that need them are skipped and their committed tables are reused, not
+# regenerated (audit item A10, 9 October 2026).
+RAN=()
+SKIPPED=()
+
 # Order matters. 27 validates the instrument classification against the external security
 # master and must run BEFORE 03, because 03 writes the analysis and equity samples and the
 # classification decides which securities are in the ordinary-equity universe. 25 runs last:
@@ -44,37 +51,73 @@ for script in \
 do
   echo "===== scripts/${script} ====="
   python "scripts/${script}"
+  RAN+=("${script}")
   if [ "${script}" = "41_anam_posthoc.py" ]; then
-    # M17 and M18, the post hoc recheck of M16-M18 (script 44) and the theory checks (script 45, whose
-    # Part C reads the frontier panels) read third-party inputs that are not packaged
-    # (data/external/README.md); their frozen tables 107-123 are shipped, so the run
-    # continues without them.
+    # M17 and M18, the post hoc recheck of M16-M18 (script 44), the theory checks (script 45, whose
+    # Part C reads the frontier panels), the corrected evaluation of plan M20 (script 47, four of whose
+    # seven samples are frontier panels), the checks of Proposition 7 (script 48, whose Part C reads
+    # the frontier panels), the M21 parameter freeze (script 50, which never overwrites the frozen
+    # table: it reports whether it reproduces it) and the post hoc residue check of the frozen tables
+    # (script 51) read third-party inputs that are not packaged (data/external/README.md).
+    # Their committed tables are shipped, so the run continues without them, as a partial reproduction.
+    OPTIONAL=(42_anam_frontier.py 43_anam_morocco.py 44_anam_recheck.py 45_theory_checks.py
+              47_corrected_evaluation.py 48_kernel_theory.py 50_m21_freeze.py 51_frozen_residue_check.py)
     if [ -d data/external/frontier ]; then
       for optional in \
         42_anam_frontier.py \
         43_anam_morocco.py \
         44_anam_recheck.py \
-        45_theory_checks.py
+        45_theory_checks.py \
+        47_corrected_evaluation.py \
+        48_kernel_theory.py \
+        50_m21_freeze.py \
+        51_frozen_residue_check.py
       do
         echo "===== scripts/${optional} ====="
         python "scripts/${optional}"
+        RAN+=("${optional}")
       done
     else
-      echo "===== scripts/42_anam_frontier.py, 43_anam_morocco.py, 44_anam_recheck.py and 45_theory_checks.py skipped: data/external/frontier/ not present ====="
+      echo "===== SKIPPED (data/external/frontier/ not present): ${OPTIONAL[*]} ====="
+      SKIPPED+=("${OPTIONAL[@]}")
     fi
-    # the step-by-step verification of the theory's proofs reads script 45's committed outputs
-    # and the NEPSE sample only, so it always runs
+    # the step-by-step verification of the theory's proofs reads the committed outputs of scripts 45 and
+    # 48 and the NEPSE sample only, and the audit sensitivities read the NEPSE sample only, so both always run
     for always in \
-      46_theory_proofs.py
+      46_theory_proofs.py \
+      49_audit_sensitivities.py
     do
       echo "===== scripts/${always} ====="
       python "scripts/${always}"
+      RAN+=("${always}")
     done
   fi
 done
 
 echo "===== tests ====="
 pytest -q
+
+echo "===== record what ran ====="
+python - "${#SKIPPED[@]}" "${RAN[@]}" -- ${SKIPPED[@]+"${SKIPPED[@]}"} <<'PY'
+import json, subprocess, sys
+from datetime import datetime, timezone
+n_skipped = int(sys.argv[1])
+rest = sys.argv[2:]
+cut = rest.index("--")
+ran, skipped = rest[:cut], [x for x in rest[cut + 1:] if x]
+try:
+    head = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip() or None
+except Exception:
+    head = None
+status = {"finished_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "git_head": head,
+          "python": sys.version.split()[0], "status": "complete" if not skipped else "partial",
+          "ran": ran, "skipped": skipped,
+          "skipped_reason": "data/external/frontier/ not present" if skipped else None,
+          "note": ("Skipped analyses were not regenerated: their committed tables are reused as shipped."
+                   if skipped else "Every producer script ran.")}
+open("output/run_status.json", "w").write(json.dumps(status, indent=2) + "\n")
+print(f"output/run_status.json: {status['status']}; {len(ran)} ran, {len(skipped)} skipped")
+PY
 
 echo "===== refresh submission manifest ====="
 # FORENSIC-AUDIT FOLLOW-UP (2026-09-03). Every step above can change a hashed artifact
@@ -85,4 +128,8 @@ echo "===== refresh submission manifest ====="
 # that have nothing to do with data integrity. This must be the LAST write of the run.
 python build_manifest.py
 
-echo "Paper-facing reproduction completed successfully."
+if [ "${#SKIPPED[@]}" -gt 0 ]; then
+  echo "PARTIAL reproduction: ${#SKIPPED[@]} analyses were skipped for want of data/external/frontier/ (${SKIPPED[*]}); their committed tables were reused, not regenerated."
+else
+  echo "Paper-facing reproduction completed: every producer script ran."
+fi

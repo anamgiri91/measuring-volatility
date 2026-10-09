@@ -1,12 +1,25 @@
-"""A fair forecast comparison of daily volatility estimators against close-to-close realised variance.
+"""The forecast comparison of plans M16-M18, FROZEN: kept unchanged so that tables 101, 108 and 113 stay
+reproducible. Superseded by ``anam_estimator.evaluation`` and ``scripts/47_corrected_evaluation.py``
+(plan M20), which correct four defects an independent audit found here on 9 October 2026:
+
+* the training mask applies to the forecast ORIGIN only, so training targets run into the test span
+  (audit item A01);
+* a target of ``win`` sessions is the next ``win`` retained ROWS, stitched across sessions a security
+  did not trade (A02);
+* zero targets are dropped, and a phi above one can turn a forecast negative and be scored on fewer
+  origins (A08);
+* the reported mean difference weights stock-days, its t statistic dates (A09).
 
 WHY THIS TEST, AND WHY IN THIS FORM
 -----------------------------------
 Latent variance is unobserved, so estimators are compared by how well each forecasts a common,
-conditionally unbiased target: the mean squared close-to-close return over the next ``win``
-sessions. Under QLIKE loss the ranking with such a noisy target matches the ranking with the true
-variance (Patton 2011, J. Econometrics 160). Three choices keep the comparison about MEASUREMENT
-rather than about forecasting models:
+observable target: the mean squared close-to-close return over the next ``win`` sessions. Under QLIKE
+loss the ranking with this target matches the ranking by the target's CONDITIONAL MEAN, the conditional
+second moment of observed returns (Patton 2011, J. Econometrics 160). That is not latent integrated
+variance: squared observed returns also carry the squared drift and closing-price errors
+(``ESTIMAND_NOTE.md``; an earlier version said the ranking "matches the ranking with the true variance",
+audit item A03). Three choices keep the comparison about MEASUREMENT rather than about forecasting
+models:
 
 * every estimator is put on the close-to-close scale by the SAME calibration scheme (``kappa``:
   a trailing ratio sum(r^2)/sum(X), pooled across the cross-section or from a series' own history),

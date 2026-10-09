@@ -9,14 +9,15 @@ here; the original stock-level NEPSE downloads that produced them are not redist
 | File | Rows | Read by |
 |---|---|---|
 | `panel_trades_clean.csv` | 184,430 | `03_descriptive.py` — the cleaned trading panel, before the analysis screens |
-| `analysis_sample.csv` | 184,390 | pooled universe, all instrument types (`load_sample(..., "full")`) |
+| `analysis_sample.csv` | 184,391 | pooled universe, all instrument types (`load_sample(..., "full")`) |
 | `equity_sample.csv` | 143,718 | ordinary equity only, the primary estimation universe (`load_sample(..., "equity")`) |
 | `nepse_trading_calendar.csv` | 890 dates, 569 sessions | `26_robustness.py` — derives the annualisation factor A |
 
 `analysis_sample.csv` is `panel_trades_clean.csv` after the Section 3 screens (positivity,
-`|ln(C/C_prev)| < 0.5`, and the rules-derived feasible-range ceiling). The 40-row difference is
+`|ln(C/C_prev)| < 0.5`, and the rules-derived feasible-range ceiling). The 39-row difference is
 4 rows failing the range ceiling plus rows lost to the return and positivity filters; one
-security (`ADBLB`) drops out entirely.
+security (`ADBLB`) drops out entirely. (Earlier versions of this file said 184,390 rows and a
+40-row difference; the shipped file has 184,391 rows, as the audit of 9 October 2026 found.)
 
 `ADBLB` is worth naming, because the classification audit added in this revision explains it.
 It is the **4% Agricultural Bond**, which the ticker-convention rule read as ordinary equity

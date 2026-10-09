@@ -61,9 +61,23 @@ def pytest_result() -> str:
     return "unknown"
 
 
+def run_status():
+    """The status run_paper_analysis.sh recorded on its last complete pass, or a statement that none exists."""
+    f = ROOT / "output" / "run_status.json"
+    if not f.exists():
+        return ("no run of run_paper_analysis.sh has written output/run_status.json; the runner records one "
+                "from round 19 on (audit item A10)")
+    return json.loads(f.read_text())
+
+
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "18 (round 18: every step of every proof in the theory supplement verified by "
+    "revision": "19 (round 19: the independent audit of 9 October 2026 answered point by point "
+                "(RESEARCH_AUDIT_RESPONSE.md); the forecast evaluation corrected under plan M20, frozen before it "
+                "was run, with return-only forecasts, ablations and a model confidence set (manuscript Table 39); "
+                "plan M21's prospective test frozen; Proposition 7 added to the theory supplement; the overstated "
+                "claims corrected (AUDIT-REGISTER M-028 to M-034); "
+                "round 18: every step of every proof in the theory supplement verified by "
                 "scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the "
                 "precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their "
                 "proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of "
@@ -91,7 +105,12 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round18_revisions.py, in order",
+                          "through paper/apply_round19_revisions.py, in order",
+        "canonical_source": "The .docx above is the canonical editable manuscript. The revision scripts record "
+                            "every edit and the checks behind it, starting from a pre-revision draft that is not "
+                            "distributed (the --base of paper/apply_referee_revisions.py), so they document the revision rather than "
+                            "rebuild "
+                            "the file from nothing (audit item A14).",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -104,8 +123,13 @@ manifest = {
     },
     "validation": {
         "pytest": pytest_result(),
-        "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference "
-                                 "environment (earlier rounds)",
+        "paper_facing_pipeline": run_status(),
+        "round_19_runs": "Run individually in round 19 on Python 3.13 / x86-64 Linux, with the third-party "
+                         "inputs present: scripts 46, 47 (plan M20, all seven samples), 48, 49, 50, 51 and 25, "
+                         "then paper/apply_round19_revisions.py. Script 47 asserts that its step S0 reproduces "
+                         "the frozen tables 101, 108 and 113, and script 51 that its frozen run does. The full "
+                         "runner was not rerun end to end in round 19; 'paper_facing_pipeline' records the last "
+                         "run that wrote output/run_status.json, if any.",
         "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites "
                           "the build manifest's provenance) was rerun in a clean copy on Python "
                           "3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-"
@@ -230,11 +254,44 @@ manifest = {
         "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
         "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
     },
+    "revision_19_changes": {
+        "audit": "audits/2026-10-09_research_audit.md and audits/2026-10-09_publication_plan.md (as received); "
+                 "RESEARCH_AUDIT_RESPONSE.md answers A01-A15: twelve accepted, three accepted in part with the "
+                 "disputed part argued (A02 features, A09 parameter uncertainty, A13 importance)",
+        "corrected_evaluation": {
+            "plan": "M20_CORRECTED_EVALUATION_PLAN.md (frozen in commit 984dfbc before any corrected loss was computed)",
+            "script": "scripts/47_corrected_evaluation.py; shared module anam_estimator.evaluation",
+            "outputs": "output/tables/table125-132; manuscript Table 39 (output/tables/paper_table39_m20_corrected.csv)",
+            "results": "M20_CORRECTED_EVALUATION_RESULTS.md",
+            "result": "47 of 288 frozen per-rival verdicts change. A classical range estimator beats the full form "
+                      "in 1 of 84 primary comparisons and the open-free form in none. After Holm, the open-free form "
+                      "beats close-to-close at 5 sessions in 6 of 7 samples and the full form in 3. The best "
+                      "range-based forecast beats the best return-only forecast in Dhaka 2009-2021 and Morocco only; "
+                      "returns suffice in Dhaka 2023-2026 and after NEPSE's reform. HAR on the open-free kernel has "
+                      "the lowest test loss in 10 of 14 cells and, with GJR-GARCH, is in every 90% model confidence set.",
+        },
+        "prospective_test": "M21_PROSPECTIVE_PLAN.md; parameters frozen by scripts/50_m21_freeze.py in "
+                            "output/tables/table136_m21_frozen_parameters.csv (SHA-256 recorded in the plan)",
+        "theory": "Proposition 7 (paper/theory/section_theory.tex; proof B.7): what Anam's kernel does with a noisy "
+                  "open; scripts/48_kernel_theory.py (63 checks, table133-134); scripts/46_theory_proofs.py now "
+                  "321 steps, 166 symbolic",
+        "post_hoc": "scripts/49_audit_sensitivities.py (table135: weight floor, robust first stage, corporate-action "
+                    "tolerance, row counts); scripts/51_frozen_residue_check.py (table137: floating-point residues "
+                    "in the frozen tables)",
+        "corrections": "AUDIT-REGISTER.md M-028 to M-034",
+        "new_scripts": ["scripts/47_corrected_evaluation.py", "scripts/48_kernel_theory.py",
+                        "scripts/49_audit_sensitivities.py", "scripts/50_m21_freeze.py",
+                        "scripts/51_frozen_residue_check.py", "paper/apply_round19_revisions.py"],
+        "new_tests": ["anam-estimator/tests/test_evaluation.py", "tests/test_forecast_baselines.py",
+                      "tests/test_round19_revisions.py"],
+        "new_documents": ["RESEARCH_AUDIT_RESPONSE.md", "ESTIMAND_NOTE.md", "M20_CORRECTED_EVALUATION_PLAN.md",
+                          "M20_CORRECTED_EVALUATION_RESULTS.md", "M21_PROSPECTIVE_PLAN.md", "audits/"],
+    },
     "revision_18_changes": {
         "proof_steps": {
             "script": "scripts/46_theory_proofs.py",
             "outputs": "output/tables/table124_theory_proof_steps.csv; paper/theory/generated/proofs.tex and tab_proofs.tex "
-                       "(the supplement's Table 5)",
+                       "(the supplement's Table 5 then, Table 6 since Proposition 7 was added in round 19)",
             "result": "251 steps, all passing: every part of every proposition and every step of every proof in the "
                       "theory supplement, and the paper's own mathematical claims (the Yang-Zhang identity, the "
                       "non-negativity of Garman-Klass, the special cases of Anam's kernel, the old and corrected "
@@ -277,18 +334,22 @@ manifest = {
                    "#subdirectory=anam-estimator\"",
         "contents": "anam_estimator() (the estimate on every bar), AnamModel (fit, forecast, backtest, score, "
                     "save/load), a command line, simulate_bars(); depends on numpy and pandas only",
-        "verified": "its arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py; "
-                    "tests/test_anam_package.py checks that it equals the research module on every NEPSE "
-                    "stock-day and both indices and that its forecasts equal the paper's forecast test origin "
-                    "by origin; anam-estimator/tests holds the package's own tests",
+        "tested": "its estimator's arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py, and "
+                  "tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day "
+                  "and both indices; since version 0.2.0 its forecasting model uses the corrected evaluation of "
+                  "plan M20 (anam_estimator.evaluation), and the same test checks it origin by origin against the "
+                  "research code's single-model corrected evaluation; anam-estimator/tests holds the package's "
+                  "own tests",
     },
     "revision_14_changes": {
         "M14_instrumented_calibration": {
             "plan": "M14_CALIBRATION_ANALYSIS_PLAN.md (frozen before any slope was computed)",
             "results": "M14_CALIBRATION_RESULTS.md; output/tables/table74-88; manuscript Section 6.6, "
                        "Table 29, Figure 7",
-            "result": "Range estimators' near-unit ratios are calibration (Parkinson slope 0.919 "
-                      "[0.760, 1.056]); AddRS and the VWAP estimator are amplified; the "
+            "result": "A unit calibration slope is not rejected for the range estimators (Parkinson 0.919 "
+                      "[0.760, 1.056]), under instruments whose validity is assumed (two-way clustered "
+                      "effective F 19.4 for the primary instruments, 29.9 for those dated two sessions back; "
+                      "post hoc, AUDIT-REGISTER M-030); AddRS and the VWAP estimator are amplified; the "
                       "liquidity-gradient, closing-rule and band-slope predictions were not detected.",
         },
         "M15_opening_price": {

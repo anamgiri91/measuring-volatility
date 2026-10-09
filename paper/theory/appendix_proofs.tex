@@ -1,4 +1,4 @@
-% Appendix B: proofs of Propositions 1-6.
+% Appendix B: proofs of Propositions 1-7.
 \section{Proofs}\label{app:proofs}
 
 All moments are raw, $\Phi$ and $\phi$ are the standard normal distribution and density, and
@@ -348,3 +348,110 @@ the Sherman--Morrison formula,
   \Sigma_X^{-1}\beta=\frac{\Omega_U^{-1}\beta}{1+\Var(IV)\,\beta'\Omega_U^{-1}\beta}\propto\Omega_U^{-1}\beta.
 \]
 Equivalently, under the constraint, $w'\Sigma_Xw=\Var(IV)+w'\Omega_Uw$. \qed
+
+\subsection*{B.7 Proof of Proposition~\ref{prop:kernel}}
+
+\emph{(a)} By Proposition~\ref{prop:ident}(a), $\E[o\os]=b\E[o^2]$. Hence
+\[
+  \E[(\os-b\,o)^2]=\E[\os^2]-2b\E[o\os]+b^2\E[o^2]=\E[\os^2]-b^2\E[o^2],
+\]
+which is the identity. The deficit is zero if and only if $\os=b\,o$ almost surely.
+\begin{itemize}
+  \item If $\E[\os\eta]=0$, then $\E[o\os]=\E[\os^2]$, so $b\E[o^2]=\E[\os^2]$ and
+        $b^2\E[o^2]=b\E[\os^2]$. Also $\E[\pi(o)]=b^2\E[o^2]+b(1-b)\E[o^2]=b\E[o^2]=\E[\os^2]$.
+  \item If, in addition, $(\os,\eta)$ is centred Gaussian, then so is $(\os,o)$. Hence
+        $\E[\os\mid o]=b\,o$, and $\Var(\os\mid o)=\E[\os^2]-b^2\E[o^2]=b(1-b)\E[o^2]$ is constant.
+        So $\E[\os^2\mid o]=b^2o^2+b(1-b)\E[o^2]=\pi(o)$.
+  \item The last statement is Proposition~\ref{prop:ident}(e). The deficit
+        $\E[\os^2]-b^2\E[o^2]$ takes every value in $[0,\E[r^2]-b^2\E[o^2]]$ as $\E[\os^2]$ ranges
+        over the identified set.
+\end{itemize}
+
+\emph{(b)} The open lies in $[l,h]$ and the previous close is the point $0$. There are three cases:
+\begin{itemize}
+  \item if $b\,o\in[l,h]$, both extensions vanish and $R^*=h-l$;
+  \item if $b\,o>h$, then $R^*=h-l+(b\,o-h)=b\,o-l$;
+  \item if $b\,o<l$, then $R^*=h-b\,o$.
+\end{itemize}
+In each case $R^*=\max(h,b\,o)-\min(l,b\,o)$, the range of the set $\{l,h,b\,o\}$. For
+$b\in[0,1]$, $b\,o$ is a convex combination of $0$ and $o\in[l,h]$. So $\{l,h,b\,o\}$ lies in the
+interval spanned by $\{l,h,0\}$, whose length is $TR$; and it contains $\{l,h\}$, whose span is $R$.
+At $b=1$, $b\,o=o\in[l,h]$. In the example, $h=\ln(O/C_{-})$, $l=r=0$ and $b=0$, so
+$R^*=TR=h$ and $A_0=(1-\lambda_0)h^2/(4\ln2)$.
+
+\emph{(c), the true range.} Take $\sigma_c=1$. Measured from $C_{-}$, the printed high and low are
+$h=\os+\max(\eta,M)$ and $l=\os+\min(\eta,m)$. Without the error they are $h_e=\os+M$ and
+$l_e=\os+m$. Write $x^+=\max(x,0)$ and $x^-=\max(-x,0)$. Then $TR=h^++l^-$, so
+$TR-TR_e=\delta^++\delta^-$, where $\delta^+=h^+-h_e^+\ge0$ and $\delta^-=l^--l_e^-\ge0$. Hence
+\[
+  TR^2-TR_e^2=2\,TR_e(\delta^++\delta^-)+(\delta^++\delta^-)^2.
+\]
+The second term is at most $\eta^2\ind\{M<|\eta|\}$ or $\eta^2\ind\{-m<|\eta|\}$. Since
+$P(M<x)\le\sqrt{2/\pi}\,x$, its expectation is $O(\rho^3)$.
+
+Now $\delta^+>0$ requires $\eta>M$. There are two cases.
+\begin{itemize}
+  \item On $\{\os>0\}$, $\delta^+=(\eta-M)^+$.
+  \item On $\{\os\le0\}$, $\delta^+\le\eta^+\ind\{|\os|<\eta\}$. The probability that $|\os|<\eta$
+        and $M<\eta$, given $\eta$, is $O(\eta^2)$, so this case contributes $O(\rho^3)$.
+\end{itemize}
+Conditioning on $\eta=e>0$, for small $e$,
+\begin{align*}
+  \E[TR_e\,(e-M)^+\ind\{\os>0\}]&=\int_0^e(e-x)\,\E[TR_e\ind\{\os>0\}\mid M=x]\,f_M(x)\,dx\\
+  &=\tfrac{e^2}{2}f_M(0)\,\E[TR_e\ind\{\os>0\}\mid M=0^+]\{1+o(1)\},
+\end{align*}
+with $f_M(0)=\sqrt{2/\pi}$. Conditional on $M=0^+$:
+\begin{itemize}
+  \item the path $-W$ is a Brownian meander \citep{DurrettIglehartMiller1977}, so $-m$ has the law
+        of its maximum $U$, independent of $\os$;
+  \item on $\{\os>0\}$, $TR_e=\os-\min(\os+m,0)=\max(\os,-m)$.
+\end{itemize}
+Integrating over $\eta$, with $\E[(\eta^+)^2]=\rho^2/2$, and adding the mirror image $\delta^-$
+under $(W,\eta,\os)\mapsto(-W,-\eta,-\os)$, gives
+\[
+  \E[TR^2-TR_e^2]=\frac{2\rho^2}{\sqrt{2\pi}}\,\E[\max(\os,U)\ind\{\os>0\}]+o(\rho^2).
+\]
+Dominated convergence applies as in the small-error limit of B.2(c). Next,
+\[
+  \E[\max(\os,U)\ind\{\os>0\}]=\tfrac12\E[U]+\E[(\os-U)^+]=\tfrac12\sqrt{2\pi}\ln2+s\,\E[\psi(U/s)].
+\]
+This uses $\E[(sZ-u)^+]=s\psi(u/s)$ for $u\ge0$, and $\E[U]=\sqrt{2\pi}\ln2$. The mean follows from
+the law of $U$ \citep{DurrettIglehart1977}:
+\[
+  \E[U]=\int_0^\infty P(U>u)\,du=2\sqrt{\pi/2}\sum_{k\ge1}\frac{(-1)^{k+1}}{k}=\sqrt{2\pi}\ln2.
+\]
+Dividing by $4\ln2$ gives~\eqref{eq:gammaTR}.
+
+\emph{(c), the properties of $\gamma_{TR}$.}
+\begin{itemize}
+  \item \emph{Monotone.} Since $\psi'(a)=-\Phibar(a)$,
+        $\tfrac{d}{ds}\{s\psi(u/s)\}=\psi(u/s)+(u/s)\Phibar(u/s)=\phi(u/s)>0$.
+  \item \emph{Upper bound.} $0\le\psi(a)\le\psi(0)=1/\sqrt{2\pi}$ gives
+        $\tfrac14\le\gamma_{TR}(s)\le\tfrac14+s/(4\pi\ln2)$.
+  \item \emph{Lower bound.} Since $\Phibar\le\tfrac12$ on $[0,\infty)$,
+        $\psi(a)\ge1/\sqrt{2\pi}-a/2$. So $s\E[\psi(U/s)]\ge s/\sqrt{2\pi}-\tfrac12\E[U]$, and hence
+        $\gamma_{TR}(s)\ge s/(4\pi\ln2)$.
+  \item \emph{Limits.} As $s\to0$, $s\psi(U/s)\le s/\sqrt{2\pi}\to0$. As $s\to\infty$,
+        $0\le s\psi(U/s)-s/\sqrt{2\pi}+U/2=s\int_0^{U/s}\{\Phi(z)-\tfrac12\}dz\le\phi(0)U^2/(2s)$,
+        using $\Phi(z)-\tfrac12\le z\phi(0)$. The bound tends to zero because $\E[U^2]<\infty$.
+\end{itemize}
+
+\emph{(c), the kernels.} Under Assumption~\ref{as:path} the close carries no error, so $\lambda_0r^2$
+is the same with and without it, and $A_0$ has loading $(1-\lambda_0)\gamma_{TR}(s)$.
+
+For the full kernel:
+\begin{itemize}
+  \item $b=s^2/(s^2+\rho^2)=1-\rho^2/s^2+O(\rho^4)$ and $w=\lambda_0\rho^2/s^2+O(\rho^4)$;
+  \item $\E[(b\,o)^2]=b^2(s^2+\rho^2)=s^2-\rho^2+O(\rho^4)$.
+\end{itemize}
+The anchor $b\,o$ lies within $(1-b)|o|=O(\rho^2)|o|$ of the printed open. So $R^*\neq R$ only if the
+open is an extreme or within that distance of one, an event of probability $O(\rho)$, and there
+$R^*-R=O(\rho^2)|o|$. Hence $\E[R^{*2}-R^2]=O(\rho^3)$, and $\E[R^{*2}]/(4\ln2)=1+\tfrac12\rho^2+o(\rho^2)$
+by Proposition~\ref{prop:classical}(c). With $\E[r^2]=s^2+1$,
+\[
+  \E[A]=(1-w)\bigl(s^2-\rho^2+1+\tfrac12\rho^2\bigr)+w(s^2+1)+o(\rho^2)=s^2+1-\tfrac12\rho^2+o(\rho^2).
+\]
+At $\sigma_\eta=0$, $A=\os^2+(M-m)^2/(4\ln2)$, with mean $s^2+1$. So the loading is $-\tfrac12$. With
+$\pi(o)$ in place of $(b\,o)^2$, $\E[\pi(o)]=s^2$ exactly by~(a). The same steps then give
+$s^2+1+\tfrac12\rho^2+o(\rho^2)$, a loading of $+\tfrac12$. \qed
+

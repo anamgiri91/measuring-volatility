@@ -1,4 +1,5 @@
-"""The theory supplement (paper/theory/) and its checks (plan M19, scripts/45_theory_checks.py).
+"""The theory supplement (paper/theory/) and its checks (plan M19, scripts/45_theory_checks.py; Proposition 7,
+added after the 9 October 2026 audit, scripts/48_kernel_theory.py).
 
 The full check run takes minutes, and its Part C needs the third-party frontier inputs. These tests
 therefore read the committed outputs. They also re-verify the inexpensive closed forms directly, and
@@ -38,7 +39,7 @@ def numbers() -> dict[str, str]:
     """The generated macros: script 45's numbers and script 46's step counts."""
     pat = re.compile(r"\\csname thn@(.+?)\\endcsname\{(.*)\}$")
     out = {}
-    for f in ("numbers.tex", "proofs.tex"):
+    for f in ("numbers.tex", "proofs.tex", "kernel.tex"):
         for line in (GEN / f).read_text().splitlines():
             m = pat.search(line)
             if m:
@@ -104,7 +105,8 @@ def test_every_number_the_latex_quotes_is_defined():
     assert used, "the LaTeX quotes no generated numbers"
     missing = sorted(used - set(defined))
     assert not missing, f"undefined generated numbers: {missing}"
-    for frag in ("tab_bounds.tex", "tab_censoring.tex", "tab_checks.tex", "tab_pooling.tex", "tab_proofs.tex"):
+    for frag in ("tab_bounds.tex", "tab_censoring.tex", "tab_checks.tex", "tab_pooling.tex", "tab_proofs.tex",
+                 "tab_kernel.tex"):
         assert (GEN / frag).exists(), frag
 
 
@@ -218,3 +220,45 @@ def test_the_results_document_quotes_the_tables():
         assert f"| {x.n_with_b} | {x.d_total:.4f} |" in doc
     assert f"**P4a (mechanism): {pool.P4a_overall.iloc[0]}.**" in doc
     assert f"**P4b (cross-section): {pool.P4b_overall.iloc[0]}.**" in doc
+
+
+# ── Proposition 7 (post hoc, after the audit): scripts/48_kernel_theory.py ─────────────────────────
+
+@pytest.fixture(scope="module")
+def s48():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    spec = importlib.util.spec_from_file_location("s48_under_test", ROOT / "scripts" / "48_kernel_theory.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_every_check_of_proposition_7_passes_and_the_macros_match():
+    led = pd.read_csv(TAB / "table133_theory_kernel_checks.csv")
+    assert len(led) >= 50 and led["pass"].all(), led[~led["pass"]][["check", "design"]].to_string()
+    assert set(led["proposition"].astype(str)) == {"7"}
+    n = numbers()
+    assert n["k7-checks-n"] == str(len(led)) and n["k7-checks-pass"] == str(int(led["pass"].sum()))
+    ex = pd.read_csv(TAB / "table134_theory_kernel_exposure.csv")
+    C = ex[ex["part"] == "C"].dropna(subset=["s"])
+    assert num(n["k7-xOF-min"]) == pytest.approx(round(C["exact_open_free"].min(), 2))
+    assert num(n["k7-xOF-max"]) == pytest.approx(round(C["exact_open_free"].max(), 2))
+
+
+def test_the_true_range_loading_closed_form(s48):
+    # the meander's mean, the limits and the bounds of gamma_TR, re-derived directly
+    assert s48.meander_mean() == pytest.approx(math.sqrt(2 * math.pi) * math.log(2), rel=1e-9)
+    assert s48.gamma_tr(1e-4) == pytest.approx(0.25, abs=1e-7)
+    for s in (0.2, 1.0, 5.0):
+        g = s48.gamma_tr(s)
+        assert max(0.25, s / (4 * math.pi * math.log(2))) - 1e-12 <= g <= 0.25 + s / (4 * math.pi * math.log(2)) + 1e-12
+    assert s48.gamma_tr(2.0) > s48.gamma_tr(1.0) > s48.gamma_tr(0.5)
+
+
+def test_the_audit_bar_is_contaminated_through_the_high():
+    # C_- = C = L = 100, O = H = 105, b = 0: the extended range keeps the erroneous high
+    h, l, b, o = math.log(1.05), 0.0, 0.0, math.log(1.05)
+    Rs = max(h, b * o) - min(l, b * o)
+    assert Rs == pytest.approx(math.log(1.05))
+    n = numbers()
+    assert num(n["k7-ex-kernel"]) == pytest.approx(round(0.8 * Rs ** 2 / (4 * math.log(2)) * 1e4, 2))

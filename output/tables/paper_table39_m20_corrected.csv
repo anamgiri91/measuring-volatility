@@ -1,0 +1,15 @@
+Test sample,Horizon (sessions),Anam minus close-to-close: t,Open-free form minus close-to-close: t,"Holm p, beats close-to-close (Anam / open-free)",Best return-only (training),Best range-based (training),Range-based minus return-only: t (verdict),Lowest test loss of 17,In the 90% confidence set (close-to-close / Anam / open-free / HAR on open-free)
+"NEPSE, regimes A2 and C",5,+0.82,+0.63,1.000 / 0.736,GARCH,HAR on the open-free kernel,+0.35 (no significant difference),HAR on r²,yes / yes / yes / yes
+"NEPSE, regimes A2 and C",21,+0.16,+0.02,-,GJR-GARCH,HAR on the open-free kernel,+0.06 (no significant difference),HAR on r²,yes / yes / yes / yes
+NIFTY 50 (index),5,-2.91,-2.99,0.009 / 0.006,GJR-GARCH,HAR on the open-free kernel,-0.08 (no significant difference),HAR on the open-free kernel,no / yes / yes / yes
+NIFTY 50 (index),21,-0.04,+0.31,-,GJR-GARCH,HAR on the open-free kernel,-1.75 (no significant difference),HAR on the open-free kernel,yes / yes / yes / yes
+S&P 500 (index),5,-6.08,-6.65,0.000 / 0.000,GJR-GARCH,HAR on the open-free kernel,-1.18 (no significant difference),true-range Parkinson,no / yes / yes / yes
+S&P 500 (index),21,-0.18,-0.09,-,GJR-GARCH,HAR on the open-free kernel,-1.21 (no significant difference),HAR on the open-free kernel,yes / yes / yes / yes
+Dhaka 2023-2026,5,+1.45,-2.56,1.000 / 0.013,GJR-GARCH,HAR on the open-free kernel,+2.66 (returns suffice),GJR-GARCH,no / no / no / yes
+Dhaka 2023-2026,21,-0.60,-1.99,-,GJR-GARCH,Yang-Zhang (daily form),+3.63 (returns suffice),HAR on the open-free kernel,no / no / yes / yes
+Vietnam 2007-2020,5,-0.86,-3.94,0.785 / 0.000,GARCH,HAR on the open-free kernel,-1.51 (no significant difference),HAR on the open-free kernel,no / no / no / yes
+Vietnam 2007-2020,21,+1.64,-0.63,-,GARCH,HAR on the open-free kernel,-1.19 (no significant difference),HAR on the open-free kernel,no / no / yes / yes
+Dhaka 2009-2021 (dates repaired),5,-6.52,-8.02,0.000 / 0.000,GJR-GARCH,HAR on the open-free kernel,-6.31 (range adds information),HAR on the open-free kernel,yes / yes / yes / yes
+Dhaka 2009-2021 (dates repaired),21,-2.45,-3.04,-,GJR-GARCH,HAR on the open-free kernel,-3.14 (range adds information),HAR on the open-free kernel,yes / yes / yes / yes
+Morocco 2012-2026,5,-0.53,-2.62,0.890 / 0.013,HAR on r²,HAR on the open-free kernel,-2.30 (range adds information),HAR on the open-free kernel,no / no / yes / yes
+Morocco 2012-2026,21,-2.03,-2.61,-,GARCH,HAR on the open-free kernel,-2.72 (range adds information),HAR on the open-free kernel,no / yes / yes / yes

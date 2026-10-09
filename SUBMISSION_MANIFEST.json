@@ -1,13 +1,14 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-  "revision": "18 (round 18: every step of every proof in the theory supplement verified by scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-09T14:34:47+00:00",
+  "revision": "19 (round 19: the independent audit of 9 October 2026 answered point by point (RESEARCH_AUDIT_RESPONSE.md); the forecast evaluation corrected under plan M20, frozen before it was run, with return-only forecasts, ablations and a model confidence set (manuscript Table 39); plan M21's prospective test frozen; Proposition 7 added to the theory supplement; the overstated claims corrected (AUDIT-REGISTER M-028 to M-034); round 18: every step of every proof in the theory supplement verified by scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
+  "generated_utc": "2026-10-09T19:04:58+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
     "as_reviewed_note": "This PDF is the PRE-revision manuscript the first-round referee actually read, retained ONLY so the revision can be checked against it. It is NOT the current manuscript -- 'revised_source' above is -- and was renamed from the ambiguous 'NEPSE_Volatility_Final_Manuscript.pdf' after a forensic audit found the old name was being mistaken for the current file. No PDF rendering of the current .docx exists in this package as of this manifest: the environment that produced this revision has no docx-to-PDF renderer (Word/LibreOffice/pandoc) available, so a camera-ready PDF must still be exported from 'revised_source' before submission.",
     "double_anonymous_set": "paper/submission/",
-    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round18_revisions.py, in order",
+    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round19_revisions.py, in order",
+    "canonical_source": "The .docx above is the canonical editable manuscript. The revision scripts record every edit and the checks behind it, starting from a pre-revision draft that is not distributed (the --base of paper/apply_referee_revisions.py), so they document the revision rather than rebuild the file from nothing (audit item A14).",
     "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv by the revision scripts, which fail if a superseded value survives in the text or if a headline number does not reach it."
   },
   "referee_response": "REFEREE_RESPONSE.md",
@@ -15,8 +16,9 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "352 passed in 51.43s",
-    "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference environment (earlier rounds)",
+    "pytest": "389 passed in 59.71s",
+    "paper_facing_pipeline": "no run of run_paper_analysis.sh has written output/run_status.json; the runner records one from round 19 on (audit item A10)",
+    "round_19_runs": "Run individually in round 19 on Python 3.13 / x86-64 Linux, with the third-party inputs present: scripts 46, 47 (plan M20, all seven samples), 48, 49, 50, 51 and 25, then paper/apply_round19_revisions.py. Script 47 asserts that its step S0 reproduces the frozen tables 101, 108 and 113, and script 51 that its frozen run does. The full runner was not rerun end to end in round 19; 'paper_facing_pipeline' records the last run that wrote output/run_status.json, if any.",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
       "Python 3.14 / macOS arm64 (reference)",
@@ -107,10 +109,45 @@
       "ANAM_RECHECK_POSTHOC.md"
     ]
   },
+  "revision_19_changes": {
+    "audit": "audits/2026-10-09_research_audit.md and audits/2026-10-09_publication_plan.md (as received); RESEARCH_AUDIT_RESPONSE.md answers A01-A15: twelve accepted, three accepted in part with the disputed part argued (A02 features, A09 parameter uncertainty, A13 importance)",
+    "corrected_evaluation": {
+      "plan": "M20_CORRECTED_EVALUATION_PLAN.md (frozen in commit 984dfbc before any corrected loss was computed)",
+      "script": "scripts/47_corrected_evaluation.py; shared module anam_estimator.evaluation",
+      "outputs": "output/tables/table125-132; manuscript Table 39 (output/tables/paper_table39_m20_corrected.csv)",
+      "results": "M20_CORRECTED_EVALUATION_RESULTS.md",
+      "result": "47 of 288 frozen per-rival verdicts change. A classical range estimator beats the full form in 1 of 84 primary comparisons and the open-free form in none. After Holm, the open-free form beats close-to-close at 5 sessions in 6 of 7 samples and the full form in 3. The best range-based forecast beats the best return-only forecast in Dhaka 2009-2021 and Morocco only; returns suffice in Dhaka 2023-2026 and after NEPSE's reform. HAR on the open-free kernel has the lowest test loss in 10 of 14 cells and, with GJR-GARCH, is in every 90% model confidence set."
+    },
+    "prospective_test": "M21_PROSPECTIVE_PLAN.md; parameters frozen by scripts/50_m21_freeze.py in output/tables/table136_m21_frozen_parameters.csv (SHA-256 recorded in the plan)",
+    "theory": "Proposition 7 (paper/theory/section_theory.tex; proof B.7): what Anam's kernel does with a noisy open; scripts/48_kernel_theory.py (63 checks, table133-134); scripts/46_theory_proofs.py now 321 steps, 166 symbolic",
+    "post_hoc": "scripts/49_audit_sensitivities.py (table135: weight floor, robust first stage, corporate-action tolerance, row counts); scripts/51_frozen_residue_check.py (table137: floating-point residues in the frozen tables)",
+    "corrections": "AUDIT-REGISTER.md M-028 to M-034",
+    "new_scripts": [
+      "scripts/47_corrected_evaluation.py",
+      "scripts/48_kernel_theory.py",
+      "scripts/49_audit_sensitivities.py",
+      "scripts/50_m21_freeze.py",
+      "scripts/51_frozen_residue_check.py",
+      "paper/apply_round19_revisions.py"
+    ],
+    "new_tests": [
+      "anam-estimator/tests/test_evaluation.py",
+      "tests/test_forecast_baselines.py",
+      "tests/test_round19_revisions.py"
+    ],
+    "new_documents": [
+      "RESEARCH_AUDIT_RESPONSE.md",
+      "ESTIMAND_NOTE.md",
+      "M20_CORRECTED_EVALUATION_PLAN.md",
+      "M20_CORRECTED_EVALUATION_RESULTS.md",
+      "M21_PROSPECTIVE_PLAN.md",
+      "audits/"
+    ]
+  },
   "revision_18_changes": {
     "proof_steps": {
       "script": "scripts/46_theory_proofs.py",
-      "outputs": "output/tables/table124_theory_proof_steps.csv; paper/theory/generated/proofs.tex and tab_proofs.tex (the supplement's Table 5)",
+      "outputs": "output/tables/table124_theory_proof_steps.csv; paper/theory/generated/proofs.tex and tab_proofs.tex (the supplement's Table 5 then, Table 6 since Proposition 7 was added in round 19)",
       "result": "251 steps, all passing: every part of every proposition and every step of every proof in the theory supplement, and the paper's own mathematical claims (the Yang-Zhang identity, the non-negativity of Garman-Klass, the special cases of Anam's kernel, the old and corrected Appendix A, the M14 and M15 algebra). 138 steps are verified symbolically with SymPy; the others numerically, by simulation, pathwise or on every NEPSE stock-day they apply to."
     },
     "corrections": "AUDIT-REGISTER.md M-027: precision edits to the supplement's statements and to Appendix A's attainment condition; no result changes",
@@ -148,13 +185,13 @@
     "path": "anam-estimator/ (pyproject.toml, src/anam_estimator, tests, examples, README.md with a model card)",
     "install": "pip install \"anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator\"",
     "contents": "anam_estimator() (the estimate on every bar), AnamModel (fit, forecast, backtest, score, save/load), a command line, simulate_bars(); depends on numpy and pandas only",
-    "verified": "its arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py; tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day and both indices and that its forecasts equal the paper's forecast test origin by origin; anam-estimator/tests holds the package's own tests"
+    "tested": "its estimator's arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py, and tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day and both indices; since version 0.2.0 its forecasting model uses the corrected evaluation of plan M20 (anam_estimator.evaluation), and the same test checks it origin by origin against the research code's single-model corrected evaluation; anam-estimator/tests holds the package's own tests"
   },
   "revision_14_changes": {
     "M14_instrumented_calibration": {
       "plan": "M14_CALIBRATION_ANALYSIS_PLAN.md (frozen before any slope was computed)",
       "results": "M14_CALIBRATION_RESULTS.md; output/tables/table74-88; manuscript Section 6.6, Table 29, Figure 7",
-      "result": "Range estimators' near-unit ratios are calibration (Parkinson slope 0.919 [0.760, 1.056]); AddRS and the VWAP estimator are amplified; the liquidity-gradient, closing-rule and band-slope predictions were not detected."
+      "result": "A unit calibration slope is not rejected for the range estimators (Parkinson 0.919 [0.760, 1.056]), under instruments whose validity is assumed (two-way clustered effective F 19.4 for the primary instruments, 29.9 for those dated two sessions back; post hoc, AUDIT-REGISTER M-030); AddRS and the VWAP estimator are amplified; the liquidity-gradient, closing-rule and band-slope predictions were not detected."
     },
     "M15_opening_price": {
       "plan": "M15_OPENING_PRICE_ANALYSIS_PLAN.md (frozen before any outcome statistic was computed; simulation checks committed next)",
@@ -227,8 +264,13 @@
     },
     {
       "path": "AUDIT-REGISTER.md",
-      "bytes": 56354,
-      "sha256": "ad75f35b484deeb053b9bbd77678ef9c7607cfe62318ca99e396b30d0bedf839"
+      "bytes": 68286,
+      "sha256": "d8f80d93ffb2e23396bbb6ba0e47a96bd7dcd47b963994e52a71fd9c8509e142"
+    },
+    {
+      "path": "ESTIMAND_NOTE.md",
+      "bytes": 5838,
+      "sha256": "be1f88490d76daad303c9ae1a799a9e8100dde24cecd223b2b8681bc3b60f795"
     },
     {
       "path": "FORENSIC_AUDIT_RESPONSE.md",
@@ -316,6 +358,21 @@
       "sha256": "290da341762410a4cd051969ccaa41567bfdc796e3f82d4db58ddca3a3f52052"
     },
     {
+      "path": "M20_CORRECTED_EVALUATION_PLAN.md",
+      "bytes": 16281,
+      "sha256": "c84d43f0ec7b797eddb6afcd46c076c5b119833bdb890ae11fd38fcf7c6c3bb9"
+    },
+    {
+      "path": "M20_CORRECTED_EVALUATION_RESULTS.md",
+      "bytes": 25941,
+      "sha256": "97cd7038d69253a58411ba0c396b5393506068dba1d11c649f71ccb1b5b510ba"
+    },
+    {
+      "path": "M21_PROSPECTIVE_PLAN.md",
+      "bytes": 9633,
+      "sha256": "9a5bcffe46d7a9e5596d78e4e9a36f1e7c8d29ea18a02146215b1ce6730b9f37"
+    },
+    {
       "path": "M7_ANALYSIS_PLAN.md",
       "bytes": 5293,
       "sha256": "c3ba9301a8bedf45f933677027bb8617788b54649e665797f2bce506a4f10f8c"
@@ -327,8 +384,8 @@
     },
     {
       "path": "PAPER_RESULTS_CHECK.csv",
-      "bytes": 7962,
-      "sha256": "2f04a037bfd988b8907acf96da5970d32560ef70aedb23d979c918ca6b41c934"
+      "bytes": 9776,
+      "sha256": "4d8dc55f8ac9429f83e5d7a29a0b8e4900258ffb944a583fd41ea804c48102d5"
     },
     {
       "path": "PAPER_REVISIONS.md",
@@ -337,8 +394,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 40453,
-      "sha256": "86aaedfedfaa7e2dd93a6a35025b6c7f73ab60668ee346381ae3c737ddcd89c3"
+      "bytes": 50447,
+      "sha256": "94c109acfad7a9ee745346baa6bb37c27ea1dcdf622d9a5af220e1b66544b3b7"
     },
     {
       "path": "REFEREE_RESPONSE.md",
@@ -352,8 +409,13 @@
     },
     {
       "path": "REPRODUCIBILITY_MAP.csv",
-      "bytes": 25365,
-      "sha256": "4ebee836e124ee2b6a4388191dbdf49b9e5bf2a0af52e902eb314ca62c6e76cd"
+      "bytes": 28345,
+      "sha256": "46790059aa5daa4fe605c185807670430424a7a9595c24e5931d0002ca6ca98b"
+    },
+    {
+      "path": "RESEARCH_AUDIT_RESPONSE.md",
+      "bytes": 24751,
+      "sha256": "099944e09fdb077db04da76c3e819b3b68982e54ad24e4a5a610be57354e7782"
     },
     {
       "path": "anam-estimator/LICENSE",
@@ -362,8 +424,8 @@
     },
     {
       "path": "anam-estimator/README.md",
-      "bytes": 8376,
-      "sha256": "81c6e327f8b851c20bd130d786e29ef2c606b2a02bd33fc48f291cc327c65604"
+      "bytes": 11382,
+      "sha256": "97d2d9bad666ded3c260645b4acf14fc28d2305576d3f15da8d9b71f238925e6"
     },
     {
       "path": "anam-estimator/examples/quickstart.py",
@@ -377,8 +439,8 @@
     },
     {
       "path": "anam-estimator/src/anam_estimator/__init__.py",
-      "bytes": 1639,
-      "sha256": "5d45636f26078cacf35828434483122b7981fe558c45f6bdfc8a726f9be84a50"
+      "bytes": 1737,
+      "sha256": "6f095f99a91c8fb74ab557a20342cf2f965db7a84365bcaa57e503a57aed6e19"
     },
     {
       "path": "anam-estimator/src/anam_estimator/__main__.py",
@@ -388,7 +450,7 @@
     {
       "path": "anam-estimator/src/anam_estimator/_version.py",
       "bytes": 22,
-      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed"
+      "sha256": "667d4a15b970b851e20d17510224670c14646cfb6d5a1e388ca6b9cc6da8bf41"
     },
     {
       "path": "anam-estimator/src/anam_estimator/cli.py",
@@ -411,14 +473,19 @@
       "sha256": "0e347582911f8b79c28b37bcb3e1a7453cb8a3a1ab3a80b27bbb421d329e7ad9"
     },
     {
+      "path": "anam-estimator/src/anam_estimator/evaluation.py",
+      "bytes": 15365,
+      "sha256": "5b5b2fcab89d071829df232c53056a307381c986c8e263116dcc83ebce79b858"
+    },
+    {
       "path": "anam-estimator/src/anam_estimator/ml.py",
-      "bytes": 16867,
-      "sha256": "169bfd06f27cbad7d4cac8b7d415f9874d7c05dcfe851618704d3c0f569c7467"
+      "bytes": 18221,
+      "sha256": "576fcb9aa3573b7c33f4f095250e8332f3927aea4485722fb26e6660e53d853c"
     },
     {
       "path": "anam-estimator/src/anam_estimator/model.py",
-      "bytes": 16420,
-      "sha256": "a69abc8dfe679d739d69e63d9b1a473261c6d1a37d1052de5261d242576de1f7"
+      "bytes": 19649,
+      "sha256": "c308a6777611656ad2040e36120cf7140ae37cdd2f099d09ecbdcd0e890f4cc1"
     },
     {
       "path": "anam-estimator/src/anam_estimator/py.typed",
@@ -456,6 +523,11 @@
       "sha256": "0a6e8bcbdf9e6e85972c213336e2628fa2142471e6a3a9aa17342a3c08b9001b"
     },
     {
+      "path": "anam-estimator/tests/test_evaluation.py",
+      "bytes": 10774,
+      "sha256": "e8aa3f162925da13c4d461162568737be58619d0da72862693f03eae44a24783"
+    },
+    {
       "path": "anam-estimator/tests/test_ml.py",
       "bytes": 2112,
       "sha256": "764dc1846b4ade624f102be11293db3a178e488d40d088db1e3ef75bfd6eb72d"
@@ -466,9 +538,19 @@
       "sha256": "e63f2bcf76843dd6844d42c632187e32be82cbcfbe927021c8fb45385eb2f508"
     },
     {
+      "path": "audits/2026-10-09_publication_plan.md",
+      "bytes": 22886,
+      "sha256": "dc74c94eff6f2b9de467eee1268aa6a7b01f0c762050c76b84e5a477ae4e2489"
+    },
+    {
+      "path": "audits/2026-10-09_research_audit.md",
+      "bytes": 35466,
+      "sha256": "6a570584f108d86ff15d758fddd842e9cdc2c7458e6eb7a6bf298d2dd25a3f2d"
+    },
+    {
       "path": "build_manifest.py",
-      "bytes": 25321,
-      "sha256": "b7070ac98f15a17336b2f3efb6a2f52743611b978fda861ac40ff5b506a09693"
+      "bytes": 30729,
+      "sha256": "0933ab22cb94f921841f84f0e3a4687921ef9009e9429c91734e75b6ee6d5bfb"
     },
     {
       "path": "data/audit/README.md",
@@ -512,8 +594,8 @@
     },
     {
       "path": "data/processed/README.md",
-      "bytes": 5105,
-      "sha256": "bec8db16e920209892a998fe60bfed01ba620032b5171950062754cb5d037640"
+      "bytes": 5253,
+      "sha256": "870fe2d15fa212d39e755055be7d344ee4e2ad383bea45c7368b8521cb07d5ef"
     },
     {
       "path": "data/processed/analysis_sample.csv",
@@ -801,6 +883,11 @@
       "sha256": "c98253f9c8105cd333135b7b5519870aaa62ccbab7730c116edd60f376a26a98"
     },
     {
+      "path": "output/tables/paper_table39_m20_corrected.csv",
+      "bytes": 2538,
+      "sha256": "5f9c8a36c1102285f1995d044641178c7fc2bad62ec0499ffcadb3223cc4abd6"
+    },
+    {
       "path": "output/tables/paper_table3_instrument_classification_effect.csv",
       "bytes": 265,
       "sha256": "df5be701d0b1c80a5b6c837e1049a6a9d0950db2bffd49963d56d51c3f2d3fab"
@@ -967,8 +1054,73 @@
     },
     {
       "path": "output/tables/table124_theory_proof_steps.csv",
-      "bytes": 28859,
-      "sha256": "6e09675ad3f155e4003bdde0d7ae56eb25c0d37ac3e914fb553ed9c97566d692"
+      "bytes": 37468,
+      "sha256": "e7a0d7e5a06cab379b315332ceb2e4e5221f74590d8bfff619469b029148bdcf"
+    },
+    {
+      "path": "output/tables/table125_m20_correction_steps.csv",
+      "bytes": 142199,
+      "sha256": "37613dcda1a557856df24ea6ccce83a39f1f35dfcf98c7d3831573599fdec0c8"
+    },
+    {
+      "path": "output/tables/table126_m20_verdict_changes.csv",
+      "bytes": 40185,
+      "sha256": "f29870cbb2ddabd60e6d5fe789a214f0c9bfb09848c1c7fac1b338586baf5b73"
+    },
+    {
+      "path": "output/tables/table127_m20_comparison.csv",
+      "bytes": 57567,
+      "sha256": "d9741c43042157c71a50c470c1f551b99c890380ed04e090187105ce4850b854"
+    },
+    {
+      "path": "output/tables/table128_m20_mcs.csv",
+      "bytes": 20792,
+      "sha256": "366347b5985df7ac38e5d14c0183e7c0ecf20a9d5fe777b4c2e82152d7bcbf3f"
+    },
+    {
+      "path": "output/tables/table129_m20_claims.csv",
+      "bytes": 10451,
+      "sha256": "57a921aa4fc7bbdb90db1f3590826e3fb058ece8e4325e0ead94ad190c7a68b4"
+    },
+    {
+      "path": "output/tables/table130_m20_ablations.csv",
+      "bytes": 30934,
+      "sha256": "3c13b850884cb2e04d66d965fc8e80ec924aeec550d3a36e90b2812c4e4216ee"
+    },
+    {
+      "path": "output/tables/table131_m20_coverage.csv",
+      "bytes": 6230,
+      "sha256": "9fe821aba76f0b5ed520b3df6e25d1d4a42cef5b782bcf7eca31ec4312962ec1"
+    },
+    {
+      "path": "output/tables/table132_m20_inference.csv",
+      "bytes": 64949,
+      "sha256": "fce0ef548e9318e3ddbd6547cd3a7133b1732916ee240c18ecce6a257ba3c973"
+    },
+    {
+      "path": "output/tables/table133_theory_kernel_checks.csv",
+      "bytes": 8748,
+      "sha256": "53ecc507dc6c9e9ef4d98b11a46c364ea70123394ebf67571fac3fd0c02aac89"
+    },
+    {
+      "path": "output/tables/table134_theory_kernel_exposure.csv",
+      "bytes": 9496,
+      "sha256": "5f1d2b668808d81d9b728979f9c4da5190215c0860a2a192802b00469472a521"
+    },
+    {
+      "path": "output/tables/table135_audit_sensitivities.csv",
+      "bytes": 2990,
+      "sha256": "9e454d83714f5c3874604902c4723c108810693393a64ff27abcf805a3a4933f"
+    },
+    {
+      "path": "output/tables/table136_m21_frozen_parameters.csv",
+      "bytes": 30342,
+      "sha256": "b73efe7fa43f8551f9e689e289786bb90c9aa3623329e9bef075387b054508c4"
+    },
+    {
+      "path": "output/tables/table137_frozen_residue_check.csv",
+      "bytes": 8853,
+      "sha256": "8f398bc4f987df5c839f254bd63e9e163242ff0872ae6120aab9967315afcb78"
     },
     {
       "path": "output/tables/table14_cross_market_fingerprint.csv",
@@ -1127,8 +1279,8 @@
     },
     {
       "path": "output/tables/table47_corporate_action_audit.csv",
-      "bytes": 944,
-      "sha256": "d5586d7f19b350f4e7704fe96bdb2a3faa53fa2bca0b03b7d62d2433e99c5f09"
+      "bytes": 1083,
+      "sha256": "82cd202e358c22346b30070fa9c90390e422ea6d0879a835aaf412440bf6505f"
     },
     {
       "path": "output/tables/table48_yang_zhang_horizon.csv",
@@ -1427,13 +1579,13 @@
     },
     {
       "path": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
-      "bytes": 2238905,
-      "sha256": "45953a5a12f9a07feebccdbdc9e0f0522a23203d1872dcf2ee063a21df81ff1a"
+      "bytes": 2243446,
+      "sha256": "95e7ba561c271815c2aacf5fbf6d8858cc63f5ed5390d6b13fb2595af4f3ca53"
     },
     {
       "path": "paper/apply_referee_revisions.py",
-      "bytes": 73061,
-      "sha256": "6228419074e18a8806602442b97b7d5fec04d5628345e94f939cea0e6ca5f2bf"
+      "bytes": 73687,
+      "sha256": "eaba27c76f0be3cb11e520e1689f2828b81a3f227a097022bd6b404883c84f75"
     },
     {
       "path": "paper/apply_round10_revisions.py",
@@ -1481,6 +1633,11 @@
       "sha256": "b64aaf149d72f2d72c1dec1cc3bfeeff2375be37b8564428ff6256a4805d7fa4"
     },
     {
+      "path": "paper/apply_round19_revisions.py",
+      "bytes": 48919,
+      "sha256": "a0cc744789799b7468bef88c9cb9e2f53b04e11fa135aad8bde71d9354a66b80"
+    },
+    {
       "path": "paper/apply_round3_revisions.py",
       "bytes": 52629,
       "sha256": "26c12bfc15cd8bc1226f3e5b3aa29ee7d0ac37fadf4f50b06b01d353901883f7"
@@ -1517,8 +1674,8 @@
     },
     {
       "path": "paper/build_submission_set.py",
-      "bytes": 23706,
-      "sha256": "f83d57f6f6e2d883bf3055f34d4c62b5b2831cd5f241c035f8c438bcb31c9896"
+      "bytes": 25203,
+      "sha256": "d2d26284ce6f8309e3d0d1a27390728eb230074564594610ae2eb56984248f4d"
     },
     {
       "path": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -1527,43 +1684,43 @@
     },
     {
       "path": "paper/submission/01_title_page.docx",
-      "bytes": 37706,
-      "sha256": "0af8a04fcdd352696101d6df057f038bbcc0c3e6985a77e1e505a4b2677a135e"
+      "bytes": 37858,
+      "sha256": "a45b0308c13bb3ed429859796ece2fb499be0faf0e69d27c421cfd8723f0c9a3"
     },
     {
       "path": "paper/submission/02_manuscript_anonymous.docx",
-      "bytes": 2238784,
-      "sha256": "0edc7325ab1328fc66c4c3151861041cb3e8964d7b1fe954bd452d4091a9ed5b"
+      "bytes": 2243336,
+      "sha256": "48ba7fd8e1bff7e427ef869e117d7083d95119f54548a560acbb8c27c6cf4634"
     },
     {
       "path": "paper/submission/03_cover_letter_Asian_Journal_of_Economics_and_Banking.docx",
-      "bytes": 38885,
-      "sha256": "b7c97cc09433062ddb8d0777a8d003060ab9019d292860ec4943c6b0f8fa18d2"
+      "bytes": 39183,
+      "sha256": "eeb229497b6bc15b4f19ec60f5d44d8442c53ae6177663efd4ca9c24ec65119d"
     },
     {
       "path": "paper/submission/03_cover_letter_Investment_Management_and_Financial_Innovations.docx",
-      "bytes": 38869,
-      "sha256": "a2a9e7ad0ab9cf9a6b76df26f281e235b88d243b6d37ac25474c88b169fd66cb"
+      "bytes": 39169,
+      "sha256": "dd469632f31c5da39286b156d3eef97d5f7260a66ad5c0fb29aad4fc33b9b4aa"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Empirical_Finance.docx",
-      "bytes": 38890,
-      "sha256": "8c0f99474ec7dcf6656d6ffd9a93cdf80a296554b6787556a1f5a71958c1169e"
+      "bytes": 39194,
+      "sha256": "1e2bc669e383e34d972f383c144f9bc5c733da91f58d3f2ea69788acb4e80cd5"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Econometrics.docx",
-      "bytes": 38897,
-      "sha256": "d267af4a5e0de5ea895c47f8a1eb5864fd5eacb896f554633d49250a584bea45"
+      "bytes": 39192,
+      "sha256": "a6f6218790400aa58c2ddebd3d2985130db65dd30bc5caad37c6c5a51df25e50"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Markets.docx",
-      "bytes": 38876,
-      "sha256": "80cd6bd58b209736399dc9e3c7a562ae0ca6efbb12dd0550277bfca4246638c8"
+      "bytes": 39180,
+      "sha256": "6a16e7943bf6182b679d601671fdc069c7a4660a3f43fd6dc90d142e3b3bc161"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Risk_and_Financial_Management.docx",
-      "bytes": 38883,
-      "sha256": "b7e45d2a83d757d94a5708111638c4ceeb42228ecf0884462546bc11829c4c11"
+      "bytes": 39218,
+      "sha256": "693408d64c07dde800772e13736b0d691bc3ea60afd4361c37897fd8d0b12cd7"
     },
     {
       "path": "paper/theory/.gitignore",
@@ -1572,8 +1729,13 @@
     },
     {
       "path": "paper/theory/appendix_proofs.tex",
-      "bytes": 17310,
-      "sha256": "79f864c11f481dff9fec9aa558215e2d083cd764c7fe44549b4d193135be0bdc"
+      "bytes": 23090,
+      "sha256": "a0de46a2274ee1f647d430e48e35f0aa5caadab58e716928f34ea1d996018184"
+    },
+    {
+      "path": "paper/theory/generated/kernel.tex",
+      "bytes": 5427,
+      "sha256": "d7a87d438b393b611b008cea32e79011dd05bddb29f73f693002045d650db005"
     },
     {
       "path": "paper/theory/generated/numbers.tex",
@@ -1583,7 +1745,7 @@
     {
       "path": "paper/theory/generated/proofs.tex",
       "bytes": 558,
-      "sha256": "563e99070cbc1b40a0ba160670ca516a5057ae7070ddf9b79e02a2eb119b4c26"
+      "sha256": "895f0737477ef1f40d616aa2a3a9be1edc9c30f80066aa7bf9acee03ea34dad3"
     },
     {
       "path": "paper/theory/generated/tab_bounds.tex",
@@ -1601,34 +1763,39 @@
       "sha256": "e740c234b83b4be97e37feda42d4611410aeccac5026a7758a0a06a4f98c40fe"
     },
     {
+      "path": "paper/theory/generated/tab_kernel.tex",
+      "bytes": 549,
+      "sha256": "d1577d182fd0c10884ff418f956466b27a9d6621847e1383a815c1fa1ed90adb"
+    },
+    {
       "path": "paper/theory/generated/tab_pooling.tex",
       "bytes": 1169,
       "sha256": "2d4f8181856eba074a197094217a2fdb3c7a8ac41ed984fc74991a922ca1e492"
     },
     {
       "path": "paper/theory/generated/tab_proofs.tex",
-      "bytes": 392,
-      "sha256": "fbfaf246797bb8a1a0b295bd4070831abde81b60f33b55b464f0bc83168f12ca"
+      "bytes": 442,
+      "sha256": "86be8cb1be5b2e2a7245531463647485be21a26ecbf2a87a731d46f5e71314ca"
     },
     {
       "path": "paper/theory/references.bib",
-      "bytes": 5367,
-      "sha256": "0478c3a9f3b2d3c45dc109e3f6c0365fccfb12933aa2f06ae54bc9b689cf1cf3"
+      "bytes": 5567,
+      "sha256": "2b5b8e34c3ed4c6d1c545bea898395f975b2d34f5ce37cc4a4622e9605fcc598"
     },
     {
       "path": "paper/theory/section_theory.tex",
-      "bytes": 33544,
-      "sha256": "f27c441df640955dd65e21948bd716f0a1f0ffa1135d8c804a1bc7d73bf4afbf"
+      "bytes": 41455,
+      "sha256": "570eb2f9e41fc27458a12129b941f8cc51c6c39b23fe7a44c12755e8b482b28f"
     },
     {
       "path": "paper/theory/theory.pdf",
-      "bytes": 486038,
-      "sha256": "64332dc19a1ce67b7b7ee38acb4c40206d66236634aaab3047b2841e589067d1"
+      "bytes": 530893,
+      "sha256": "3801ee64cec3c41572f8b587464a8ce7d8f5b07160831558bf25d157d2ec4748"
     },
     {
       "path": "paper/theory/theory.tex",
-      "bytes": 3599,
-      "sha256": "58e89375106205f4ba110befafe270241eccf9b9a67b99673a33ecf5eb811e4f"
+      "bytes": 4349,
+      "sha256": "5287bad7d92bac12844d8702f7e72f28c18e7155ec1a79f9f6f11d5fa2225768"
     },
     {
       "path": "pyproject.toml",
@@ -1637,13 +1804,13 @@
     },
     {
       "path": "requirements.txt",
-      "bytes": 1130,
-      "sha256": "9cf3ef0a84eaacb1ecdc8ad414831b234c48a1c1c73defacec77f358886d86ca"
+      "bytes": 1325,
+      "sha256": "d6367ec5316d6bc481252d3f95ccf8890164a2fc5590b7af0343f479f860753f"
     },
     {
       "path": "run_paper_analysis.sh",
-      "bytes": 3710,
-      "sha256": "e5814ef48634afdc078ccc5024175580802ffa0f128e5746df1c56f481130596"
+      "bytes": 6323,
+      "sha256": "fa8f0dd5dd5d013e984f16ebdd5c58db31e60a63943a313de69cdda58d050f67"
     },
     {
       "path": "scripts/02_build_panel.py",
@@ -1692,13 +1859,13 @@
     },
     {
       "path": "scripts/25_submission_tables.py",
-      "bytes": 60694,
-      "sha256": "ec039680abc8fef2eeed3a2e298548a16b9f699dc23c2d13b1e57d1e6958efac"
+      "bytes": 64290,
+      "sha256": "32aba47ba15600e8f1d43e0ca8996e0bb08b6867e43a69d0fb387ecd18ec4747"
     },
     {
       "path": "scripts/26_robustness.py",
-      "bytes": 40853,
-      "sha256": "e07b2aa8427d24bc25fbd63bb881a9717c95ab5b1aca0222c37976c4d2167eac"
+      "bytes": 41021,
+      "sha256": "58f47df40bc2533336abd4607c5cefd8e0fc4469798d360fec69b7d7d812b107"
     },
     {
       "path": "scripts/27_classification_audit.py",
@@ -1797,8 +1964,33 @@
     },
     {
       "path": "scripts/46_theory_proofs.py",
-      "bytes": 66986,
-      "sha256": "34c4c7b7d6c35d5a9014009e3fa53217d28cfbc65f61aef2c0957c9ef87d2541"
+      "bytes": 76480,
+      "sha256": "7faec0dfd3aad6e4cf8f53d9602aadb5a325b1272ffa004b5a298043a7bc7fcc"
+    },
+    {
+      "path": "scripts/47_corrected_evaluation.py",
+      "bytes": 35653,
+      "sha256": "af0e6c25e5ef2015d25e5fbc996494341f17c8dcdf31e659d18dbb49eb1b76c1"
+    },
+    {
+      "path": "scripts/48_kernel_theory.py",
+      "bytes": 21751,
+      "sha256": "8e6f324b1382cce2e9d86150a8dd76c1ee61b0edd20f191c5147e85e39275222"
+    },
+    {
+      "path": "scripts/49_audit_sensitivities.py",
+      "bytes": 7253,
+      "sha256": "c302af370b08e19abee1937ecff3f891a54994223d5914c3d180f686817a17d1"
+    },
+    {
+      "path": "scripts/50_m21_freeze.py",
+      "bytes": 5572,
+      "sha256": "d624c12a4293c205c544be62d91ae20c6e74ab40fd8cef7437996c92bc5361eb"
+    },
+    {
+      "path": "scripts/51_frozen_residue_check.py",
+      "bytes": 7509,
+      "sha256": "843e94f60202695fd8b297e6c85ad304f3f4ec49becbc71af27c8dd7d9b82e31"
     },
     {
       "path": "scripts/_env.py",
@@ -1812,8 +2004,8 @@
     },
     {
       "path": "src/nepsevol/calibration.py",
-      "bytes": 35506,
-      "sha256": "bcfd440050d843d323e7a3f9d4301fba8e5c3aa0b9d060cbbbc472d34de28a8b"
+      "bytes": 39972,
+      "sha256": "95d5242cb411c6240e15c5109a6ac7b675bf21780802c5a0a64a94215b1ae95e"
     },
     {
       "path": "src/nepsevol/clean/__init__.py",
@@ -1837,8 +2029,8 @@
     },
     {
       "path": "src/nepsevol/corporate_actions.py",
-      "bytes": 9517,
-      "sha256": "4482cb9093f54db5c0201ede9cdacf21be439ec8e29791b1f0182503b4a29b2d"
+      "bytes": 9988,
+      "sha256": "2b70c5b5d635978a655fb1ba97c1c9585e94b4e66886096ed400a1292c248129"
     },
     {
       "path": "src/nepsevol/equivalence.py",
@@ -1852,8 +2044,8 @@
     },
     {
       "path": "src/nepsevol/estimators/anam.py",
-      "bytes": 12693,
-      "sha256": "4627a6f8cc908eca87ee91c6fb15aca6462fae3cb981da5a6eca96130923cdd9"
+      "bytes": 14173,
+      "sha256": "ffddf075d33eb0ba67dea1ee36021128a09594bbb5dc3fb586cfa95902e2aca9"
     },
     {
       "path": "src/nepsevol/estimators/microsim.py",
@@ -1874,6 +2066,11 @@
       "path": "src/nepsevol/estimators/simulate.py",
       "bytes": 8725,
       "sha256": "c9d6b91acdfa6bef231c0c96a0a0de8b9bb6d1fae9c07c3108f099de038f99a5"
+    },
+    {
+      "path": "src/nepsevol/forecast_baselines.py",
+      "bytes": 10402,
+      "sha256": "9a444f947a2bb720e28a3c36c1554452c4220191128c14c0988a81552ef5cc98"
     },
     {
       "path": "src/nepsevol/frontier.py",
@@ -1927,8 +2124,8 @@
     },
     {
       "path": "src/nepsevol/volforecast.py",
-      "bytes": 5791,
-      "sha256": "bd6ea09644e7a73045ef525feffbfcb9cda24d33580a4ee3f8ae0964088116b8"
+      "bytes": 6709,
+      "sha256": "2e18037c82601d51587c9f744dfc54f158d47b4f4ce095776d78fb667fc0d849"
     },
     {
       "path": "tests/test_anam_estimator.py",
@@ -1947,8 +2144,8 @@
     },
     {
       "path": "tests/test_anam_package.py",
-      "bytes": 6254,
-      "sha256": "c65450cc830b3a12c91903864055e42fa6e2f0aaee7ee5884106feb584a8e69d"
+      "bytes": 8317,
+      "sha256": "9271f0587b2803d655a22a35d9831e230f3eeb5fecef1e8a3cda5366f5db3b4f"
     },
     {
       "path": "tests/test_anam_recheck.py",
@@ -1974,6 +2171,11 @@
       "path": "tests/test_estimators.py",
       "bytes": 7064,
       "sha256": "083ed5feb163edff08d9ba3d4d3419ff63c862db49c4a606dee23637d0cb7781"
+    },
+    {
+      "path": "tests/test_forecast_baselines.py",
+      "bytes": 4252,
+      "sha256": "b8c8924db3f1247d3350b35a1559bd074fa6f78a3adbb2c7d72660129d0b29bc"
     },
     {
       "path": "tests/test_frontier_panels.py",
@@ -2002,8 +2204,13 @@
     },
     {
       "path": "tests/test_round16_revisions.py",
-      "bytes": 7389,
-      "sha256": "9da99333616670625ae28c69990581ef405763a5d5b49bfee1620674fb61c498"
+      "bytes": 7669,
+      "sha256": "bbfc042023bcd28fb8ce41d3de4d44cf626996e73eb25a23e49b3b1c2c74d8a8"
+    },
+    {
+      "path": "tests/test_round19_revisions.py",
+      "bytes": 11629,
+      "sha256": "1f0a8b36fad3c0286e7aac0f51b0d94829a4d3dc8bb9129268c2863bcb11eace"
     },
     {
       "path": "tests/test_round3_revisions.py",
@@ -2012,13 +2219,13 @@
     },
     {
       "path": "tests/test_theory_checks.py",
-      "bytes": 11318,
-      "sha256": "793733a416bb851dbddaae24378ec52f02c9991f2196c398a45cbc4fa9460c8c"
+      "bytes": 13561,
+      "sha256": "b869b1b26b7e609590361aa7b5fb83b1e8f761caf4bf13b680948446780651c3"
     },
     {
       "path": "tests/test_theory_proofs.py",
-      "bytes": 6964,
-      "sha256": "9f6da7fb87ef107a36853e89c2a0cdf7c3efac20092287ef114515d1c6f55464"
+      "bytes": 7032,
+      "sha256": "4c14f893a97be73a0cff4b6a7c94ff9ab7acbc20ef63247ba9f3aaadbd4a705f"
     }
   ]
 }

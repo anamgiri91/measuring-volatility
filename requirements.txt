@@ -20,3 +20,6 @@ arch==8.0.0
 scipy==1.18.1
 # Imported only by scripts/46 (the step-by-step symbolic verification of the theory's proofs).
 sympy==1.14.0
+# Imported by the manuscript builders only (paper/apply_*_revisions.py, paper/build_submission_set.py) and by
+# the tests that read the manuscript; not by any analysis script.
+python-docx==1.2.0

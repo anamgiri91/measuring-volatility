@@ -879,9 +879,15 @@ def renumber_limitations(doc):
 
 
 def main():
+    # The base is the author's pre-revision Word draft ("Calculating Volatility in Frontier Markets: Nepal,
+    # Revised"), which is NOT distributed (its rendered form is paper/manuscript_as_reviewed_pre_revision.pdf).
+    # This script, and every later round, is therefore a record of the edits and their checks, applied
+    # in order to produce the tracked manuscript; a recipient cannot rerun this first round without the
+    # draft. The canonical editable source is the tracked paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx
+    # (audit item A14, 9 October 2026; the default used to point at the author's Downloads folder).
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base", default=str(pathlib.Path.home() /
-                    "Downloads/Calculating_Volatility_in_Frontier_Markets_Nepal_Revised.docx"))
+    ap.add_argument("--base", required=True,
+                    help="the author's pre-revision .docx draft (not distributed with the package)")
     ap.add_argument("--out", default=str(ROOT / "paper" /
                     "NEPSE_Volatility_Manuscript_Revised_2026-09.docx"))
     a = ap.parse_args()

@@ -37,7 +37,7 @@ def tt(v) -> str:
 
 
 def test_tables_37_and_38_are_the_frozen_paper_tables(doc):
-    assert len(doc.tables) == 38 and len(doc.inline_shapes) == 8
+    assert len(doc.tables) >= 38 and len(doc.inline_shapes) == 8   # round 19 adds Table 39
     for cap in ("Table 37.", "Table 38."):
         assert sum(p.text.startswith(cap) for p in doc.paragraphs) == 1, cap
     for k, csv in [(36, "paper_table37_anam_robustness.csv"), (37, "paper_table38_anam_level_same_calibration.csv")]:
@@ -121,10 +121,12 @@ def test_nepse_protocol_keeps_close_to_close_primary(body):
 
 
 def test_every_reading_of_the_recheck_is_labelled_post_hoc(body):
+    # Round 19 adds plan M20, whose Holm adjustment was fixed in advance; a sentence that reports it is labelled
+    # by its table (39) or its plan instead, so this rule now accepts either label too.
     for sentence in re.split(r"(?<=[.!?])\s+", body):
         if "MSE" in sentence or "Holm" in sentence:
-            assert ("post hoc" in sentence.lower() or "Table 37" in sentence
-                    or "Tables 37 and 38" in sentence), sentence[:100]
+            assert ("post hoc" in sentence.lower() or "Table 37" in sentence or "Tables 37 and 38" in sentence
+                    or "Table 39" in sentence or "plan M20" in sentence), sentence[:100]
 
 
 def test_limitations_run_through_sixteenth():

@@ -69,9 +69,13 @@ import pandas as pd
 __all__ = ["CLASSES", "ROUNDING_TOL", "classify_disagreements", "adjusted_previous_close",
            "corporate_action_flags"]
 
-#: Relative tolerance below which a disagreement is a reference-price rounding artifact rather
-#: than an entitlement. NEPSE quotes to two decimals on prices that are frequently in the
-#: hundreds, so sub-0.5% disagreements are not separable from tick rounding.
+#: Relative tolerance below which a disagreement is not treated as an entitlement. It is a classification
+#: choice, not a rounding bound: two-decimal rounding of a price in the hundreds moves it by about 0.001%,
+#: and none of the 315 disagreements is that small (an earlier comment said sub-0.5% disagreements "are
+#: not separable from tick rounding"; audit item A11). Entitlement adjustments (bonus and rights issues)
+#: move the reference price by several percent, so 0.5% separates them from small reference-price
+#: differences of unknown origin, which keep the class name ``reference_rounding`` for stability. At 0.1%
+#: or 0.25% the corporate-action count changes from 216 to 221 or 219 (scripts/49_audit_sensitivities.py).
 ROUNDING_TOL = 0.005
 
 #: The classes :func:`classify_disagreements` can assign. Ordered from most to least explained.

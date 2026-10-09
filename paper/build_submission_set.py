@@ -83,15 +83,15 @@ TOP_TIER = [
     ("Journal_of_Financial_Markets", "Journal of Financial Markets", "Editors",
      "Its scope is market microstructure -- trading mechanisms, call auctions, price limits and "
      "price discovery -- and this paper's central evidence concerns an opening call auction and "
-     "a reform of its price band, analysed as a natural experiment under a frozen plan."),
+     "a package of rule changes that widened its price band, analysed as an event under a frozen plan."),
     ("Journal_of_Empirical_Finance", "Journal of Empirical Finance", "Editors",
      "It publishes empirical work on volatility measurement and market design, and this paper "
-     "combines both: a calibration test for daily-bar volatility estimators, evidence that a "
-     "market-design rule change altered what those estimators measure, and an estimator built on that "
-     "evidence and tested out of sample in four frontier markets."),
+     "combines both: a calibration test for daily-bar volatility estimators, evidence that a change in "
+     "market-design rules coincided with a change in what those estimators measure, and an estimator built on "
+     "that evidence and tested out of sample in four frontier markets, against return-only forecasts."),
     ("Journal_of_Financial_Econometrics", "Journal of Financial Econometrics", "Editors",
-     "It publishes research on the measurement of volatility, and this paper identifies daily-"
-     "bar estimators' calibration from volatility persistence without a high-frequency "
+     "It publishes research on the measurement of volatility, and this paper tests daily-bar "
+     "estimators' calibration with volatility persistence as the instrument, without a high-frequency "
      "benchmark, documents a failure of the independence assumption behind Yang-Zhang, and "
      "proposes an estimator for markets whose opening price is unreliable, tested out of sample "
      "under frozen plans."),
@@ -113,17 +113,19 @@ JOURNALS = [
      "Editors",
      "Its scope covers financial markets, mathematical methods in finance and risk analysis, and "
      "it asks for enough methodological detail to reproduce the work -- which this submission "
-     "supplies in full."),
+     "supplies in full for its NEPSE and index results, and for its other markets up to third-party "
+     "data files that it documents but cannot redistribute."),
 ]
 
 ABSTRACT_SHORT = (
     "Nepal has no exchange-traded options and no public intraday data, so its volatility must be "
     "measured from daily open-high-low-close bars. This paper shows that the bar's opening price "
-    "is mostly transient: the trading session undoes most of the overnight move. It uses NEPSE's "
-    "2026 widening of its pre-open price band as a natural experiment indicating that market design "
-    "shapes what daily bars measure, and it builds an estimator for markets whose open is "
-    "unreliable, tested out of sample in four frontier markets and two benchmark indices. No "
-    "estimator is claimed to dominate close-to-close everywhere.")
+    "is mostly transient: the trading session undoes most of the overnight move. NEPSE's 2026 rule "
+    "package, which widened its pre-open price band, coincided with a sharp change in what daily bars "
+    "measure. The paper builds an estimator for markets whose open is unreliable, tests it out of sample "
+    "in four frontier markets and two benchmark indices, and retests it against forecasts built from "
+    "returns alone after an audit corrected the evaluation. No estimator is claimed to dominate "
+    "close-to-close everywhere.")
 
 
 def anonymise(doc):
@@ -310,12 +312,14 @@ def title_page(doc_style_from):
         "claim-to-producer-to-output reproducibility map, an audit register, and a test suite. "
         "The original stock-level NEPSE downloads are not redistributed because their "
         "redistribution terms are unresolved; the build script is included as the complete "
-        "cleaning specification and the processed panels are sufficient to reproduce every "
-        "reported result.")
+        "cleaning specification and the processed panels are sufficient to reproduce every NEPSE "
+        "and index result. The Bangladeshi, Vietnamese and Moroccan results need third-party files "
+        "that the package documents and pins by digest but does not redistribute; a run without them "
+        "reports itself as a partial reproduction.")
     add("Ethics. Not applicable. The study uses aggregate market price data only.")
     add("AI use. Analysis code and manuscript revisions were prepared with computational "
-        "assistance; all empirical results are produced by the included scripts and are "
-        "reproducible from the package.")
+        "assistance; all empirical results are produced by the included scripts, and those on the "
+        "NEPSE panels and the two indices are reproducible from the package alone.")
     add("")
     add("Abstract (short form for the title page)", "Heading 1")
     add(ABSTRACT_SHORT)
@@ -356,27 +360,32 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "session estimator and the usual open-to-close benchmark read. In NEPSE it is mostly "
         f"transient: the trading session undoes {numbers['undo_lo']}-{numbers['undo_hi']}% of the "
         "overnight move, and a post hoc split places the error in each security's own auction "
-        "rather than in the market-wide move. NEPSE's 20 April 2026 widening "
-        "of its pre-open band from +/-2% to +/-5% is used as a natural experiment, under an "
-        "analysis plan frozen before testing: it produced a sharp break in how much of the open "
-        f"survives to the close, larger than at any of {numbers['n_plac']} placebo dates, and opens "
-        "pinned at the old band had been reversed rather than continued -- the narrow band capped "
-        "overreaction without detectably delaying price discovery. Three consequences follow for "
+        "rather than in the market-wide move. NEPSE's 20 April 2026 rule package, which widened "
+        "its pre-open band from +/-2% to +/-5%, is analysed as an event under a plan frozen before "
+        "testing: it coincided with a sharp break in how much of the open survives to the close, "
+        f"larger than at any of {numbers['n_plac']} placebo dates, and opens pinned at the old band had "
+        "been reversed rather than continued, which is consistent with the narrow band capping "
+        "overreaction without delaying price discovery; the band's separate effect is not identified. "
+        "Three consequences follow for "
         "measurement: three-quarters of Yang-Zhang's excess over close-to-close variance is the "
         "overnight-intraday covariance it assumes away; ratio comparisons against the open-to-"
         "close benchmark cannot see the open's error; and close-to-close returns, which never "
-        "read the open, are the robust benchmark. A second frozen analysis identifies each "
-        "estimator's calibration from volatility persistence without a high-frequency benchmark "
-        "and shows the range estimators' near-unit ratios to be calibration, not offsetting "
-        "distortions. The earlier results remain: range estimators do not collapse in thin "
+        "read the open, are the robust benchmark. A second frozen analysis tests each estimator's "
+        "calibration with volatility persistence as the instrument, without a high-frequency "
+        "benchmark: a unit slope is not rejected for the range estimators, although the instruments' "
+        "validity is assumed and their first stage is weak with clustered errors. The earlier results "
+        "remain: range estimators do not collapse in thin "
         "ordinary equity, and apparent estimator failure in a pooled frontier-market universe is "
         "largely an instrument-composition artifact. The paper then builds on this evidence: a new "
         "daily-bar estimator that weights the overnight move by the open's measured reliability, "
         "extends the range to the effective open and calibrates to close-to-close variance, designed "
-        "on part of the NEPSE sample and tested out of sample under three further frozen plans. No "
-        "classical range estimator forecasts significantly better than it in any of seven test samples "
-        "across Nepal, Bangladesh, Vietnam, Morocco and two benchmark indices, and its open-free form "
-        "passed a test fixed in advance in Morocco.")
+        "on part of the NEPSE sample and tested out of sample under three further frozen plans in "
+        "Nepal, Bangladesh, Vietnam, Morocco and two benchmark indices. An independent audit then found "
+        "defects in that forecast evaluation; a corrected evaluation, frozen before it was run, finds "
+        "that the estimator's open-free form beats close-to-close at five sessions in six of the seven "
+        "samples, but that forecasts built from returns alone (GARCH-type and HAR models) are about as "
+        "accurate in most of them. Both evaluations are reported, and a prospective test on sessions "
+        "after the audit is frozen.")
     add("")
     add("What the paper does not claim. Latent variance is unobserved, so results are reported "
         "relative to stated benchmarks, and no estimator is claimed to dominate generally. The "
@@ -387,18 +396,23 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "not detected, and without auction order-book data the mechanism inside the auction is not "
         "identified; the paper reports these limits and its failed predictions alongside the "
         "results. The India VIX exercise is co-movement and forecasting evidence about India, and "
-        "its estimator comparison is inconclusive. The new estimator does not beat close-to-close at "
-        "short horizons in the primary panels of three of the four frontier markets, and close-to-close beat it "
-        "immediately after NEPSE's rule change; those failed predictions are reported as such. Its "
+        "its estimator comparison is inconclusive. In the corrected evaluation the new estimator's full "
+        "form does not beat close-to-close at short horizons in the primary panel of any of the four "
+        "frontier markets, close-to-close beat both forms immediately after NEPSE's rule change, and a "
+        "range-based forecast beats the best return-only forecast in only two of seven samples; those "
+        "results are reported as they are. Its "
         "level on the close-to-close scale comes from its calibration, which the classical estimators "
         "can be given too, and its record against close-to-close changes with the loss function; a "
         "post hoc recheck reports both.")
     add("")
-    add("Reproducibility. A complete package accompanies the submission: frozen data, producer "
+    add("Reproducibility. A reproducibility package accompanies the submission: frozen data, producer "
         "scripts, a claim-to-output reproducibility map, an audit register recording defects "
         "found and fixed, and a test suite that fails if the manuscript and the package "
-        "disagree. Every number in the manuscript is interpolated from the frozen output tables "
-        "by script rather than transcribed.")
+        "disagree. It reproduces every result on the NEPSE panels and the two indices; the "
+        "Bangladeshi, Vietnamese and Moroccan results need third-party files that it documents and "
+        "pins by digest but cannot redistribute, and a run without them reports itself as partial. "
+        "Every number in the manuscript is interpolated from the frozen output tables by script "
+        "rather than transcribed.")
     add("")
     add("The manuscript is original, is not under consideration elsewhere, and all authors have "
         "approved the submission. An anonymised manuscript and a separate title page are "

@@ -1,0 +1,48 @@
+part,item,statistic,value
+S1,A13,"OC: IV slope, frozen whole-panel floor",1
+S1,A13,"OC: IV slope, past-only floor",1
+S1,A13,"OC: J p-value, frozen whole-panel floor",
+S1,A13,"OC: J p-value, past-only floor",
+S1,A13,"P: IV slope, frozen whole-panel floor",0.9185820237
+S1,A13,"P: IV slope, past-only floor",0.9221936568
+S1,A13,"P: J p-value, frozen whole-panel floor",0.0001882877776
+S1,A13,"P: J p-value, past-only floor",0.0002043776958
+S1,A13,"GK: IV slope, frozen whole-panel floor",0.8871307186
+S1,A13,"GK: IV slope, past-only floor",0.8921375052
+S1,A13,"GK: J p-value, frozen whole-panel floor",0.0001882877776
+S1,A13,"GK: J p-value, past-only floor",0.0002043776958
+S1,A13,"RS: IV slope, frozen whole-panel floor",0.9117229619
+S1,A13,"RS: IV slope, past-only floor",0.9176298037
+S1,A13,"RS: J p-value, frozen whole-panel floor",0.001220385533
+S1,A13,"RS: J p-value, past-only floor",0.00132658912
+S1,A13,"AddRS: IV slope, frozen whole-panel floor",1.343996168
+S1,A13,"AddRS: IV slope, past-only floor",1.34951398
+S1,A13,"AddRS: J p-value, frozen whole-panel floor",0.06065647629
+S1,A13,"AddRS: J p-value, past-only floor",0.06264987197
+S1,A13,"AP: IV slope, frozen whole-panel floor",1.654867739
+S1,A13,"AP: IV slope, past-only floor",1.661727101
+S1,A13,"AP: J p-value, frozen whole-panel floor",3.400788525e-08
+S1,A13,"AP: J p-value, past-only floor",3.818024553e-08
+S1,A13,"GKV: IV slope, frozen whole-panel floor",0.9369990145
+S1,A13,"GKV: IV slope, past-only floor",0.9422375523
+S1,A13,"GKV: J p-value, frozen whole-panel floor",0.0004189232211
+S1,A13,"GKV: J p-value, past-only floor",0.0004452833743
+S1,A13,share of rows whose weight changes,0.01705637412
+S1,A13,share of the past-floor rows that are in the frozen sample,1
+S2,A06,"first-stage F, conventional (instruments dated t-1 (primary))",555.7670327
+S2,A06,"first-stage F, two-way cluster-robust Wald (instruments dated t-1 (primary))",41.68633036
+S2,A06,"effective F, Montiel Olea-Pflueger, two-way (instruments dated t-1 (primary))",19.40058501
+S2,A06,"first-stage F, conventional (instruments dated t-2)",171.4164885
+S2,A06,"first-stage F, two-way cluster-robust Wald (instruments dated t-2)",25.38438793
+S2,A06,"effective F, Montiel Olea-Pflueger, two-way (instruments dated t-2)",29.89564646
+S3,A11,previous-close disagreements,315
+S3,A11,median price at a disagreement,634.64
+S3,A11,largest relative gap two-decimal rounding can produce (median over disagreements),7.878482289e-06
+S3,A11,disagreements within two-decimal rounding,0
+S3,A11,disagreements between rounding and 0.5% (called 'rounding' by the rule),34
+S3,A11,downward revisions beyond 0.1% (corporate-action label),221
+S3,A11,downward revisions beyond 0.25% (corporate-action label),219
+S3,A11,downward revisions beyond 0.5% (corporate-action label),216
+S4,A15,"panel_trades_clean.csv: rows (README stated 184,430)",184430
+S4,A15,"analysis_sample.csv: rows (README stated 184,390)",184391
+S4,A15,"equity_sample.csv: rows (README stated 143,718)",143718

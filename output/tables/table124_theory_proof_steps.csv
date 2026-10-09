@@ -232,6 +232,76 @@ model,-,,,c = e_c - eta + eps equals r - o,symbolic,simplifies to 0,True
 6,e,B.6,e,"w' Sigma w = v (w' beta)^2 + w' Omega w, = v + w' Omega w under w' beta = 1",symbolic,simplifies to 0,True
 6,e,B.6,e,the two weight formulas agree on 200 random 4 x 4 designs,numerical,max gap 1.2e-15,True
 6,e,,,"M14 bounds: 1/(beta' Sigma^-1 beta) = Var(IV) + 1/(beta' Omega^-1 beta), so D_k = n_k - 1/(beta'Omega^-1 beta) <= n_k",symbolic,simplifies to 0,True
+7,a,B.7,a,E[(o* - b o)^2] = E[o*^2] - 2b E[o o*] + b^2 E[o^2],symbolic,simplifies to 0,True
+7,a,B.7,a,with E[o o*] = b E[o^2] this is E[o*^2] - b^2 E[o^2],symbolic,simplifies to 0,True
+7,a,B.7,a,E[(b o)^2] = E[o*^2] - E[(o* - b o)^2],symbolic,simplifies to 0,True
+7,a,B.7,a,if E[o* eta] = 0: b E[o^2] = E[o*^2],symbolic,simplifies to 0,True
+7,a,B.7,a,if E[o* eta] = 0: E[(b o)^2] = b E[o*^2],symbolic,simplifies to 0,True
+7,a,B.7,a,if E[o* eta] = 0: E[pi(o)] = b^2 E[o^2] + b(1-b) E[o^2] = E[o*^2],symbolic,simplifies to 0,True
+7,a,B.7,a,Gaussian: Var(o* | o) = E[o*^2] - b^2 E[o^2] = b(1-b) E[o^2],symbolic,simplifies to 0,True
+7,a,B.7,a,Gaussian: E[o*^2 | o] has slope b^2 on o^2 (simulation),Monte Carlo,"theory 0.371802, simulated 0.372375 (SE 0.00034)",True
+7,a,B.7,a,Gaussian: E[o*^2 | o] has intercept b(1-b)E[o^2] (simulation),Monte Carlo,"theory 0.390244, simulated 0.389159 (SE 0.00097)",True
+7,a,B.7,a,deficit at E[o*^2] = b^2 m_oo is 0,symbolic,simplifies to 0,True
+7,a,B.7,a,deficit at E[o*^2] = m_rr is m_rr - b^2 m_oo (Prop. 1(e) endpoints),symbolic,simplifies to 0,True
+7,b,B.7,b,"the three cases give R* = max(h, b o) - min(l, b o), b = 0.0",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"b o lies between 0 and o (a convex combination), b = 0.0",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+7,b,B.7,b,"R <= R* <= TR, b = 0.0",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"the three cases give R* = max(h, b o) - min(l, b o), b = 0.25",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"b o lies between 0 and o (a convex combination), b = 0.25",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+7,b,B.7,b,"R <= R* <= TR, b = 0.25",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"the three cases give R* = max(h, b o) - min(l, b o), b = 0.6",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"b o lies between 0 and o (a convex combination), b = 0.6",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+7,b,B.7,b,"R <= R* <= TR, b = 0.6",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"the three cases give R* = max(h, b o) - min(l, b o), b = 1.0",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"b o lies between 0 and o (a convex combination), b = 1.0",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+7,b,B.7,b,"R <= R* <= TR, b = 1.0",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,"at b = 1, b o = o lies in [l, h], so R* = R",pathwise,"max |residual| over 400,000 paths = 2.8e-17",True
+7,b,B.7,b,the audit's bar: R* = TR = ln(1.05) and A_0 = 0.8 ln(1.05)^2/(4 ln 2),numerical,"target 0.0006868613727, computed 0.0006868613727, tolerance 1e-15",True
+7,c,B.7,c,psi'(a) = -Phibar(a),symbolic,simplifies to 0,True
+7,c,B.7,c,psi(0) = 1/sqrt(2 pi),symbolic,simplifies to 0,True
+7,c,B.7,c,E[(Z - a)^+] = psi(a),symbolic,simplifies to 0,True
+7,c,B.7,c,E[(s Z - u)^+] = s psi(u/s),symbolic-50dp,zero to 50 digits at 12 random points (max |residual| 1.4e-191),True
+7,c,B.7,c,d/ds {s psi(u/s)} = phi(u/s),symbolic,simplifies to 0,True
+7,c,B.7,c,E[(eta^+)^2] = rho^2/2,symbolic,simplifies to 0,True
+7,c,B.7,c,f_M(0) = 2 phi(0) = sqrt(2/pi),symbolic,simplifies to 0,True
+7,c,B.7,c,int_0^e (e - x) f_M(x) dx = f_M(0) e^2/2 + O(e^3),symbolic,simplifies to 0,True
+7,c,B.7,c,"sum (-1)^(k+1)/k = ln 2, so E[U] = 2 sqrt(pi/2) ln 2 = sqrt(2 pi) ln 2",symbolic,simplifies to 0,True
+7,c,B.7,c,"E[U] from the law of U, by quadrature",numerical,"target 1.737462321, computed 1.737462321, tolerance 1e-09",True
+7,c,B.7,c,"the meander law is the images limit of (-m | M < a), x = 0.5",numerical,"target 2.682381008e-08, computed 2.702907582e-08, tolerance 0.0002",True
+7,c,B.7,c,"the meander law is the images limit of (-m | M < a), x = 1.0",numerical,"target 0.03605475634, computed 0.03608674397, tolerance 0.0002",True
+7,c,B.7,c,"the meander law is the images limit of (-m | M < a), x = 2.0",numerical,"target 0.7300003283, computed 0.7300539201, tolerance 0.0002",True
+7,c,B.7,c,assembly: (2/sqrt(2 pi))(E[U]/2 + X)/(4 ln 2) = 1/4 + X/(2 sqrt(2 pi) ln 2),symbolic,simplifies to 0,True
+7,c,B.7,c,upper bound: X <= s/sqrt(2 pi) gives 1/4 + s/(4 pi ln 2),symbolic,simplifies to 0,True
+7,c,B.7,c,lower bound: X >= s/sqrt(2 pi) - E[U]/2 gives s/(4 pi ln 2),symbolic,simplifies to 0,True
+7,c,B.7,c,psi(a) >= psi(0) - a/2 because int_0^a Phibar <= a/2,symbolic,simplifies to 0,True
+7,c,B.7,c,"large s: int_0^{U/s} z phi(0) dz = phi(0) U^2/(2 s^2), times s gives phi(0) U^2/(2s)",symbolic,simplifies to 0,True
+7,c,B.7,c,gamma_TR is increasing (min increment on a grid of 40),numerical,"target 0, computed 0, tolerance 0",True
+7,c,B.7,c,"the two numerical routes to gamma_TR agree, s = 0.3",numerical,"target 0.2500017925, computed 0.2500017925, tolerance 0.0002",True
+7,c,B.7,c,"the two numerical routes to gamma_TR agree, s = 1.0",numerical,"target 0.2578728682, computed 0.2578728682, tolerance 0.0002",True
+7,c,B.7,c,"the two numerical routes to gamma_TR agree, s = 3.0",numerical,"target 0.4048554432, computed 0.4048554432, tolerance 0.0002",True
+7,c,B.7,c,b = s^2/(s^2 + rho^2) = 1 - rho^2/s^2 + O(rho^4),symbolic,simplifies to 0,True
+7,c,B.7,c,E[(b o)^2] = b^2 (s^2 + rho^2) = s^2 - rho^2 + O(rho^4),symbolic,simplifies to 0,True
+7,c,B.7,c,"E[A] = s^2 + 1 - rho^2/2 + O(rho^4) (loading -1/2, any s and lambda_0)",symbolic,simplifies to 0,True
+7,c,B.7,c,with pi(o): E = s^2 + 1 + rho^2/2 + O(rho^4) (loading +1/2),symbolic,simplifies to 0,True
+7,c,B.7,c,E[pi(o)] = s^2 exactly under the model,symbolic,simplifies to 0,True
+7,c,B.7,c,"first-order loading of the Parkinson (s=0.5), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.49805 (SE 0.0031)",True
+7,c,B.7,c,"first-order loading of the true-range Parkinson TR^2/(4 ln 2) (s=0.5), against simulation (script 48)",Monte Carlo,"theory 0.250188, simulated 0.25149 (SE 0.002)",True
+7,c,B.7,c,"first-order loading of the open-free kernel (s=0.5), against simulation (script 48)",Monte Carlo,"theory 0.20015, simulated 0.201192 (SE 0.0016)",True
+7,c,B.7,c,"first-order loading of the full kernel (s=0.5), against simulation (script 48)",Monte Carlo,"theory -0.5, simulated -0.509482 (SE 0.023)",True
+7,c,B.7,c,"first-order loading of the full kernel, posterior overnight term (s=0.5), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.502399 (SE 0.023)",True
+7,c,B.7,c,"first-order loading of the overnight^2 + Parkinson (s=0.5), against simulation (script 48)",Monte Carlo,"theory 1.5, simulated 1.50027 (SE 0.023)",True
+7,c,B.7,c,"first-order loading of the Parkinson (s=1.0), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.49805 (SE 0.0031)",True
+7,c,B.7,c,"first-order loading of the true-range Parkinson TR^2/(4 ln 2) (s=1.0), against simulation (script 48)",Monte Carlo,"theory 0.257873, simulated 0.258913 (SE 0.0021)",True
+7,c,B.7,c,"first-order loading of the open-free kernel (s=1.0), against simulation (script 48)",Monte Carlo,"theory 0.206298, simulated 0.20713 (SE 0.0017)",True
+7,c,B.7,c,"first-order loading of the full kernel (s=1.0), against simulation (script 48)",Monte Carlo,"theory -0.5, simulated -0.502362 (SE 0.046)",True
+7,c,B.7,c,"first-order loading of the full kernel, posterior overnight term (s=1.0), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.500725 (SE 0.046)",True
+7,c,B.7,c,"first-order loading of the overnight^2 + Parkinson (s=1.0), against simulation (script 48)",Monte Carlo,"theory 1.5, simulated 1.50151 (SE 0.046)",True
+7,c,B.7,c,"first-order loading of the Parkinson (s=2.0), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.49805 (SE 0.0031)",True
+7,c,B.7,c,"first-order loading of the true-range Parkinson TR^2/(4 ln 2) (s=2.0), against simulation (script 48)",Monte Carlo,"theory 0.316176, simulated 0.316921 (SE 0.0027)",True
+7,c,B.7,c,"first-order loading of the open-free kernel (s=2.0), against simulation (script 48)",Monte Carlo,"theory 0.252941, simulated 0.253537 (SE 0.0021)",True
+7,c,B.7,c,"first-order loading of the full kernel (s=2.0), against simulation (script 48)",Monte Carlo,"theory -0.5, simulated -0.498252 (SE 0.092)",True
+7,c,B.7,c,"first-order loading of the full kernel, posterior overnight term (s=2.0), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.502528 (SE 0.092)",True
+7,c,B.7,c,"first-order loading of the overnight^2 + Parkinson (s=2.0), against simulation (script 48)",Monte Carlo,"theory 1.5, simulated 1.50399 (SE 0.092)",True
 paper,6.7,,,"Var(r) = Var(o) + Var(c) + 2 Cov(o, c) for sample moments (ddof = 1, n = 4 symbolic)",symbolic,simplifies to 0,True
 paper,6.7,,,"YZ - Var(r) = (1 - k)[mean RS - Var(c)] - 2 Cov(o, c), exactly",symbolic,simplifies to 0,True
 paper,4.5,,,Yang-Zhang weight k = 0.34/(1.34 + (n+1)/(n-1)) at n = 21,numerical,"target 0.1393442623, computed 0.1393442623, tolerance 1e-15",True

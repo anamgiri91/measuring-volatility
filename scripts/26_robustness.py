@@ -362,8 +362,9 @@ _audit["interpretation"] = _audit.ca_class.map({
     "corporate_action": "NEPSE's ex-date reference-price adjustment: the published previous "
                         "close is reduced by a bonus/rights entitlement. Adopting it removes a "
                         "price move that did not happen.",
-    "reference_rounding": "within the 0.5% rounding floor; not separable from tick rounding, "
-                          "so treated as agreement and NOT adjusted.",
+    "reference_rounding": "below the 0.5% classification threshold: too small for an entitlement (bonus and "
+                          "rights adjustments move the reference by several percent) but not tick rounding "
+                          "either, which is about 0.001% at these prices; treated as agreement and NOT adjusted.",
     "upward_adjustment": "published previous close ABOVE the prior close. Not explicable as an "
                          "entitlement; left UNADJUSTED and disclosed.",
     "session_gap": "the prior observed row is not the previous genuine session, so there is no "

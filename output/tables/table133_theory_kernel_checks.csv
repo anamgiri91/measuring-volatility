@@ -1,0 +1,64 @@
+proposition,check,design,theory,value,se,rule,pass
+7,a: E[(b o)^2] = b E[o*^2] under an uncorrelated error,"s=1.0, sigma_eta=0.8",0,0.0001702176274,0.0003344346825,|value - theory| <= 4 SE,True
+7,a: the linear posterior moment is unbiased for E[o*^2],"s=1.0, sigma_eta=0.8",0,0.0003086569041,0.0004774655639,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has slope b^2 on o^2,"s=1.0, sigma_eta=0.8",0.3718024985,0.371211968,0.0002416304073,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has intercept b(1-b)E[o^2],"s=1.0, sigma_eta=0.8",0.3902439024,0.3909036423,0.0006861064879,|value - theory| <= 4 SE,True
+7,a: E[(b o)^2] = b E[o*^2] under an uncorrelated error,"s=0.5, sigma_eta=1.2",0,2.18480331e-05,3.633363948e-05,|value - theory| <= 4 SE,True
+7,a: the linear posterior moment is unbiased for E[o*^2],"s=0.5, sigma_eta=1.2",0,0.0001313865374,0.0002029258442,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has slope b^2 on o^2,"s=0.5, sigma_eta=1.2",0.02188298729,0.02167715566,7.309982265e-05,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has intercept b(1-b)E[o^2],"s=0.5, sigma_eta=1.2",0.2130177515,0.213234247,0.0002139689054,|value - theory| <= 4 SE,True
+7,a: E[(b o)^2] = b E[o*^2] under an uncorrelated error,"s=2.0, sigma_eta=0.5",0,-0.001715066908,0.0009938027703,|value - theory| <= 4 SE,True
+7,a: the linear posterior moment is unbiased for E[o*^2],"s=2.0, sigma_eta=0.5",0,-0.001721823846,0.001013528273,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has slope b^2 on o^2,"s=2.0, sigma_eta=0.5",0.8858131488,0.8860744197,0.0001590223555,|value - theory| <= 4 SE,True
+7,a: Gaussian E[o*^2 | o] has intercept b(1-b)E[o^2],"s=2.0, sigma_eta=0.5",0.2352941176,0.2359060141,0.001169525262,|value - theory| <= 4 SE,True
+7,a: proportional overreaction makes (b o)^2 = o*^2 pathwise,theta=0.5,0,1.065814104e-14,,"identity, relative error <= 1e-09",True
+7,a: proportional overreaction makes (b o)^2 = o*^2 pathwise,theta=2.0,0,1.065814104e-14,,"identity, relative error <= 1e-09",True
+7,a: (b o)^2 has the same mean under every law of Prop. 1(e),"E[o^2]=1, E[r^2]=2, b=0.4",0.16,0.16,,"E[(b o)^2] = b^2 E[o^2] depends only on the law of (o, r)",True
+7,"a: the deficit spans [0, E[r^2] - b^2 E[o^2]]","E[o^2]=1, E[r^2]=2, b=0.4",1.84,1.84,,E[o*^2] - b^2 E[o^2] = 0 and = E[r^2] - b^2 E[o^2] are both attained,True
+7,"b: R* = max(h, b o) - min(l, b o)","b=0.0, 4000000 bars",0,2.775557562e-17,,"identity, relative error <= 1e-12",True
+7,b: R <= R* <= TR,"b=0.0, 4000000 bars",0,0,,violations = 0,True
+7,"b: R* = max(h, b o) - min(l, b o)","b=0.3, 4000000 bars",0,2.775557562e-17,,"identity, relative error <= 1e-12",True
+7,b: R <= R* <= TR,"b=0.3, 4000000 bars",0,0,,violations = 0,True
+7,"b: R* = max(h, b o) - min(l, b o)","b=0.7, 4000000 bars",0,2.775557562e-17,,"identity, relative error <= 1e-12",True
+7,b: R <= R* <= TR,"b=0.7, 4000000 bars",0,0,,violations = 0,True
+7,"b: R* = max(h, b o) - min(l, b o)","b=1.0, 4000000 bars",0,2.775557562e-17,,"identity, relative error <= 1e-12",True
+7,b: R <= R* <= TR,"b=1.0, 4000000 bars",0,0,,violations = 0,True
+7,b: R* = R when b = 1,4000000 bars,0,2.775557562e-17,,"identity, relative error <= 1e-12",True
+7,b: the audit's bar gives R* = ln(O/C_-),"C_- = C = L = 100, O = H = 105, b = 0",0.04879016417,0.04879016417,,"identity, relative error <= 1e-09",True
+7,c: E[U] = sqrt(2 pi) ln 2 from the meander law,integral of 1 - F_U,1.737462321,1.737462321,,"numerical, |error| <= 1e-09",True
+7,c: the meander law is the images limit of (-m | M < a),"x=0.5, a=1e-4",2.682381008e-08,2.702907582e-08,,"numerical, |error| <= 0.0002",True
+7,c: the meander law is the images limit of (-m | M < a),"x=1.0, a=1e-4",0.03605475634,0.03608674397,,"numerical, |error| <= 0.0002",True
+7,c: both forms of the meander law agree,x=1.0,0.03605475634,0.03605475634,,"numerical, |error| <= 1e-12",True
+7,c: the meander law is the images limit of (-m | M < a),"x=1.5, a=1e-4",0.3728329582,0.3729171286,,"numerical, |error| <= 0.0002",True
+7,c: both forms of the meander law agree,x=1.5,0.3728329582,0.3728329582,,"numerical, |error| <= 1e-12",True
+7,c: the meander law is the images limit of (-m | M < a),"x=2.0, a=1e-4",0.7300003283,0.7300539201,,"numerical, |error| <= 0.0002",True
+7,c: both forms of the meander law agree,x=2.0,0.7300003283,0.7300003283,,"numerical, |error| <= 1e-12",True
+7,c: the meander law is the images limit of (-m | M < a),"x=3.0, a=1e-4",0.9777820374,0.9777887015,,"numerical, |error| <= 0.0002",True
+7,c: both forms of the meander law agree,x=3.0,0.9777820374,0.9777820374,,"numerical, |error| <= 1e-12",True
+7,c: gamma_TR is increasing in s,"s in [0.05, 6], 60 points",0,2.987199377e-11,,min increment > 0,True
+7,"c: max(1/4, s/(4 pi ln 2)) <= gamma_TR <= 1/4 + s/(4 pi ln 2)","s in [0.05, 6], 60 points",0,0,,both margins >= 0,True
+7,c: gamma_TR -> 1/4 as s -> 0,s = 1e-3,0.25,0.25,,"numerical, |error| <= 1e-06",True
+7,c: gamma_TR - s/(4 pi ln 2) -> 0 as s -> infinity,s = 200,0,0.0009442326359,,"numerical, |error| <= 0.005",True
+7,c: two routes to gamma_TR agree,s=0.25,0.2500001863,0.2500001863,,"numerical, |error| <= 0.0002",True
+7,c: two routes to gamma_TR agree,s=0.5,0.250187854,0.250187854,,"numerical, |error| <= 0.0002",True
+7,c: two routes to gamma_TR agree,s=1.0,0.2578728682,0.2578728682,,"numerical, |error| <= 0.0002",True
+7,c: two routes to gamma_TR agree,s=2.0,0.3161762002,0.3161762002,,"numerical, |error| <= 0.0002",True
+7,c: two routes to gamma_TR agree,s=4.0,0.5053459223,0.5053459223,,"numerical, |error| <= 0.0002",True
+7,c: first-order loading of the Parkinson,"s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.4980502978,0.003111379649,|value - theory| <= 4 SE,True
+7,c: first-order loading of the true-range Parkinson TR^2/(4 ln 2),"s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.250187854,0.2514903974,0.002020825611,|value - theory| <= 4 SE,True
+7,c: first-order loading of the open-free kernel,"s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.2001502832,0.201192318,0.001616660489,|value - theory| <= 4 SE,True
+7,c: first-order loading of the full kernel,"s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",-0.5,-0.5094822357,0.02347984702,|value - theory| <= 4 SE,True
+7,"c: first-order loading of the full kernel, posterior overnight term","s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.5023985389,0.02347984702,|value - theory| <= 4 SE,True
+7,c: first-order loading of the overnight^2 + Parkinson,"s=0.5, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",1.5,1.500269649,0.0232770707,|value - theory| <= 4 SE,True
+7,c: first-order loading of the Parkinson,"s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.4980502978,0.003111379649,|value - theory| <= 4 SE,True
+7,c: first-order loading of the true-range Parkinson TR^2/(4 ln 2),"s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.2578728682,0.2589126177,0.002073720938,|value - theory| <= 4 SE,True
+7,c: first-order loading of the open-free kernel,"s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.2062982945,0.2071300942,0.00165897675,|value - theory| <= 4 SE,True
+7,c: first-order loading of the full kernel,"s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",-0.5,-0.5023615774,0.04630959526,|value - theory| <= 4 SE,True
+7,"c: first-order loading of the full kernel, posterior overnight term","s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.5007247745,0.04630959526,|value - theory| <= 4 SE,True
+7,c: first-order loading of the overnight^2 + Parkinson,"s=1.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",1.5,1.501509598,0.04613018932,|value - theory| <= 4 SE,True
+7,c: first-order loading of the Parkinson,"s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.4980502978,0.003111379649,|value - theory| <= 4 SE,True
+7,c: first-order loading of the true-range Parkinson TR^2/(4 ln 2),"s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.3161762002,0.3169212214,0.002651280619,|value - theory| <= 4 SE,True
+7,c: first-order loading of the open-free kernel,"s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.2529409602,0.2535369771,0.002121024495,|value - theory| <= 4 SE,True
+7,c: first-order loading of the full kernel,"s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",-0.5,-0.4982515838,0.09219921393,|value - theory| <= 4 SE,True
+7,"c: first-order loading of the full kernel, posterior overnight term","s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",0.5,0.502527535,0.09219921393,|value - theory| <= 4 SE,True
+7,c: first-order loading of the overnight^2 + Parkinson,"s=2.0, rho=(0.02, 0.04, 0.08), 4000000 paths, 100 steps",1.5,1.503988522,0.09201571898,|value - theory| <= 4 SE,True

@@ -10,7 +10,8 @@ Sections~6.6--6.8 of the paper report four facts:
         frontier panel;
   \item a pooled calibration lagged the band reform.
 \end{itemize}
-This section gives the statistics behind those facts in six propositions. Proofs are in
+This section gives the statistics behind those facts in six propositions. A seventh,
+added after an independent audit, says what Anam's estimator does with a noisy open. Proofs are in
 Appendix~\ref{app:proofs}. The script \texttt{scripts/45\_theory\_checks.py} compared each closed
 form, identity and inequality with a simulation or a numerical integral, as plan M19 required. The
 plan was registered before the script was written. Table~\ref{tab:checks} lists the checks. A second
@@ -18,6 +19,7 @@ script verified every step of every proof, symbolically wherever the step is alg
 (Table~\ref{tab:proofs}). The
 propositions are post hoc relative to plans M14--M18, because they were derived after those
 results were known. Only the test of Section~\ref{sec:pooling} had its prediction fixed in advance.
+Proposition~\ref{prop:kernel} was checked by a third script, \texttt{scripts/48\_kernel\_theory.py}.
 
 \subsection{The model}\label{sec:model}
 
@@ -126,7 +128,8 @@ Part~(e) is why the paper sets the level of every estimator on the close-to-clos
 level the bar identifies without assumptions about the error is $\E[r^2]$. How it divides between
 the overnight move and the session is identified only up to the interval in~(e). The overnight
 term of Anam's estimator, $(b\,o)^2$, has expectation $b^2\E[o^2]$, the lower end of that
-interval. That lower end is exact under pure proportional overreaction. Part~(d) gives another
+interval. That lower end is exact under pure proportional overreaction, and
+Proposition~\ref{prop:kernel}(a) says what it misses otherwise. Part~(d) gives another
 reading of the S\&P~500's pooled $b$ of 2.21 (Section~6.8): it is what an index open
 reflecting about $45\%$ of the overnight move would produce.
 
@@ -496,6 +499,115 @@ Part~(c) qualifies the identification behind Section~6.6.
 The two-session-lag sensitivity reported in Section~6.6 is therefore the relevant check of
 identification, not an optional one.
 
+\subsection{What Anam's kernel does with a noisy open}\label{sec:kernel}
+
+An independent audit of 9 October 2026 objected to two readings of Anam's estimator (Section~6.8 of
+the paper). The first is that $b\,o$ is the permanent overnight move, and its square that move's
+variance. The second is that extending the range removes an open that overshoots. This subsection
+replaces both readings with a result, and measures how much of the opening error each kernel
+absorbs. It was derived after the audit, and nothing in it was predicted in advance.
+
+Measured from the previous close, write $h=\ln(H/C_{-})$ and $l=\ln(L/C_{-})$. The kernel of
+Anam's estimator, with $w=\lambda_0(1-b)$ and $\lambda_0=0.2$, is
+\begin{equation}\label{eq:kernel}
+  A=(1-w)\Bigl\{(b\,o)^2+\frac{R^{*2}}{4\ln2}\Bigr\}+w\,r^2,\qquad
+  R^*=R+\max(0,\,b\,o-h)+\max(0,\,l-b\,o).
+\end{equation}
+Its open-free form is $A_0=(1-\lambda_0)\,TR^2/(4\ln2)+\lambda_0r^2$, where
+$TR=\max(h,0)-\min(l,0)$ is Wilder's true range \citep{Wilder1978}. It is the case $b=0$. Let
+$\pi(o)=b^2o^2+b(1-b)\E[o^2]$, and let $\psi(a)=\E[(Z-a)^+]=\phi(a)-a\Phibar(a)$ for a standard
+normal $Z$.
+
+\begin{proposition}[Anam's kernel under a noisy open]\label{prop:kernel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Under Assumption~\ref{as:orth},
+        $\E[(b\,o)^2]=b^2\E[o^2]=\E[\os^2]-\E[(\os-b\,o)^2]\le\E[\os^2]$, with equality if and only
+        if $\os=b\,o$ almost surely.
+        \begin{itemize}
+          \item If $\E[\os\eta]=0$, then $\E[(b\,o)^2]=b\,\E[\os^2]$, and $\E[\pi(o)]=\E[\os^2]$.
+          \item If, in addition, $(\os,\eta)$ is a centred Gaussian vector, then
+                $\pi(o)=\E[\os^2\mid o]$.
+          \item Without a restriction on $\E[\os\eta]$, the deficit $\E[(\os-b\,o)^2]$ is identified
+                only up to the interval $[0,\,\E[r^2]-b^2\E[o^2]]$.
+        \end{itemize}
+  \item For every bar, $R^*=\max(h,b\,o)-\min(l,b\,o)$. Hence $R\le R^*\le TR$ for $b\in[0,1]$,
+        with $R^*=R$ when $b=1$, so the extension never removes a printed open that set the high or
+        the low. With $C_{-}=C=L$ and $O=H$, the open-free kernel is
+        $A_0=(1-\lambda_0)\ln^2(O/C_{-})/(4\ln2)>0$, although nothing but the print moved.
+  \item Let Assumption~\ref{as:path} hold, with $\os\sim N(0,s^2\sigma_c^2)$ independent of
+        $(\eta,W)$ and $b$ at its population value $s^2/(s^2+\rho^2)$. As $\sigma_\eta\to0$ with
+        $\sigma_c$ and $s$ fixed, each kernel's expectation exceeds its value at $\sigma_\eta=0$ by
+        $\gamma\sigma_\eta^2\{1+o(1)\}$. The loadings $\gamma$ are:
+        \begin{itemize}
+          \item for the true range, $TR^2/(4\ln2)$,
+                \begin{equation}\label{eq:gammaTR}
+                  \gamma_{TR}(s)=\frac14+\frac{s\,\E[\psi(U/s)]}{2\sqrt{2\pi}\ln2}.
+                \end{equation}
+                Here $U$ is the maximum of a Brownian meander on $[0,1]$, with
+                $P(U\le u)=1+2\sum_{k\ge1}(-1)^ke^{-k^2u^2/2}$. The loading $\gamma_{TR}$ increases
+                in $s$, from $\tfrac14$ as $s\to0$ to $s/(4\pi\ln2)+o(1)$ as $s\to\infty$, and
+                $\max\{\tfrac14,\,s/(4\pi\ln2)\}\le\gamma_{TR}(s)\le\tfrac14+s/(4\pi\ln2)$;
+          \item $(1-\lambda_0)\gamma_{TR}(s)$ for the open-free kernel $A_0$;
+          \item $-\tfrac12$ for the full kernel $A$, whatever $s$;
+          \item $+\tfrac12$ for $A$ with $\pi(o)$ in place of $(b\,o)^2$.
+        \end{itemize}
+\end{enumerate}
+\end{proposition}
+
+Part~(a) makes the audit's first objection exact. The overnight term is the lower end of the
+identified set of Proposition~\ref{prop:ident}(e). It is unbiased for the efficient overnight
+second moment only under proportional overreaction. Under an error uncorrelated with the news it
+carries the fraction $b$ of that moment. In NEPSE, where $b$ lies between 0.13 and 0.36, that is a
+third or less. The calibration $\kappa$ restores the average level of the whole kernel, not the
+overnight share within it. The posterior moment $\pi(o)$ corrects the share, but only under the
+uncorrelated-error reading, which the data cannot confirm.
+
+Part~(b) makes the second objection exact. The extension moves the anchor; it does not move the
+extremes. The audit's bar, $C_{-}=C=L=100$ and $O=H=105$, gives
+$A_0=\thn{k7-ex-kernel}\times10^{-4}$, all of it opening error.
+
+Part~(c) measures what remains:
+\begin{itemize}
+  \item \textbf{To first order}, the open-free kernel absorbs $(1-\lambda_0)\gamma_{TR}(s)$ of the
+        error's variance: \thn{k7-gOF-0p3} at $s=0.3$ and \thn{k7-gOF-1p0} at $s=1$. Parkinson
+        absorbs $\tfrac12$ and overnight$^2$ + Parkinson $\tfrac32$ (Proposition~\ref{prop:classical}(g)).
+  \item \textbf{The full kernel over-corrects.} Its shrinkage of the overnight move removes the
+        residual uncertainty as well as the error, by part~(a). To first order this outweighs the
+        half that the range absorbs.
+  \item \textbf{First order needs $\sigma_\eta\ll s\sigma_c$.} At the error sizes of NEPSE this
+        condition fails, so Table~\ref{tab:kernel} gives the exact exposures, by simulation. Under an
+        uncorrelated error, the moments of NEPSE's first regime imply $s=\thn{k7-s-NA1}$ and
+        $\rho=\thn{k7-rho-NA1}$ (and $s=\thn{k7-s-NC}$, $\rho=\thn{k7-rho-NC}$ after the reform).
+        At $s=0.3$ and $\rho=0.5$ the open-free kernel absorbs \thn{k7-ex-OF-s0p3-r0p5} of the
+        error's variance, against \thn{k7-ex-P-s0p3-r0p5} for Parkinson and
+        \thn{k7-ex-full-s0p3-r0p5} for the full kernel.
+  \item \textbf{Across the samples.} At each sample's own implied $s$ and $\rho$ (nine samples:
+        NEPSE's four regimes, the NIFTY~50 and the four frontier panels), the open-free kernel
+        absorbs between \thn{k7-xOF-min} and \thn{k7-xOF-max} of the error's variance and Parkinson
+        between \thn{k7-xP-min} and \thn{k7-xP-max}. The full kernel ranges from
+        \thn{k7-xfull-min} to \thn{k7-xfull-max}: its overnight shrinkage over-corrects where the
+        overnight move is large relative to the session, and under-corrects where it is small. These
+        are reported, not tested: they rest on the uncorrelated-error reading of the moments.
+\end{itemize}
+Leaving the open out therefore reduces the exposure to the opening error but does not remove it.
+Which of the two forms is exposed more depends on $s$ and $\rho$. Only close-to-close has no
+exposure at all.
+
+\begin{table}[t]
+\centering\small
+\caption{Each kernel's exposure to the opening error: the excess of its expectation over its value with an exact open, in units of $\sigma_\eta^2$ (Assumption~\ref{as:path}, $\os\sim N(0,s^2\sigma_c^2)$, $b$ at its population value, $\sigma_c=1$). ``First order'' is Proposition~\ref{prop:kernel}(c) and Proposition~\ref{prop:classical}(g). The other columns are exact, by simulation with 4{,}000{,}000 paths. Ledger: \texttt{table134\_theory\_\allowbreak kernel\_\allowbreak exposure.csv}.}\label{tab:kernel}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{3}{c}{$s=0.3$} & \multicolumn{3}{c}{$s=1$} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Kernel & First order & $\rho=0.5$ & $\rho=1$ & First order & $\rho=0.5$ & $\rho=1$ \\
+\midrule
+\tabinput{generated/tab_kernel.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Verification}\label{sec:verification}
 
 Every closed form, identity and inequality above was set against one of three references by
@@ -542,6 +654,11 @@ verified in one of five ways:
 \end{itemize}
 The step ledger, \texttt{output/tables/table124\_theory\_proof\_steps.csv}, has \thn{proofs-n}
 steps, of which \thn{proofs-pass} pass and \thn{proofs-fail} fail (Table~\ref{tab:proofs}).
+Proposition~\ref{prop:kernel} was added after both scripts' first runs. Its closed forms were set
+against simulation and numerical integrals by \texttt{scripts/\allowbreak 48\_kernel\_theory.py},
+in \thn{k7-checks-n} checks, of which \thn{k7-checks-pass} pass
+(\texttt{table133\_theory\_\allowbreak kernel\_\allowbreak checks.csv}). Its proof is in the step
+ledger with the others.
 
 \begin{table}[h]
 \centering\small

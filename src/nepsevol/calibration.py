@@ -36,9 +36,15 @@ so for ANY F_{t-1}-measurable instrument vector ``Z_{i,t-1}``
 
     Cov(X_it, Z_{i,t-1}') = beta * Cov(V_it, Z_{i,t-1}'),                                   (P1)
 
-a K x L matrix of RANK ONE whose column space is spanned by ``beta``. The measurement error and
-the unpredictable part of variance are martingale differences, so lagged measures are valid
-instruments however strongly the same-day errors are correlated. No assumption is made about
+a K x L matrix of RANK ONE whose column space is spanned by ``beta``. Under (M1) the measurement error
+and the unpredictable part of variance are martingale differences, so lagged measures are valid
+instruments however strongly the same-day errors are correlated. That validity is an ASSUMPTION of
+(M1), not a consequence of volatility persistence, which supplies only relevance: an error that persists
+across sessions (a lasting spread, a slowly corrected auction error) violates it, and then only
+instruments dated before the persistence ends are valid (theory supplement, Proposition 6(c)). In the
+pooled NEPSE sample the overidentifying restrictions are rejected (table78), and the first stage that
+looks strong by the conventional F (556) is borderline by a cluster-robust standard (effective F 19.4
+with instruments dated t-1, 29.9 with t-2; ``scripts/49_audit_sensitivities.py``; audit item A06). No assumption is made about
 how ``V`` evolves -- in particular it need not be a random walk, which the data-based ranking of
 Patton (2011, J. Econometrics 161) requires -- and no high-frequency benchmark is used. This is
 the classic errors-in-variables remedy of Christensen & Prabhala (1998), applied to estimators
@@ -282,17 +288,38 @@ def lagged_means(df: pd.DataFrame, cols, windows=(1, 5, 22), by: str = "symbol",
 
 
 def predictable_scale(df: pd.DataFrame, col: str, window: int = 22, by: str = "symbol",
-                      floor_quantile: float = 0.01) -> pd.Series:
+                      floor_quantile: float = 0.01, floor: str = "full", date: str = "date") -> pd.Series:
     """Precision weight ``1 / S_{t-1}^2`` from a trailing mean of ``col`` through session ``t-1``.
 
-    F_{t-1}-measurable by construction, so weighting by it leaves every moment condition valid.
-    ``S`` is floored at the ``floor_quantile`` of its own distribution so a security-day with an
-    implausibly quiet history cannot take an unbounded weight.
+    ``S`` is floored at the ``floor_quantile`` of its own distribution, so that a security-day with
+    an implausibly quiet history cannot take an unbounded weight. ``floor`` says which distribution:
+
+    ``"full"`` (the frozen M14 choice): the quantile of ``S`` over the whole supplied panel. That
+        constant uses future observations, so in a finite sample the weight is not strictly
+        F_{t-1}-measurable (audit item A13, 9 October 2026; an earlier docstring said it was "by
+        construction"). Every moment condition E[w U Z] = 0 holds for ANY fixed floor, because
+        E[U | F_{t-1}] = 0 whatever the weight's constant. So the population moment does not move
+        with the floor: estimating it is an orthogonal nuisance, with no first-order effect on the
+        GMM estimator. ``scripts/49_audit_sensitivities.py`` measures the finite-sample effect.
+    ``"past"``: for each date, the quantile of every ``S`` dated strictly before it, an expanding
+        estimate that uses no later observation. Rows on dates with no earlier ``S`` are not floored.
     """
     s = df.groupby(by, sort=False)[col].shift(1)
     S = s.groupby(df[by], sort=False).transform(lambda x: x.rolling(window, min_periods=window).mean())
-    floor = np.nanquantile(S, floor_quantile)
-    S = S.clip(lower=floor)
+    if floor == "full":
+        S = S.clip(lower=np.nanquantile(S, floor_quantile))
+    elif floor == "past":
+        dates = pd.to_datetime(df[date])
+        order = np.sort(dates.unique())
+        vals = S.to_numpy()
+        dv = dates.to_numpy()
+        fl = {}
+        for d in order:
+            past = vals[(dv < d) & np.isfinite(vals)]
+            fl[d] = np.quantile(past, floor_quantile) if len(past) else -np.inf
+        S = S.clip(lower=dates.map(pd.Series(fl)).astype(float))
+    else:
+        raise ValueError(f"floor must be 'full' or 'past', got {floor!r}")
     return 1.0 / S.pow(2)
 
 
@@ -398,6 +425,11 @@ class CalibrationResult:
     J_df: int = 0
     n_obs: int = 0
     n_groups: int = 0
+    #: cluster-robust first-stage diagnostics (``robust_first_stage=True``): the Wald statistic of the
+    #: excluded instruments divided by their number, and Montiel Olea and Pflueger's (2013) effective F,
+    #: both with the moment covariance clustered by security and date
+    first_stage_F_robust: float = float("nan")
+    first_stage_F_eff: float = float("nan")
 
     def table(self) -> pd.DataFrame:
         b = self.bounds
@@ -473,7 +505,8 @@ def past_demean(M: np.ndarray, codes: np.ndarray) -> np.ndarray:
 def calibrate(X: np.ndarray, Z: np.ndarray, group, measures, reference: str,
               weights: np.ndarray | None = None, date=None, composite_over=None,
               transform: str = "fod", cluster: str = "two-way",
-              compute_J: bool = True, instruments: str = "levels") -> CalibrationResult:
+              compute_J: bool = True, instruments: str = "levels",
+              robust_first_stage: bool = False) -> CalibrationResult:
     """Instrumented calibration of K measures against a reference, with security fixed effects.
 
     Parameters
@@ -493,6 +526,8 @@ def calibrate(X: np.ndarray, Z: np.ndarray, group, measures, reference: str,
     cluster : ``"two-way"`` (security and date, Cameron-Gelbach-Miller) or ``"date"`` for the
         covariance of the moment conditions in the J statistic.
     compute_J : skip the J statistic (the bootstrap does not need it).
+    robust_first_stage : also compute the first stage's cluster-robust Wald F and effective F (audit
+        item A06: ``first_stage_F`` is the conventional, homoskedastic statistic).
     instruments : under ``"fod"``, use the lagged instruments in ``"levels"`` with a constant
         (default; the standard Arellano-Bover choice for predetermined instruments) or
         ``"past"``-demeaned on each security's own expanding mean. Both are valid. The Monte
@@ -630,11 +665,55 @@ def calibrate(X: np.ndarray, Z: np.ndarray, group, measures, reference: str,
             b_gmm = float(b_vec @ Sinv @ a_vec) / float(b_vec @ Sinv @ b_vec)
             m_ = a_vec - b_gmm * b_vec
             J[k] = float(m_ @ Sinv @ m_)
+    F_rob = F_eff = float("nan")
+    if robust_first_stage and dts_k is not None:
+        F_rob, F_eff = _robust_first_stage(Zs, Xs[:, r], w, codes_k, _group_codes(dts_k),
+                                           has_constant=(transform == "fod"), two_way=(cluster == "two-way"))
     return CalibrationResult(
         measures=measures, reference=reference, beta=beta, ols_slope=ols, mean=mean, ratio=ratio,
         delta=delta, corr_with_ref=corr, weights=wts, bounds=bounds, var_vhat=var_vhat,
         first_stage_F=float(F), first_stage_R2=float(R2), rank_one_share=share, J=J,
-        J_df=max(L_eff - 1, 0), n_obs=int((w > 0).sum()), n_groups=int(n_g))
+        J_df=max(L_eff - 1, 0), n_obs=int((w > 0).sum()), n_groups=int(n_g),
+        first_stage_F_robust=float(F_rob), first_stage_F_eff=float(F_eff))
+
+
+def _robust_first_stage(Z, x, w, sec, dte, has_constant: bool, two_way: bool) -> tuple[float, float]:
+    """Cluster-robust first-stage strength for one endogenous regressor.
+
+    The constant (if any) is partialled out. With the weighted first stage x = Z pi + e, the
+    covariance of pi-hat is V = Q^-1 S Q^-1, Q = Z'WZ, S the clustered outer product of the scores
+    z w e (date clusters, plus security clusters minus rows for two-way). Returns the Wald statistic
+    pi' V^-1 pi divided by the number of excluded instruments, and the effective F
+    pi' Q pi / tr(V Q) of Montiel Olea and Pflueger (2013), which equals the conventional F under
+    homoskedasticity.
+    """
+    sw = w.sum()
+    if has_constant:
+        Zx = Z[:, 1:]
+        Zx = Zx - (Zx * w[:, None]).sum(0) / sw
+        xc = x - (w * x).sum() / sw
+    else:
+        Zx, xc = Z, x
+    Q = (Zx * w[:, None]).T @ Zx
+    pi = np.linalg.solve(Q, (Zx * w[:, None]).T @ xc)
+    e = xc - Zx @ pi
+    h = Zx * (w * e)[:, None]
+    L = Zx.shape[1]
+
+    def clustered(codes):
+        n_c = codes.max() + 1
+        g = np.zeros((n_c, L))
+        for j in range(L):
+            g[:, j] = np.bincount(codes, weights=h[:, j], minlength=n_c)
+        return g.T @ g
+    S = clustered(dte)
+    if two_way and sec.max() > 0:
+        S = S + clustered(sec) - h.T @ h
+    Qi = np.linalg.inv(Q)
+    V = Qi @ S @ Qi
+    wald = float(pi @ np.linalg.pinv(V) @ pi) / L
+    eff = float(pi @ Q @ pi) / float(np.trace(V @ Q))
+    return wald, eff
 
 
 # --------------------------------------------------------------------------------------------

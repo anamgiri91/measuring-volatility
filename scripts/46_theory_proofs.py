@@ -832,6 +832,142 @@ def prop6(S: Steps, quick: bool) -> None:
 # The paper's own mathematical claims, checked on the data where they are identities
 # =============================================================================================
 
+# =============================================================================================
+# Proposition 7 (Appendix B.7): Anam's kernel under a noisy open
+# =============================================================================================
+
+def prop7(S: Steps, quick: bool) -> None:
+    s48 = _load("s48_for_46", "48_kernel_theory.py")
+    os_, eta = sp.symbols("ostar eta")
+    so, ce, ve = sp.symbols("s_oo c_oe v_ee", real=True)
+    mom = {frozenset((os_,)): so, frozenset((os_, eta)): ce, frozenset((eta,)): ve}
+    rv = [os_, eta]
+    o = os_ + eta
+    Eoo, Eoos = E(o * o, rv, mom), E(o * os_, rv, mom)
+    b = Eoos / Eoo
+    # (a)
+    S.sym("7", "a", "B.7", "a", "E[(o* - b o)^2] = E[o*^2] - 2b E[o o*] + b^2 E[o^2]",
+          E((os_ - b * o) ** 2, rv, mom) - (so - 2 * b * Eoos + b ** 2 * Eoo))
+    S.sym("7", "a", "B.7", "a", "with E[o o*] = b E[o^2] this is E[o*^2] - b^2 E[o^2]",
+          E((os_ - b * o) ** 2, rv, mom) - (so - b ** 2 * Eoo))
+    S.sym("7", "a", "B.7", "a", "E[(b o)^2] = E[o*^2] - E[(o* - b o)^2]",
+          E((b * o) ** 2, rv, mom) - (so - E((os_ - b * o) ** 2, rv, mom)))
+    mom0 = dict(mom)
+    mom0[frozenset((os_, eta))] = 0
+    Eoo0, b0 = E(o * o, rv, mom0), E(o * os_, rv, mom0) / E(o * o, rv, mom0)
+    S.sym("7", "a", "B.7", "a", "if E[o* eta] = 0: b E[o^2] = E[o*^2]", b0 * Eoo0 - so)
+    S.sym("7", "a", "B.7", "a", "if E[o* eta] = 0: E[(b o)^2] = b E[o*^2]", b0 ** 2 * Eoo0 - b0 * so)
+    S.sym("7", "a", "B.7", "a", "if E[o* eta] = 0: E[pi(o)] = b^2 E[o^2] + b(1-b) E[o^2] = E[o*^2]",
+          b0 ** 2 * Eoo0 + b0 * (1 - b0) * Eoo0 - so)
+    S.sym("7", "a", "B.7", "a", "Gaussian: Var(o* | o) = E[o*^2] - b^2 E[o^2] = b(1-b) E[o^2]",
+          (so - b0 ** 2 * Eoo0) - b0 * (1 - b0) * Eoo0)
+    n = 200_000 if quick else 2_000_000
+    rng = np.random.default_rng(SEED + 7)
+    sv, tv = 1.0, 0.8
+    x = rng.normal(0, sv, n)
+    y = x + rng.normal(0, tv, n)
+    bb = sv * sv / (sv * sv + tv * tv)
+    X = np.column_stack([np.ones(n), y * y])
+    coef = np.linalg.lstsq(X, x * x, rcond=None)[0]
+    res = x * x - X @ coef
+    cov = np.linalg.inv(X.T @ X) * np.mean(res ** 2)
+    S.mc("7", "a", "B.7", "a", "Gaussian: E[o*^2 | o] has slope b^2 on o^2 (simulation)", bb * bb, coef[1], math.sqrt(cov[1, 1]))
+    S.mc("7", "a", "B.7", "a", "Gaussian: E[o*^2 | o] has intercept b(1-b)E[o^2] (simulation)",
+         bb * (1 - bb) * (sv * sv + tv * tv), coef[0], math.sqrt(cov[0, 0]))
+    moo, mrr, s_ = sp.symbols("m_oo m_rr s", positive=True)
+    bq = sp.symbols("b", real=True)
+    S.sym("7", "a", "B.7", "a", "deficit at E[o*^2] = b^2 m_oo is 0", (bq ** 2 * moo) - bq ** 2 * moo)
+    S.sym("7", "a", "B.7", "a", "deficit at E[o*^2] = m_rr is m_rr - b^2 m_oo (Prop. 1(e) endpoints)",
+          (mrr - bq ** 2 * moo) - (mrr - bq ** 2 * moo))
+    # (b)
+    m_ = 400_000 if not quick else 50_000
+    o_ = rng.normal(0, 0.02, m_)
+    c_ = rng.normal(0, 0.02, m_)
+    u_ = np.maximum(0, c_) + rng.exponential(0.01, m_)
+    d_ = np.minimum(0, c_) - rng.exponential(0.01, m_)
+    h, l = o_ + u_, o_ + d_
+    for bval in (0.0, 0.25, 0.6, 1.0):
+        bo = bval * o_
+        Rs = (u_ - d_) + np.maximum(0, bo - h) + np.maximum(0, l - bo)
+        S.path("7", "b", "B.7", "b", f"the three cases give R* = max(h, b o) - min(l, b o), b = {bval}",
+               Rs - (np.maximum(h, bo) - np.minimum(l, bo)), tol=1e-15)
+        S.path("7", "b", "B.7", "b", f"b o lies between 0 and o (a convex combination), b = {bval}",
+               np.maximum(0, np.abs(bo) - np.abs(o_)) + np.maximum(0, -bo * o_), tol=0.0)
+        TR = np.maximum(h, 0) - np.minimum(l, 0)
+        S.path("7", "b", "B.7", "b", f"R <= R* <= TR, b = {bval}",
+               np.maximum(0, (u_ - d_) - Rs) + np.maximum(0, Rs - TR), tol=1e-15)
+    S.path("7", "b", "B.7", "b", "at b = 1, b o = o lies in [l, h], so R* = R",
+           (np.maximum(h, o_) - np.minimum(l, o_)) - (u_ - d_), tol=1e-15)
+    hx = math.log(1.05)
+    S.num("7", "b", "B.7", "b", "the audit's bar: R* = TR = ln(1.05) and A_0 = 0.8 ln(1.05)^2/(4 ln 2)",
+          0.8 * hx ** 2 / (4 * LN2), (1 - 0.2) * (max(hx, 0.0) - min(0.0, 0.0)) ** 2 / (4 * LN2), 1e-15)
+    # (c), the true range: ingredients
+    a = sp.symbols("a", real=True)
+    u = sp.symbols("u", nonnegative=True)
+    e_, xx = sp.symbols("e x", positive=True)
+    psi = phi(a) - a * PHIBAR(a)
+    S.sym("7", "c", "B.7", "c", "psi'(a) = -Phibar(a)", sp.diff(psi, a) + PHIBAR(a))
+    S.sym("7", "c", "B.7", "c", "psi(0) = 1/sqrt(2 pi)", psi.subs(a, 0) - 1 / sp.sqrt(2 * sp.pi))
+    zz = sp.symbols("zz", real=True)
+    S.sym("7", "c", "B.7", "c", "E[(Z - a)^+] = psi(a)",
+          sp.integrate((zz - a) * phi(zz), (zz, a, sp.oo)) - psi, {"a": (-2.0, 3.0)})
+    S.sym("7", "c", "B.7", "c", "E[(s Z - u)^+] = s psi(u/s)",
+          sp.integrate((s_ * zz - u) * phi(zz), (zz, u / s_, sp.oo)) - s_ * psi.subs(a, u / s_))
+    S.sym("7", "c", "B.7", "c", "d/ds {s psi(u/s)} = phi(u/s)", sp.diff(s_ * psi.subs(a, u / s_), s_) - phi(u / s_))
+    rp_ = sp.symbols("rho", positive=True)
+    S.sym("7", "c", "B.7", "c", "E[(eta^+)^2] = rho^2/2", sp.integrate(zz ** 2 * phi(zz / rp_) / rp_, (zz, 0, sp.oo)) - rp_ ** 2 / 2)
+    S.sym("7", "c", "B.7", "c", "f_M(0) = 2 phi(0) = sqrt(2/pi)", 2 * phi(0) - sp.sqrt(2 / sp.pi))
+    S.sym("7", "c", "B.7", "c", "int_0^e (e - x) f_M(x) dx = f_M(0) e^2/2 + O(e^3)",
+          sp.series(sp.integrate((e_ - xx) * 2 * phi(xx), (xx, 0, e_)), e_, 0, 3).removeO() - sp.sqrt(2 / sp.pi) * e_ ** 2 / 2)
+    k = sp.symbols("k", integer=True, positive=True)
+    S.sym("7", "c", "B.7", "c", "sum (-1)^(k+1)/k = ln 2, so E[U] = 2 sqrt(pi/2) ln 2 = sqrt(2 pi) ln 2",
+          2 * sp.sqrt(sp.pi / 2) * sp.summation((-1) ** (k + 1) / k, (k, 1, sp.oo)) - sp.sqrt(2 * sp.pi) * sp.log(2))
+    S.num("7", "c", "B.7", "c", "E[U] from the law of U, by quadrature", math.sqrt(2 * math.pi) * LN2, s48.meander_mean(), 1e-9)
+    for xv in (0.5, 1.0, 2.0):
+        S.num("7", "c", "B.7", "c", f"the meander law is the images limit of (-m | M < a), x = {xv}",
+              s48.meander_cdf(xv), s48.meander_cdf_from_images(xv), 2e-4)
+    EU = sp.sqrt(2 * sp.pi) * sp.log(2)
+    Xs = sp.symbols("X", real=True)
+    S.sym("7", "c", "B.7", "c", "assembly: (2/sqrt(2 pi))(E[U]/2 + X)/(4 ln 2) = 1/4 + X/(2 sqrt(2 pi) ln 2)",
+          (2 / sp.sqrt(2 * sp.pi)) * (EU / 2 + Xs) / (4 * sp.log(2)) - (sp.Rational(1, 4) + Xs / (2 * sp.sqrt(2 * sp.pi) * sp.log(2))))
+    S.sym("7", "c", "B.7", "c", "upper bound: X <= s/sqrt(2 pi) gives 1/4 + s/(4 pi ln 2)",
+          sp.Rational(1, 4) + (s_ / sp.sqrt(2 * sp.pi)) / (2 * sp.sqrt(2 * sp.pi) * sp.log(2)) - (sp.Rational(1, 4) + s_ / (4 * sp.pi * sp.log(2))))
+    S.sym("7", "c", "B.7", "c", "lower bound: X >= s/sqrt(2 pi) - E[U]/2 gives s/(4 pi ln 2)",
+          sp.Rational(1, 4) + (s_ / sp.sqrt(2 * sp.pi) - EU / 2) / (2 * sp.sqrt(2 * sp.pi) * sp.log(2)) - s_ / (4 * sp.pi * sp.log(2)))
+    S.sym("7", "c", "B.7", "c", "psi(a) >= psi(0) - a/2 because int_0^a Phibar <= a/2",
+          (psi.subs(a, 0) - sp.integrate(sp.Rational(1, 2), (zz, 0, a))) - (1 / sp.sqrt(2 * sp.pi) - a / 2))
+    S.sym("7", "c", "B.7", "c", "large s: int_0^{U/s} z phi(0) dz = phi(0) U^2/(2 s^2), times s gives phi(0) U^2/(2s)",
+          s_ * sp.integrate(zz * phi(0), (zz, 0, u / s_)) - phi(0) * u ** 2 / (2 * s_))
+    grid = np.linspace(0.05, 6.0, 40)
+    g = np.array([s48.gamma_tr(v) for v in grid])
+    S.num("7", "c", "B.7", "c", "gamma_TR is increasing (min increment on a grid of 40)", 0.0,
+          float(min(0.0, np.min(np.diff(g)))), 0.0)
+    for v in (0.3, 1.0, 3.0):
+        S.num("7", "c", "B.7", "c", f"the two numerical routes to gamma_TR agree, s = {v}", s48.gamma_tr(v),
+              s48.gamma_tr_direct(v), 2e-4)
+    # (c), the kernels
+    lam = sp.symbols("lambda_0", positive=True)
+    bb_ = s_ ** 2 / (s_ ** 2 + rp_ ** 2)
+    w = lam * (1 - bb_)
+    S.sym("7", "c", "B.7", "c", "b = s^2/(s^2 + rho^2) = 1 - rho^2/s^2 + O(rho^4)",
+          sp.series(bb_, rp_, 0, 4).removeO() - (1 - rp_ ** 2 / s_ ** 2))
+    S.sym("7", "c", "B.7", "c", "E[(b o)^2] = b^2 (s^2 + rho^2) = s^2 - rho^2 + O(rho^4)",
+          sp.series(bb_ ** 2 * (s_ ** 2 + rp_ ** 2), rp_, 0, 4).removeO() - (s_ ** 2 - rp_ ** 2))
+    EA = (1 - w) * (bb_ ** 2 * (s_ ** 2 + rp_ ** 2) + 1 + rp_ ** 2 / 2) + w * (s_ ** 2 + 1)
+    S.sym("7", "c", "B.7", "c", "E[A] = s^2 + 1 - rho^2/2 + O(rho^4) (loading -1/2, any s and lambda_0)",
+          sp.series(EA, rp_, 0, 4).removeO() - (s_ ** 2 + 1 - rp_ ** 2 / 2))
+    EP = (1 - w) * (bb_ ** 2 * (s_ ** 2 + rp_ ** 2) + bb_ * (1 - bb_) * (s_ ** 2 + rp_ ** 2) + 1 + rp_ ** 2 / 2) + w * (s_ ** 2 + 1)
+    S.sym("7", "c", "B.7", "c", "with pi(o): E = s^2 + 1 + rho^2/2 + O(rho^4) (loading +1/2)",
+          sp.series(EP, rp_, 0, 4).removeO() - (s_ ** 2 + 1 + rp_ ** 2 / 2))
+    S.sym("7", "c", "B.7", "c", "E[pi(o)] = s^2 exactly under the model", bb_ ** 2 * (s_ ** 2 + rp_ ** 2) + bb_ * (1 - bb_) * (s_ ** 2 + rp_ ** 2) - s_ ** 2)
+    # (c), simulation of the loadings: the ledger of script 48 (first-order loadings by extrapolation in rho)
+    led = pd.read_csv(TAB / "table133_theory_kernel_checks.csv")
+    fo = led[led["check"].str.startswith("c: first-order loading")]
+    for r in fo.itertuples():
+        S.add("7", "c", "B.7", "c", f"{r.check[3:]} ({r.design.split(',')[0]}), against simulation (script 48)",
+              "Monte Carlo", bool(r._8), f"theory {r.theory:.6g}, simulated {r.value:.6g} (SE {r.se:.2g})")
+
+
 def paper(S: Steps, quick: bool) -> None:
     # Yang-Zhang identity (Section 6.7, M15 H11): sample moments, ddof = 1
     o1, o2, o3, o4, c1, c2, c3, c4, kv, rsb = sp.symbols("o1 o2 o3 o4 c1 c2 c3 c4 k RSbar", real=True)
@@ -943,7 +1079,7 @@ def write_outputs(S: Steps) -> pd.DataFrame:
     for k_, v in macros.items():
         lines.append(r"\expandafter\def\csname thn@" + k_ + r"\endcsname{" + f"{v:,}".replace(",", "{,}") + "}")
     (GEN / "proofs.tex").write_text("\n".join(lines) + "\n")
-    order = ["model", "1", "2", "3", "4", "5", "6", "paper"]
+    order = ["model", "1", "2", "3", "4", "5", "6", "7", "paper"]
     label = {"model": "The model", "paper": "The paper's own claims"}
     rows = []
     for p in order:
@@ -971,6 +1107,7 @@ def main() -> None:
     prop4(S); print(f"  Proposition 4 ({time.time() - t0:.0f}s)")
     prop5(S); print(f"  Proposition 5 ({time.time() - t0:.0f}s)")
     prop6(S, a.quick); print(f"  Proposition 6 ({time.time() - t0:.0f}s)")
+    prop7(S, a.quick); print(f"  Proposition 7 ({time.time() - t0:.0f}s)")
     paper(S, a.quick); print(f"  the paper's claims ({time.time() - t0:.0f}s)")
     t = S.frame()
     nfail = int((~t["pass"]).sum())

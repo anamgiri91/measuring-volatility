@@ -65,14 +65,15 @@ l = ln(L/PC) and R = ln(H/L).
 
 | Step | Definition |
 |---|---|
-| Open quality | b = Σ o·r / Σ o², clipped to [0, 1]: the share of the overnight move the session keeps. Pooled over the cross-section and the last 60 dates (at least 20); a single series uses its own last 250 sessions (at least 60) |
-| Extended range | R* = R + max(0, b·o − h) + max(0, l − b·o): the range extended to the effective open PC·exp(b·o) |
+| Open quality | b = Σ o·r / Σ o², clipped to [0, 1]: the pooled projection of the close-to-close return on the overnight return, the share of the overnight move the session keeps on average (weighted by the size of the move). Pooled over the cross-section and the last 60 dates (at least 20); a single series uses its own last 250 sessions (at least 60) |
+| Extended range | R* = R + max(0, b·o − h) + max(0, l − b·o) = max(h, b·o) − min(l, b·o): the range extended to the anchor PC·exp(b·o). b·o is a shrinkage predictor of the efficient overnight log move, not the move itself |
 | Daily kernel | A = (1 − w)·[(b·o)² + R*²/(4 ln 2)] + w·r², with w = 0.2·(1 − b) |
 | Calibration | κ = Σ r² / Σ A over the same trailing set, which puts the level on the close-to-close scale |
 | Window variance | σ² = κ × mean(A) over the window (21 sessions by default) |
 
-The constants were fixed on development data before any test data were read. The arithmetic is a
-verbatim copy of the research code. Tests in the parent repository check that the two agree exactly on
+The constants were fixed on development data, in a plan frozen before the estimator was computed on the
+test data; the full-sample findings that motivated the design included the test periods, as the plan
+discloses. The arithmetic is a verbatim copy of the research code. Tests in the parent repository check that the two agree exactly on
 every NEPSE stock-day and on the NIFTY 50 and S&P 500.
 
 ### Two forms
@@ -81,28 +82,43 @@ every NEPSE stock-day and on the NIFTY 50 and S&P 500.
 * **`form="open-free"`**: b = 0. It becomes 0.8 × true-range Parkinson + 0.2 r², and reads only the
   previous close, the high, the low and the close.
 
-In the paper the open-free form had the lower loss of the two wherever b was well below one, which was
-every frontier market tested. The full form had the lower loss on two indices, though not significantly.
-`anam_estimator(prices)["b"]` shows the b measured on your data.
+`anam_estimator(prices)["b"]` shows the b measured on your data. What the extension cannot do: an opening
+print that sets the high or the low stays in R* (R ≤ R* ≤ true range), so neither form removes an opening
+error that is already in an extreme. The theory supplement (Proposition 7) measures how much of the error's
+variance each form still absorbs. The open-free form absorbs about a quarter to two-fifths of it at the
+error sizes the paper's data imply, against about a half for Parkinson. The full form's overnight term
+(b·o)² understates the efficient overnight variance unless the error is proportional to the news.
 
 ## The model
 
 `AnamModel` forecasts the mean daily variance over the next `horizon` sessions:
 
-    forecast = κ × (φ × mean A over the last h sessions + (1 − φ) × mean A over the last 250 sessions)
+    forecast = κ × (φ × mean A over the last h bars + (1 − φ) × mean A over the last 250 bars)
 
-The shrinkage φ is its one fitted parameter. `fit` chooses it by minimising the QLIKE loss of past
-forecasts of the mean squared close-to-close return. This is the forecast the paper evaluated. Fitted on
-the paper's training span, its forecasts equal the paper's, origin by origin. Where the paper scored the
-same forecast origins (both indices, and NEPSE at 21 sessions), it reproduces Table 34's losses to about
-10⁻¹¹. The parent repository's tests check both.
+The shrinkage φ ∈ {0, 0.05, …, 0.95} is its one fitted parameter. `fit` chooses it by minimising the QLIKE
+loss, y/f + ln f, of past forecasts of the target: the mean squared close-to-close return over the next h
+**exchange sessions**.
+
+**Changed in 0.2.0.** An independent audit (9 October 2026) found four defects in version 0.1.0 and in the
+paper's original forecast test. The model now follows the paper's corrected evaluation (plan M20,
+`anam_estimator.evaluation`):
+
+* a target of h sessions is h consecutive sessions of the calendar, never h bars stitched across a gap;
+* with `train_end`, φ is chosen only from origins whose whole outcome window ends before it;
+* zero targets are scored;
+* the φ grid stops below one, so no candidate is scored on fewer origins.
+
+Pass `calendar=` (the market's sessions) for a single thinly traded series. By default every date in the
+data is a session. Fitted on the paper's training span, the model reproduces the corrected evaluation of
+the paper, origin by origin, and the parent repository's tests check this. It no longer reproduces the
+frozen Table 34, whose defects the correction removes.
 
 | Method | What it does |
 |---|---|
 | `fit(prices, train_end=None)` | estimate on every bar and choose φ (only from origins before `train_end`, if given) |
 | `forecast(data=None, horizon=None)` | forecast per security; pass newer `data` to forecast without refitting |
 | `variance_path()` | the estimate on every bar: b, κ, variance, volatility and close-to-close variance |
-| `backtest()` / `score()` | every past forecast beside what followed, and its mean QLIKE loss (out of sample after `train_end`) |
+| `backtest()` / `score(loss="normalized")` | every past forecast beside what followed, its QLIKE loss in both forms (normalised, zero when exact; canonical, y/f + ln f, defined at a zero target), and their mean (out of sample after `train_end`) |
 | `save(path)` / `AnamModel.load(path)` | keep the fitted settings as JSON |
 
 ## Output
@@ -133,18 +149,29 @@ reversed during the session.
 * intraday risk;
 * bars without a meaningful high and low.
 
-**Evidence** (out of sample, under plans frozen before testing; paper Section 6.8, Tables 34-38):
+**Evidence.** Out of sample, under plans frozen before testing (paper Section 6.8).
 
-* **Against the classical range estimators.** Under the plans' QLIKE loss, none forecast significantly
-  better in any of seven test samples: Nepal, Bangladesh (two panels), Vietnam, Morocco, the NIFTY 50
-  and the S&P 500. The estimators compared were Parkinson, Garman–Klass, Rogers–Satchell, Yang–Zhang,
-  overnight² + Parkinson and overnight² + Garman–Klass. This survives other standard errors. Under an
-  MSE loss, the estimators with a full overnight term beat it in Vietnam at 21 sessions.
-* **Against plain close-to-close, mixed and dependent on the loss function.**
-  * It beat close-to-close on both indices, in Dhaka 2009-2021 and, fragilely, in Morocco.
-  * It did not beat it in Nepal's holdout, Dhaka 2023-2026 or Vietnam.
-  * Close-to-close beat it right after a rule change in Nepal, and in Vietnam at 21 sessions.
-* **The open-free form** passed one test fixed in advance, in Morocco.
+The corrected evaluation (plan M20, paper Table 39) is the record. An independent audit found four defects in
+the evaluation of the earlier plans (Tables 34-38), which is the one version 0.1.0 of this package used. Plan
+M20, frozen before it was run, removes them.
+
+* **Against the classical range estimators** (Parkinson, Garman–Klass, Rogers–Satchell, Yang–Zhang,
+  overnight² + Parkinson and overnight² + Garman–Klass), over seven test samples (Nepal, Bangladesh in two
+  panels, Vietnam, Morocco, the NIFTY 50 and the S&P 500):
+  * one classical estimator has significantly lower QLIKE loss than the full form in 1 of 84 comparisons
+    (Parkinson, Dhaka 2023-2026, 5 sessions);
+  * none has lower loss than the open-free form.
+* **Against plain close-to-close at 5 sessions.** After Holm's adjustment across the seven samples:
+  * the open-free form wins in six (all but Nepal);
+  * the full form wins in three (Dhaka 2009-2021 and both indices);
+  * close-to-close beat both right after a rule change in Nepal.
+* **Against forecasts built from returns alone** (GARCH, GJR-GARCH, EWMA, a HAR on squared returns):
+  * the best range-based forecast is better only in Dhaka 2009-2021 and Morocco, and fragilely in Morocco;
+  * the return-only forecast is better in Dhaka 2023-2026;
+  * neither is detectably better elsewhere.
+* **The most accurate forecast in most samples** pairs the open-free form with HAR dynamics. It is not this
+  package's φ-shrinkage model, which is close to the paper's frozen design.
+* **Estimating b.** It did not beat setting it to zero (the open-free form) in any sample.
 
 **Limitations.**
 
@@ -154,11 +181,20 @@ reversed during the session.
 * The level is on the close-to-close scale because of the calibration, which any estimator could be
   given, so the level alone is no evidence of accuracy.
 * A b below one shows that the session reverses part of the overnight move, not why.
+* The kernel is a heuristic whose level the calibration sets. Its overnight term understates the efficient
+  overnight second moment unless the open's error is proportional to the move. An opening error that is
+  already the day's high or low stays in the range: the open-free form absorbs about a quarter to two-fifths
+  of its variance (theory supplement, Proposition 7).
+* The forecasts target the second moment of observed close-to-close returns, not integrated variance.
 * Each series needs about 120 sessions of history in series mode.
 * Corporate actions not adjusted in the prices distort the returns.
 
-The paper's post hoc recheck of these claims is in
+The earlier post hoc recheck of these claims is in
 [`ANAM_RECHECK_POSTHOC.md`](https://github.com/anamgiri91/measuring-volatility/blob/main/ANAM_RECHECK_POSTHOC.md).
+The corrected evaluation is in
+[`M20_CORRECTED_EVALUATION_RESULTS.md`](https://github.com/anamgiri91/measuring-volatility/blob/main/M20_CORRECTED_EVALUATION_RESULTS.md),
+and the prospective test is planned in
+[`M21_PROSPECTIVE_PLAN.md`](https://github.com/anamgiri91/measuring-volatility/blob/main/M21_PROSPECTIVE_PLAN.md).
 
 ## Citation
 
