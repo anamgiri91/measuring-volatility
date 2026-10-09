@@ -62,6 +62,14 @@ do
     else
       echo "===== scripts/42_anam_frontier.py, 43_anam_morocco.py, 44_anam_recheck.py and 45_theory_checks.py skipped: data/external/frontier/ not present ====="
     fi
+    # the step-by-step verification of the theory's proofs reads script 45's committed outputs
+    # and the NEPSE sample only, so it always runs
+    for always in \
+      46_theory_proofs.py
+    do
+      echo "===== scripts/${always} ====="
+      python "scripts/${always}"
+    done
   fi
 done
 

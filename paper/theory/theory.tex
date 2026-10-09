@@ -1,5 +1,6 @@
 % The theory section of "When the Open Overreacts" and its proof appendix, as a standalone document.
 % Build:  python scripts/45_theory_checks.py      (writes generated/numbers.tex and the table fragments)
+%         python scripts/46_theory_proofs.py      (writes generated/proofs.tex and tab_proofs.tex)
 %         latexmk -pdf theory.tex                  (in this directory)
 % Every number below is a macro \thn{key} defined in generated/numbers.tex; none is typed by hand.
 \documentclass[11pt]{article}
@@ -31,6 +32,7 @@
   \PackageError{theory}{Undefined generated number '#1'}{Run scripts/45_theory_checks.py}\fi}
 \makeatother
 \input{generated/numbers.tex}
+\input{generated/proofs.tex}
 % table bodies are read with the primitive \input, which expands inside a tabular before \bottomrule
 \makeatletter
 \newcommand{\tabinput}[1]{\@@input #1 }
@@ -63,9 +65,11 @@ and how a price band inflates $b$, with a closed-form factor. It explains why on
 pooled across securities whose opens differ penalises the estimator that reads the open. Finally,
 it shows how a rolling calibration lags a rule change, and when lagged realised measures identify
 an estimator's calibration. Each closed form, identity and inequality was checked against
-simulation or numerical integration by \texttt{scripts/45\_theory\_checks.py}. The ledger has
-\thn{checks-n} checks and \thn{checks-pass} pass. The applications to the NEPSE data and the one
-new test were fixed in advance in plan M19.
+simulation or numerical integration by \texttt{scripts/45\_theory\_checks.py}. That ledger has
+\thn{checks-n} checks, and \thn{checks-pass} pass. Every step of every proof was then verified by
+\texttt{scripts/46\_theory\_proofs.py}, symbolically with SymPy wherever the step is algebra or
+calculus. Of its \thn{proofs-n} steps, \thn{proofs-pass} pass. The applications to the NEPSE data
+and the one new test were fixed in advance in plan M19.
 \end{abstract}
 
 \input{section_theory}

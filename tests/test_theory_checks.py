@@ -35,12 +35,14 @@ def s45():
 
 
 def numbers() -> dict[str, str]:
+    """The generated macros: script 45's numbers and script 46's step counts."""
     pat = re.compile(r"\\csname thn@(.+?)\\endcsname\{(.*)\}$")
     out = {}
-    for line in (GEN / "numbers.tex").read_text().splitlines():
-        m = pat.search(line)
-        if m:
-            out[m.group(1)] = m.group(2)
+    for f in ("numbers.tex", "proofs.tex"):
+        for line in (GEN / f).read_text().splitlines():
+            m = pat.search(line)
+            if m:
+                out[m.group(1)] = m.group(2)
     return out
 
 
@@ -102,7 +104,7 @@ def test_every_number_the_latex_quotes_is_defined():
     assert used, "the LaTeX quotes no generated numbers"
     missing = sorted(used - set(defined))
     assert not missing, f"undefined generated numbers: {missing}"
-    for frag in ("tab_bounds.tex", "tab_censoring.tex", "tab_checks.tex", "tab_pooling.tex"):
+    for frag in ("tab_bounds.tex", "tab_censoring.tex", "tab_checks.tex", "tab_pooling.tex", "tab_proofs.tex"):
         assert (GEN / frag).exists(), frag
 
 

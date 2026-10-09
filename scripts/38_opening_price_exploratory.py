@@ -26,7 +26,8 @@ X4  A bound that does NOT assume the opening error is independent of overnight n
     negative (then E[eta^2] > -E[o c] = (1 - b) E[o^2], which exceeds the bound). CORRECTED IN
     ROUND 17 (AUDIT-REGISTER M-026): this docstring used to say the bound is attained when eta is
     perfectly correlated with the news. It is not. The bound is valid but not sharp; the sharp bound
-    is E[eta^2] >= (1 - b)^2 E[o^2], attained exactly when eta is proportional to the efficient open
+    is E[eta^2] >= (1 - b)^2 E[o^2], attained exactly when the efficient open o* equals b o (for b > 0,
+    when eta is proportional to it)
     (theory supplement, Proposition 1; computed with intervals by scripts/45_theory_checks.py,
     table122). Under independence the value is (1 - b) E[o^2]. The weaker bound and the
     independence value are reported here as shares of the open-to-close benchmark E[OC], beside the

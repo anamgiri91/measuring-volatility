@@ -3,8 +3,9 @@
 
 All moments are raw, $\Phi$ and $\phi$ are the standard normal distribution and density, and
 $\Phibar=1-\Phi$. For a standard Brownian motion $W$ on $[0,1]$, let $M=\sup W$, $m=\inf W$ and
-$D=W(1)$. Each numbered claim below was checked numerically by
-\texttt{scripts/45\_theory\_checks.py}, as recorded in Table~\ref{tab:checks}.
+$D=W(1)$. Each step below was verified by \texttt{scripts/46\_theory\_proofs.py}, symbolically
+wherever it is algebra or calculus (Table~\ref{tab:proofs}). The closed forms were also set against
+simulation by \texttt{scripts/45\_theory\_checks.py} (Table~\ref{tab:checks}).
 
 \subsection*{B.1 Proof of Proposition~\ref{prop:ident}}
 
@@ -17,7 +18,8 @@ quadratic minimised at $\gamma=\E[o\os]/\E[o^2]=b$. Hence $b\,o$ is the best lin
 $\os$, and $C_{-}e^{b o}$ that of the efficient open on the log scale. If $\E[\os\mid o]=\gamma o$,
 then $\E[o\os]=\E[o\,\E[\os\mid o]]=\gamma\E[o^2]$, so $\gamma=b$.
 
-\emph{(b)} Since $c=r-o$, we have $\E[oc]=\E[or]-\E[o^2]=(b-1)\E[o^2]$.
+\emph{(b)} Since $c=r-o$, we have $\E[oc]=\E[or]-\E[o^2]=(b-1)\E[o^2]$. Only the definition of
+$b$ is used.
 
 \emph{(c)} Write $\eta=o-\os=(1-b)o-(\os-bo)$. Then
 \[
@@ -51,15 +53,16 @@ centred Gaussian with $\E[o^2]=m_{oo}$, $\E[or]=bm_{oo}$ and $\E[r^2]=m_{rr}$, t
 every $s$. The range of $\E[\eta^2]$ follows from~(c) with
 $\E[(\os-bo)^2]=s-b^2m_{oo}$.
 
-\emph{The published bound.} For $b\in[0,1)$:
+\emph{The published bound.} Let $b<1$. Then $3-2b>1$, so both sides of the second inequality
+below are positive and squaring preserves it:
 \[
   \tfrac12\{\sqrt{5-4b}-1\}<1-b
   \iff \sqrt{5-4b}<3-2b
   \iff 5-4b<9-12b+4b^2
   \iff 0<4(1-b)^2.
 \]
-So the bound of Appendix~A is strictly below~\eqref{eq:sharp}, and by~(c) it is never attained
-when $b<1$. \qed
+So for every $b<1$ the bound of Appendix~A is strictly below~\eqref{eq:sharp}, and by~(c) it is
+never attained. \qed
 
 \subsection*{B.2 Proof of Proposition~\ref{prop:classical}}
 
@@ -197,11 +200,13 @@ clip function, $g(y)\{y-g(y)\}$ is:
   \item $\beta(y-\beta)>0$ if $y>\beta$;
   \item $-\beta(y+\beta)>0$ if $y<-\beta$.
 \end{itemize}
-Hence $\E[g(o_L)o_L]\ge\E[g(o_L)^2]$, with equality if and only if $P(|o_L|>\beta)=0$.
+Hence $\E[g(o_L)o_L]\ge\E[g(o_L)^2]$, with equality if and only if $P(|o_L|>\beta)=0$. So
+$F\ge1$, and $b=b_LF\ge b_L$ when $b_L\ge0$.
 
 \emph{(b)} On $A=\{|o_L|<\beta\}$, $g(o_L)=o_L$ and $\E[o_Lr\ind_A]=b_L\E[o_L^2\ind_A]$. On $A^c$,
 $g(o_L)=\beta\operatorname{sign}(o_L)$. So $\E[g(o_L)r\ind_{A^c}]=b_L\beta\E[|o_L|\ind_{A^c}]$ and
-$\E[g(o_L)^2\ind_{A^c}]=\beta^2P(A^c)$.
+$\E[g(o_L)^2\ind_{A^c}]=\beta^2P(A^c)$. Since $\E[|o_L|\mid A^c]\ge\beta$, the pinned coefficient
+is at least $b_L$ when $b_L\ge0$.
 
 \emph{(c)} Let $z=o_L/\sigma$. The function $g$ is Lipschitz with $g'(z)=\ind\{|z|<k\}$ almost
 everywhere, so Stein's identity \citep{Stein1981} gives $\E[g(z)z]=\E[g'(z)]=2\Phi(k)-1$. Also

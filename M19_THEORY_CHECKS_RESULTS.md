@@ -36,7 +36,8 @@ the run reported here:
 Results worth stating because they are new here:
 
 * **Proposition 1.** E[η²] = (1 − b)²E[o²] + E[(o\* − b o)²]. The sharp bound is
-  E[η²] ≥ (1 − b)²E[o²], attained exactly when the error is proportional to the efficient open. The
+  E[η²] ≥ (1 − b)²E[o²], attained exactly when o\* = b o (for b > 0, when the error is proportional
+  to the efficient open). The
   manuscript's Appendix A bound is valid but strictly weaker, and its stated attainment was wrong
   (`AUDIT-REGISTER.md` M-026).
 * **Proposition 2.** Under an instantly corrected Gaussian opening error, the exact biases are:
@@ -170,3 +171,9 @@ the frozen tables' losses exactly, to 1e-9.
   M-026). Its published bound and the shares built on it remain valid lower bounds.
 * **Section 9** now points to the theory supplement and reports this plan's outcome.
 * **No frozen verdict of M14–M18 changes.**
+* **Every step of every proof was verified afterwards.** `scripts/46_theory_proofs.py` checked each
+  step and wrote one row per step to `table124_theory_proof_steps.csv`. It verified each step
+  symbolically wherever the step is algebra or calculus, and otherwise numerically, by simulation,
+  pathwise or on the data. All steps pass. Reading the statements step by step led to precision
+  edits in the supplement and to round 18 of the manuscript (`AUDIT-REGISTER.md` M-027). None of
+  them changes a result.

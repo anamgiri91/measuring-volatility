@@ -13,7 +13,9 @@ Sections~6.6--6.8 of the paper report four facts:
 This section gives the statistics behind those facts in six propositions. Proofs are in
 Appendix~\ref{app:proofs}. The script \texttt{scripts/45\_theory\_checks.py} compared each closed
 form, identity and inequality with a simulation or a numerical integral, as plan M19 required. The
-plan was registered before the script was written. Table~\ref{tab:checks} lists the checks. The
+plan was registered before the script was written. Table~\ref{tab:checks} lists the checks. A second
+script verified every step of every proof, symbolically wherever the step is algebra or calculus
+(Table~\ref{tab:proofs}). The
 propositions are post hoc relative to plans M14--M18, because they were derived after those
 results were known. Only the test of Section~\ref{sec:pooling} had its prediction fixed in advance.
 
@@ -84,10 +86,12 @@ A linear conditional mean holds for every elliptical law of $(o_L,r)$, Gaussian 
 \begin{proposition}[Identification]\label{prop:ident}
 Under Assumption~\ref{as:orth}:
 \begin{enumerate}[label=(\alph*)]
-  \item $\E[or]=\E[o\os]$, so $b=\arg\min_\gamma \E[(\os-\gamma o)^2]$. The effective open
-        $C_{-}\exp(b\,o)$ is the best linear predictor of the efficient open. If $\E[\os\mid o]$
-        is linear in $o$, then $b\,o=\E[\os\mid o]$.
+  \item $\E[or]=\E[o\os]$, so $b=\arg\min_\gamma \E[(\os-\gamma o)^2]$: $b\,o$ is the best linear
+        predictor of $\os$ through the origin (all moments here are raw). The effective open
+        $C_{-}\exp(b\,o)$ therefore predicts the efficient open on the log scale. If
+        $\E[\os\mid o]$ is linear in $o$, then $b\,o=\E[\os\mid o]$.
   \item $\E[oc]=-(1-b)\,\E[o^2]$: the session reverses the fraction $1-b$ of the overnight move.
+        This part uses only the definition of $b$.
   \item $\E[\eta^2]=(1-b)^2\,\E[o^2]+\E[(\os-b\,o)^2]$. Hence
         \begin{equation}\label{eq:sharp}
           \E[\eta^2]\;\ge\;(1-b)^2\,\E[o^2],
@@ -165,8 +169,8 @@ Let $T_1(\rho)=\{(1+\rho^2)\arctan\rho-\rho\}/\pi$.
 \begin{proposition}[Biases under a noisy open]\label{prop:classical}
 \leavevmode
 \begin{enumerate}[label=(\alph*)]
-  \item Under Assumption~\ref{as:orth} alone, $o^2+c^2-r^2=-2oc$. Hence
-        $\E[o^2+c^2]-\E[r^2]=2(1-b)\E[o^2]$ whatever the joint law of $(\os,\eta,x)$.
+  \item For any joint law with finite second moments, $o^2+c^2-r^2=-2oc$, and hence
+        $\E[o^2+c^2]-\E[r^2]=2(1-b)\E[o^2]$. No assumption about the error is needed.
 \end{enumerate}
 Under Assumption~\ref{as:path}, with $\eta$ independent of $(\os,W)$ and Gaussian:
 \begin{enumerate}[label=(\alph*),resume]
@@ -177,14 +181,17 @@ Under Assumption~\ref{as:path}, with $\eta$ independent of $(\os,W)$ and Gaussia
         \begin{equation}\label{eq:deltaR}
           \Delta_R(\rho)=2T_1(\rho)+\tfrac{4}{\pi}(\rho-\arctan\rho)+4\int_0^\infty J(s)\,\Phibar(s/\rho)\,ds,
         \end{equation}
-        with $J(s)=\E[(-m)\ind\{M<s\}]$, an explicit series given in Appendix~\ref{app:proofs}.
+        with $J(s)=\E[(-m)\ind\{M<s\}]$, a one-dimensional integral of the explicit series~\eqref{eq:G}
+        in Appendix~\ref{app:proofs}.
         Moreover, $0\le\Delta_R(\rho)\le (8/\pi)\rho+\rho^2$. As $\rho\to0$,
         $\Delta_R(\rho)=2\ln2\,\rho^2\{1+o(1)\}$.
   \item Rogers--Satchell. $\E[RS]-\sigma_c^2=\sigma_c^2\{\rho^2/2-T_1(\rho)\}$, exactly.
   \item Garman--Klass. $\E[GK]-\sigma_c^2=\sigma_c^2\{\Delta_R(\rho)/2-(2\ln2-1)\rho^2\}$.
   \item The probability that the open is the session's high or low is $(2/\pi)\arctan\rho$.
   \item As $\sigma_\eta\to0$ with $\sigma_c$ fixed, each estimator's bias is
-        $\gamma\sigma_\eta^2\{1+o(1)\}$. The loading $\gamma$ is:
+        $\gamma\sigma_\eta^2\{1+o(1)\}$. The bias is measured against what the estimator measures
+        when the open is exact: $\sigma_c^2$ for $c^2$, Parkinson, Garman--Klass and
+        Rogers--Satchell, and $\E[\os{}^2]+\sigma_c^2$ for the others. The loading $\gamma$ is:
         \begin{itemize}
           \item 0 for close-to-close;
           \item 1 for $c^2$;
@@ -237,7 +244,8 @@ Under Assumption~\ref{as:band}:
   \item $b=b_L\,F$, with $F=\E[g(o_L)o_L]/\E[g(o_L)^2]\ge1$. Equality holds if and only if
         $P(|o_L|>\beta)=0$.
   \item On interior opens ($|o_L|<\beta$), the coefficient equals $b_L$. On opens pinned at the
-        band, it equals $b_L\,\E[|o_L|\mid|o_L|\ge\beta]/\beta\ge b_L$.
+        band, it equals $b_L\,\E[|o_L|\mid|o_L|\ge\beta]/\beta$, which is at least $b_L$ when
+        $b_L\ge0$.
   \item If $o_L\sim N(0,\sigma^2)$ and $k=\beta/\sigma$, then
         \begin{equation}\label{eq:F}
           F(k)=\frac{2\Phi(k)-1}{2\Phi(k)-1-2k\phi(k)+2k^2\Phibar(k)}.
@@ -249,7 +257,7 @@ Under Assumption~\ref{as:band}:
         $\ln(b_0/b_1)=\ln(b_0/b_{0}^{\mathrm{int}})+\ln(b_{0}^{\mathrm{int}}/b_{1}^{\mathrm{int}})+\ln(b_{1}^{\mathrm{int}}/b_1)$.
         Under Assumption~\ref{as:band} in both regimes:
         \begin{itemize}
-          \item the first term is $\ln F_0>0$ (censoring);
+          \item the first term is $\ln F_0\ge0$, strictly positive when the band binds (censoring);
           \item the second is the change in the latent coefficient;
           \item the third is $-\ln F_1\le0$.
         \end{itemize}
@@ -321,8 +329,8 @@ $q(c)=c-1-\ln c\ge0$.
         row-weighted mean of the $c^*_i$ to one. The pooled level loss is then
         $\sum_iw_iq(c^*_i)\approx\tfrac12\sum_iw_i(\ln c^*_i)^2$, the cross-sectional dispersion
         of the securities' calibration.
-  \item Suppose Assumptions~\ref{as:orth}--\ref{as:path} hold for each security, with independent
-        errors. For the kernel $K(\beta)=(\beta o)^2+R^2/(4\ln2)$, the level ratio
+  \item Suppose Assumptions~\ref{as:orth}--\ref{as:path} hold for each security, with Gaussian
+        errors independent of the efficient returns. For the kernel $K(\beta)=(\beta o)^2+R^2/(4\ln2)$, the level ratio
         $\psi_i(\beta)=\E[K_i(\beta)]/\E[r_i^2]$ is
         $1-(1-\beta^2)s_i+\beta^2n_i+\sigma_{c,i}^2\Delta_R(\rho_i)/(4\ln2\,\E[r_i^2])$, where
         $s_i=\E[\os_i{}^2]/\E[r_i^2]$ and $n_i=\sigma_{\eta,i}^2/\E[r_i^2]$. To first order in the
@@ -490,8 +498,8 @@ identification, not an optional one.
 
 \subsection{Verification}\label{sec:verification}
 
-Every closed form, identity and inequality above was checked by
-\texttt{scripts/\allowbreak 45\_theory\_checks.py} against one of three references:
+Every closed form, identity and inequality above was set against one of three references by
+\texttt{scripts/45\_theory\_checks.py}:
 \begin{itemize}
   \item a Monte Carlo simulation, in which Brownian extremes were drawn exactly from the Brownian
         bridge within each step and the closed form had to lie within four standard errors;
@@ -503,12 +511,46 @@ The ledger, \texttt{output/tables/table121\_theory\_checks.csv}, has \thn{checks
 
 \begin{table}[h]
 \centering\small
-\caption{Checks of the propositions (ledger: \texttt{table121\_theory\_checks.csv}).}\label{tab:checks}
+\caption{Checks of the propositions against simulation. Ledger: \texttt{table121\_theory\_\allowbreak checks.csv}.}\label{tab:checks}
 \begin{tabular}{ccc}
 \toprule
 Proposition & Checks & Passed \\
 \midrule
 \tabinput{generated/tab_checks.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+A second script, \texttt{scripts/\allowbreak 46\_theory\_proofs.py}, then went through every part of
+every proposition and every step of every proof in Appendix~\ref{app:proofs}. It also covered the
+paper's own mathematical claims: the Yang--Zhang identity, the non-negativity of Garman--Klass on a
+valid bar, the special cases of Anam's kernel, and the old and corrected Appendix~A. Each step was
+verified in one of five ways:
+\begin{itemize}
+  \item \textbf{Symbolically} (\thn{proofs-symbolic} steps). SymPy reduces the difference of the
+        two sides to zero. For \thn{proofs-sym50} of these steps, where SymPy builds both sides
+        exactly but its simplifier does not close the difference, the difference was instead
+        evaluated to 60 significant digits at twelve random points and had to vanish to 50.
+  \item \textbf{Numerically} (\thn{proofs-numerical} steps), by quadrature, series or exact
+        arithmetic on a grid. This includes monotonicity in 50-digit arithmetic.
+  \item \textbf{By simulation} (\thn{proofs-mc} steps), within four standard errors. This is how
+        the results the proofs cite from the literature were checked where the proofs use them: the
+        reflection principle, the method of images, the meander limit and the GMM asymptotics.
+  \item \textbf{Pathwise} (\thn{proofs-path} steps), as identities on every simulated path.
+  \item \textbf{On the data} (\thn{proofs-data} steps), as identities on every NEPSE stock-day they
+        apply to.
+\end{itemize}
+The step ledger, \texttt{output/tables/table124\_theory\_proof\_steps.csv}, has \thn{proofs-n}
+steps, of which \thn{proofs-pass} pass and \thn{proofs-fail} fail (Table~\ref{tab:proofs}).
+
+\begin{table}[h]
+\centering\small
+\caption{Every step of every proof, by how it was verified. Ledger: \texttt{table124\_theory\_\allowbreak proof\_steps.csv}.}\label{tab:proofs}
+\begin{tabular}{lccccccc}
+\toprule
+ & Symbolic & Numerical & Simulation & Pathwise & Data & Steps & Passed \\
+\midrule
+\tabinput{generated/tab_proofs.tex}
 \bottomrule
 \end{tabular}
 \end{table}

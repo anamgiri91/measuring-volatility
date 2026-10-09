@@ -1,0 +1,252 @@
+proposition,part,appendix,appendix_part,step,method,detail,pass
+model,-,,,o = e_o + eta - eps_prev = o* + eta with o* = e_o - eps_prev,symbolic,simplifies to 0,True
+model,-,,,r = e_o + e_c + eps - eps_prev = o* + x with x = e_c + eps,symbolic,simplifies to 0,True
+model,-,,,c = e_c - eta + eps equals r - o,symbolic,simplifies to 0,True
+1,a,B.1,a,E[o x] = E[o* x] + E[eta x] = 0 under Assumption 1,symbolic,simplifies to 0,True
+1,a,B.1,a,E[o r] = E[o o*] under Assumption 1,symbolic,simplifies to 0,True
+1,a,B.1,a,E[(o* - g o)^2] = E[o*^2] - 2 g E[o o*] + g^2 E[o^2],symbolic,simplifies to 0,True
+1,a,B.1,a,the quadratic's stationary point is g = E[o o*]/E[o^2] = b,symbolic,simplifies to 0,True
+1,a,B.1,a,"its second derivative is 2 E[o^2] > 0, so b is the minimiser",symbolic,simplifies to 0,True
+1,a,B.1,a,"if E[o*|o] = g o then E[o o*] = g E[o^2], so g = b (tower property)",symbolic,simplifies to 0,True
+1,b,B.1,b,E[o c] = E[o r] - E[o^2] = (b - 1) E[o^2] for any joint law (definition of b),symbolic,simplifies to 0,True
+1,b,B.1,b,"the same under Assumption 1, in the model's moments",symbolic,simplifies to 0,True
+1,c,B.1,c,eta = (1 - b) o - (o* - b o) (pathwise algebra),symbolic,simplifies to 0,True
+1,c,B.1,c,E[eta^2] = (1-b)^2 E[o^2] - 2(1-b) E[o(o* - b o)] + E[(o* - b o)^2],symbolic,simplifies to 0,True
+1,c,B.1,c,the cross term E[o(o* - b o)] vanishes,symbolic,simplifies to 0,True
+1,c,B.1,c,E[eta^2] = (1-b)^2 E[o^2] + E[(o* - b o)^2] (the decomposition),symbolic,simplifies to 0,True
+1,c,B.1,c,if o* = b o then eta = (1 - b) o = ((1 - b)/b) o* (b > 0),symbolic,simplifies to 0,True
+1,c,B.1,c,"E[(o* - b o)^2] >= 0 and the bound holds on 20,000 random covariance matrices",numerical,min E[(o* - b o)^2] = 0.00e+00,True
+1,d,B.1,d,independent error: b = E[o*^2]/(E[o*^2] + E[eta^2]),symbolic,simplifies to 0,True
+1,d,B.1,d,independent error: E[eta^2] = (1 - b) E[o^2],symbolic,simplifies to 0,True
+1,d,B.1,d,proportional error eta = theta o* + nu: b = (1+theta)E[o*^2]/{(1+theta)^2 E[o*^2] + E[nu^2]},symbolic,simplifies to 0,True
+1,d,B.1,d,"stale open o = lambda o* (theta = lambda - 1, nu = 0): b = 1/lambda",symbolic,simplifies to 0,True
+1,e,B.1,e,E[r^2] = E[o*^2] + E[x^2] under Assumption 1,symbolic,simplifies to 0,True
+1,e,B.1,e,necessity: E[(o* - b o)^2] = E[o*^2] - b^2 E[o^2],symbolic,simplifies to 0,True
+1,e,B.1,e,"sufficiency: det Cov(o, o*) = m_oo s - b^2 m_oo^2, so PSD iff s >= b^2 m_oo",symbolic,simplifies to 0,True
+1,e,B.1,e,construction: E[o r] = b m_oo for every s,symbolic,simplifies to 0,True
+1,e,B.1,e,construction: E[r^2] = m_rr for every s,symbolic,simplifies to 0,True
+1,e,B.1,e,"construction: E[x (o*, eta)] = 0 (Assumption 1 holds)",symbolic,simplifies to 0,True
+1,e,B.1,e,range of E[eta^2]: (1-b)^2 m_oo + s - b^2 m_oo at s = b^2 m_oo and s = m_rr,symbolic,simplifies to 0,True
+1,e,B.1,e,"the interval is non-empty: m_rr - b^2 m_oo = det[[m_oo, m_or],[m_or, m_rr]]/m_oo >= 0",symbolic,simplifies to 0,True
+1,remark,B.1,bound,(3 - 2b)^2 - (5 - 4b) = 4(1 - b)^2,symbolic,simplifies to 0,True
+1,remark,B.1,bound,(sqrt(5-4b) - 1)/2 < 1 - b <=> sqrt(5-4b) < 3 - 2b (algebra),symbolic,simplifies to 0,True
+1,remark,B.1,bound,strict gap (1-b)^2 > g(b) for every b < 1 (grid down to b = -20),numerical,min gap 2.00e-18 on 4200 points,True
+1,remark,,,"ratio of the bounds at b = 0.3, exact 0.49/((sqrt(3.8)-1)/2)^2, equals the code's",numerical,"target 2.174679434, computed 2.174679434, tolerance 1e-13",True
+1,remark,,,the quoted ratio (macro p1-ratio-at-03) is the exact ratio rounded,numerical,"target 2.17, computed 2.17, tolerance 1e-12",True
+1,remark,,,perfect correlation eta = theta o*: b = 1/(1+theta),symbolic,simplifies to 0,True
+1,remark,,,perfect correlation: E[eta^2] = theta^2 E[o*^2] = (1-b)^2 E[o^2],symbolic,simplifies to 0,True
+1,remark,,,"E[(b o)^2] = b^2 E[o^2], the lower end of the identified interval",symbolic,simplifies to 0,True
+1,remark,,,S&P 500 pooled b = 2.21 (table120) and 1/b = 45% (an open reflecting 45% of the move),data,"b = 2.2130, 1/b = 0.4519",True
+2,a,B.2,a,o^2 + c^2 - r^2 = -2 o c with r = o + c (no assumption),symbolic,simplifies to 0,True
+2,a,B.2,a,E[-2oc] = -2(E[or] - E[o^2]) = 2(1 - b)E[o^2],symbolic,simplifies to 0,True
+2,b,B.2,b,E[r^2] = E[o*^2] + sigma_c^2 (close-to-close unbiased),symbolic,simplifies to 0,True
+2,b,B.2,b,E[o^2] - E[o*^2] = sigma_eta^2,symbolic,simplifies to 0,True
+2,b,B.2,b,E[c^2] - sigma_c^2 = sigma_eta^2 - 2E[D eta] = sigma_eta^2,symbolic,simplifies to 0,True
+2,-,B.2,scaling,Brownian scaling: E[(sigma_c X)^2] = sigma_c^2 E[X^2] for every functional of degree one,symbolic,simplifies to 0,True
+2,-,B.2,coordinates,"R = h~ - l~, u = h~ - eta, d = l~ - eta, c = D - eta, r = o* + D from prices (rho = 0.5)",pathwise,"max |residual| over 2,000,000 paths = 8.9e-16",True
+2,c,B.2,c,R = (M - m) + (eta - M)^+ + (m - eta)^+ (rho = 0.5),pathwise,"max |residual| over 400,000 paths = 8.9e-16",True
+2,c,B.2,c,"at most one of (eta - M)^+, (m - eta)^+ is positive (rho = 0.5)",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+2,c,B.2,c,M - m <= R <= M - m + |eta| on every path (rho = 0.5),pathwise,"400,000 paths",True
+2,c,B.2,c,R^2 - (M - m)^2 = term(eta > M) + term(eta < m) (rho = 0.5),pathwise,"max |residual| over 400,000 paths = 8.7e-15",True
+2,c,B.2,c,term(eta > M) = ((eta-M)^+)^2 + 2(eta-M)^+ M + 2(eta-M)^+(-m) (rho = 0.5),pathwise,"max |residual| over 400,000 paths = 3.6e-15",True
+2,c,B.2,c,"(W, eta) -> (-W, -eta): the two terms have equal means (rho = 0.5)",Monte Carlo,"theory 0, simulated 0.00144161 (SE 0.0017)",True
+2,c,B.2,c,T3 = int_0^inf J(s) Phibar(s/rho) ds (Fubini; image series) against E[(eta-M)^+(-m)] (rho = 0.5),Monte Carlo,"theory 0.0623984, simulated 0.0628346 (SE 0.00039)",True
+2,d,B.2,d,RS = (h~ - eta)(h~ - D) + (l~ - eta)(l~ - D) (rho = 0.5),pathwise,"max |residual| over 400,000 paths = 8.0e-15",True
+2,d,B.2,d,"RS - RS_0 by case: -eta(M+m-2D), -eta(m-D) - M(M-D), mirror (rho = 0.5)",pathwise,"max |residual| over 400,000 paths = 7.3e-15",True
+2,d,B.2,d,E[eta (M + m - 2D)] = 0 (rho = 0.5),Monte Carlo,"theory 0, simulated -0.000225368 (SE 0.00071)",True
+2,d,B.2,d,E[RS] - 1 = 2E[(eta - M)^+ (M - D)] (collection with symmetry) (rho = 0.5),Monte Carlo,"theory 0, simulated -3.88355e-05 (SE 0.0009)",True
+2,f,B.2,f,the events eta > M and eta < m are disjoint (rho = 0.5),pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+2,-,B.2,coordinates,"R = h~ - l~, u = h~ - eta, d = l~ - eta, c = D - eta, r = o* + D from prices (rho = 1)",pathwise,"max |residual| over 2,000,000 paths = 8.9e-16",True
+2,c,B.2,c,R = (M - m) + (eta - M)^+ + (m - eta)^+ (rho = 1),pathwise,"max |residual| over 400,000 paths = 8.9e-16",True
+2,c,B.2,c,"at most one of (eta - M)^+, (m - eta)^+ is positive (rho = 1)",pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+2,c,B.2,c,M - m <= R <= M - m + |eta| on every path (rho = 1),pathwise,"400,000 paths",True
+2,c,B.2,c,R^2 - (M - m)^2 = term(eta > M) + term(eta < m) (rho = 1),pathwise,"max |residual| over 400,000 paths = 1.1e-14",True
+2,c,B.2,c,term(eta > M) = ((eta-M)^+)^2 + 2(eta-M)^+ M + 2(eta-M)^+(-m) (rho = 1),pathwise,"max |residual| over 400,000 paths = 7.1e-15",True
+2,c,B.2,c,"(W, eta) -> (-W, -eta): the two terms have equal means (rho = 1)",Monte Carlo,"theory 0, simulated -0.000738108 (SE 0.0047)",True
+2,c,B.2,c,T3 = int_0^inf J(s) Phibar(s/rho) ds (Fubini; image series) against E[(eta-M)^+(-m)] (rho = 1),Monte Carlo,"theory 0.185216, simulated 0.185379 (SE 0.00074)",True
+2,d,B.2,d,RS = (h~ - eta)(h~ - D) + (l~ - eta)(l~ - D) (rho = 1),pathwise,"max |residual| over 400,000 paths = 8.0e-15",True
+2,d,B.2,d,"RS - RS_0 by case: -eta(M+m-2D), -eta(m-D) - M(M-D), mirror (rho = 1)",pathwise,"max |residual| over 400,000 paths = 8.1e-15",True
+2,d,B.2,d,E[eta (M + m - 2D)] = 0 (rho = 1),Monte Carlo,"theory 0, simulated 0.000697432 (SE 0.0018)",True
+2,d,B.2,d,E[RS] - 1 = 2E[(eta - M)^+ (M - D)] (collection with symmetry) (rho = 1),Monte Carlo,"theory 0, simulated -0.000490798 (SE 0.0017)",True
+2,f,B.2,f,the events eta > M and eta < m are disjoint (rho = 1),pathwise,"max |residual| over 400,000 paths = 0.0e+00",True
+2,c,B.2,c,E[(M - m)^2] = 4 ln 2 (Feller 1951),Monte Carlo,"theory 2.77259, simulated 2.77526 (SE 0.0031)",True
+2,c,B.2,c,E[M - m] = 2 sqrt(2/pi),Monte Carlo,"theory 1.59577, simulated 1.59627 (SE 0.00082)",True
+2,d,B.2,d,E[RS_0] = 1 (Rogers and Satchell 1991),Monte Carlo,"theory 1, simulated 1.0005 (SE 0.001)",True
+2,c,B.2,c,"P(M < s) = 2 Phi(s) - 1 (reflection), s = 0.3",Monte Carlo,"theory 0.235823, simulated 0.235387 (SE 0.00076)",True
+2,c,B.2,c,"P(M < s) = 2 Phi(s) - 1 (reflection), s = 1",Monte Carlo,"theory 0.682689, simulated 0.683057 (SE 0.00066)",True
+2,c,B.2,c,"image series G(0.5, 0.5) = P(M < a, -m < b)",Monte Carlo,"theory 0.00915699, simulated 0.009135 (SE 0.00014)",True
+2,c,B.2,c,"image series G(1, 0.3) = P(M < a, -m < b)",Monte Carlo,"theory 0.0455369, simulated 0.0458775 (SE 0.00033)",True
+2,c,B.2,c,"image series G(0.2, 1.5) = P(M < a, -m < b)",Monte Carlo,"theory 0.0833934, simulated 0.0831625 (SE 0.00048)",True
+2,c,B.2,c,"image series G(1.2, 1.2) = P(M < a, -m < b)",Monte Carlo,"theory 0.540358, simulated 0.540083 (SE 0.00094)",True
+2,c,B.2,c,"J(0.3) = int_0^inf [P(M<s) - G(s,t)] dt = E[(-m) 1{M<s}]",Monte Carlo,"theory 0.345141, simulated 0.344706 (SE 0.0012)",True
+2,c,B.2,c,"J(1) = int_0^inf [P(M<s) - G(s,t)] dt = E[(-m) 1{M<s}]",Monte Carlo,"theory 0.703437, simulated 0.703916 (SE 0.0011)",True
+2,c,B.2,c,"J(2) = int_0^inf [P(M<s) - G(s,t)] dt = E[(-m) 1{M<s}]",Monte Carlo,"theory 0.789384, simulated 0.789734 (SE 0.0011)",True
+2,d,B.2,d,"reflection: P(M <= a, D <= x) = Phi(x) - Phi(x - 2a) at (a, x) = (0.5, 0.2)",Monte Carlo,"theory 0.367404, simulated 0.36731 (SE 0.00082)",True
+2,d,B.2,d,"reflection: P(M <= a, D <= x) = Phi(x) - Phi(x - 2a) at (a, x) = (1, -0.5)",Monte Carlo,"theory 0.302328, simulated 0.302335 (SE 0.00066)",True
+2,d,B.2,d,"reflection: P(M <= a, D <= x) = Phi(x) - Phi(x - 2a) at (a, x) = (0.3, 0.3)",Monte Carlo,"theory 0.235823, simulated 0.235387 (SE 0.00076)",True
+2,d,B.2,d,"E[(M - D) 1{M < a}] = 2 int_0^a Phibar = 2(a Phibar(a) - phi(a) + phi(0)), a = 0.5",Monte Carlo,"theory 0.402291, simulated 0.40248 (SE 0.001)",True
+2,d,B.2,d,"E[(M - D) 1{M < a}] = 2 int_0^a Phibar = 2(a Phibar(a) - phi(a) + phi(0)), a = 1.5",Monte Carlo,"theory 0.739271, simulated 0.739782 (SE 0.00094)",True
+2,c,B.2,c,E[-m | M < 0.05] = J(s)/P(M < s) (simulation against the series),Monte Carlo,"theory 1.68819, simulated 1.68862 (SE 0.0043)",True
+2,c,B.2,c,"G(a, b) = G(b, a) (series, a = 0.7, b = 1.3)",numerical,"target 0.3303698049, computed 0.3303698049, tolerance 1e-12",True
+2,c,B.2,c,"G(a, b) -> 2 Phi(a) - 1 as b -> infinity (a = 0.8)",numerical,"target 0.5762892028, computed 0.5762892028, tolerance 1e-12",True
+2,c,B.2,c,T1 = (2/pi) int_0^alpha (rho cos - sin)^2 = ((1+rho^2) atan rho - rho)/pi,symbolic,simplifies to 0,True
+2,c,B.2,c,T2 = (2/pi) int_0^alpha (rho cos - sin) sin = (rho - atan rho)/pi,symbolic,simplifies to 0,True
+2,c,B.2,c,sin^2(atan rho) = rho^2/(1 + rho^2),symbolic,simplifies to 0,True
+2,c,B.2,c,sin(2 atan rho) = 2 rho/(1 + rho^2),symbolic,simplifies to 0,True
+2,c,B.2,c,polar representation: E[((rho Z - |Z'|)^+)^2] by quadrature = T1 (rho = 0.5),numerical,"target 0.02532457897, computed 0.02532456715, tolerance 1e-07",True
+2,c,B.2,c,polar representation: E[((rho Z - |Z'|)^+)^2] by quadrature = T1 (rho = 2),numerical,"target 1.125462139, computed 1.125462138, tolerance 1e-07",True
+2,c,B.2,c,"(y - M)^+ = int_0^y 1{M < s} ds for y, M > 0",symbolic-50dp,zero to 50 digits at 12 random points (max |residual| 0.0e+00),True
+2,c,B.2,c,E|eta| = rho sqrt(2/pi),symbolic,simplifies to 0,True
+2,c,B.2,c,"E|Z'| = sqrt(2/pi), so E[M - m] = 2 sqrt(2/pi)",symbolic,simplifies to 0,True
+2,c,B.2,c,E[(M - m + |eta|)^2] = 4 ln 2 + (8/pi) rho + rho^2 (independence),symbolic,simplifies to 0,True
+2,c,B.2,c,0 <= Delta_R <= (8/pi) rho + rho^2 (rho = 0.25),numerical,Delta_R = 0.086643,True
+2,c,B.2,c,0 <= Delta_R <= (8/pi) rho + rho^2 (rho = 0.5),numerical,Delta_R = 0.346528,True
+2,c,B.2,c,0 <= Delta_R <= (8/pi) rho + rho^2 (rho = 1),numerical,Delta_R = 1.377485,True
+2,c,B.2,c,0 <= Delta_R <= (8/pi) rho + rho^2 (rho = 2),numerical,Delta_R = 5.293280,True
+2,c,B.2,c,0 <= Delta_R <= (8/pi) rho + rho^2 (rho = 4),numerical,Delta_R = 19.595207,True
+2,c,B.2,c,(1 + rho^2) atan rho - rho = (2/3) rho^3 + O(rho^5),symbolic,simplifies to 0,True
+2,c,B.2,c,rho - atan rho = rho^3/3 + O(rho^5),symbolic,simplifies to 0,True
+2,c,B.2,c,substitution s = rho v: T3 = rho^2 int (J(rho v)/(rho v)) v Phibar(v) dv (rho = 0.5),numerical,"target 0.06239844804, computed 0.06239844804, tolerance 1e-07",True
+2,c,B.2,c,f_M(0) = 2 phi(0) = sqrt(2/pi),symbolic,simplifies to 0,True
+2,c,B.2,c,f_M(0) sqrt(2 pi) ln 2 = 2 ln 2,symbolic,simplifies to 0,True
+2,c,B.2,c,"E[-m | M < s] = J(s)/P(M < s) -> sqrt(2 pi) ln 2 (meander mean), s = 0.01",numerical,"target 1.737462321, computed 1.727491279, tolerance 0.03",True
+2,c,B.2,c,"E[-m | M < s] = J(s)/P(M < s) -> sqrt(2 pi) ln 2 (meander mean), s = 0.005",numerical,"target 1.737462321, computed 1.732469561, tolerance 0.015",True
+2,c,B.2,c,"J(s)/s is bounded on (0, 1] (grid of 50 points)",numerical,"max 1.3703, min 0.7034",True
+2,c,B.2,c,"J(s) <= E[-m] = sqrt(2/pi) for s > 1, and J increases towards it",numerical,"J(1..5) = 0.70344, 0.76807, 0.78938, 0.79750, 0.79788; sqrt(2/pi) = 0.79788",True
+2,c,B.2,c,int_0^inf v Phibar(v) dv = 1/4,symbolic,simplifies to 0,True
+2,c,B.2,c,2 ln 2 x 1/4 = (1/2) ln 2,symbolic,simplifies to 0,True
+2,c,B.2,c,T3/rho^2 -> (ln 2)/2 (rho = 0.1),numerical,"target 0.3465735903, computed 0.3254372722, tolerance 0.2",True
+2,c,B.2,c,T3/rho^2 -> (ln 2)/2 (rho = 0.05),numerical,"target 0.3465735903, computed 0.335973854, tolerance 0.1",True
+2,c,,,the code's Delta_R is the displayed formula: 2T1 + (4/pi)(rho - atan rho) + 4 T3 (rho = 0.7),numerical,"target 0.6784836691, computed 0.6784836691, tolerance 1e-14",True
+2,remark,,,quoted Delta_R/(2 ln 2 rho^2) at rho = 0.5 (macro p2-Pratio-0p5) is the exact value rounded,numerical,"target 0.9999, computed 0.9999, tolerance 1e-12",True
+2,remark,,,quoted Delta_R/(2 ln 2 rho^2) at rho = 1 (macro p2-Pratio-1p0) is the exact value rounded,numerical,"target 0.9936, computed 0.9936, tolerance 1e-12",True
+2,remark,,,quoted Delta_R/(2 ln 2 rho^2) at rho = 2 (macro p2-Pratio-2p0) is the exact value rounded,numerical,"target 0.9546, computed 0.9546, tolerance 1e-12",True
+2,remark,,,Parkinson's bias is within 1% of sigma_eta^2/2 for every rho <= 1 (grid of 20),numerical,max relative gap 0.0064,True
+2,d,B.2,d,int_{-inf}^a (a - x) 2(2a - x) phi(2a - x) dx = 2 int_a^inf (z - a) z phi(z) dz = 2 Phibar(a),symbolic,simplifies to 0,True
+2,d,B.2,d,2 int_a^inf (z - a) z phi(z) dz = 2 Phibar(a),symbolic,simplifies to 0,True
+2,d,B.2,d,"2 int_0^inf E[(eta-a)^+] Phibar(a) da = 2E[1{eta>0,Z''>0}(eta mu - mu^2/2)] (rho = 0.5)",numerical,"target 0.04983771051, computed 0.04983771055, tolerance 1e-07",True
+2,d,B.2,d,... and both equal rho^2/4 - T1/2 (rho = 0.5),numerical,"target 0.04983771051, computed 0.04983771051, tolerance 1e-07",True
+2,d,B.2,d,"2 int_0^inf E[(eta-a)^+] Phibar(a) da = 2E[1{eta>0,Z''>0}(eta mu - mu^2/2)] (rho = 1.5)",numerical,"target 0.2928788576, computed 0.2928788577, tolerance 1e-07",True
+2,d,B.2,d,... and both equal rho^2/4 - T1/2 (rho = 1.5),numerical,"target 0.2928788576, computed 0.2928788576, tolerance 1e-07",True
+2,d,B.2,d,polar evaluation: (2/pi)[int_0^a (rho cos sin - sin^2/2) + int_a^{pi/2} rho^2 cos^2/2] = rho^2/4 - T1/2,symbolic,simplifies to 0,True
+2,d,B.2,d,E[RS] - 1 = 2(rho^2/4 - T1/2) = rho^2/2 - T1,symbolic,simplifies to 0,True
+2,e,B.2,e,E[GK] - 1 = (4 ln 2 + Delta_R)/2 - (2 ln 2 - 1)(1 + rho^2) - 1 = Delta_R/2 - (2 ln 2 - 1) rho^2,symbolic,simplifies to 0,True
+2,f,B.2,f,P(rho Z > |Z'|) = (angle 2 atan rho)/(2 pi) = atan(rho)/pi; total (2/pi) atan rho,symbolic,simplifies to 0,True
+2,-,,,B2 inversion: s = (2/pi) atan(rho) gives rho = tan(pi s/2),symbolic,simplifies to 0,True
+2,-,,,B2 inversion: x = rho^2/(1 + rho^2) gives rho = sqrt(x/(1 - x)),symbolic,simplifies to 0,True
+2,g,,,"k = 0.34/(1.34 + 22/20) for a 21-session window, quoted as macro p2-yz-k",numerical,"target 0.1393, computed 0.1393, tolerance 1e-12",True
+2,g,B.2,g,Rogers-Satchell loading: lim (rho^2/2 - T1)/rho^2 = 1/2,symbolic,simplifies to 0,True
+2,g,B.2,g,Parkinson loading: (2 ln 2 rho^2)/(4 ln 2)/rho^2 = 1/2,symbolic,simplifies to 0,True
+2,g,B.2,g,Garman-Klass loading: ln 2 - (2 ln 2 - 1) = 1 - ln 2,symbolic,simplifies to 0,True
+2,g,B.2,g,overnight^2 + Parkinson loading 1 + 1/2 = 3/2; + Garman-Klass 1 + (1 - ln 2) = 2 - ln 2,symbolic,simplifies to 0,True
+2,g,B.2,g,Yang-Zhang daily form loading 1 + k + (1 - k)/2 = (3 + k)/2,symbolic,simplifies to 0,True
+2,g,,,(3 + k)/2 quoted as macro p2-yz-load,numerical,"target 1.57, computed 1.57, tolerance 1e-12",True
+2,g,,,1 - ln 2 quoted as macro p2-gk-load,numerical,"target 0.307, computed 0.307, tolerance 1e-12",True
+2,g,,,2 - ln 2 quoted as macro p2-gk2-load,numerical,"target 1.307, computed 1.307, tolerance 1e-12",True
+3,a,B.3,a,"tower property: E[g r] = E[g E[r|o_L]] = b_L E[g o_L], so b = b_L E[g o_L]/E[g^2]",symbolic,simplifies to 0,True
+3,a,B.3,a,y > beta: g(y)(y - g(y)) = beta(y - beta) > 0,symbolic,simplifies to 0,True
+3,a,B.3,a,y < -beta: g(y)(y - g(y)) = -beta(y + beta) > 0,symbolic,simplifies to 0,True
+3,a,B.3,a,g(y)(y - g(y)) >= 0 everywhere and > 0 exactly when |y| > beta (grid),numerical,"beta = 1, 200,001 points",True
+3,a,B.3,a,F = 1 when no latent open exceeds the band,numerical,"target 1, computed 1, tolerance 1e-15",True
+3,b,B.3,b,interior: E[o_L r 1_A]/E[o_L^2 1_A] = b_L,symbolic,simplifies to 0,True
+3,b,B.3,b,pinned: b_L beta E|o_L|1_Ac / (beta^2 P(A^c)) = b_L E[|o_L| | A^c]/beta,symbolic,simplifies to 0,True
+3,b,B.3,b,"E[|o_L| | |o_L| >= beta]/beta >= 1, so b_pinned >= b_L when b_L >= 0 (Gaussian grid)",numerical,inverse Mills ratio exceeds its argument,True
+3,c,B.3,c,Stein: E[g(z) z] = int_{-k}^{k} z^2 phi + 2k int_k^inf z phi = 2 Phi(k) - 1,symbolic,simplifies to 0,True
+3,c,B.3,c,E[g^2] = 2 Phi(k) - 1 - 2k phi(k) + 2k^2 Phibar(k),symbolic,simplifies to 0,True
+3,c,B.3,c,N(k) = int_0^k 2 phi(t) dt = 2 Phi(k) - 1,symbolic,simplifies to 0,True
+3,c,B.3,c,"D(k) = int_0^k 4t Phibar(t) dt = E[min(z^2, k^2)]",symbolic-50dp,zero to 50 digits at 12 random points (max |residual| 5.6e-191),True
+3,c,,,equation (F) equals the code's F_gauss (k = 0.3),numerical,"target 3.112511363, computed 3.112511363, tolerance 1e-13",True
+3,c,,,equation (F) equals the code's F_gauss (k = 1.1),numerical,"target 1.261314916, computed 1.261314916, tolerance 1e-13",True
+3,c,,,equation (F) equals the code's F_gauss (k = 2.5),numerical,"target 1.010250712, computed 1.010250712, tolerance 1e-13",True
+3,c,B.3,c,lemma's identity a(k)C(k) - c(k)A(k) = c(k) int c(t)[a(k)/c(k) - a(t)/c(t)] dt (linearity),symbolic,simplifies to 0,True
+3,c,B.3,c,lemma: a(k)C(k) - c(k)A(k) < 0 (k = 0.2),numerical,value -2.539e-02,True
+3,c,B.3,c,lemma: a(k)C(k) - c(k)A(k) < 0 (k = 0.8),numerical,value -1.682e-01,True
+3,c,B.3,c,lemma: a(k)C(k) - c(k)A(k) < 0 (k = 1.5),numerical,value -1.456e-01,True
+3,c,B.3,c,lemma: a(k)C(k) - c(k)A(k) < 0 (k = 3),numerical,value -7.336e-03,True
+3,c,B.3,c,a(t)/c(t) = 2 phi/(4 t Phibar) = lambda(t)/(2t),symbolic,simplifies to 0,True
+3,c,B.3,c,lambda' = lambda(lambda - t),symbolic,simplifies to 0,True
+3,c,B.3,c,(lambda/t)' = lambda(t lambda - t^2 - 1)/t^2,symbolic,simplifies to 0,True
+3,c,B.3,c,lambda < t + 1/t  <=>  Phibar > t phi/(1 + t^2): (t + 1/t)Phibar - phi = ((1+t^2)/t)(Phibar - t phi/(1+t^2)),symbolic,simplifies to 0,True
+3,c,B.3,c,"Gordon (1941): Phibar(t)(1 + t^2) > t phi(t) on (0, 30] (grid, scaled form)",numerical,min 1.08e-200,True
+3,c,B.3,c,N(k) -> 1 as k -> infinity,symbolic,simplifies to 0,True
+3,c,B.3,c,D(k) -> 1 as k -> infinity,symbolic,simplifies to 0,True
+3,c,B.3,c,N(k) = 2 phi(0) k + O(k^3),symbolic,simplifies to 0,True
+3,c,B.3,c,D(k) = k^2 + O(k^3),symbolic,simplifies to 0,True
+3,c,B.3,c,k F(k) -> 2 phi(0) as k -> 0,symbolic,simplifies to 0,True
+3,c,B.3,c,F(k) -> 1 as k -> infinity,symbolic,simplifies to 0,True
+3,c,B.3,c,pinned ratio: E[|z| | |z| > k] = 2 int_k^inf z phi / (2 Phibar(k)) = lambda(k),symbolic,simplifies to 0,True
+3,c,B.3,c,"F strictly decreasing on [0.006, 8] (4,000 points in 50-digit arithmetic)",numerical,F(8) - 1 = 1.208e-15,True
+3,d,B.3,d,ln(b0/b1) = ln(b0/b0int) + ln(b0int/b1int) + ln(b1int/b1) (telescoping),symbolic,simplifies to 0,True
+3,d,B.3,d,regime 0: ln(b0/b0int) = ln F0; regime 1: ln(b1int/b1) = -ln F1,symbolic,simplifies to 0,True
+3,d,,,the three terms of NEPSE's A2 -> C decomposition add up (table122),numerical,"target 1.003863583, computed 1.003863583, tolerance 1e-09",True
+4,a,B.4,a,"QL(Y,f) - QL(Y,cf) = (Y/f)(1 - 1/c) - ln c",symbolic,simplifies to 0,True
+4,a,B.4,a,averaged with c = m = mean(Y/f): m(1 - 1/m) - ln m = q(m),symbolic,simplifies to 0,True
+4,a,B.4,a,"q(1) = 0, q'(c) = 1 - 1/c, q'' = 1/c^2 > 0, so q >= 0 (ln c <= c - 1)",symbolic,simplifies to 0,True
+4,a,B.4,a,"d/dc mean QL(Y, c f) = 1/c - m/c^2 vanishes at c = m (the best rescaling)",symbolic,simplifies to 0,True
+4,a,B.4,a,second derivative at c = m is 1/m^2 > 0,symbolic,simplifies to 0,True
+4,a,B.4,a,"sample identity: mean QL(Y,f) = mean QL(Y, c* f) + q(c*) (500 random pairs)",numerical,"target 0.4831959402, computed 0.4831959402, tolerance 1e-12",True
+4,b,B.4,b,first-order condition: sum w_i c*_i(kappa) = sum w_i at the optimal common scale,symbolic,simplifies to 0,True
+4,b,B.4,b,q(c) = (c-1)^2/2 + O((c-1)^3),symbolic,simplifies to 0,True
+4,b,B.4,b,ln c = (c - 1) + O((c - 1)^2),symbolic,simplifies to 0,True
+4,b,B.4,b,q(c) - (ln c)^2/2 = O((c - 1)^3),symbolic,simplifies to 0,True
+4,c,B.4,c,psi(beta) = 1 - (1 - beta^2)s + beta^2 n + sigma_c^2 Delta_R/(4 ln 2 E[r^2]),symbolic,simplifies to 0,True
+4,c,B.4,c,first order (Delta_R = 2 ln 2 rho^2): psi = 1 - (1 - beta^2)s + (beta^2 + 1/2) n,symbolic,simplifies to 0,True
+4,d,B.4,d,"ln(a + gamma n) = ln gamma + ln(a/gamma + n), so the variances are equal",symbolic,simplifies to 0,True
+4,d,B.4,d,d(a/gamma)/d(beta^2) = (s gamma - a)/gamma^2 = (3s/2 - 1)/gamma^2,symbolic,simplifies to 0,True
+4,d,B.4,d,s gamma - a = 3s/2 - 1,symbolic,simplifies to 0,True
+4,d,B.4,d,"d/dxi Var(ln(xi + n)) = 2 Cov(ln(xi + n), 1/(xi + n)) (xi = 1, finite differences)",numerical,"target -0.02781533838, computed -0.02781533838, tolerance 1e-07",True
+4,d,B.4,d,"that covariance is negative (oppositely monotone in n), for xi in a grid",numerical,,True
+4,d,B.4,d,the condition s < 2/3 matters: with s = 0.8 the dispersion decreases in beta,numerical,counterexample outside the stated range,True
+4,d,B.4,d,share-only: 1 - (1 - beta^2)s_i + gamma n = (1 + gamma n)(1 - t s_i),symbolic,simplifies to 0,True
+4,d,B.4,d,dt/d(beta^2) = -(1 + 3n/2)/(1 + gamma n)^2 < 0,symbolic,simplifies to 0,True
+4,d,B.4,d,"d/dt Var(ln(1 - t s)) = 2 Cov(ln(1 - t s), -s/(1 - t s)) (t = 0.5)",numerical,"target 0.0390330324, computed 0.0390330324, tolerance 1e-07",True
+4,d,B.4,d,"that covariance is positive (both decreasing in s), for t in a grid",numerical,,True
+4,d,B.4,d,"at beta = 1, t = 0: psi_i = 1 + gamma n is the same for every security",symbolic,simplifies to 0,True
+5,a,B.5,a,ratio of sums with R_s = rho_j(s) a_s is omega rho_1 + (1 - omega) rho_0,symbolic,simplifies to 0,True
+5,a,,,relative bias kappa/rho_1 - 1 = (1 - omega)(rho_0/rho_1 - 1),symbolic,simplifies to 0,True
+5,b,B.5,b,"constant kernel mass: omega_{tau+j} = min((j+1)/L, 1) for L = 10, 20, 60, 120",numerical,,True
+5,c,B.5,c,ln((1 - omega) rho_1 e^delta + omega rho_1) - ln rho_1 = (1 - omega) delta + O(delta^2),symbolic,simplifies to 0,True
+5,c,B.5,c,sum_{j=0}^{L-1} (1 - (j+1)/L)^2 = (L-1)(2L-1)/(6L),symbolic,simplifies to 0,True
+5,c,B.5,c,(L-1)(2L-1)/(6L) = L/3 - 1/2 + 1/(6L) = L/3 + O(1),symbolic,simplifies to 0,True
+5,c,B.5,c,d/dL (1/2)(lambda delta^2 L/3 + v/L) = 0 at L* = sqrt(3v/(lambda delta^2)),symbolic,simplifies to 0,True
+5,c,B.5,c,second derivative v/L^3 > 0 at L*,symbolic,simplifies to 0,True
+5,c,B.5,c,minimum value sqrt(lambda delta^2 v/3),symbolic,simplifies to 0,True
+5,c,B.5,c,q(e^eps) = e^eps - 1 - eps = eps^2/2 + O(eps^3),symbolic,simplifies to 0,True
+5,c,,,the factor 1/3 = int_0^1 (1 - u)^2 du,symbolic,simplifies to 0,True
+5,c,,,"B4: with lambda = K/T and mean delta^2 = Sigma/K, L* = sqrt(3 v T/Sigma delta^2)",symbolic,simplifies to 0,True
+5,c,,,"B4: L* = sqrt(3 v T/sum delta^2) from the table's v, deltas and T",numerical,"target 46.28481549, computed 46.28481549, tolerance 4.62848e-05",True
+5,c,,,B4: the quoted L* (macro b4-Lstar) is the table's value rounded,numerical,"target 46, computed 46, tolerance 1e-12",True
+6,b,B.6,b,"Cov(X_k, X_0) = beta_k Var(IV) + Cov(U_k, U_0)",symbolic,simplifies to 0,True
+6,b,B.6,b,Var(X_0) = Var(IV) + Var(U_0),symbolic,simplifies to 0,True
+6,b,B.6,b,mean ratio = beta_k + delta_k with delta_k = (mean X_k - beta_k mean X_0)/mean X_0,symbolic,simplifies to 0,True
+6,c,B.6,c,"Cov(X_k, Z) = beta_k Cov(IV, Z) + Cov(U_k, Z) (bilinearity)",symbolic,simplifies to 0,True
+6,c,B.6,c,"the instrumented estimand is [beta_k Cov(V,Z) + Cov(U_k,Z)]/[Cov(V,Z) + Cov(U_0,Z)]",symbolic,simplifies to 0,True
+6,a,B.6,a,"with Cov(U, Z) = 0: Cov(X_k, Z) = beta_k Cov(X_0, Z) (rank one)",symbolic,simplifies to 0,True
+6,a,B.6,a,E[U_0 x Z_(t-1)] = 0 (martingale difference against an instrument dated t-1),Monte Carlo,"theory 0, simulated -0.0514637 (SE 0.11)",True
+6,a,B.6,a,E[U_1 x Z_(t-1)] = 0 (martingale difference against an instrument dated t-1),Monte Carlo,"theory 0, simulated -0.0580419 (SE 0.088)",True
+6,c,B.6,c,E[IV - V x Z_(t-1)] = 0 (martingale difference against an instrument dated t-1),Monte Carlo,"theory 0, simulated -0.0020836 (SE 0.034)",True
+6,a,B.6,a,"Cov(X_1, Z)/Cov(X_0, Z) = beta_1 = 0.8 with an instrument dated t-1",Monte Carlo,"theory 0.8, simulated 0.795613 (SE 0.037)",True
+6,d,B.6,d,"GMM consistency and the J test's size, checked in simulation (table121, Proposition 6 rows)",Monte Carlo,12 of 12 rows pass,True
+6,e,B.6,e,"Sherman-Morrison: Sigma^-1 beta (1 + v beta' Omega^-1 beta) = Omega^-1 beta (2 x 2, general)",symbolic,simplifies to 0,True
+6,e,B.6,e,"KKT: Sigma w* = mu beta with mu = 1/(beta' Sigma^-1 beta), and beta' w* = 1",symbolic,simplifies to 0,True
+6,e,B.6,e,"w' Sigma w = v (w' beta)^2 + w' Omega w, = v + w' Omega w under w' beta = 1",symbolic,simplifies to 0,True
+6,e,B.6,e,the two weight formulas agree on 200 random 4 x 4 designs,numerical,max gap 1.2e-15,True
+6,e,,,"M14 bounds: 1/(beta' Sigma^-1 beta) = Var(IV) + 1/(beta' Omega^-1 beta), so D_k = n_k - 1/(beta'Omega^-1 beta) <= n_k",symbolic,simplifies to 0,True
+paper,6.7,,,"Var(r) = Var(o) + Var(c) + 2 Cov(o, c) for sample moments (ddof = 1, n = 4 symbolic)",symbolic,simplifies to 0,True
+paper,6.7,,,"YZ - Var(r) = (1 - k)[mean RS - Var(c)] - 2 Cov(o, c), exactly",symbolic,simplifies to 0,True
+paper,4.5,,,Yang-Zhang weight k = 0.34/(1.34 + (n+1)/(n-1)) at n = 21,numerical,"target 0.1393442623, computed 0.1393442623, tolerance 1e-15",True
+paper,4.3,,,GK - (3/2 - 2 ln 2) c^2 = (R^2 - c^2)/2 >= 0 when |c| <= R,symbolic,simplifies to 0,True
+paper,4.3,,,"3/2 - 2 ln 2 > 0, so GK >= 0 on a valid bar",symbolic,3/2 - 2 ln 2 = 0.113706,True
+paper,Appendix A,,,old Appendix A: -E[oc] = E[e_o eta] + E[eta^2] under its assumptions,symbolic,simplifies to 0,True
+paper,Appendix A,,,old Appendix A: E[o^2] = E[e_o^2] + 2E[e_o eta] + E[eta^2] + E[eps_prev^2],symbolic,simplifies to 0,True
+paper,Appendix A,,,old Appendix A: y = (sqrt(5-4b) - 1)/2 solves y^2 + y = 1 - b,symbolic,simplifies to 0,True
+paper,Appendix A,,,old Appendix A: y = (sqrt(1+4x) - 1)/2 has y^2 = x - y <= x,symbolic,simplifies to 0,True
+paper,Appendix A,,,corrected Appendix A (round 17) is Proposition 1(c) in Appendix A's coordinates: o* = e_o - eps_prev,symbolic,simplifies to 0,True
+paper,M15,,,M15: b = E[or]/E[o^2] = 1 + E[oc]/E[o^2] (r = o + c),symbolic,simplifies to 0,True
+paper,M15,,,M15: E[oc] = -Var(eta) when the errors are independent of everything,symbolic,simplifies to 0,True
+paper,6.8,,,open-free form: kernel(b = 0) = 0.8 TR^2/(4 ln 2) + 0.2 r^2,data,"max |residual| over 142,970 stock-days = 2.1e-17",True
+paper,6.8,,,full form at b = 1: kernel = o^2 + R^2/(4 ln 2) (overnight^2 + Parkinson),data,"max |residual| over 142,970 stock-days = 0.0e+00",True
+paper,6.8,,,"R* = max(h, b o) - min(l, b o): the range of the bar extended to the effective open",data,"max |residual| over 142,970 stock-days = 5.6e-17",True
+paper,6.8,,,"R <= R* <= TR for every b in [0, 1], with R*(0) = TR and R*(1) = R",data,"142,970 stock-days",True
+paper,4.3,,,GK >= (3/2 - 2 ln 2) c^2 >= 0 on every valid NEPSE bar,data,"142,970 valid stock-days",True
+paper,6.7,,,the Yang-Zhang identity holds on NEPSE 21-session windows (to 1e-12 relative),data,"1,526 windows",True

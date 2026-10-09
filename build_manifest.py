@@ -63,7 +63,9 @@ def pytest_result() -> str:
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "17 (round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their "
+    "revision": "18 (round 18: every step of every proof in the theory supplement verified by "
+                "scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the "
+                "precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their "
                 "proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of "
                 "Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the "
                 "overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added "
@@ -89,7 +91,7 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round17_revisions.py, in order",
+                          "through paper/apply_round18_revisions.py, in order",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -227,6 +229,22 @@ manifest = {
         "new_scripts": ["scripts/44_anam_recheck.py", "paper/apply_round16_revisions.py"],
         "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
         "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
+    },
+    "revision_18_changes": {
+        "proof_steps": {
+            "script": "scripts/46_theory_proofs.py",
+            "outputs": "output/tables/table124_theory_proof_steps.csv; paper/theory/generated/proofs.tex and tab_proofs.tex "
+                       "(the supplement's Table 5)",
+            "result": "251 steps, all passing: every part of every proposition and every step of every proof in the "
+                      "theory supplement, and the paper's own mathematical claims (the Yang-Zhang identity, the "
+                      "non-negativity of Garman-Klass, the special cases of Anam's kernel, the old and corrected "
+                      "Appendix A, the M14 and M15 algebra). 138 steps are verified symbolically with SymPy; the others "
+                      "numerically, by simulation, pathwise or on every NEPSE stock-day they apply to.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-027: precision edits to the supplement's statements and to Appendix A's "
+                       "attainment condition; no result changes",
+        "new_scripts": ["scripts/46_theory_proofs.py", "paper/apply_round18_revisions.py"],
+        "new_tests": ["tests/test_theory_proofs.py"],
     },
     "revision_17_changes": {
         "theory": {

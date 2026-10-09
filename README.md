@@ -46,7 +46,10 @@ every claim made for the estimator is in [`ANAM_RECHECK_POSTHOC.md`](ANAM_RECHEC
 6. when lagged realised measures identify an estimator's calibration.
 
 `scripts/45_theory_checks.py` checks every closed form, identity and inequality against simulation or
-numerical integration (187 checks, all passing). The supplement's one prediction about real data was
+numerical integration (187 checks, all passing). `scripts/46_theory_proofs.py` then verifies every
+step of every proof, together with the paper's own mathematical claims (251 steps, all passing). Of
+those steps, 138 are verified symbolically with SymPy; the rest numerically, by simulation,
+pathwise or on the data. The supplement's one prediction about real data was
 fixed in advance under [`M19_THEORY_CHECKS_PLAN.md`](M19_THEORY_CHECKS_PLAN.md) and was not
 supported.
 
@@ -171,16 +174,19 @@ Details: paper Section 6.8 and Tables 33–38; `M16_ANAM_ESTIMATOR_*`, `M17_ANAM
 ## Manuscript and submission set
 
 - **The manuscript.** `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` is rebuilt from the frozen
-  tables by `paper/apply_referee_revisions.py`, then rounds 3–17, applied in order. Round 15
+  tables by `paper/apply_referee_revisions.py`, then rounds 3–18, applied in order. Round 15
   (`paper/apply_round15_revisions.py`) adds Anam's estimator: Section 6.8, Tables 33–36, a new title, and
   changes to the abstract, introduction, protocol, discussion, limitations, conclusion and references.
   Round 16 (`paper/apply_round16_revisions.py`) corrects what a recheck of those claims found
   (`AUDIT-REGISTER.md` M-020 to M-025) and adds the post hoc recheck as Tables 37–38. Round 17
   (`paper/apply_round17_revisions.py`) corrects Appendix A's bound on the opening error, which the
-  theory supplement showed is not sharp (M-026), and points Section 9 to the supplement.
+  theory supplement showed is not sharp (M-026), and points Section 9 to the supplement. Round 18
+  (`paper/apply_round18_revisions.py`) states Appendix A's attainment condition exactly (M-027) and
+  adds the step-by-step verification to Section 9.
 - **The theory supplement.** `paper/theory/` holds the LaTeX theory section and its proof appendix,
-  with the compiled `theory.pdf`. Every number in it is a macro written by `scripts/45_theory_checks.py`
-  to `paper/theory/generated/`. Build it with `latexmk -pdf theory.tex` in that directory.
+  with the compiled `theory.pdf`. Every number in it is a macro written to `paper/theory/generated/` by
+  `scripts/45_theory_checks.py` and `scripts/46_theory_proofs.py`. Build it with
+  `latexmk -pdf theory.tex` in that directory.
   Every figure the manuscript quotes is interpolated from `output/tables/*.csv`.
 - **The submission set.** `paper/submission/` is the double-anonymous submission set, rebuilt by
   `paper/build_submission_set.py`. Because the estimator carries the author's name, the anonymous copy
@@ -259,7 +265,8 @@ final formatting step, which runs last.
 23. `scripts/43_anam_morocco.py` — M18, frozen plan: both forms of Anam's estimator on the Casablanca panel, by band regime, and the decision ledger (package Tables 112-116). Needs `data/external/frontier/casablanca/`; skipped when absent.
 24. `scripts/44_anam_recheck.py` — POST HOC recheck of the M16-M18 claims, run after every verdict was known: every estimator under the same calibration, longer Newey-West lags, non-overlapping origins, an MSE loss, halves of each test span, Holm corrections, and the data assumptions (package Tables 117-120; paper Tables 37-38). Needs `data/external/frontier/`; skipped when absent.
 25. `scripts/45_theory_checks.py` — plan M19: every proposition of the theory supplement checked against simulation or numerical integration (Part A), its applications to the NEPSE data (Part B), and the pooling test across the five panel test spans (Part C) (package Tables 121-123; `paper/theory/generated/`). Post hoc relative to M14-M18; Part C needs `data/external/frontier/` and is skipped with the script when absent. About five minutes.
-26. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–38, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
+26. `scripts/46_theory_proofs.py` — every step of every proof in the theory supplement, and the paper's own mathematical claims. Each step is verified symbolically with SymPy where it is algebra or calculus, and otherwise numerically, by simulation, pathwise or on every NEPSE stock-day it applies to (package Table 124; `paper/theory/generated/proofs.tex`). It reads script 45's committed outputs, so it always runs. About two minutes.
+27. `scripts/25_submission_tables.py` — manuscript-facing Tables 1, 3–38, and the `PAPER_RESULTS_CHECK.csv` QA ledger. **Runs last**: it reads the artifacts produced by every step above.
 
 ## Implementation conventions
 
@@ -291,7 +298,7 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 
 ## Repository map
 
-- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-17). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) added Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18; round 16 (`apply_round16_revisions.py`) corrects the overstatements a recheck found and adds Tables 37-38; round 17 (`apply_round17_revisions.py`) corrects Appendix A's bound on the opening error (M-026). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
+- `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` — **the revised manuscript**, rebuilt from the frozen output tables by the `paper/apply_*_revisions.py` scripts, applied in order (`apply_referee_revisions.py`, then rounds 3-18). Round 14 (`apply_round14_revisions.py`) added Sections 6.6-6.7, Tables 29-32 and Figures 7-8 from the M14 and M15 analyses; round 15 (`apply_round15_revisions.py`) added Section 6.8 and Tables 33-36 on Anam's estimator from M16-M18; round 16 (`apply_round16_revisions.py`) corrects the overstatements a recheck found and adds Tables 37-38; round 17 (`apply_round17_revisions.py`) corrects Appendix A's bound on the opening error (M-026); round 18 (`apply_round18_revisions.py`) states its attainment condition exactly and cites the step-by-step verification (M-027). Every figure it quotes is interpolated from `output/tables/*.csv`, never typed by hand.
 - `paper/submission/` — the double-anonymous submission set: anonymised manuscript (with the estimator's eponym replaced by "the proposed estimator"), separate title page, and a cover letter for each target journal (three field journals, then the referee's three recommendations), rebuilt by `paper/build_submission_set.py`.
 - `paper/manuscript_as_reviewed_pre_revision.pdf` — the manuscript **as reviewed** (the PRE-revision PDF the first-round referee actually read), retained only so the revision can be checked against it. **This is not the current manuscript; `paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx` above is.** (Renamed from the earlier, misleadingly generic `NEPSE_Volatility_Final_Manuscript.pdf` after a forensic audit found the old name being mistaken for the current file.) No PDF rendering of the current `.docx` ships in this package — this development environment has no docx-to-PDF renderer available; export one from the `.docx` before submitting to a journal.
 - `PAPER_REVISIONS.md` — **superseded**; the pre-referee revision notes, retained for provenance.
@@ -314,7 +321,7 @@ series used by M16 is read from the `arch` package (version 8.0.0).
   - calibration lag;
   - instrumented calibration.
 
-  Every number is a macro in `paper/theory/generated/numbers.tex`, written by `scripts/45_theory_checks.py`.
+  Every number is a macro in `paper/theory/generated/`, written by `scripts/45_theory_checks.py` and `scripts/46_theory_proofs.py`. The second of these verifies every step of every proof and writes one row per step to `output/tables/table124_theory_proof_steps.csv` (251 steps, 138 of them symbolic).
 - `M19_THEORY_CHECKS_PLAN.md` / `M19_THEORY_CHECKS_RESULTS.md` — the plan for checking the theory, frozen in its own commit before `scripts/45_theory_checks.py` existed, and its results. It sets out:
   - Part A, the propositions against simulation;
   - Part B, the applications to frozen data;

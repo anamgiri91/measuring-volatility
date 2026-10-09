@@ -18,3 +18,5 @@ arch==8.0.0
 # Pinned deliberately: statsmodels pulls scipy in, and scripts/34, 35 and 45 import it directly
 # (45 for the Brownian-extreme integrals and the Gaussian closed forms of the theory checks).
 scipy==1.18.1
+# Imported only by scripts/46 (the step-by-step symbolic verification of the theory's proofs).
+sympy==1.14.0
