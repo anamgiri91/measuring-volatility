@@ -43,7 +43,7 @@ import pandas as pd
 
 from nepsevol.estimators import anam as AN
 
-__all__ = ["LONGRUN_SESSIONS", "LONGRUN_MIN", "rolling_rows", "pooled_kappa", "series_kappa", "constant_kappa",
+__all__ = ["LONGRUN_SESSIONS", "LONGRUN_MIN", "ZERO_SQUARE", "clean_square", "rolling_rows", "pooled_kappa", "series_kappa", "constant_kappa",
            "to_matrix", "from_matrix", "ewma_path", "garch_path", "h_step_mean", "har_components", "simplex_grid",
            "tr_parkinson", "posterior_kernel", "EWMA_GRID", "GARCH_GRID", "GJR_GRID"]
 
@@ -62,11 +62,25 @@ GJR_GRID = tuple((a, round(p - a - g / 2, 10), g) for a in (0.0, 0.02, 0.04, 0.0
                  for g in (0.04, 0.08, 0.12, 0.16, 0.20) for p in _PERSIST if p - a - g / 2 >= 0)
 
 
+#: squared quantities below this are floating-point residues of equal prices and count as zero
+#: (the same rule as ``anam_estimator.evaluation.ZERO_SQUARE``; a test keeps the two equal)
+ZERO_SQUARE = 1e-18
+
+
+def clean_square(x: pd.Series) -> pd.Series:
+    """A squared quantity with floating-point residues of equal prices set to exactly zero (NaN kept)."""
+    x = x.astype(float)
+    return x.where(~(x.abs() < ZERO_SQUARE), 0.0)
+
+
 def rolling_rows(x: pd.Series, by: pd.Series, n: int, minp: int | None = None) -> pd.Series:
     """Mean of each security's last ``n`` observed rows through the current one (NaN rows are skipped
-    by the count of ``minp``)."""
+    by the count of ``minp``), exactly zero where every observed value in the window is zero."""
     mp = n if minp is None else minp
-    return x.groupby(by, sort=False).transform(lambda z: z.rolling(n, min_periods=mp).mean())
+    m = x.groupby(by, sort=False).transform(lambda z: z.rolling(n, min_periods=mp).mean())
+    nz = (x.notna() & (x != 0)).astype(float)
+    cnt = nz.groupby(by, sort=False).transform(lambda z: z.rolling(n, min_periods=1).sum())
+    return m.where(~((cnt == 0) & m.notna()), 0.0)
 
 
 def pooled_kappa(X: pd.Series, r2: pd.Series, date: pd.Series, L: int = 60, minp: int = 20) -> pd.Series:

@@ -34,7 +34,8 @@ from ._version import __version__
 from .core import LAMBDA0, MIN_POOL_DATES, MIN_SERIES_SESSIONS, POOL_SESSIONS, SERIES_SESSIONS
 from .data import prepare, resolve_mode
 from .estimator import annualization, estimate, resolve_form
-from .evaluation import forward_target, purged, qlike_canonical, qlike_normalized, select_by_loss, session_ordinal
+from .evaluation import (clean_square, forward_target, purged, qlike_canonical, qlike_normalized,
+                         rolling_mean_exact, select_by_loss, session_ordinal)
 
 __all__ = ["AnamModel", "qlike", "qlike_canonical", "PHI_GRID", "LONGRUN_SESSIONS", "LONGRUN_MIN"]
 
@@ -140,14 +141,13 @@ class AnamModel:
         # Origins and features: the bars with a full set of coordinates (a previous close), as in the
         # paper's evaluation; within them the kernel is undefined until b has enough history.
         use = path["r2"].notna()
-        q, X, r2 = p[use], path.loc[use, "kernel"], path.loc[use, "r2"]
+        r2_all = clean_square(path["r2"])
+        q, X, r2 = p[use], clean_square(path.loc[use, "kernel"]), r2_all[use]
         sym, date = q["symbol"], q["date"]
         valid = X.notna() & r2.notna()
         Xv, rv = X.where(valid), r2.where(valid)
-        cur = Xv.groupby(sym, sort=False).transform(lambda z: z.rolling(h, min_periods=h).mean())
-        n = Xv.notna().astype(float).groupby(sym, sort=False).transform(
-            lambda z: z.rolling(LONGRUN_SESSIONS, min_periods=LONGRUN_MIN).sum())
-        lr = _trailing_sum(Xv, sym, LONGRUN_SESSIONS, LONGRUN_MIN) / n
+        cur = rolling_mean_exact(Xv, sym, h)
+        lr = rolling_mean_exact(Xv, sym, LONGRUN_SESSIONS, LONGRUN_MIN)
         if mode == "panel":
             L, m = POOL_SESSIONS, min(MIN_POOL_DATES, POOL_SESSIONS)
             num, den = rv.groupby(date).sum(), Xv.groupby(date).sum()
@@ -158,7 +158,7 @@ class AnamModel:
         # Target: h consecutive exchange sessions of every bar, so a bar without a previous close or a
         # session without a bar inside the window leaves the target unobserved.
         ses = session_ordinal(p["date"], self.calendar)
-        tgt = forward_target(path["r2"], p["symbol"], ses, h)
+        tgt = forward_target(r2_all, p["symbol"], ses, h)
         ready = kappa.notna() & cur.notna() & lr.notna() & (kappa > 0) & (lr > 0)
         out = pd.DataFrame({"kappa": kappa, "cur": cur, "lr": lr, "ready": ready}, index=q.index)
         out = out.reindex(p.index)

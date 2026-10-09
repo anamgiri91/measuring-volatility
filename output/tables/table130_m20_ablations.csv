@@ -1,0 +1,231 @@
+market,span,window,contrast,model,reference,parameters,n,difference,t,verdict
+NEPSE,A2+C,5,calibration,P raw,P,0.85,51660,0.03217005217,2.717783747,loses to
+NEPSE,A2+C,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.85,51660,0.03374984419,3.204838701,loses to
+NEPSE,A2+C,5,previous-close anchor,TR-P,P,0.75,51660,-0.0077451501,-3.130312804,beats
+NEPSE,A2+C,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,51660,-0.009927036847,-2.172683204,beats
+NEPSE,A2+C,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,51660,0.005192058307,1.762751385,no significant difference
+NEPSE,A2+C,5,estimated b against b = 1,Anam,o2+P,0.75,51660,-0.0378454759,-3.491229353,beats
+NEPSE,A2+C,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,51660,0.00201705149,0.1478937688,no significant difference
+NEPSE,A2+C,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.75,51660,2.633595554e-05,0.003333722775,no significant difference
+NEPSE,A2+C,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.2, 0.3, 0.3, 0.2)",51660,-0.01388566784,-1.509336804,no significant difference
+NEPSE,A2+C,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.2, 0.4, 0.3)",51660,-0.01267918128,-1.184348552,no significant difference
+NEPSE,A2+C,5,measurement with common dynamics,"open-free, CC's phi",CC,None,51660,0.005097470688,0.1943463361,no significant difference
+NEPSE,A2+C,5,measurement with common dynamics,"Anam, CC's phi",CC,None,51660,0.01006704596,0.3575929965,no significant difference
+NEPSE,A2+C,5,residual uncertainty,Anam posterior (exploratory),Anam,0.75,51660,-0.004912402242,-0.6081518599,no significant difference
+NEPSE,A2,5,calibration,P raw,P,0.85,28842,0.01973424063,2.21598864,loses to
+NEPSE,A2,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.85,28842,0.02145417747,2.504643579,loses to
+NEPSE,A2,5,previous-close anchor,TR-P,P,0.75,28842,-0.001195689334,-0.4179164204,no significant difference
+NEPSE,A2,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,28842,0.001151733155,0.2093637882,no significant difference
+NEPSE,A2,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,28842,-0.001257333092,-0.4350388676,no significant difference
+NEPSE,A2,5,estimated b against b = 1,Anam,o2+P,0.75,28842,-0.0053151656,-0.4835654084,no significant difference
+NEPSE,A2,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,28842,0.02437620759,1.278515957,no significant difference
+NEPSE,A2,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.75,28842,-0.00142120952,-0.3101517761,no significant difference
+NEPSE,A2,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.2, 0.3, 0.3, 0.2)",28842,-0.02326554974,-1.657183764,no significant difference
+NEPSE,A2,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.2, 0.4, 0.3)",28842,-0.02279374983,-1.663730567,no significant difference
+NEPSE,A2,5,measurement with common dynamics,"open-free, CC's phi",CC,None,28842,-0.04984780807,-1.452134968,no significant difference
+NEPSE,A2,5,measurement with common dynamics,"Anam, CC's phi",CC,None,28842,-0.04959703059,-1.357155596,no significant difference
+NEPSE,A2,5,residual uncertainty,Anam posterior (exploratory),Anam,0.75,28842,0.002626005173,0.3533192682,no significant difference
+NEPSE,C,5,calibration,P raw,P,0.85,21573,0.05226676645,2.236629759,loses to
+NEPSE,C,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.85,21573,0.05236982657,2.557210132,loses to
+NEPSE,C,5,previous-close anchor,TR-P,P,0.75,21573,-0.01608419845,-6.952616846,beats
+NEPSE,C,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,21573,-0.0237573512,-5.019402656,beats
+NEPSE,C,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,21573,0.01264902386,2.967920407,loses to
+NEPSE,C,5,estimated b against b = 1,Anam,o2+P,0.75,21573,-0.08053260784,-9.173486164,beats
+NEPSE,C,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,21573,-0.02245770622,-1.778874988,no significant difference
+NEPSE,C,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.75,21573,0.005508450837,0.3339818101,no significant difference
+NEPSE,C,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.2, 0.3, 0.3, 0.2)",21573,-0.004180780546,-0.4238515579,no significant difference
+NEPSE,C,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.2, 0.4, 0.3)",21573,-0.004750287167,-0.3086333322,no significant difference
+NEPSE,C,5,measurement with common dynamics,"open-free, CC's phi",CC,None,21573,0.07275084628,2.719823551,loses to
+NEPSE,C,5,measurement with common dynamics,"Anam, CC's phi",CC,None,21573,0.0830253002,2.881688988,loses to
+NEPSE,C,5,residual uncertainty,Anam posterior (exploratory),Anam,0.75,21573,-0.01384272632,-0.8759595929,no significant difference
+NEPSE,A2+C,21,calibration,P raw,P,0.9,47131,0.03670019516,2.326337749,loses to
+NEPSE,A2+C,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.9,47131,0.03993527347,2.719257578,loses to
+NEPSE,A2+C,21,previous-close anchor,TR-P,P,0.75,47131,-0.003839079722,-1.547443863,no significant difference
+NEPSE,A2+C,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,47131,-0.006348035527,-1.145634986,no significant difference
+NEPSE,A2+C,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,47131,0.004464521144,1.220694179,no significant difference
+NEPSE,A2+C,21,estimated b against b = 1,Anam,o2+P,0.75,47131,-0.03139132386,-2.042870973,beats
+NEPSE,A2+C,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,47131,-0.0003523013549,-0.01737953383,no significant difference
+NEPSE,A2+C,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.8,47131,0.001322817911,0.1345839109,no significant difference
+NEPSE,A2+C,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.2, 0.4, 0.3)",47131,-0.009876815901,-1.938808439,no significant difference
+NEPSE,A2+C,21,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.1, 0.4, 0.4)",47131,-0.0116767465,-2.929163507,beats
+NEPSE,A2+C,21,measurement with common dynamics,"open-free, CC's phi",CC,None,47131,-0.003309246937,-0.1022907721,no significant difference
+NEPSE,A2+C,21,measurement with common dynamics,"Anam, CC's phi",CC,None,47131,0.001071732987,0.03041256174,no significant difference
+NEPSE,A2+C,21,residual uncertainty,Anam posterior (exploratory),Anam,0.8,47131,5.454439683e-05,0.004722655291,no significant difference
+NEPSE,A2,21,calibration,P raw,P,0.9,24592,0.03169701173,1.51790903,no significant difference
+NEPSE,A2,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.9,24592,0.03327324471,1.429009666,no significant difference
+NEPSE,A2,21,previous-close anchor,TR-P,P,0.75,24592,0.0004795770611,0.4946679262,no significant difference
+NEPSE,A2,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,24592,0.002796737279,0.5958166582,no significant difference
+NEPSE,A2,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,24592,-0.00113200394,-0.5410403305,no significant difference
+NEPSE,A2,21,estimated b against b = 1,Anam,o2+P,0.75,24592,-0.005400988778,-0.5494056058,no significant difference
+NEPSE,A2,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,24592,0.02834869575,1.016629464,no significant difference
+NEPSE,A2,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.8,24592,0.01033941652,13.60646439,loses to
+NEPSE,A2,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.2, 0.4, 0.3)",24592,-0.01579565968,-3.751196764,beats
+NEPSE,A2,21,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.1, 0.4, 0.4)",24592,-0.01733528298,-9.156518447,beats
+NEPSE,A2,21,measurement with common dynamics,"open-free, CC's phi",CC,None,24592,-0.0520543466,-1.2853343,no significant difference
+NEPSE,A2,21,measurement with common dynamics,"Anam, CC's phi",CC,None,24592,-0.05231765995,-1.234118601,no significant difference
+NEPSE,A2,21,residual uncertainty,Anam posterior (exploratory),Anam,0.8,24592,0.01633190496,1.084761849,no significant difference
+NEPSE,C,21,calibration,P raw,P,0.9,17348,0.05264667701,2.24335681,loses to
+NEPSE,C,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.9,17348,0.05371657341,3.018802336,loses to
+NEPSE,C,21,previous-close anchor,TR-P,P,0.75,17348,-0.01094870012,-5.905036393,beats
+NEPSE,C,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,17348,-0.02034652251,-3.930867977,beats
+NEPSE,C,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,17348,0.01309778941,2.385946137,loses to
+NEPSE,C,21,estimated b against b = 1,Anam,o2+P,0.75,17348,-0.07285108222,-6.947040435,beats
+NEPSE,C,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.75,17348,-0.03083315315,-1.437522201,no significant difference
+NEPSE,C,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.8,17348,-0.002762201493,-0.1360943267,no significant difference
+NEPSE,C,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.2, 0.4, 0.3)",17348,-0.001419301604,-0.1692619949,no significant difference
+NEPSE,C,21,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.1, 0.4, 0.4)",17348,-0.004342154635,-0.6623053176,no significant difference
+NEPSE,C,21,measurement with common dynamics,"open-free, CC's phi",CC,None,17348,0.06435921422,2.150168676,loses to
+NEPSE,C,21,measurement with common dynamics,"Anam, CC's phi",CC,None,17348,0.07586926962,2.18632967,loses to
+NEPSE,C,21,residual uncertainty,Anam posterior (exploratory),Anam,0.8,17348,-0.01921182272,-1.424161774,no significant difference
+NIFTY50,test half,5,calibration,P raw,P,0.3,2013,0.1450711023,2.5678273,loses to
+NIFTY50,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.45,2013,0.02081467545,1.442846258,no significant difference
+NIFTY50,test half,5,previous-close anchor,TR-P,P,0.55,2013,-0.0192482566,-1.746768541,no significant difference
+NIFTY50,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.55,2013,0.001954509961,1.076976861,no significant difference
+NIFTY50,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.55,2013,-0.005931151178,-1.251941106,no significant difference
+NIFTY50,test half,5,estimated b against b = 1,Anam,o2+P,0.55,2013,-0.007505883617,-2.851417956,beats
+NIFTY50,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.55,2013,-0.005513648589,-1.466122269,no significant difference
+NIFTY50,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.0, 0.3, 0.4, 0.3)",2013,-0.01531200404,-1.428527044,no significant difference
+NIFTY50,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.1, 0.6, 0.3)",2013,-0.02497600039,-1.701748988,no significant difference
+NIFTY50,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,2013,-0.01418964176,-2.220275291,beats
+NIFTY50,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,2013,-0.0186238645,-2.004562467,beats
+NIFTY50,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.55,2013,0.001775042024,2.38547979,loses to
+NIFTY50,test half,21,calibration,P raw,P,0.25,1997,0.2418191122,1.630949992,no significant difference
+NIFTY50,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.5,1997,0.05969554065,1.191242434,no significant difference
+NIFTY50,test half,21,previous-close anchor,TR-P,P,0.55,1997,-0.05908769941,-1.4149028,no significant difference
+NIFTY50,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.6,1997,-0.009440914738,-1.350625508,no significant difference
+NIFTY50,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.55,1997,-0.005909951522,-0.5867558568,no significant difference
+NIFTY50,test half,21,estimated b against b = 1,Anam,o2+P,0.55,1997,-0.00691817166,-1.634643645,no significant difference
+NIFTY50,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.6,1997,0.007428729023,0.4129076749,no significant difference
+NIFTY50,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.0, 0.3, 0.3, 0.4)",1997,-0.03189503055,-1.348857199,no significant difference
+NIFTY50,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.1, 0.6, 0.3)",1997,-0.01457296245,-1.47951346,no significant difference
+NIFTY50,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,1997,-0.0009733944965,-0.06272203773,no significant difference
+NIFTY50,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,1997,-0.01548279152,-1.312508606,no significant difference
+NIFTY50,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.5,1997,0.01186905065,2.220072649,loses to
+SP500,test half,5,calibration,P raw,P,0.6,2510,0.09353022681,2.904327104,loses to
+SP500,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.6,2510,0.02566781881,1.866347437,no significant difference
+SP500,test half,5,previous-close anchor,TR-P,P,0.7,2510,-0.006993142414,-1.485545704,no significant difference
+SP500,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.65,2510,0.01195161928,4.645988994,loses to
+SP500,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.65,2510,-0.003315281227,-0.9375710952,no significant difference
+SP500,test half,5,estimated b against b = 1,Anam,o2+P,0.65,2510,0,0,no significant difference
+SP500,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.65,2510,-0.008786588859,-2.973504927,beats
+SP500,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.0, 0.4, 0.4, 0.2)",2510,-0.0009779586429,-0.1095852259,no significant difference
+SP500,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.2, 0.5, 0.3)",2510,-0.01280012134,-1.012415523,no significant difference
+SP500,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,2510,-0.01367883427,-1.925752378,no significant difference
+SP500,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,2510,-0.01307316892,-1.399749112,no significant difference
+SP500,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.65,2510,-3.538559441e-19,-0.3148685739,no significant difference
+SP500,test half,21,calibration,P raw,P,0.7,2494,0.1667753739,2.511619959,loses to
+SP500,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.7,2494,0.05181795969,1.990287938,loses to
+SP500,test half,21,previous-close anchor,TR-P,P,0.75,2494,0.007779879458,1.516020803,no significant difference
+SP500,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.75,2494,9.480603496e-06,0.002218913118,no significant difference
+SP500,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.75,2494,-0.001680582023,-0.3386471819,no significant difference
+SP500,test half,21,estimated b against b = 1,Anam,o2+P,0.75,2494,1.424504282e-18,0.60802181,no significant difference
+SP500,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.75,2494,-0.01703730841,-2.036646046,beats
+SP500,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.0, 0.4, 0.3, 0.3)",2494,-0.03012650336,-2.465789946,beats
+SP500,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.2, 0.4, 0.4)",2494,-0.01583951533,-2.180298571,beats
+SP500,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,2494,-0.002531850502,-0.2472458596,no significant difference
+SP500,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,2494,-0.002675978232,-0.1914257965,no significant difference
+SP500,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.75,2494,-2.136756423e-18,-1.210731317,no significant difference
+DSE 2023-2026,test half,5,calibration,P raw,P,0.35,152779,0.01823443768,3.493831243,loses to
+DSE 2023-2026,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.3,152779,0.02639178502,4.418213924,loses to
+DSE 2023-2026,test half,5,previous-close anchor,TR-P,P,0.3,152779,-0.0003729994013,-0.3174470264,no significant difference
+DSE 2023-2026,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.3,152779,-0.005344812826,-11.95063532,beats
+DSE 2023-2026,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.25,152779,0.009921462942,11.03086964,loses to
+DSE 2023-2026,test half,5,estimated b against b = 1,Anam,o2+P,0.25,152779,-0.0154940852,-5.047533213,beats
+DSE 2023-2026,test half,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.3,152779,0.002056833768,0.9423102331,no significant difference
+DSE 2023-2026,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.3,152779,0.004955866621,2.096626662,loses to
+DSE 2023-2026,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.1, 0.1, 0.7)",152779,-8.760014369e-05,-0.1066209676,no significant difference
+DSE 2023-2026,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.1, 0.1, 0.7)",152779,-0.01138118161,-7.023875898,beats
+DSE 2023-2026,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,152779,0.005455796592,2.504012382,loses to
+DSE 2023-2026,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,152779,0.009622972317,4.462284427,loses to
+DSE 2023-2026,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.15,152779,0.01563206241,11.09425668,loses to
+DSE 2023-2026,test half,21,calibration,P raw,P,0.4,137966,0.01465973979,1.947688981,no significant difference
+DSE 2023-2026,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.25,137966,0.02374387783,2.596142638,loses to
+DSE 2023-2026,test half,21,previous-close anchor,TR-P,P,0.25,137966,0.00375745225,1.308646094,no significant difference
+DSE 2023-2026,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.25,137966,-0.002376938885,-3.990314929,beats
+DSE 2023-2026,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.2,137966,0.0047634995,3.752874992,loses to
+DSE 2023-2026,test half,21,estimated b against b = 1,Anam,o2+P,0.2,137966,-0.01215837557,-3.138373298,beats
+DSE 2023-2026,test half,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.25,137966,0.006035009064,1.983722121,loses to
+DSE 2023-2026,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.25,137966,0.004234237714,1.138427312,no significant difference
+DSE 2023-2026,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.0, 0.1, 0.1, 0.8)",137966,-0.001602367754,-1.293101803,no significant difference
+DSE 2023-2026,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.1, 0.1, 0.8)",137966,-0.005218438859,-5.639957612,beats
+DSE 2023-2026,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,137966,-0.003959033137,-1.240090424,no significant difference
+DSE 2023-2026,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,137966,-0.002000429751,-0.6012826669,no significant difference
+DSE 2023-2026,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.1,137966,0.008001477205,5.671836736,loses to
+Vietnam 2007-2020,test half,5,calibration,P raw,P,0.2,662880,0.02623663435,3.54119472,loses to
+Vietnam 2007-2020,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.5,662880,0.0003658659056,0.2500280757,no significant difference
+Vietnam 2007-2020,test half,5,previous-close anchor,TR-P,P,0.55,662880,-0.05420972469,-19.11844012,beats
+Vietnam 2007-2020,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.55,662880,-0.01031569449,-26.90428604,beats
+Vietnam 2007-2020,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.5,662880,0.00813458283,14.87562935,loses to
+Vietnam 2007-2020,test half,5,estimated b against b = 1,Anam,o2+P,0.5,662880,-0.02563527879,-6.785418717,beats
+Vietnam 2007-2020,test half,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.55,662880,-0.0004034417002,-0.2564903667,no significant difference
+Vietnam 2007-2020,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.55,662880,0.004440236526,3.655690676,loses to
+Vietnam 2007-2020,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.3, 0.3, 0.3)",662880,-0.01250731946,-11.42969557,beats
+Vietnam 2007-2020,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.2, 0.3, 0.4)",662880,-0.01861998972,-11.95980072,beats
+Vietnam 2007-2020,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,662880,-0.009825649539,-3.36777115,beats
+Vietnam 2007-2020,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,662880,-0.00154275452,-0.6416243563,no significant difference
+Vietnam 2007-2020,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.6,662880,0.002863739385,2.285958571,loses to
+Vietnam 2007-2020,test half,21,calibration,P raw,P,0.2,532668,0.003553968518,0.3211052214,no significant difference
+Vietnam 2007-2020,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.4,532668,-0.0007517592703,-0.2856557279,no significant difference
+Vietnam 2007-2020,test half,21,previous-close anchor,TR-P,P,0.45,532668,-0.0342208905,-9.477493593,beats
+Vietnam 2007-2020,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.45,532668,-0.006803537404,-13.27668015,beats
+Vietnam 2007-2020,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.45,532668,0.005546242578,4.322178151,loses to
+Vietnam 2007-2020,test half,21,estimated b against b = 1,Anam,o2+P,0.45,532668,-0.02748480824,-4.032826883,beats
+Vietnam 2007-2020,test half,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.45,532668,0.00121413363,0.4359071983,no significant difference
+Vietnam 2007-2020,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.45,532668,0.007120897114,3.618277994,loses to
+Vietnam 2007-2020,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.2, 0.2, 0.5)",532668,-0.005726674938,-5.109343258,beats
+Vietnam 2007-2020,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.2, 0.2, 0.6)",532668,-0.00291605383,-3.795172615,beats
+Vietnam 2007-2020,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,532668,-0.0006465692047,-0.2097482737,no significant difference
+Vietnam 2007-2020,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,532668,0.004617674191,2.014391306,loses to
+Vietnam 2007-2020,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.45,532668,0.004078408241,2.320093415,loses to
+DSE 2009-2021,test half,5,calibration,P raw,P,0.6,430268,0.003044904288,1.645185291,no significant difference
+DSE 2009-2021,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.7,430268,0.003232869254,1.618705382,no significant difference
+DSE 2009-2021,test half,5,previous-close anchor,TR-P,P,0.65,430268,-0.01161256742,-7.116179348,beats
+DSE 2009-2021,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.65,430268,-0.002642355708,-4.9581145,beats
+DSE 2009-2021,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.65,430268,0.003043956192,6.437527125,loses to
+DSE 2009-2021,test half,5,estimated b against b = 1,Anam,o2+P,0.65,430268,-0.01715886718,-10.18366345,beats
+DSE 2009-2021,test half,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.65,430268,0.009535818022,4.470479802,loses to
+DSE 2009-2021,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.65,430268,0.001456103436,0.9778483681,no significant difference
+DSE 2009-2021,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.2, 0.3, 0.2, 0.3)",430268,-0.01006907418,-4.932190148,beats
+DSE 2009-2021,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.2, 0.3, 0.4)",430268,-0.01663104913,-5.341539802,beats
+DSE 2009-2021,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,430268,-0.02336160674,-6.925505171,beats
+DSE 2009-2021,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,430268,-0.01929590055,-5.389432317,beats
+DSE 2009-2021,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.65,430268,0.0004374850313,0.6246945426,no significant difference
+DSE 2009-2021,test half,21,calibration,P raw,P,0.6,375353,0.005361406347,1.470542809,no significant difference
+DSE 2009-2021,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.65,375353,0.005865845577,1.470457389,no significant difference
+DSE 2009-2021,test half,21,previous-close anchor,TR-P,P,0.6,375353,-0.006390032901,-4.163770807,beats
+DSE 2009-2021,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.6,375353,-0.001166998878,-1.575390574,no significant difference
+DSE 2009-2021,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.6,375353,0.001326502349,1.974431949,loses to
+DSE 2009-2021,test half,21,estimated b against b = 1,Anam,o2+P,0.6,375353,-0.00914133575,-3.417340348,beats
+DSE 2009-2021,test half,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.6,375353,0.01374468647,3.565179111,loses to
+DSE 2009-2021,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.65,375353,0.006909402494,1.661013621,no significant difference
+DSE 2009-2021,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.3, 0.2, 0.4)",375353,-0.01009873787,-3.803219827,beats
+DSE 2009-2021,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.2, 0.3, 0.5)",375353,-0.007438149538,-5.394827332,beats
+DSE 2009-2021,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,375353,-0.0171777149,-3.998479423,beats
+DSE 2009-2021,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,375353,-0.01555709319,-3.311397027,beats
+DSE 2009-2021,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.6,375353,-0.0006137644119,-0.5176545883,no significant difference
+Morocco 2012-2026,test half,5,calibration,P raw,P,0.15,56688,0.415659044,7.541631184,loses to
+Morocco 2012-2026,test half,5,calibration,open-free raw,"Anam, open-free special case (b=0)",0.3,56688,0.03289261634,2.833067097,loses to
+Morocco 2012-2026,test half,5,previous-close anchor,TR-P,P,0.35,56688,-0.2502591049,-4.638945546,beats
+Morocco 2012-2026,test half,5,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.4,56688,-0.01210777197,-7.368436382,beats
+Morocco 2012-2026,test half,5,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.4,56688,0.008374509355,4.45452926,loses to
+Morocco 2012-2026,test half,5,estimated b against b = 1,Anam,o2+P,0.4,56688,-0.00621461752,-1.995091519,beats
+Morocco 2012-2026,test half,5,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.4,56688,0.002797355045,0.8140812129,no significant difference
+Morocco 2012-2026,test half,5,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.4,56688,-0.002644626822,-0.6883213098,no significant difference
+Morocco 2012-2026,test half,5,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.2, 0.2, 0.5)",56688,-0.009775412923,-4.841993194,beats
+Morocco 2012-2026,test half,5,dynamics: HAR against phi,HAR-CC,CC,"(0.1, 0.1, 0.2, 0.6)",56688,-0.009699597287,-4.658042658,beats
+Morocco 2012-2026,test half,5,measurement with common dynamics,"open-free, CC's phi",CC,None,56688,-0.005813863827,-1.417818656,no significant difference
+Morocco 2012-2026,test half,5,measurement with common dynamics,"Anam, CC's phi",CC,None,56688,0.001723133323,0.3751574632,no significant difference
+Morocco 2012-2026,test half,5,residual uncertainty,Anam posterior (exploratory),Anam,0.4,56688,-0.005045422032,-2.304939762,beats
+Morocco 2012-2026,test half,21,calibration,P raw,P,0.15,40275,0.3580874659,4.681374533,loses to
+Morocco 2012-2026,test half,21,calibration,open-free raw,"Anam, open-free special case (b=0)",0.25,40275,0.0385902788,2.179853474,loses to
+Morocco 2012-2026,test half,21,previous-close anchor,TR-P,P,0.3,40275,-0.2063315266,-2.547572827,beats
+Morocco 2012-2026,test half,21,r^2 blend,"Anam, open-free special case (b=0)",TR-P,0.35,40275,-0.005556695455,-2.464615218,beats
+Morocco 2012-2026,test half,21,estimated b against b = 0,Anam,"Anam, open-free special case (b=0)",0.35,40275,0.003117886518,1.054538371,no significant difference
+Morocco 2012-2026,test half,21,estimated b against b = 1,Anam,o2+P,0.35,40275,-0.004709162121,-1.031092944,no significant difference
+Morocco 2012-2026,test half,21,cross-sectional pooling,"open-free, own calibration","Anam, open-free special case (b=0)",0.3,40275,0.01584027742,2.404729369,loses to
+Morocco 2012-2026,test half,21,adaptive scale,"open-free, constant calibration","Anam, open-free special case (b=0)",0.3,40275,-0.003193966125,-0.56503106,no significant difference
+Morocco 2012-2026,test half,21,dynamics: HAR against phi,HAR-open-free,"Anam, open-free special case (b=0)","(0.1, 0.1, 0.2, 0.6)",40275,-0.008641106284,-3.006922927,beats
+Morocco 2012-2026,test half,21,dynamics: HAR against phi,HAR-CC,CC,"(0.0, 0.1, 0.2, 0.7)",40275,-0.007460232867,-3.127819329,beats
+Morocco 2012-2026,test half,21,measurement with common dynamics,"open-free, CC's phi",CC,None,40275,-0.01510888291,-2.294110708,beats
+Morocco 2012-2026,test half,21,measurement with common dynamics,"Anam, CC's phi",CC,None,40275,-0.01217962225,-1.755205861,no significant difference
+Morocco 2012-2026,test half,21,residual uncertainty,Anam posterior (exploratory),Anam,0.35,40275,-0.002183936096,-0.6035049656,no significant difference

@@ -54,11 +54,34 @@ import pandas as pd
 __all__ = [
     "session_ordinal", "forward_target", "purged", "qlike_canonical", "qlike_normalized", "date_sums",
     "weighted_mean_se", "bartlett_lrv", "andrews_bandwidth", "stationary_multiplicities",
-    "model_confidence_set", "select_by_loss", "TARGET_REASONS",
+    "model_confidence_set", "select_by_loss", "TARGET_REASONS", "ZERO_SQUARE", "clean_square",
+    "rolling_mean_exact",
 ]
 
 #: why an origin's target is or is not observed (see :func:`forward_target`)
 TARGET_REASONS = ("complete", "missing session", "missing return", "beyond data")
+#: a squared log return or daily kernel below this is the floating-point residue of two equal prices (the
+#: log of their ratio is of order 1e-16), not a price move: a genuine one-tick move on any exchange's price
+#: grid squares to more than 1e-12. Such values count as exactly zero, so that a "positive" long-run level
+#: means a positive one (found in the first run of plan M20, where residues of order 1e-36 in the Dhaka
+#: panel passed the positivity test and produced near-zero forecasts).
+ZERO_SQUARE = 1e-18
+
+
+def clean_square(x) -> pd.Series:
+    """A squared quantity with floating-point residues of equal prices set to exactly zero (NaN kept)."""
+    s = pd.Series(x, dtype=float) if not isinstance(x, pd.Series) else x.astype(float)
+    return s.where(~(s.abs() < ZERO_SQUARE), 0.0)
+
+
+def rolling_mean_exact(x: pd.Series, by: pd.Series, n: int, minp: int | None = None) -> pd.Series:
+    """Each security's mean of its last ``n`` rows (NaN skipped, at least ``minp`` observed), exactly zero
+    where every observed value in the window is zero (a rolling sum can otherwise leave a residue)."""
+    mp = n if minp is None else minp
+    m = x.groupby(by, sort=False).transform(lambda z: z.rolling(n, min_periods=mp).mean())
+    nz = (x.notna() & (x != 0)).astype(float)
+    cnt = nz.groupby(by, sort=False).transform(lambda z: z.rolling(n, min_periods=1).sum())
+    return m.where(~((cnt == 0) & m.notna()), 0.0)
 
 
 def session_ordinal(dates, calendar=None) -> pd.Series:

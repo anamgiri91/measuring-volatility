@@ -1,0 +1,289 @@
+market,span,window,estimator,rival,dQLIKE_frozen,t_frozen,verdict_frozen,dQLIKE_corrected,t_corrected,verdict_corrected,changed
+NEPSE,A2+C,5,Anam,CC,0.01597785441,1.19191492,no significant difference,0.01955178437,1.374048737,no significant difference,False
+NEPSE,A2+C,5,Anam,P,-0.01264752768,-3.97456975,beats,-0.008303150105,-1.054983878,no significant difference,True
+NEPSE,A2+C,5,Anam,GK,-0.02662674484,-3.835967375,beats,-0.02237044158,-2.401089721,beats,False
+NEPSE,A2+C,5,Anam,RS,-0.04141309298,-4.469148656,beats,-0.03752926321,-3.018440623,beats,False
+NEPSE,A2+C,5,Anam,o2+P,-0.03442907662,-4.493274723,beats,-0.03900790695,-3.662172501,beats,False
+NEPSE,A2+C,5,Anam,o2+GK,-0.04384960142,-5.234017067,beats,-0.04232614613,-3.002870636,beats,False
+NEPSE,A2+C,5,Anam,YZ (daily form),-0.04512046489,-5.450600246,beats,-0.04389960704,-3.185338713,beats,False
+NEPSE,A2+C,5,Anam,"Anam, open-free special case (b=0)",0.005184170434,2.47149659,loses to,0.009044623228,2.764721702,loses to,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,0.01079368398,0.9306566202,no significant difference,0.01050716114,0.7222949772,no significant difference,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",P,-0.01783169811,-3.779791051,beats,-0.01734777333,-2.835782053,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",GK,-0.03181091527,-3.808048161,beats,-0.03141506481,-4.153729526,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",RS,-0.04659726341,-4.343827604,beats,-0.04657388644,-4.328050569,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",o2+P,-0.03961324705,-4.151994741,beats,-0.04805253018,-4.558052779,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",o2+GK,-0.04903377185,-4.785334014,beats,-0.05137076936,-3.899680906,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.05030463533,-4.957496587,beats,-0.05294423027,-4.083702158,beats,False
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,-0.005184170434,-2.47149659,beats,-0.009044623228,-2.764721702,beats,False
+NEPSE,A2,5,Anam,CC,-0.01716281896,-1.150055734,no significant difference,-0.01613388855,-1.183604698,no significant difference,False
+NEPSE,A2,5,Anam,P,-0.002944309837,-0.8664381866,no significant difference,0.007301430821,0.6711034592,no significant difference,False
+NEPSE,A2,5,Anam,GK,-0.01181792915,-1.318095363,no significant difference,-0.00545211455,-0.4142604956,no significant difference,False
+NEPSE,A2,5,Anam,RS,-0.02348488022,-1.818482524,no significant difference,-0.01651822423,-0.8717129002,no significant difference,False
+NEPSE,A2,5,Anam,o2+P,-0.01021101858,-1.345836535,no significant difference,-0.006870838316,-0.6392528574,no significant difference,False
+NEPSE,A2,5,Anam,o2+GK,-0.01907398633,-2.070837374,beats,-0.007301333936,-0.4118756563,no significant difference,True
+NEPSE,A2,5,Anam,YZ (daily form),-0.0217172238,-2.388198874,beats,-0.01059488623,-0.6053772477,no significant difference,True
+NEPSE,A2,5,Anam,"Anam, open-free special case (b=0)",0.0008743961786,0.4576762298,no significant difference,0.008503957457,2.000081408,loses to,True
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,-0.01803721514,-1.40724037,no significant difference,-0.02463784601,-1.535922109,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",P,-0.003818706016,-0.7315454029,no significant difference,-0.001202526636,-0.1623845655,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",GK,-0.01269232532,-1.177477347,no significant difference,-0.01395607201,-1.410024678,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",RS,-0.0243592764,-1.657461565,no significant difference,-0.02502218169,-1.59921954,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",o2+P,-0.01108541475,-1.175338005,no significant difference,-0.01537479577,-1.930023625,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",o2+GK,-0.0199483825,-1.805802031,no significant difference,-0.01580529139,-1.098809436,no significant difference,False
+NEPSE,A2,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.02259161998,-2.075745226,beats,-0.01909884368,-1.336317365,no significant difference,True
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,-0.0008743961786,-0.4576762298,no significant difference,-0.008503957457,-2.000081408,beats,True
+NEPSE,C,5,Anam,CC,0.06186585532,3.505709524,loses to,0.0631752127,3.363487917,loses to,False
+NEPSE,C,5,Anam,P,-0.0260830202,-8.187152074,beats,-0.02798117089,-3.739607632,beats,False
+NEPSE,C,5,Anam,GK,-0.04713166761,-6.416828236,beats,-0.04317442132,-4.590645499,beats,False
+NEPSE,C,5,Anam,RS,-0.066237267,-8.029690511,beats,-0.06326742073,-6.520777653,beats,False
+NEPSE,C,5,Anam,o2+P,-0.06796244081,-7.611307927,beats,-0.08098536021,-9.470686663,beats,False
+NEPSE,C,5,Anam,o2+GK,-0.07815498307,-8.589051797,beats,-0.08668658249,-7.353813938,beats,False
+NEPSE,C,5,Anam,YZ (daily form),-0.0775255985,-7.960278583,beats,-0.08616887026,-7.032636122,beats,False
+NEPSE,C,5,Anam,"Anam, open-free special case (b=0)",0.01115166912,3.317300731,loses to,0.009479680552,1.772638578,no significant difference,True
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,0.0507141862,3.375721996,loses to,0.05369553214,3.144999038,loses to,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",P,-0.03723468932,-8.618986651,beats,-0.03746085145,-7.388760868,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",GK,-0.05828333673,-7.39973209,beats,-0.05265410188,-7.556409374,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",RS,-0.07738893612,-8.364794541,beats,-0.07274710128,-8.697032846,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",o2+P,-0.07911410993,-6.665289281,beats,-0.09046504076,-7.406429251,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",o2+GK,-0.08930665219,-7.400143355,beats,-0.09616626304,-7.205623297,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.08867726762,-6.962291676,beats,-0.09564855081,-6.767458714,beats,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,-0.01115166912,-3.317300731,beats,-0.009479680552,-1.772638578,no significant difference,True
+NEPSE,A2+C,21,Anam,CC,0.009252223576,0.3695535165,no significant difference,0.01046850165,0.3877910102,no significant difference,False
+NEPSE,A2+C,21,Anam,P,-0.007595893954,-2.014076941,beats,-0.005671327031,-1.280984297,no significant difference,True
+NEPSE,A2+C,21,Anam,GK,-0.01665948496,-2.749497094,beats,-0.01159311261,-1.801607452,no significant difference,True
+NEPSE,A2+C,21,Anam,RS,-0.02599679813,-3.691126526,beats,-0.02067911214,-3.012439367,beats,False
+NEPSE,A2+C,21,Anam,o2+P,-0.02504652798,-2.275091632,beats,-0.02728121344,-1.738732835,no significant difference,True
+NEPSE,A2+C,21,Anam,o2+GK,-0.03024107339,-2.43185046,beats,-0.03138174149,-1.844030385,no significant difference,True
+NEPSE,A2+C,21,Anam,YZ (daily form),-0.03130673644,-2.640632792,beats,-0.03273956917,-2.044519718,beats,False
+NEPSE,A2+C,21,Anam,"Anam, open-free special case (b=0)",0.004361892402,1.639872465,no significant difference,0.004443890189,1.251302589,no significant difference,False
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,0.004890331174,0.2118251486,no significant difference,0.006024611464,0.2541925805,no significant difference,False
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",P,-0.01195778636,-1.933033711,no significant difference,-0.01011521722,-1.305309967,no significant difference,False
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",GK,-0.02102137737,-2.494234947,beats,-0.0160370028,-1.645415704,no significant difference,True
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",RS,-0.03035869053,-3.267094948,beats,-0.02512300233,-2.501368083,beats,False
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",o2+P,-0.02940842039,-2.180457721,beats,-0.03172510363,-1.667680027,no significant difference,True
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",o2+GK,-0.03460296579,-2.31709124,beats,-0.03582563167,-1.75714987,no significant difference,True
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.03566862884,-2.485461105,beats,-0.03718345935,-1.919631712,no significant difference,True
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,-0.004361892402,-1.639872465,no significant difference,-0.004443890189,-1.251302589,no significant difference,False
+NEPSE,A2,21,Anam,CC,-0.02563716044,-1.047956913,no significant difference,-0.03067937055,-0.9661632228,no significant difference,False
+NEPSE,A2,21,Anam,P,-7.372429262e-05,-0.05070623931,no significant difference,0.002014030526,0.615481342,no significant difference,False
+NEPSE,A2,21,Anam,GK,-0.004890389536,-1.066715436,no significant difference,0.0005129569786,0.08472279483,no significant difference,False
+NEPSE,A2,21,Anam,RS,-0.01248499821,-2.268803946,beats,-0.008501536232,-1.239754622,no significant difference,True
+NEPSE,A2,21,Anam,o2+P,-0.005090388876,-0.6613910505,no significant difference,-0.0007196601675,-0.06318479089,no significant difference,False
+NEPSE,A2,21,Anam,o2+GK,-0.007886065304,-0.8477745078,no significant difference,-0.001965105615,-0.1479287925,no significant difference,False
+NEPSE,A2,21,Anam,YZ (daily form),-0.01021279231,-1.147412125,no significant difference,-0.006012442822,-0.4760190255,no significant difference,False
+NEPSE,A2,21,Anam,"Anam, open-free special case (b=0)",9.598959492e-05,0.08407450239,no significant difference,-0.001079724736,-0.5243709398,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,-0.02573315004,-1.119098724,no significant difference,-0.02959964581,-0.9955468035,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",P,-0.0001697138875,-0.06402303708,no significant difference,0.003093755262,0.5835047481,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",GK,-0.00498637913,-0.8421178114,no significant difference,0.001592681714,0.1979515007,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",RS,-0.01258098781,-1.887981266,no significant difference,-0.007421811497,-0.8618785149,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",o2+P,-0.005186378471,-0.5750475886,no significant difference,0.0003600645681,0.02690839633,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",o2+GK,-0.007982054899,-0.7497093824,no significant difference,-0.0008853808796,-0.05798095078,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.01030878191,-1.010032191,no significant difference,-0.004932718087,-0.3387318808,no significant difference,False
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,-9.598959492e-05,-0.08407450239,no significant difference,0.001079724736,0.5243709398,no significant difference,False
+NEPSE,C,21,Anam,CC,0.06904793921,2.468230337,loses to,0.06836302847,2.491205581,loses to,False
+NEPSE,C,21,Anam,P,-0.02048788189,-8.435855666,beats,-0.01788359496,-10.32961491,beats,False
+NEPSE,C,21,Anam,GK,-0.03683013295,-13.21719928,beats,-0.02860396553,-12.36853411,beats,False
+NEPSE,C,21,Anam,RS,-0.04915420742,-13.40514611,beats,-0.03920595234,-15.5986617,beats,False
+NEPSE,C,21,Anam,o2+P,-0.05924866863,-5.769534186,beats,-0.06879197297,-6.539425801,beats,False
+NEPSE,C,21,Anam,o2+GK,-0.06855455309,-6.220937887,beats,-0.07606218015,-6.560536716,beats,False
+NEPSE,C,21,Anam,YZ (daily form),-0.067458922,-5.870519197,beats,-0.07483095504,-6.242311942,beats,False
+NEPSE,C,21,Anam,"Anam, open-free special case (b=0)",0.01167307655,2.734723814,loses to,0.01298681526,2.542880133,loses to,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,0.05737486267,2.397026253,loses to,0.05537621321,2.460800267,loses to,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",P,-0.03216095844,-5.421213688,beats,-0.03087041022,-4.744809372,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",GK,-0.0485032095,-7.534699818,beats,-0.04159078079,-5.786641205,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",RS,-0.06082728397,-8.839640393,beats,-0.0521927676,-7.311965099,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",o2+P,-0.07092174518,-5.045582337,beats,-0.08177878823,-5.385750582,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",o2+GK,-0.08022762964,-5.333677826,beats,-0.08904899541,-5.401054894,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.07913199854,-5.094278421,beats,-0.08781777031,-5.201704077,beats,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,-0.01167307655,-2.734723814,beats,-0.01298681526,-2.542880133,beats,False
+NIFTY50,test half,5,Anam,CC,-0.04106098708,-3.068232343,beats,-0.04106098708,-2.913599913,beats,False
+NIFTY50,test half,5,Anam,P,-0.02322489781,-1.911934073,no significant difference,-0.02322489781,-1.826275682,no significant difference,False
+NIFTY50,test half,5,Anam,GK,-0.01742987963,-1.789700461,no significant difference,-0.01742987963,-1.662869486,no significant difference,False
+NIFTY50,test half,5,Anam,RS,-0.04601567999,-3.259293241,beats,-0.04601567999,-2.848103832,beats,False
+NIFTY50,test half,5,Anam,o2+P,-0.007505883617,-3.185237899,beats,-0.007505883617,-2.851417956,beats,False
+NIFTY50,test half,5,Anam,o2+GK,-0.005859846321,-1.925228445,no significant difference,-0.005859846321,-1.95159573,no significant difference,False
+NIFTY50,test half,5,Anam,YZ (daily form),-0.023109475,-3.991598172,beats,-0.023109475,-3.486667694,beats,False
+NIFTY50,test half,5,Anam,"Anam, open-free special case (b=0)",-0.005931151178,-1.241407,no significant difference,-0.005931151178,-1.251941106,no significant difference,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,-0.03512983591,-3.310123716,beats,-0.03512983591,-2.993885671,beats,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",P,-0.01729374664,-1.72422122,no significant difference,-0.01729374664,-1.578258403,no significant difference,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",GK,-0.01149872845,-1.433973466,no significant difference,-0.01149872845,-1.290458202,no significant difference,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",RS,-0.04008452882,-3.145276044,beats,-0.04008452882,-2.679586476,beats,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",o2+P,-0.001574732439,-0.3044583734,no significant difference,-0.001574732439,-0.2991212433,no significant difference,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",o2+GK,7.130485621e-05,0.01146167538,no significant difference,7.130485621e-05,0.01200698553,no significant difference,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.01717832382,-2.388424595,beats,-0.01717832382,-2.203157258,beats,False
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,0.005931151178,1.241407,no significant difference,0.005931151178,1.251941106,no significant difference,False
+NIFTY50,test half,21,Anam,CC,-0.0005138031387,-0.03964334195,no significant difference,-0.0005138031387,-0.03718474046,no significant difference,False
+NIFTY50,test half,21,Anam,P,-0.07009561637,-1.331418734,no significant difference,-0.07443856567,-1.321090287,no significant difference,False
+NIFTY50,test half,21,Anam,GK,-0.09012527685,-1.636478814,no significant difference,-0.09578656626,-1.617316058,no significant difference,False
+NIFTY50,test half,21,Anam,RS,-0.1313524593,-2.15543292,beats,-0.1313524593,-2.012462245,beats,False
+NIFTY50,test half,21,Anam,o2+P,-0.00691817166,-1.696297752,no significant difference,-0.00691817166,-1.634643645,no significant difference,False
+NIFTY50,test half,21,Anam,o2+GK,-0.0270294534,-2.237415622,beats,-0.0270294534,-2.123219538,beats,False
+NIFTY50,test half,21,Anam,YZ (daily form),-0.04793414545,-2.328784559,beats,-0.06140158021,-2.235956173,beats,False
+NIFTY50,test half,21,Anam,"Anam, open-free special case (b=0)",-0.005909951522,-0.5974844094,no significant difference,-0.005909951522,-0.5867558568,no significant difference,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,0.005396148383,0.3376933194,no significant difference,0.005396148383,0.3098119745,no significant difference,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",P,-0.06418566485,-1.409118296,no significant difference,-0.06852861415,-1.413743291,no significant difference,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",GK,-0.08421532533,-1.732629811,no significant difference,-0.08987661474,-1.733991574,no significant difference,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",RS,-0.1254425078,-2.203045692,beats,-0.1254425078,-2.124322524,beats,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",o2+P,-0.001008220138,-0.1035808633,no significant difference,-0.001008220138,-0.1094589248,no significant difference,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.02111950188,-1.887005558,no significant difference,-0.02111950188,-2.121302088,beats,True
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.04202419393,-2.276472928,beats,-0.05549162869,-2.453635129,beats,False
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,0.005909951522,0.5974844094,no significant difference,0.005909951522,0.5867558568,no significant difference,False
+SP500,test half,5,Anam,CC,-0.05710492661,-6.389225109,beats,-0.05710492661,-6.082911207,beats,False
+SP500,test half,5,Anam,P,0.001643195644,0.4422523186,no significant difference,0.001643195644,0.4346085544,no significant difference,False
+SP500,test half,5,Anam,GK,0.007303733277,1.125771519,no significant difference,0.007303733277,1.095775975,no significant difference,False
+SP500,test half,5,Anam,RS,-0.02627985553,-2.027752568,beats,-0.02627985553,-1.927853352,no significant difference,True
+SP500,test half,5,Anam,o2+P,7.077118882e-19,1.003822113,no significant difference,-0,-0,no significant difference,False
+SP500,test half,5,Anam,o2+GK,0.006489487637,1.718109667,no significant difference,0.006489487637,1.728736212,no significant difference,False
+SP500,test half,5,Anam,YZ (daily form),0.006176967485,1.403728843,no significant difference,0.006176967485,1.360295377,no significant difference,False
+SP500,test half,5,Anam,"Anam, open-free special case (b=0)",-0.003315281227,-0.976528468,no significant difference,-0.003315281227,-0.9375710952,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,-0.05378964539,-7.101546765,beats,-0.05378964539,-6.649299989,beats,False
+SP500,test half,5,"Anam, open-free special case (b=0)",P,0.004958476871,0.8487015861,no significant difference,0.004958476871,0.8162669799,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",GK,0.0106190145,1.196714228,no significant difference,0.0106190145,1.167807792,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",RS,-0.02296457431,-1.519711665,no significant difference,-0.02296457431,-1.452965379,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",o2+P,0.003315281227,0.976528468,no significant difference,0.003315281227,0.9375710952,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",o2+GK,0.009804768863,1.593085537,no significant difference,0.009804768863,1.597863914,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),0.009492248712,1.378246663,no significant difference,0.009492248712,1.340501026,no significant difference,False
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,0.003315281227,0.976528468,no significant difference,0.003315281227,0.9375710952,no significant difference,False
+SP500,test half,21,Anam,CC,-0.002497050717,-0.1989572417,no significant difference,-0.002497050717,-0.1847407361,no significant difference,False
+SP500,test half,21,Anam,P,0.006108778039,1.824036609,no significant difference,0.006108778039,1.77668823,no significant difference,False
+SP500,test half,21,Anam,GK,0.0003447841727,0.03861116203,no significant difference,0.0003447841727,0.03565901775,no significant difference,False
+SP500,test half,21,Anam,RS,-0.007120340517,-0.4152110364,no significant difference,-0.007120340517,-0.3781148179,no significant difference,False
+SP500,test half,21,Anam,o2+P,-2.670945528e-19,-0.4018002123,no significant difference,1.424504282e-18,0.60802181,no significant difference,False
+SP500,test half,21,Anam,o2+GK,-0.005280323381,-0.6374788046,no significant difference,-0.005280323381,-0.5908766474,no significant difference,False
+SP500,test half,21,Anam,YZ (daily form),-0.004480251111,-0.4953384726,no significant difference,-0.004480251111,-0.4569636059,no significant difference,False
+SP500,test half,21,Anam,"Anam, open-free special case (b=0)",-0.001680582023,-0.3678153463,no significant difference,-0.001680582023,-0.3386471819,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,-0.0008164686943,-0.09267834255,no significant difference,-0.0008164686943,-0.08588751886,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",P,0.007789360062,1.391117672,no significant difference,0.007789360062,1.311548297,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",GK,0.002025366196,0.1536037762,no significant difference,0.002025366196,0.1419932211,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",RS,-0.005439758494,-0.254836475,no significant difference,-0.005439758494,-0.2326144334,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",o2+P,0.001680582023,0.3678153463,no significant difference,0.001680582023,0.3386471819,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.003599741358,-0.301332355,no significant difference,-0.003599741358,-0.2788839906,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.002799669089,-0.2121801937,no significant difference,-0.002799669089,-0.1952797315,no significant difference,False
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,0.001680582023,0.3678153463,no significant difference,0.001680582023,0.3386471819,no significant difference,False
+DSE 2023-2026,test half,5,Anam,CC,-0.002487812306,-0.9017507307,no significant difference,0.003285703336,1.465261591,no significant difference,False
+DSE 2023-2026,test half,5,Anam,P,-0.02041809675,-5.562119188,beats,0.004216158941,2.087404544,loses to,True
+DSE 2023-2026,test half,5,Anam,GK,-0.01966028151,-6.823462493,beats,-0.00438471288,-2.613440022,beats,False
+DSE 2023-2026,test half,5,Anam,RS,-0.02771012626,-9.64542411,beats,-0.01035842991,-5.5205368,beats,False
+DSE 2023-2026,test half,5,Anam,o2+P,-0.02743459242,-9.610750936,beats,-0.01549994049,-5.04895439,beats,False
+DSE 2023-2026,test half,5,Anam,o2+GK,-0.03018933606,-10.54300089,beats,-0.01812940115,-5.75689055,beats,False
+DSE 2023-2026,test half,5,Anam,YZ (daily form),-0.03423466678,-10.22710404,beats,-0.02123911993,-5.913205489,beats,False
+DSE 2023-2026,test half,5,Anam,"Anam, open-free special case (b=0)",0.00429285611,11.35007952,loses to,0.009922043496,11.03492484,loses to,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,-0.006780668416,-2.549776647,beats,-0.00663634016,-2.570824844,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",P,-0.02471095286,-6.722955688,beats,-0.005705884555,-3.957558156,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",GK,-0.02395313762,-8.246859857,beats,-0.01430675638,-9.92780343,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",RS,-0.03200298237,-10.88660765,beats,-0.02028047341,-11.35685533,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",o2+P,-0.03172744853,-10.54713381,beats,-0.02542198398,-8.565656641,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",o2+GK,-0.03448219217,-11.41442055,beats,-0.02805144464,-9.101310413,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.03852752289,-11.00779371,beats,-0.03116116343,-8.796874012,beats,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,-0.00429285611,-11.35007952,beats,-0.009922043496,-11.03492484,beats,False
+DSE 2023-2026,test half,21,Anam,CC,-0.007965572622,-2.217844552,beats,0.000597044425,0.1704372496,no significant difference,True
+DSE 2023-2026,test half,21,Anam,P,-0.01894308024,-3.631996301,beats,0.006179013139,1.418356001,no significant difference,True
+DSE 2023-2026,test half,21,Anam,GK,-0.01548972572,-3.932142362,beats,0.002538895115,0.7537736647,no significant difference,True
+DSE 2023-2026,test half,21,Anam,RS,-0.0219108565,-4.68437569,beats,-0.0006908196515,-0.2334200465,no significant difference,True
+DSE 2023-2026,test half,21,Anam,o2+P,-0.02266161331,-4.596031143,beats,-0.01213019067,-3.125459001,beats,False
+DSE 2023-2026,test half,21,Anam,o2+GK,-0.02311728899,-4.852791963,beats,-0.01301103123,-3.531850612,beats,False
+DSE 2023-2026,test half,21,Anam,YZ (daily form),-0.02685905798,-4.796779391,beats,-0.01397264143,-2.849608964,beats,False
+DSE 2023-2026,test half,21,Anam,"Anam, open-free special case (b=0)",0.0002200545468,0.1781879558,no significant difference,0.004763248029,3.741255363,loses to,True
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,-0.008185627169,-2.301114992,beats,-0.004166203604,-1.302426874,no significant difference,True
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",P,-0.01916313478,-4.446567294,beats,0.001415765109,0.4374043488,no significant difference,True
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",GK,-0.01570978027,-5.185386767,beats,-0.002224352915,-0.9623058603,no significant difference,True
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",RS,-0.02213091105,-5.730111691,beats,-0.005454067681,-2.698854251,beats,False
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",o2+P,-0.02288166786,-5.067651456,beats,-0.0168934387,-4.742081746,beats,False
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.02333734353,-5.350239464,beats,-0.01777427926,-5.195561055,beats,False
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.02707911252,-5.180652375,beats,-0.01873588946,-4.163763421,beats,False
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,-0.0002200545468,-0.1781879558,no significant difference,-0.004763248029,-3.741255363,beats,True
+Vietnam 2007-2020,test half,5,Anam,CC,0.0005481071729,0.204780321,no significant difference,-0.001078201064,-0.5098694258,no significant difference,False
+Vietnam 2007-2020,test half,5,Anam,P,-0.05202066348,-22.42247657,beats,-0.0572100106,-15.92010777,beats,False
+Vietnam 2007-2020,test half,5,Anam,GK,-0.1089303466,-33.94228502,beats,-0.1080763161,-23.38015185,beats,False
+Vietnam 2007-2020,test half,5,Anam,RS,-0.1661051736,-40.92114312,beats,-0.1507036955,-25.4424039,beats,False
+Vietnam 2007-2020,test half,5,Anam,o2+P,-0.0232556654,-7.214426173,beats,-0.02662096163,-7.223917568,beats,False
+Vietnam 2007-2020,test half,5,Anam,o2+GK,-0.02793300512,-9.607771052,beats,-0.02956028609,-8.956642782,beats,False
+Vietnam 2007-2020,test half,5,Anam,YZ (daily form),-0.03193631848,-10.06778897,beats,-0.03376858621,-9.331848303,beats,False
+Vietnam 2007-2020,test half,5,Anam,"Anam, open-free special case (b=0)",0.00757120852,15.73336414,loses to,0.009118354333,13.63558859,loses to,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,-0.007023101347,-3.584709228,beats,-0.0101965554,-4.04560148,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",P,-0.059591872,-28.08759763,beats,-0.06632836493,-21.24194446,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",GK,-0.1165015551,-38.88356181,beats,-0.1171946704,-28.15507016,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",RS,-0.1736763821,-43.72924162,beats,-0.1598220498,-28.06742158,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",o2+P,-0.03082687392,-8.554815061,beats,-0.03573931597,-8.285127201,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",o2+GK,-0.03550421364,-10.77517634,beats,-0.03867864042,-9.839608173,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.039507527,-11.09764884,beats,-0.04288694054,-10.09368352,beats,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,-0.00757120852,-15.73336414,beats,-0.009118354333,-13.63558859,beats,False
+Vietnam 2007-2020,test half,21,Anam,CC,0.01130811049,7.266020954,loses to,0.00339802574,1.512795848,no significant difference,True
+Vietnam 2007-2020,test half,21,Anam,P,-0.06599100896,-21.73820367,beats,-0.0360454737,-7.145524195,beats,False
+Vietnam 2007-2020,test half,21,Anam,GK,-0.1509466883,-30.10552005,beats,-0.06439908611,-9.474267468,beats,False
+Vietnam 2007-2020,test half,21,Anam,RS,-0.2483804116,-23.08304355,beats,-0.07599144078,-12.24957891,beats,False
+Vietnam 2007-2020,test half,21,Anam,o2+P,-0.01513768279,-3.364636713,beats,-0.0272772652,-4.046941923,beats,False
+Vietnam 2007-2020,test half,21,Anam,o2+GK,-0.01704010614,-4.169834858,beats,-0.02765272811,-4.542238163,beats,False
+Vietnam 2007-2020,test half,21,Anam,YZ (daily form),-0.02092283206,-4.743438234,beats,-0.031431528,-4.74724211,beats,False
+Vietnam 2007-2020,test half,21,Anam,"Anam, open-free special case (b=0)",0.008006442928,10.02608569,loses to,0.005476698541,4.328190032,loses to,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,0.00330166756,1.59974735,no significant difference,-0.002078672802,-0.6984970648,no significant difference,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",P,-0.07399745188,-29.35589831,beats,-0.04152217224,-10.47665115,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",GK,-0.1589531312,-34.45534875,beats,-0.06987578465,-12.2495349,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",RS,-0.2563868545,-24.10284734,beats,-0.08146813932,-15.37130373,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",o2+P,-0.02314412571,-4.424683692,beats,-0.03275396374,-4.107931192,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.02504654907,-5.198586104,beats,-0.03312942665,-4.524765281,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.02892927499,-5.623503151,beats,-0.03690822654,-4.699636509,beats,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,-0.008006442928,-10.02608569,beats,-0.005476698541,-4.328190032,beats,False
+DSE 2009-2021,test half,5,Anam,CC,-0.0169871751,-6.171332256,beats,-0.02231360321,-6.634998649,beats,False
+DSE 2009-2021,test half,5,Anam,P,-0.01177502462,-9.553254871,beats,-0.06783535742,-1.365558902,no significant difference,True
+DSE 2009-2021,test half,5,Anam,GK,-0.02131897716,-12.45193661,beats,-0.06225694428,-1.719483726,no significant difference,True
+DSE 2009-2021,test half,5,Anam,RS,-0.03228592551,-13.83616503,beats,-0.05315160291,-3.061846524,beats,False
+DSE 2009-2021,test half,5,Anam,o2+P,-0.01845166609,-12.53954817,beats,-0.01702746538,-10.07254424,beats,False
+DSE 2009-2021,test half,5,Anam,o2+GK,-0.02455179346,-13.23042504,beats,-0.02308556114,-10.99495177,beats,False
+DSE 2009-2021,test half,5,Anam,YZ (daily form),-0.02781506181,-13.55707396,beats,-0.02633317275,-11.3046468,beats,False
+DSE 2009-2021,test half,5,Anam,"Anam, open-free special case (b=0)",0.003622721886,9.073722685,loses to,0.002955468811,6.236931627,loses to,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,-0.02060989699,-8.303497094,beats,-0.02526907202,-8.129744814,beats,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",P,-0.0153977465,-10.97441398,beats,-0.07079082623,-1.426652513,no significant difference,True
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",GK,-0.02494169905,-12.89481363,beats,-0.06521241309,-1.803468909,no significant difference,True
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",RS,-0.0359086474,-13.92983841,beats,-0.05610707172,-3.235707526,beats,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",o2+P,-0.02207438797,-13.49240512,beats,-0.01998293419,-10.48413196,beats,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",o2+GK,-0.02817451534,-13.56012681,beats,-0.02604102995,-11.04782186,beats,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.0314377837,-13.87690308,beats,-0.02928864156,-11.36980465,beats,False
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,-0.003622721886,-9.073722685,beats,-0.002955468811,-6.236931627,beats,False
+DSE 2009-2021,test half,21,Anam,CC,-0.01074676343,-3.016788135,beats,-0.01086879845,-2.461847258,beats,False
+DSE 2009-2021,test half,21,Anam,P,-0.007102696889,-3.651977606,beats,-0.05765565775,-1.176350402,no significant difference,True
+DSE 2009-2021,test half,21,Anam,GK,-0.01051745699,-3.733220709,beats,-0.04661044534,-1.301492509,no significant difference,True
+DSE 2009-2021,test half,21,Anam,RS,-0.01297417002,-4.083663826,beats,-0.03267239005,-1.694774441,no significant difference,True
+DSE 2009-2021,test half,21,Anam,o2+P,-0.01291495858,-5.504464255,beats,-0.008746700537,-3.203601415,beats,False
+DSE 2009-2021,test half,21,Anam,o2+GK,-0.01422850172,-5.46325489,beats,-0.01010396043,-3.238497713,beats,False
+DSE 2009-2021,test half,21,Anam,YZ (daily form),-0.01704419364,-5.66554809,beats,-0.01263466087,-3.640126423,beats,False
+DSE 2009-2021,test half,21,Anam,"Anam, open-free special case (b=0)",0.001635891972,2.823582583,loses to,0.001214187393,1.786874894,no significant difference,True
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,-0.0123826554,-3.910454076,beats,-0.01208298585,-3.018237197,beats,False
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",P,-0.008738588861,-4.177455178,beats,-0.05886984514,-1.204753423,no significant difference,True
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",GK,-0.01215334896,-4.014395391,beats,-0.04782463273,-1.340303216,no significant difference,True
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",RS,-0.01461006199,-4.192874348,beats,-0.03388657744,-1.765233193,no significant difference,True
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",o2+P,-0.01455085056,-5.505339687,beats,-0.00996088793,-3.300491875,beats,False
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.01586439369,-5.335113155,beats,-0.01131814782,-3.265527418,beats,False
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.01868008562,-5.531947596,beats,-0.01384884827,-3.621407662,beats,False
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,-0.001635891972,-2.823582583,beats,-0.001214187393,-1.786874894,no significant difference,True
+Morocco 2012-2026,test half,5,Anam,CC,-0.007815696969,-2.056403176,beats,-0.002741942266,-0.6220806649,no significant difference,True
+Morocco 2012-2026,test half,5,Anam,P,-0.06461983287,-11.01084449,beats,-0.2551358596,-4.740495651,beats,False
+Morocco 2012-2026,test half,5,Anam,GK,-0.1340911864,-12.69495533,beats,-0.5156716131,-4.335624822,beats,False
+Morocco 2012-2026,test half,5,Anam,RS,-0.3607099152,-4.335696984,beats,-5.738564405,-2.698622149,beats,False
+Morocco 2012-2026,test half,5,Anam,o2+P,-0.008792590674,-3.079279067,beats,-0.006147140522,-1.979796714,beats,False
+Morocco 2012-2026,test half,5,Anam,o2+GK,-0.01307783733,-4.001698622,beats,-0.01111949184,-3.082035664,beats,False
+Morocco 2012-2026,test half,5,Anam,YZ (daily form),-0.01266721595,-4.258593512,beats,-0.01150379656,-3.496115459,beats,False
+Morocco 2012-2026,test half,5,Anam,"Anam, open-free special case (b=0)",0.007259255777,4.752743663,loses to,0.008297891841,4.458632971,loses to,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,-0.01507495275,-4.531342044,beats,-0.01103983411,-2.705761476,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",P,-0.07187908865,-12.59543035,beats,-0.2634337515,-4.880171988,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",GK,-0.1413504421,-13.43645484,beats,-0.5239695049,-4.399332395,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",RS,-0.367969171,-4.438391962,beats,-5.746862296,-2.702347598,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",o2+P,-0.01605184645,-4.169433903,beats,-0.01444503236,-3.369126252,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",o2+GK,-0.02033709311,-4.633738467,beats,-0.01941738368,-4.002543283,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",YZ (daily form),-0.01992647173,-4.862272319,beats,-0.01980168841,-4.335935513,beats,False
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,-0.007259255777,-4.752743663,beats,-0.008297891841,-4.458632971,beats,False
+Morocco 2012-2026,test half,21,Anam,CC,-0.004914062084,-1.004861179,no significant difference,-0.01395958047,-2.077538466,beats,True
+Morocco 2012-2026,test half,21,Anam,P,-0.0893311359,-7.321686844,beats,-0.2100906498,-2.591760286,beats,False
+Morocco 2012-2026,test half,21,Anam,GK,-0.2032357207,-9.935175204,beats,-0.4568649243,-2.583720519,beats,False
+Morocco 2012-2026,test half,21,Anam,RS,-1.287158729,-2.265618973,beats,-5.02987147,-2.238016383,beats,False
+Morocco 2012-2026,test half,21,Anam,o2+P,-9.985493249e-05,0.1893308258,no significant difference,-0.004550590601,-0.9918027054,no significant difference,False
+Morocco 2012-2026,test half,21,Anam,o2+GK,-0.0020420071,-0.5563978502,no significant difference,-0.005860543125,-1.232609865,no significant difference,False
+Morocco 2012-2026,test half,21,Anam,YZ (daily form),-0.00187134837,-0.5301247101,no significant difference,-0.005156860431,-1.163787227,no significant difference,False
+Morocco 2012-2026,test half,21,Anam,"Anam, open-free special case (b=0)",0.004159173061,2.384477798,loses to,0.002802820559,0.9552466039,no significant difference,True
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,-0.009073235145,-1.940237105,no significant difference,-0.01676240103,-2.62964804,beats,True
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",P,-0.09349030896,-8.060031262,beats,-0.2128934704,-2.631592659,beats,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",GK,-0.2073948938,-10.17778238,beats,-0.4596677448,-2.601343303,beats,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",RS,-1.291317902,-2.274559492,beats,-5.03267429,-2.239189489,beats,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",o2+P,-0.004259027994,-1.298143771,no significant difference,-0.00735341116,-1.124457752,no significant difference,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",o2+GK,-0.006201180161,-1.775458522,no significant difference,-0.008663363684,-1.322253717,no significant difference,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",YZ (daily form),-0.006030521432,-1.787368754,no significant difference,-0.00795968099,-1.246261873,no significant difference,False
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,-0.004159173061,-2.384477798,beats,-0.002802820559,-0.9552466039,no significant difference,True

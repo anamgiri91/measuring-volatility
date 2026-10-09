@@ -1,0 +1,505 @@
+market,span,window,model,reference,estimand,mean,se,t,n,n_dates
+NEPSE,A2+C,5,Anam,CC,"stock-day, L = h",0.0154246672,0.0158960129,0.9703481809,51660,208
+NEPSE,A2+C,5,Anam,CC,"stock-day, L = 2h (primary)",0.0154246672,0.01880853476,0.8200887203,51660,208
+NEPSE,A2+C,5,Anam,CC,"stock-day, L = 4h",0.0154246672,0.0216666001,0.7119099042,51660,208
+NEPSE,A2+C,5,Anam,CC,"stock-day, Andrews L = 20",0.0154246672,0.0216666001,0.7119099042,51660,208
+NEPSE,A2+C,5,Anam,CC,"equal-date mean, L = 2h",0.01454987671,0.01895325279,0.7676717485,51660,208
+NEPSE,A2+C,5,Anam,CC,"equal-security mean, L = 2h",0.004911713996,0.01965152687,0.2499405786,51660,208
+NEPSE,A2+C,5,Anam,CC,"non-overlapping origins, stock-day, L = 3",0.02276885802,0.02111772682,1.078186976,10420,42
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",0.0102326089,0.01376153288,0.7435660681,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",0.0102326089,0.01620747,0.6313514015,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",0.0102326089,0.01862033974,0.5495393232,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 19",0.0102326089,0.01846686671,0.5541063928,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",0.009446632188,0.016307591,0.579278214,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.0001069206537,0.01718767089,0.006220776187,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",0.01669413528,0.01842703712,0.9059587375,10420,42
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.005192058307,0.002476925112,-2.096170886,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.005192058307,0.002945428579,-1.762751385,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.005192058307,0.003346939039,-1.551285592,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 27",-0.005192058307,0.003449547209,-1.505141977,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.005103244517,0.00297390598,-1.716007349,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.004804793342,0.002845316367,-1.688667523,51660,208
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",-0.006074722737,0.003121018212,-1.946391314,10420,42
+NEPSE,A2+C,5,HAR-open-free,GARCH,"stock-day, L = h",0.006839069672,0.01717680668,0.3981572244,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",0.006839069672,0.01927156591,0.3548787735,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"stock-day, L = 4h",0.006839069672,0.02167990163,0.3154566745,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"stock-day, Andrews L = 18",0.006839069672,0.02123173791,0.3221153964,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"equal-date mean, L = 2h",0.005731137616,0.01963621198,0.2918657439,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"equal-security mean, L = 2h",-0.004307817878,0.02025281977,-0.2127021287,51660,208
+NEPSE,A2+C,5,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 3",0.01123989322,0.01844653301,0.6093228041,10420,42
+NEPSE,A2,5,Anam,CC,"stock-day, L = h",-0.03042315139,0.01784399863,-1.704951453,28842,118
+NEPSE,A2,5,Anam,CC,"stock-day, L = 2h (primary)",-0.03042315139,0.02048523978,-1.485125471,28842,118
+NEPSE,A2,5,Anam,CC,"stock-day, L = 4h",-0.03042315139,0.02367498407,-1.285033658,28842,118
+NEPSE,A2,5,Anam,CC,"stock-day, Andrews L = 12",-0.03042315139,0.02126969918,-1.430351747,28842,118
+NEPSE,A2,5,Anam,CC,"equal-date mean, L = 2h",-0.03064395507,0.02069895692,-1.480458904,28842,118
+NEPSE,A2,5,Anam,CC,"equal-security mean, L = 2h",-0.03571297999,0.02081100883,-1.71606193,28842,118
+NEPSE,A2,5,Anam,CC,"non-overlapping origins, stock-day, L = 2",-0.02839381055,0.02004387872,-1.416582636,5858,24
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.0291658183,0.01545442103,-1.887215201,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.0291658183,0.01764447009,-1.652972186,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.0291658183,0.02044074564,-1.426847083,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 11",-0.0291658183,0.01801191787,-1.619251126,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.02935720353,0.01782606538,-1.646869508,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.03438522942,0.01820547732,-1.888729903,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 2",-0.02801389964,0.0174435242,-1.605977056,5858,24
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.001257333092,0.002486688781,0.5056254332,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.001257333092,0.002890162662,0.4350388676,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.001257333092,0.003260052246,0.3856788165,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 15",0.001257333092,0.003086310875,0.407390293,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.001286751544,0.002921417786,0.4404544772,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.001327750569,0.002753871022,0.4821397076,28842,118
+NEPSE,A2,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 2",0.0003799109131,0.002767496375,0.1372760292,5858,24
+NEPSE,A2,5,HAR-open-free,GARCH,"stock-day, L = h",-0.03499731558,0.02416907965,-1.448020201,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",-0.03499731558,0.02524716686,-1.386187835,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"stock-day, L = 4h",-0.03499731558,0.02530138418,-1.383217429,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"stock-day, Andrews L = 13",-0.03499731558,0.02529799302,-1.383402847,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"equal-date mean, L = 2h",-0.03557870257,0.02577445323,-1.380386317,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"equal-security mean, L = 2h",-0.04318946675,0.02549672628,-1.693922046,28842,118
+NEPSE,A2,5,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 2",-0.02959955217,0.01899312545,-1.558435038,5858,24
+NEPSE,C,5,Anam,CC,"stock-day, L = h",0.07198557766,0.0209411966,3.437510235,21573,85
+NEPSE,C,5,Anam,CC,"stock-day, L = 2h (primary)",0.07198557766,0.02230324169,3.227583624,21573,85
+NEPSE,C,5,Anam,CC,"stock-day, L = 4h",0.07198557766,0.02204571923,3.265285967,21573,85
+NEPSE,C,5,Anam,CC,"stock-day, Andrews L = 16",0.07198557766,0.02223743825,3.23713446,21573,85
+NEPSE,C,5,Anam,CC,"equal-date mean, L = 2h",0.07241152511,0.02242066599,3.229677706,21573,85
+NEPSE,C,5,Anam,CC,"equal-security mean, L = 2h",0.0688812366,0.0221638657,3.10781691,21573,85
+NEPSE,C,5,Anam,CC,"non-overlapping origins, stock-day, L = 2",0.06539683299,0.02366779811,2.763114367,4313,17
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",0.0593365538,0.01830095104,3.242266136,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",0.0593365538,0.01936420076,3.064239756,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",0.0593365538,0.01829239524,3.243782622,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 16",0.0593365538,0.01883478105,3.150371308,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",0.05963069674,0.01940215588,3.073405715,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.05644877105,0.01927473514,2.928640557,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 2",0.05290185159,0.02018881435,2.620354552,4313,17
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.01264902386,0.003812058608,-3.31816091,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.01264902386,0.004261914782,-2.967920407,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.01264902386,0.004810349852,-2.629543432,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 21",-0.01264902386,0.004846214773,-2.61008322,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.01278082837,0.004324558018,-2.955406845,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.01243246554,0.004159490136,-2.988939782,21573,85
+NEPSE,C,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 2",-0.01249498141,0.004812752837,-2.596223373,4313,17
+NEPSE,C,5,HAR-open-free,GARCH,"stock-day, L = h",0.06579745741,0.01595305388,4.12444275,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",0.06579745741,0.01753532363,3.752280757,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"stock-day, L = 4h",0.06579745741,0.0186779466,3.522735064,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"stock-day, Andrews L = 14",0.06579745741,0.01801658809,3.652048716,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"equal-date mean, L = 2h",0.06609733767,0.01751180271,3.774445084,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"equal-security mean, L = 2h",0.06352890423,0.01707309491,3.7209952,21573,85
+NEPSE,C,5,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 2",0.06885859743,0.01760349527,3.911643476,4313,17
+NEPSE,A2+C,21,Anam,CC,"stock-day, L = h",0.005144947738,0.02786012331,0.1846706736,47131,192
+NEPSE,A2+C,21,Anam,CC,"stock-day, L = 2h (primary)",0.005144947738,0.03147652723,0.1634534744,47131,192
+NEPSE,A2+C,21,Anam,CC,"stock-day, L = 4h",0.005144947738,0.02516284173,0.2044660851,47131,192
+NEPSE,A2+C,21,Anam,CC,"stock-day, Andrews L = 48",0.005144947738,0.03125476259,0.1646132401,47131,192
+NEPSE,A2+C,21,Anam,CC,"equal-date mean, L = 2h",0.004001393117,0.03176007615,0.1259881462,47131,192
+NEPSE,A2+C,21,Anam,CC,"equal-security mean, L = 2h",0.004553076778,0.02979123943,0.1528327409,47131,192
+NEPSE,A2+C,21,Anam,CC,"non-overlapping origins, stock-day, L = 2",0.0024031207,0.02660065324,0.09034066485,2459,10
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",0.0006804265945,0.0250474256,0.02716553012,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",0.0006804265945,0.02810563756,0.02420961251,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",0.0006804265945,0.02224236815,0.03059146355,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 47",0.0006804265945,0.02793790539,0.02435496094,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.0003517857306,0.02840393098,-0.01238510722,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.0001151027221,0.0266646745,-0.004316674562,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 2",-0.001264866525,0.02362133409,-0.05354763281,2459,10
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.004464521144,0.00314467519,-1.419708197,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.004464521144,0.003657362524,-1.220694179,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.004464521144,0.003217518023,-1.387566786,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 67",-0.004464521144,0.003469213238,-1.286897299,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.004353178847,0.003645226412,-1.19421357,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.0046681795,0.00339807394,-1.373772196,47131,192
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 2",-0.003667987224,0.003510380928,-1.044897206,2459,10
+NEPSE,A2+C,21,HAR-open-free,GJR,"stock-day, L = h",0.001868405072,0.02641417639,0.07073493582,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",0.001868405072,0.03033818039,0.0615859306,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"stock-day, L = 4h",0.001868405072,0.02601515594,0.07181986824,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"stock-day, Andrews L = 41",0.001868405072,0.03029747799,0.06166866669,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"equal-date mean, L = 2h",0.0006388785599,0.03069526795,0.02081358472,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"equal-security mean, L = 2h",0.0007990028542,0.02840611068,0.02812785119,47131,192
+NEPSE,A2+C,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 2",0.002706457135,0.03052054882,0.0886765553,2459,10
+NEPSE,A2,21,Anam,CC,"stock-day, L = h",-0.04250952299,0.03355365691,-1.266911773,24592,102
+NEPSE,A2,21,Anam,CC,"stock-day, L = 2h (primary)",-0.04250952299,0.03751359996,-1.133176315,24592,102
+NEPSE,A2,21,Anam,CC,"stock-day, L = 4h",-0.04250952299,0.03136933519,-1.355129866,24592,102
+NEPSE,A2,21,Anam,CC,"stock-day, Andrews L = 25",-0.04250952299,0.03497469009,-1.215436731,24592,102
+NEPSE,A2,21,Anam,CC,"equal-date mean, L = 2h",-0.04309259075,0.03779293287,-1.140228807,24592,102
+NEPSE,A2,21,Anam,CC,"equal-security mean, L = 2h",-0.04180991744,0.03750089341,-1.11490457,24592,102
+NEPSE,A2,21,Anam,CC,"non-overlapping origins, stock-day, L = 2",-0.03711819208,,,1204,5
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.04137751905,0.03171768181,-1.304556849,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.04137751905,0.03545095794,-1.167176332,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.04137751905,0.02975847917,-1.39044468,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 25",-0.04137751905,0.03306646647,-1.251343838,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.0419321672,0.03571698875,-1.174011827,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.04097884229,0.03546050773,-1.155619164,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 2",-0.03558987596,,,1204,5
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.00113200394,0.00193278729,0.5856846976,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.00113200394,0.002092272749,0.5410403305,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.00113200394,0.001632295554,0.6935042718,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 21",0.00113200394,0.00193278729,0.5856846976,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.001160423553,0.002105153785,0.5512298253,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.0008310751475,0.002071844405,0.4011281665,24592,102
+NEPSE,A2,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 2",0.001528316121,,,1204,5
+NEPSE,A2,21,HAR-open-free,GJR,"stock-day, L = h",-0.04573019594,0.03522946548,-1.298066699,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.04573019594,0.03942413378,-1.159954362,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"stock-day, L = 4h",-0.04573019594,0.03382051991,-1.352143494,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"stock-day, Andrews L = 25",-0.04573019594,0.03666481172,-1.24725026,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.04634493507,0.03973752719,-1.166276272,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.04493838694,0.03906543462,-1.150336285,24592,102
+NEPSE,A2,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 2",-0.04988374208,,,1204,5
+NEPSE,C,21,Anam,CC,"stock-day, L = h",0.07149794971,0.03445892186,2.074874832,17348,69
+NEPSE,C,21,Anam,CC,"stock-day, L = 2h (primary)",0.07149794971,0.03249689445,2.20014715,17348,69
+NEPSE,C,21,Anam,CC,"stock-day, L = 4h",0.07149794971,0.02369053932,3.017995865,17348,69
+NEPSE,C,21,Anam,CC,"stock-day, Andrews L = 48",0.07149794971,0.03092654742,2.311863292,17348,69
+NEPSE,C,21,Anam,CC,"equal-date mean, L = 2h",0.07201721684,0.03256513233,2.211482395,17348,69
+NEPSE,C,21,Anam,CC,"equal-security mean, L = 2h",0.068855286,0.03221933567,2.137079631,17348,69
+NEPSE,C,21,Anam,CC,"non-overlapping origins, stock-day, L = 1",0.0520882493,,,1005,4
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",0.05840016031,0.02962951624,1.971012953,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",0.05840016031,0.02722249624,2.145290417,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",0.05840016031,0.01972792012,2.960279641,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 48",0.05840016031,0.02581215836,2.26250589,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",0.05883942289,0.02727488508,2.157274823,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.05603133523,0.02707303925,2.069635947,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 1",0.04128051493,,,1005,4
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.01309778941,0.005265378506,-2.487530458,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.01309778941,0.005489557875,-2.385946137,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.01309778941,0.004104786842,-3.190857384,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 48",-0.01309778941,0.00530867194,-2.467244078,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.01317779395,0.005501885773,-2.395141319,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.01282395077,0.00535335695,-2.395497047,17348,69
+NEPSE,C,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 1",-0.01080773437,,,1005,4
+NEPSE,C,21,HAR-open-free,GJR,"stock-day, L = h",0.06985501649,0.02260050727,3.090860557,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",0.06985501649,0.02087875175,3.345746783,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"stock-day, L = 4h",0.06985501649,0.01500189529,4.656412749,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"stock-day, Andrews L = 30",0.06985501649,0.02266206738,3.082464425,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"equal-date mean, L = 2h",0.07023707992,0.02095323412,3.352087774,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"equal-security mean, L = 2h",0.06749564481,0.02071350749,3.25853286,17348,69
+NEPSE,C,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 1",0.04655969479,,,1005,4
+NIFTY50,test half,5,Anam,CC,"stock-day, L = h",-0.04106098708,0.01338261986,-3.068232343,2013,2013
+NIFTY50,test half,5,Anam,CC,"stock-day, L = 2h (primary)",-0.04106098708,0.01409287078,-2.913599913,2013,2013
+NIFTY50,test half,5,Anam,CC,"stock-day, L = 4h",-0.04106098708,0.01467467361,-2.798085204,2013,2013
+NIFTY50,test half,5,Anam,CC,"stock-day, Andrews L = 12",-0.04106098708,0.01422674474,-2.886182879,2013,2013
+NIFTY50,test half,5,Anam,CC,"equal-date mean, L = 2h",-0.04106098708,0.01409287078,-2.913599913,2013,2013
+NIFTY50,test half,5,Anam,CC,"equal-security mean, L = 2h",-0.04106098708,0.01409287078,-2.913599913,2013,2013
+NIFTY50,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 5",-0.07439992786,0.03907666768,-1.903947606,403,403
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.03512983591,0.01061284681,-3.310123716,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.03512983591,0.0117338602,-2.993885671,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.03512983591,0.01262610146,-2.782318519,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 15",-0.03512983591,0.01225540207,-2.866477631,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.03512983591,0.0117338602,-2.993885671,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.03512983591,0.0117338602,-2.993885671,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 5",-0.05750405893,0.02903558231,-1.980468596,403,403
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.005931151178,0.00477776521,1.241407,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.005931151178,0.004737564052,1.251941106,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.005931151178,0.004807799786,1.233651866,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 13",0.005931151178,0.00472426519,1.255465335,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.005931151178,0.004737564052,1.251941106,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.005931151178,0.004737564052,1.251941106,2013,2013
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 5",0.01689586893,0.01130125676,1.495043365,403,403
+NIFTY50,test half,5,HAR-open-free,GJR,"stock-day, L = h",-0.0008219849386,0.009971606214,-0.08243255108,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.0008219849386,0.01084213508,-0.07581393632,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"stock-day, L = 4h",-0.0008219849386,0.01179849267,-0.06966864003,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"stock-day, Andrews L = 15",-0.0008219849386,0.01139610762,-0.07212856932,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.0008219849386,0.01084213508,-0.07581393632,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.0008219849386,0.01084213508,-0.07581393632,2013,2013
+NIFTY50,test half,5,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 5",0.004217396477,0.01011408057,0.4169826856,403,403
+NIFTY50,test half,21,Anam,CC,"stock-day, L = h",-0.0005138031387,0.01296064139,-0.03964334195,1997,1997
+NIFTY50,test half,21,Anam,CC,"stock-day, L = 2h (primary)",-0.0005138031387,0.01381758034,-0.03718474046,1997,1997
+NIFTY50,test half,21,Anam,CC,"stock-day, L = 4h",-0.0005138031387,0.01549017556,-0.03316961366,1997,1997
+NIFTY50,test half,21,Anam,CC,"stock-day, Andrews L = 28",-0.0005138031387,0.01326146931,-0.0387440582,1997,1997
+NIFTY50,test half,21,Anam,CC,"equal-date mean, L = 2h",-0.0005138031387,0.01381758034,-0.03718474046,1997,1997
+NIFTY50,test half,21,Anam,CC,"equal-security mean, L = 2h",-0.0005138031387,0.01381758034,-0.03718474046,1997,1997
+NIFTY50,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 3",0.01608429749,0.01855591552,0.8668016124,96,96
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",0.005396148383,0.01597943481,0.3376933194,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",0.005396148383,0.01741749457,0.3098119745,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",0.005396148383,0.01844675057,0.292525687,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 69",0.005396148383,0.01810252661,0.2980881344,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",0.005396148383,0.01741749457,0.3098119745,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.005396148383,0.01741749457,0.3098119745,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",0.02491567283,0.03176643992,0.7843394757,96,96
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.005909951522,0.00989139035,0.5974844094,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.005909951522,0.01007224973,0.5867558568,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.005909951522,0.01004233827,0.5885035302,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 36",0.005909951522,0.01001389817,0.590174917,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.005909951522,0.01007224973,0.5867558568,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.005909951522,0.01007224973,0.5867558568,1997,1997
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",0.008831375343,0.01751890975,0.5041053049,96,96
+NIFTY50,test half,21,HAR-open-free,GJR,"stock-day, L = h",-0.02343215171,0.0121150688,-1.93413278,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.02343215171,0.01337358919,-1.752121391,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"stock-day, L = 4h",-0.02343215171,0.01458769233,-1.606295991,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"stock-day, Andrews L = 35",-0.02343215171,0.01297708221,-1.805656413,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.02343215171,0.01337358919,-1.752121391,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.02343215171,0.01337358919,-1.752121391,1997,1997
+NIFTY50,test half,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 3",-0.01849265894,0.01690424592,-1.093965328,96,96
+SP500,test half,5,Anam,CC,"stock-day, L = h",-0.05710492661,0.008937692074,-6.389225109,2510,2510
+SP500,test half,5,Anam,CC,"stock-day, L = 2h (primary)",-0.05710492661,0.009387762647,-6.082911207,2510,2510
+SP500,test half,5,Anam,CC,"stock-day, L = 4h",-0.05710492661,0.009848403588,-5.798394237,2510,2510
+SP500,test half,5,Anam,CC,"stock-day, Andrews L = 17",-0.05710492661,0.009752805834,-5.855230544,2510,2510
+SP500,test half,5,Anam,CC,"equal-date mean, L = 2h",-0.05710492661,0.009387762647,-6.082911207,2510,2510
+SP500,test half,5,Anam,CC,"equal-security mean, L = 2h",-0.05710492661,0.009387762647,-6.082911207,2510,2510
+SP500,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 5",-0.05772959191,0.01781151518,-3.241138743,502,502
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.05378964539,0.007574356286,-7.101546765,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.05378964539,0.008089520021,-6.649299989,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.05378964539,0.00855859466,-6.284868898,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 19",-0.05378964539,0.008521343036,-6.312343625,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.05378964539,0.008089520021,-6.649299989,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.05378964539,0.008089520021,-6.649299989,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 5",-0.05411429268,0.01438548304,-3.761729276,502,502
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.003315281227,0.003394966287,0.976528468,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.003315281227,0.003536031821,0.9375710952,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.003315281227,0.003641579907,0.9103963969,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 17",0.003315281227,0.003622015535,0.915313917,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.003315281227,0.003536031821,0.9375710952,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.003315281227,0.003536031821,0.9375710952,2510,2510
+SP500,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 5",0.003615299227,0.004559006688,0.7930015187,502,502
+SP500,test half,5,HAR-open-free,GJR,"stock-day, L = h",-0.02434054782,0.01812851367,-1.342666491,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.02434054782,0.02065844172,-1.17823736,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"stock-day, L = 4h",-0.02434054782,0.02297656498,-1.059364089,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"stock-day, Andrews L = 22",-0.02434054782,0.02326425894,-1.046263622,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.02434054782,0.02065844172,-1.17823736,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.02434054782,0.02065844172,-1.17823736,2510,2510
+SP500,test half,5,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 5",-0.03109521345,0.03047421476,-1.02037784,502,502
+SP500,test half,21,Anam,CC,"stock-day, L = h",-0.002497050717,0.01255069027,-0.1989572417,2494,2494
+SP500,test half,21,Anam,CC,"stock-day, L = 2h (primary)",-0.002497050717,0.01351651385,-0.1847407361,2494,2494
+SP500,test half,21,Anam,CC,"stock-day, L = 4h",-0.002497050717,0.01372734363,-0.1819034173,2494,2494
+SP500,test half,21,Anam,CC,"stock-day, Andrews L = 55",-0.002497050717,0.01349817994,-0.1849916602,2494,2494
+SP500,test half,21,Anam,CC,"equal-date mean, L = 2h",-0.002497050717,0.01351651385,-0.1847407361,2494,2494
+SP500,test half,21,Anam,CC,"equal-security mean, L = 2h",-0.002497050717,0.01351651385,-0.1847407361,2494,2494
+SP500,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 4",0.001843284297,0.02151621788,0.08566953112,119,119
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.0008164686943,0.008809703237,-0.09267834255,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.0008164686943,0.009506255451,-0.08588751886,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.0008164686943,0.009734159027,-0.08387665458,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 62",-0.0008164686943,0.009518335782,-0.08577851349,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.0008164686943,0.009506255451,-0.08588751886,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.0008164686943,0.009506255451,-0.08588751886,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 4",0.0021433529,0.01469971834,0.1458091135,119,119
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",0.001680582023,0.004569091637,0.3678153463,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",0.001680582023,0.004962634012,0.3386471819,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",0.001680582023,0.005131872417,0.3274793071,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 47",0.001680582023,0.004988580172,0.3368858402,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",0.001680582023,0.004962634012,0.3386471819,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",0.001680582023,0.004962634012,0.3386471819,2494,2494
+SP500,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 4",0.0003000686026,0.007847986171,0.03823510848,119,119
+SP500,test half,21,HAR-open-free,GJR,"stock-day, L = h",-0.0883896662,0.06738383064,-1.311734067,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.0883896662,0.07303980935,-1.210157406,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"stock-day, L = 4h",-0.0883896662,0.07507836497,-1.177298763,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"stock-day, Andrews L = 115",-0.0883896662,0.07552531411,-1.17033166,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.0883896662,0.07303980935,-1.210157406,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.0883896662,0.07303980935,-1.210157406,2494,2494
+SP500,test half,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 4",-0.0536934718,0.04923890354,-1.09046847,119,119
+DSE 2023-2026,test half,5,Anam,CC,"stock-day, L = h",0.00326885754,0.002093702291,1.561280969,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"stock-day, L = 2h (primary)",0.00326885754,0.002260654436,1.445978425,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"stock-day, L = 4h",0.00326885754,0.002501389231,1.306816828,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"stock-day, Andrews L = 26",0.00326885754,0.002590671738,1.261779905,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"equal-date mean, L = 2h",0.003264144394,0.002289189268,1.425895377,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"equal-security mean, L = 2h",0.0042959507,0.002315840832,1.855028481,152779,446
+DSE 2023-2026,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 3",0.003771387255,0.002420525962,1.558085852,30830,90
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.006652605402,0.002364077737,-2.814038345,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.006652605402,0.002594867389,-2.563755447,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.006652605402,0.002876986701,-2.312351809,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 29",-0.006652605402,0.003021815004,-2.201526366,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.006718218758,0.002645718263,-2.53927973,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.006146196613,0.002592116192,-2.371111539,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",-0.006329074151,0.002800046413,-2.260346158,30830,90
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.009921462942,0.0007540590718,-13.1574081,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.009921462942,0.0008994270867,-11.03086964,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.009921462942,0.00107603457,-9.220394229,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 31",-0.009921462942,0.00121331106,-8.177180007,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.009982363151,0.0009155520601,-10.90310818,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.01044214731,0.0009455549549,-11.04340605,152779,446
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",-0.01010046141,0.001133988389,-8.907023656,30830,90
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"stock-day, L = h",0.006194907291,0.002133715497,2.90334269,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"stock-day, L = 2h (primary)",0.006194907291,0.002331131491,2.657467979,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"stock-day, L = 4h",0.006194907291,0.002678925477,2.312459732,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"stock-day, Andrews L = 21",0.006194907291,0.002709176988,2.286638089,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"equal-date mean, L = 2h",0.006444903584,0.002358769049,2.732316496,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"equal-security mean, L = 2h",0.006747597605,0.002354332354,2.866034437,152779,446
+DSE 2023-2026,test half,5,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 3",0.005066647625,0.00304088739,1.666174039,30830,90
+DSE 2023-2026,test half,21,Anam,CC,"stock-day, L = h",-0.002000429751,0.003190930654,-0.6269110702,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"stock-day, L = 2h (primary)",-0.002000429751,0.003326937331,-0.6012826669,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"stock-day, L = 4h",-0.002000429751,0.003159170511,-0.633213606,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"stock-day, Andrews L = 88",-0.002000429751,0.003202501283,-0.624646042,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"equal-date mean, L = 2h",-0.002731157173,0.003616820726,-0.755126499,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"equal-security mean, L = 2h",-0.0009304213861,0.003489334859,-0.2666472046,137966,430
+DSE 2023-2026,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 2",-0.002319279925,0.003076985444,-0.7537506977,6665,21
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.006763929251,0.003309556529,-2.043756978,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.006763929251,0.00339732431,-1.990957775,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.006763929251,0.002959904887,-2.285184663,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 88",-0.006763929251,0.002994512309,-2.258774903,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.007396470763,0.003657381672,-2.022340413,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.006278477124,0.003444353097,-1.822832023,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 2",-0.006597879414,0.002999833933,-2.199414888,6665,21
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.0047634995,0.001070842212,-4.448367319,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.0047634995,0.001269293411,-3.752874992,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.0047634995,0.00136602966,-3.487112791,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 88",-0.0047634995,0.001366848672,-3.485023321,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.00466531359,0.001209502111,-3.857218229,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.005348055738,0.001333890885,-4.009365232,137966,430
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 2",-0.004278599489,0.001538180202,-2.781598335,6665,21
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"stock-day, L = h",0.01934946244,0.005201665398,3.719859115,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"stock-day, L = 2h (primary)",0.01934946244,0.005336313319,3.625998191,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"stock-day, L = 4h",0.01934946244,0.004177341805,4.63200364,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"stock-day, Andrews L = 77",0.01934946244,0.004301725841,4.498069649,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"equal-date mean, L = 2h",0.01906832889,0.005278020401,3.612780444,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"equal-security mean, L = 2h",0.01989217199,0.005433267451,3.661180343,137966,430
+DSE 2023-2026,test half,21,YZ (daily form),GJR,"non-overlapping origins, stock-day, L = 2",0.02359768579,0.005968244426,3.953873887,6665,21
+Vietnam 2007-2020,test half,5,Anam,CC,"stock-day, L = h",-0.001948483445,0.002046150184,-0.9522680497,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"stock-day, L = 2h (primary)",-0.001948483445,0.002277748311,-0.855442823,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"stock-day, L = 4h",-0.001948483445,0.002523019238,-0.772282437,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"stock-day, Andrews L = 23",-0.001948483445,0.002575575422,-0.7565235436,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"equal-date mean, L = 2h",-0.001733684329,0.002252795925,-0.7695700749,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"equal-security mean, L = 2h",0.01787737266,0.003262553959,5.479563826,662880,1640
+Vietnam 2007-2020,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 5",-0.001735198577,0.002969714585,-0.5842980958,132425,328
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.01008306628,0.002303338219,-4.377588229,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.01008306628,0.002560721567,-3.937587907,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.01008306628,0.002855203846,-3.531469842,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 30",-0.01008306628,0.003056961614,-3.298394794,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.009687856789,0.002523759307,-3.838661144,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.00278623224,0.002941307065,0.9472769005,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 5",-0.009901578955,0.003315329514,-2.986604774,132425,328
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.00813458283,0.0005202126255,-15.63703461,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.00813458283,0.0005468395749,-14.87562935,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.00813458283,0.0006089707313,-13.35792085,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 30",-0.00813458283,0.0006560888051,-12.39860026,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.00795417246,0.0005442977092,-14.61364309,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.01509114042,0.001154111206,-13.07598465,662880,1640
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 5",-0.008166380378,0.0007061307981,-11.56496842,132425,328
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"stock-day, L = h",-0.00292931837,0.001765866339,-1.658856226,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",-0.00292931837,0.001933773676,-1.514819653,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"stock-day, L = 4h",-0.00292931837,0.002095919128,-1.397629484,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"stock-day, Andrews L = 33",-0.00292931837,0.002209115857,-1.326013917,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"equal-date mean, L = 2h",-0.002511806294,0.001899184304,-1.32257111,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"equal-security mean, L = 2h",0.00250804084,0.002697490827,0.92976807,662880,1640
+Vietnam 2007-2020,test half,5,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 5",-0.003258794427,0.002537176366,-1.284417777,132425,328
+Vietnam 2007-2020,test half,21,Anam,CC,"stock-day, L = h",0.003672283536,0.002006596235,1.830105864,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"stock-day, L = 2h (primary)",0.003672283536,0.002243688479,1.636717205,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"stock-day, L = 4h",0.003672283536,0.002399031232,1.530736027,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"stock-day, Andrews L = 100",0.003672283536,0.002406397178,1.526050467,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"equal-date mean, L = 2h",0.002506215826,0.003418050869,0.7332295281,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"equal-security mean, L = 2h",0.01031614673,0.0039849248,2.588793327,532668,1624
+Vietnam 2007-2020,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 3",0.00390467051,0.00236634198,1.650087157,25556,78
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.001873959042,0.002578045086,-0.7268914932,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.001873959042,0.002975639668,-0.62976679,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.001873959042,0.003281631044,-0.571045013,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 137",-0.001873959042,0.003295068452,-0.5687162707,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.00280531032,0.004010628271,-0.6994690434,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",0.002196790355,0.003567452279,0.6157868929,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",-0.001750113742,0.003299933168,-0.5303482382,25556,78
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.005546242578,0.001108177782,-5.004831055,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.005546242578,0.001283205454,-4.322178151,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.005546242578,0.001419953308,-3.905933065,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 137",-0.005546242578,0.00147422823,-3.762132936,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.005311526146,0.001298898785,-4.089253302,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.008119356375,0.001418239898,-5.724952729,532668,1624
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",-0.005654784252,0.001540976336,-3.669611349,25556,78
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"stock-day, L = h",-0.003022239448,0.002223433989,-1.35926655,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",-0.003022239448,0.002542915816,-1.188493708,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"stock-day, L = 4h",-0.003022239448,0.002797606268,-1.08029478,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"stock-day, Andrews L = 55",-0.003022239448,0.002640695038,-1.144486358,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"equal-date mean, L = 2h",-0.003951083187,0.003569342029,-1.106950008,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"equal-security mean, L = 2h",-0.001489919863,0.00299003578,-0.4982949946,532668,1624
+Vietnam 2007-2020,test half,21,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 3",-0.00327419154,0.003082791493,-1.062086602,25556,78
+DSE 2009-2021,test half,5,Anam,CC,"stock-day, L = h",-0.02205513255,0.002939483192,-7.503064693,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"stock-day, L = 2h (primary)",-0.02205513255,0.003382824705,-6.519738524,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"stock-day, L = 4h",-0.02205513255,0.003992193269,-5.524565336,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"stock-day, Andrews L = 33",-0.02205513255,0.004501006801,-4.900044263,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"equal-date mean, L = 2h",-0.02245028491,0.003550128628,-6.323794788,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"equal-security mean, L = 2h",-0.02572060799,0.003486851193,-7.376457027,430268,1537
+DSE 2009-2021,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 5",-0.02170586171,0.004315334176,-5.029937618,85961,307
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.02509908874,0.002708430807,-9.267022321,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.02509908874,0.003127918188,-8.024215225,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.02509908874,0.003704825879,-6.774701313,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 34",-0.02509908874,0.00422305435,-5.943349685,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.02561314276,0.003329534772,-7.692709197,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.0279660287,0.00317192827,-8.816727971,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 5",-0.02463480373,0.004012650545,-6.139284608,85961,307
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.003043956192,0.0004274105023,-7.121856331,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.003043956192,0.0004728455714,-6.437527125,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.003043956192,0.000522903329,-5.821259921,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 28",-0.003043956192,0.0005478654024,-5.556029233,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.003162857848,0.0004759429616,-6.645455661,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.002245420714,0.0005864762349,-3.828664455,430268,1537
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 5",-0.002928942019,0.0005748113705,-5.095483786,85961,307
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"stock-day, L = h",-0.0199443961,0.002757995448,-7.231482601,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.0199443961,0.003159252812,-6.313010475,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"stock-day, L = 4h",-0.0199443961,0.003617068752,-5.513966547,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"stock-day, Andrews L = 35",-0.0199443961,0.003966573191,-5.028117504,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.01986658291,0.003247496462,-6.117507176,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.02076975907,0.003087029702,-6.728072313,430268,1537
+DSE 2009-2021,test half,5,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 5",-0.01968918646,0.00372429818,-5.286683693,85961,307
+DSE 2009-2021,test half,21,Anam,CC,"stock-day, L = h",-0.0109125818,0.003908849701,-2.791762958,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"stock-day, L = 2h (primary)",-0.0109125818,0.00444949569,-2.452543516,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"stock-day, L = 4h",-0.0109125818,0.004939761602,-2.209131267,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"stock-day, Andrews L = 127",-0.0109125818,0.005336939415,-2.044726566,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"equal-date mean, L = 2h",-0.009519204732,0.004166467101,-2.284718564,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"equal-security mean, L = 2h",-0.01082233217,0.004677085724,-2.313905027,375353,1505
+DSE 2009-2021,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 3",-0.01033032437,0.005552263048,-1.860561051,17850,72
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.01223908415,0.003509963206,-3.486955114,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.01223908415,0.004022299551,-3.042807727,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.01223908415,0.004484678811,-2.729088229,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 134",-0.01223908415,0.00485189594,-2.522536407,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.01091143893,0.003773230449,-2.891802945,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.01164313791,0.004286816056,-2.716033941,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",-0.01191487643,0.005054106996,-2.357464224,17850,72
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.001326502349,0.0006191583244,-2.142428352,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.001326502349,0.0006718399938,-1.974431949,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.001326502349,0.0006781605759,-1.956029878,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 99",-0.001326502349,0.0006867818333,-1.931475593,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.001392234195,0.0006271457107,-2.219953309,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.0008208057396,0.0008526853773,-0.9626126605,375353,1505
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",-0.001584552058,0.0007222205072,-2.194000368,17850,72
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"stock-day, L = h",-0.01629441739,0.004491350383,-3.627955068,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"stock-day, L = 2h (primary)",-0.01629441739,0.005193099866,-3.13770538,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"stock-day, L = 4h",-0.01629441739,0.005746828741,-2.835375495,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"stock-day, Andrews L = 86",-0.01629441739,0.005766323857,-2.825789496,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"equal-date mean, L = 2h",-0.01518759754,0.004893866734,-3.10339418,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"equal-security mean, L = 2h",-0.01643171934,0.005424366671,-3.029241999,375353,1505
+DSE 2009-2021,test half,21,HAR-open-free,GJR,"non-overlapping origins, stock-day, L = 3",-0.01332794913,0.006356538369,-2.096730698,17850,72
+Morocco 2012-2026,test half,5,Anam,CC,"stock-day, L = h",-0.00237268952,0.004255914367,-0.5575040557,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"stock-day, L = 2h (primary)",-0.00237268952,0.004441520954,-0.5342065352,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"stock-day, L = 4h",-0.00237268952,0.004647290675,-0.5105532849,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"stock-day, Andrews L = 28",-0.00237268952,0.004787715876,-0.4955785978,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"equal-date mean, L = 2h",0.0001624849407,0.004010545977,0.04051441913,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"equal-security mean, L = 2h",0.001176213742,0.007545205785,0.1558888883,56688,1732
+Morocco 2012-2026,test half,5,Anam,CC,"non-overlapping origins, stock-day, L = 5",-0.004297167035,0.006248021295,-0.6877644669,11378,347
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.01074719888,0.003894788819,-2.759379103,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.01074719888,0.004104878699,-2.618152609,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.01074719888,0.004282694312,-2.509448047,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 31",-0.01074719888,0.004370507202,-2.459027838,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.008755471165,0.003849264758,-2.274582736,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.008136882737,0.008808080458,-0.9237975035,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 5",-0.0122094326,0.005465757245,-2.233804402,11378,347
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.008374509355,0.001719087863,-4.871484196,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.008374509355,0.001879998731,-4.45452926,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.008374509355,0.002010374203,-4.165647043,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 37",-0.008374509355,0.00219110891,-3.822041578,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.008917956105,0.002119196406,-4.208178194,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.009313096479,0.003324801567,-2.801098439,56688,1732
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 5",-0.007912265561,0.00232450535,-3.403849151,11378,347
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"stock-day, L = h",-0.01082301451,0.00429456623,-2.520164769,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"stock-day, L = 2h (primary)",-0.01082301451,0.004695553307,-2.304949769,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"stock-day, L = 4h",-0.01082301451,0.00485722552,-2.228229772,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"stock-day, Andrews L = 24",-0.01082301451,0.004861088573,-2.226459022,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"equal-date mean, L = 2h",-0.008259904428,0.004450311368,-1.856028431,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"equal-security mean, L = 2h",-0.007663991249,0.009421607711,-0.8134483502,56688,1732
+Morocco 2012-2026,test half,5,HAR-open-free,HAR-CC,"non-overlapping origins, stock-day, L = 5",-0.00997002312,0.005324496516,-1.872481856,11378,347
+Morocco 2012-2026,test half,21,Anam,CC,"stock-day, L = h",-0.01349739769,0.006527092618,-2.067903503,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"stock-day, L = 2h (primary)",-0.01349739769,0.006644024025,-2.031509464,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"stock-day, L = 4h",-0.01349739769,0.00736122785,-1.833579664,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"stock-day, Andrews L = 99",-0.01349739769,0.007606192814,-1.774527417,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"equal-date mean, L = 2h",-0.008671923135,0.007414731603,-1.169553208,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"equal-security mean, L = 2h",-0.003616743542,0.007243863938,-0.4992837487,40275,1716
+Morocco 2012-2026,test half,21,Anam,CC,"non-overlapping origins, stock-day, L = 3",-0.008006746856,0.009311056845,-0.8599181585,1908,82
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = h",-0.0166152842,0.006505845041,-2.553901007,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 2h (primary)",-0.0166152842,0.006370140366,-2.608307392,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, L = 4h",-0.0166152842,0.006474662894,-2.566200662,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"stock-day, Andrews L = 128",-0.0166152842,0.006450561279,-2.57578891,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"equal-date mean, L = 2h",-0.0140241496,0.008848200146,-1.584972014,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"equal-security mean, L = 2h",-0.007392603922,0.006387604187,-1.157335944,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",CC,"non-overlapping origins, stock-day, L = 3",-0.01481497228,0.008482965334,-1.746437914,1908,82
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = h",-0.003117886518,0.002514947208,-1.239742333,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 2h (primary)",-0.003117886518,0.002956636385,-1.054538371,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, L = 4h",-0.003117886518,0.003423436871,-0.9107474844,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"stock-day, Andrews L = 98",-0.003117886518,0.003541168433,-0.8804682908,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-date mean, L = 2h",-0.005352226466,0.003170124951,-1.688332968,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"equal-security mean, L = 2h",-0.003775860379,0.00397126452,-0.9507954861,40275,1716
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",Anam,"non-overlapping origins, stock-day, L = 3",-0.006808225426,0.004458983195,-1.52685604,1908,82
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"stock-day, L = h",-0.01834585588,0.006436480836,-2.85029294,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"stock-day, L = 2h (primary)",-0.01834585588,0.00675288411,-2.716743777,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"stock-day, L = 4h",-0.01834585588,0.007215526098,-2.542552772,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"stock-day, Andrews L = 46",-0.01834585588,0.006782744605,-2.704783528,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"equal-date mean, L = 2h",-0.01358352325,0.00817531441,-1.661529156,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"equal-security mean, L = 2h",-0.01657486838,0.006573464605,-2.521481346,40275,1716
+Morocco 2012-2026,test half,21,HAR-open-free,GARCH,"non-overlapping origins, stock-day, L = 3",-0.0169747538,0.01209049954,-1.403974563,1908,82

@@ -1,0 +1,69 @@
+rule,market,span,window,primary,detail,estimate,t,verdict,lo90,hi90,margin,p_one_sided,p_holm
+B1,NEPSE,A2+C,5,True,g* = HAR-open-free; r* = GARCH,0.006839069672,0.3548787735,no significant difference,,,,,
+B4,NEPSE,A2+C,5,True,Anam - CC; margin +/-0.00656,0.0154246672,0.8200887203,not shown equivalent,-0.01551537248,0.04636470689,0.006558950376,,
+B4,NEPSE,A2+C,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00656",0.0102326089,0.6313514015,not shown equivalent,-0.01642867925,0.03689389704,0.006558950376,,
+B1,NEPSE,A2,5,False,g* = HAR-open-free; r* = GARCH,-0.03499731558,-1.386187835,no significant difference,,,,,
+B4,NEPSE,A2,5,False,Anam - CC; margin +/-0.00644,-0.03042315139,-1.485125471,not shown equivalent,-0.06412137083,0.003275068054,0.0064448191,,
+B4,NEPSE,A2,5,False,"Anam, open-free special case (b=0) - CC; margin +/-0.00644",-0.0291658183,-1.652972186,not shown equivalent,-0.0581909716,-0.0001406649914,0.0064448191,,
+B1,NEPSE,C,5,False,g* = HAR-open-free; r* = GARCH,0.06579745741,3.752280757,returns suffice,,,,,
+B4,NEPSE,C,5,False,Anam - CC; margin +/-0.00678,0.07198557766,3.227583624,not shown equivalent,0.03529674507,0.1086744102,0.006781832971,,
+B4,NEPSE,C,5,False,"Anam, open-free special case (b=0) - CC; margin +/-0.00678",0.0593365538,3.064239756,not shown equivalent,0.02748244355,0.09119066405,0.006781832971,,
+B1,NEPSE,A2+C,21,True,g* = HAR-open-free; r* = GJR,0.001868405072,0.0615859306,no significant difference,,,,,
+B4,NEPSE,A2+C,21,True,Anam - CC; margin +/-0.00375,0.005144947738,0.1634534744,not shown equivalent,-0.04663393955,0.05692383503,0.003748528368,,
+B4,NEPSE,A2+C,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00375",0.0006804265945,0.02420961251,not shown equivalent,-0.04555334719,0.04691420038,0.003748528368,,
+B1,NEPSE,A2,21,False,g* = HAR-open-free; r* = GJR,-0.04573019594,-1.159954362,no significant difference,,,,,
+B4,NEPSE,A2,21,False,Anam - CC; margin +/-0.00372,-0.04250952299,-1.133176315,not shown equivalent,-0.1042193949,0.01920034895,0.003723485118,,
+B4,NEPSE,A2,21,False,"Anam, open-free special case (b=0) - CC; margin +/-0.00372",-0.04137751905,-1.167176332,not shown equivalent,-0.09969434486,0.01693930677,0.003723485118,,
+B1,NEPSE,C,21,False,g* = HAR-open-free; r* = GJR,0.06985501649,3.345746783,returns suffice,,,,,
+B4,NEPSE,C,21,False,Anam - CC; margin +/-0.00380,0.07149794971,2.20014715,not shown equivalent,0.01804055835,0.1249553411,0.003800541453,,
+B4,NEPSE,C,21,False,"Anam, open-free special case (b=0) - CC; margin +/-0.00380",0.05840016031,2.145290417,not shown equivalent,0.01361915399,0.1031811666,0.003800541453,,
+B1,NIFTY50,test half,5,True,g* = HAR-open-free; r* = GJR,-0.0008219849386,-0.07581393632,no significant difference,,,,,
+B4,NIFTY50,test half,5,True,Anam - CC; margin +/-0.00472,-0.04106098708,-2.913599913,not shown equivalent,-0.06424375952,-0.01787821464,0.004724807227,,
+B4,NIFTY50,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00472",-0.03512983591,-2.993885671,not shown equivalent,-0.05443203593,-0.01582763588,0.004724807227,,
+B1,NIFTY50,test half,21,True,g* = HAR-open-free; r* = GJR,-0.02343215171,-1.752121391,no significant difference,,,,,
+B4,NIFTY50,test half,21,True,Anam - CC; margin +/-0.00414,-0.0005138031387,-0.03718474046,not shown equivalent,-0.0232437228,0.02221611652,0.00413644282,,
+B4,NIFTY50,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00414",0.005396148383,0.3098119745,not shown equivalent,-0.02325563019,0.03404792695,0.00413644282,,
+B1,SP500,test half,5,True,g* = HAR-open-free; r* = GJR,-0.02434054782,-1.17823736,no significant difference,,,,,
+B4,SP500,test half,5,True,Anam - CC; margin +/-0.00522,-0.05710492661,-6.082911207,not shown equivalent,-0.07254779617,-0.04166205706,0.005218963746,,
+B4,SP500,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00522",-0.05378964539,-6.649299989,not shown equivalent,-0.06709690582,-0.04048238495,0.005218963746,,
+B1,SP500,test half,21,True,g* = HAR-open-free; r* = GJR,-0.0883896662,-1.210157406,no significant difference,,,,,
+B4,SP500,test half,21,True,Anam - CC; margin +/-0.00394,-0.002497050717,-0.1847407361,not shown equivalent,-0.02473171599,0.01973761456,0.003943924477,,
+B4,SP500,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00394",-0.0008164686943,-0.08588751886,not shown equivalent,-0.01645425891,0.01482132152,0.003943924477,,
+B1,DSE 2023-2026,test half,5,True,g* = HAR-open-free; r* = GJR,0.006194907291,2.657467979,returns suffice,,,,,
+B4,DSE 2023-2026,test half,5,True,Anam - CC; margin +/-0.00529,0.00326885754,1.445978425,not shown equivalent,-0.000449919007,0.006987634088,0.005288707482,,
+B4,DSE 2023-2026,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00529",-0.006652605402,-2.563755447,not shown equivalent,-0.01092116226,-0.002384048547,0.005288707482,,
+B1,DSE 2023-2026,test half,21,True,g* = YZ (daily form); r* = GJR,0.01934946244,3.625998191,returns suffice,,,,,
+B4,DSE 2023-2026,test half,21,True,Anam - CC; margin +/-0.00279,-0.002000429751,-0.6012826669,not shown equivalent,-0.00747324166,0.003472382159,0.002785840134,,
+B4,DSE 2023-2026,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00279",-0.006763929251,-1.990957775,not shown equivalent,-0.01235252774,-0.001175330761,0.002785840134,,
+B1,Vietnam 2007-2020,test half,5,True,g* = HAR-open-free; r* = GARCH,-0.00292931837,-1.514819653,no significant difference,,,,,
+B4,Vietnam 2007-2020,test half,5,True,Anam - CC; margin +/-0.00585,-0.001948483445,-0.855442823,practically equivalent,-0.005695379417,0.001798412526,0.005845747955,,
+B4,Vietnam 2007-2020,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00585",-0.01008306628,-3.937587907,not shown equivalent,-0.01429545325,-0.005870679298,0.005845747955,,
+B1,Vietnam 2007-2020,test half,21,True,g* = HAR-open-free; r* = GARCH,-0.003022239448,-1.188493708,no significant difference,,,,,
+B4,Vietnam 2007-2020,test half,21,True,Anam - CC; margin +/-0.00280,0.003672283536,1.636717205,not shown equivalent,-1.858401143e-05,0.007363151083,0.002796669046,,
+B4,Vietnam 2007-2020,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00280",-0.001873959042,-0.62976679,not shown equivalent,-0.006768886296,0.003020968212,0.002796669046,,
+B1,DSE 2009-2021,test half,5,True,g* = HAR-open-free; r* = GJR,-0.0199443961,-6.313010475,range adds information,,,,,
+B4,DSE 2009-2021,test half,5,True,Anam - CC; margin +/-0.00578,-0.02205513255,-6.519738524,not shown equivalent,-0.02761987919,-0.01649038591,0.005775714722,,
+B4,DSE 2009-2021,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00578",-0.02509908874,-8.024215225,not shown equivalent,-0.03024451416,-0.01995366332,0.005775714722,,
+B1,DSE 2009-2021,test half,21,True,g* = HAR-open-free; r* = GJR,-0.01629441739,-3.13770538,range adds information,,,,,
+B4,DSE 2009-2021,test half,21,True,Anam - CC; margin +/-0.00334,-0.0109125818,-2.452543516,not shown equivalent,-0.01823200221,-0.003593161394,0.003335934241,,
+B4,DSE 2009-2021,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00334",-0.01223908415,-3.042807727,not shown equivalent,-0.01885576691,-0.005622401392,0.003335934241,,
+B1,Morocco 2012-2026,test half,5,True,g* = HAR-open-free; r* = HAR-CC,-0.01082301451,-2.304949769,range adds information,,,,,
+B4,Morocco 2012-2026,test half,5,True,Anam - CC; margin +/-0.00672,-0.00237268952,-0.5342065352,not shown equivalent,-0.00967899149,0.00493361245,0.006723515957,,
+B4,Morocco 2012-2026,test half,5,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00672",-0.01074719888,-2.618152609,not shown equivalent,-0.01749972434,-0.003994673415,0.006723515957,,
+B1,Morocco 2012-2026,test half,21,True,g* = HAR-open-free; r* = GARCH,-0.01834585588,-2.716743777,range adds information,,,,,
+B4,Morocco 2012-2026,test half,21,True,Anam - CC; margin +/-0.00365,-0.01349739769,-2.031509464,not shown equivalent,-0.02442681721,-0.002567978165,0.003648630988,,
+B4,Morocco 2012-2026,test half,21,True,"Anam, open-free special case (b=0) - CC; margin +/-0.00365",-0.0166152842,-2.608307392,not shown equivalent,-0.02709416511,-0.006136403302,0.003648630988,,
+B3,DSE 2009-2021,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,-6.519738524,beats after Holm,,,,3.5215029e-11,2.46505203e-10
+B3,SP500,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,-6.082911207,beats after Holm,,,,5.900985763e-10,3.540591458e-09
+B3,NIFTY50,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,-2.913599913,beats after Holm,,,,0.001786437421,0.008932187107
+B3,Vietnam 2007-2020,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,-0.855442823,not after Holm,,,,0.1961530226,0.7846120902
+B3,Morocco 2012-2026,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,-0.5342065352,not after Holm,,,,0.2965993241,0.8897979723
+B3,NEPSE,A2+C,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,0.8200887203,not after Holm,,,,0.793917234,1
+B3,DSE 2023-2026,test half,5,True,"Anam beats CC (one-sided), Holm over 7 samples",,1.445978425,not after Holm,,,,0.9259083733,1
+B3,DSE 2009-2021,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-8.024215225,beats after Holm,,,,5.108851257e-16,3.57619588e-15
+B3,SP500,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-6.649299989,beats after Holm,,,,1.472451155e-11,8.834706932e-11
+B3,Vietnam 2007-2020,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-3.937587907,beats after Holm,,,,4.115239195e-05,0.0002057619598
+B3,NIFTY50,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-2.993885671,beats after Holm,,,,0.001377245693,0.005508982771
+B3,Morocco 2012-2026,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-2.618152609,beats after Holm,,,,0.004420362867,0.0132610886
+B3,DSE 2023-2026,test half,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,-2.563755447,beats after Holm,,,,0.005177323703,0.0132610886
+B3,NEPSE,A2+C,5,True,"Anam, open-free special case (b=0) beats CC (one-sided), Holm over 7 samples",,0.6313514015,not after Holm,,,,0.7360946076,0.7360946076

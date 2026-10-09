@@ -1,0 +1,307 @@
+market,span,window,model,loss,eliminated,mcs_p,in_mcs_90,in_mcs_75
+NEPSE,A2+C,5,HAR-CC,-7.052391073,0,1,True,True
+NEPSE,A2+C,5,GJR,-7.050899041,16,0.9369684842,True,True
+NEPSE,A2+C,5,GARCH,-7.05020402,15,0.9369684842,True,True
+NEPSE,A2+C,5,1/2 CC + 1/2 open-free,-7.047872875,14,0.9369684842,True,True
+NEPSE,A2+C,5,HAR-open-free,-7.04336495,13,0.9339669835,True,True
+NEPSE,A2+C,5,CC,-7.039711891,12,0.7023511756,True,True
+NEPSE,A2+C,5,"Anam, open-free special case (b=0)",-7.029479283,11,0.292146073,True,True
+NEPSE,A2+C,5,Anam posterior (exploratory),-7.029199626,10,0.292146073,True,True
+NEPSE,A2+C,5,Anam,-7.024287224,9,0.292146073,True,True
+NEPSE,A2+C,5,TR-P,-7.019552246,8,0.292146073,True,True
+NEPSE,A2+C,5,EWMA,-7.018920049,7,0.292146073,True,True
+NEPSE,A2+C,5,P,-7.011807096,6,0.1700850425,True,False
+NEPSE,A2+C,5,GK,-7.001783847,5,0.1345672836,True,False
+NEPSE,A2+C,5,YZ (daily form),-6.981980716,4,0.06953476738,False,False
+NEPSE,A2+C,5,RS,-6.987335634,3,0.06003001501,False,False
+NEPSE,A2+C,5,o2+P,-6.986441748,2,0.05252626313,False,False
+NEPSE,A2+C,5,o2+GK,-6.978089552,1,0.016008004,False,False
+NEPSE,A2,5,HAR-open-free,-6.835933492,0,1,True,True
+NEPSE,A2,5,Anam,-6.813925275,12,0.8784392196,True,True
+NEPSE,A2,5,TR-P,-6.813819676,11,0.8784392196,True,True
+NEPSE,A2,5,1/2 CC + 1/2 open-free,-6.812768815,16,0.8784392196,True,True
+NEPSE,A2,5,"Anam, open-free special case (b=0)",-6.812667942,13,0.8784392196,True,True
+NEPSE,A2,5,P,-6.812623986,9,0.8784392196,True,True
+NEPSE,A2,5,Anam posterior (exploratory),-6.81129927,15,0.8784392196,True,True
+NEPSE,A2,5,GK,-6.808853943,14,0.8784392196,True,True
+NEPSE,A2,5,o2+P,-6.80861011,7,0.8784392196,True,True
+NEPSE,A2,5,HAR-CC,-6.806295874,8,0.8784392196,True,True
+NEPSE,A2,5,YZ (daily form),-6.805463708,10,0.8784392196,True,True
+NEPSE,A2,5,GARCH,-6.800936177,6,0.8139069535,True,True
+NEPSE,A2,5,RS,-6.798688916,5,0.8139069535,True,True
+NEPSE,A2,5,GJR,-6.79807819,4,0.8139069535,True,True
+NEPSE,A2,5,o2+GK,-6.800627321,3,0.6993496748,True,True
+NEPSE,A2,5,CC,-6.783502124,2,0.5587793897,True,True
+NEPSE,A2,5,EWMA,-6.767320932,1,0.02951475738,False,False
+NEPSE,C,5,GJR,-7.377570029,0,1,True,True
+NEPSE,C,5,GARCH,-7.371901139,16,0.6323161581,True,True
+NEPSE,C,5,HAR-CC,-7.366009742,15,0.6323161581,True,True
+NEPSE,C,5,CC,-7.361259455,14,0.6323161581,True,True
+NEPSE,C,5,EWMA,-7.34382403,13,0.2891445723,True,True
+NEPSE,C,5,1/2 CC + 1/2 open-free,-7.343480378,12,0.1900950475,True,False
+NEPSE,C,5,HAR-open-free,-7.306103682,11,0.0005002501251,False,False
+NEPSE,C,5,Anam posterior (exploratory),-7.303116604,10,0.0005002501251,False,False
+NEPSE,C,5,"Anam, open-free special case (b=0)",-7.301922901,9,0.0005002501251,False,False
+NEPSE,C,5,Anam,-7.289273877,7,0,False,False
+NEPSE,C,5,TR-P,-7.27816555,8,0,False,False
+NEPSE,C,5,P,-7.262081351,5,0,False,False
+NEPSE,C,5,GK,-7.245367468,6,0,False,False
+NEPSE,C,5,RS,-7.225885822,3,0,False,False
+NEPSE,C,5,o2+P,-7.208741269,1,0,False,False
+NEPSE,C,5,YZ (daily form),-7.204051179,4,0,False,False
+NEPSE,C,5,o2+GK,-7.20069832,2,0,False,False
+NEPSE,A2+C,21,HAR-CC,-7.000952303,0,1,True,True
+NEPSE,A2+C,21,GJR,-7.00034035,16,0.9794897449,True,True
+NEPSE,A2+C,21,1/2 CC + 1/2 open-free,-6.998970823,14,0.9794897449,True,True
+NEPSE,A2+C,21,GARCH,-6.998927027,13,0.9794897449,True,True
+NEPSE,A2+C,21,EWMA,-6.998712195,12,0.9794897449,True,True
+NEPSE,A2+C,21,HAR-open-free,-6.998471945,15,0.9794897449,True,True
+NEPSE,A2+C,21,"Anam, open-free special case (b=0)",-6.988595129,11,0.7673836918,True,True
+NEPSE,A2+C,21,CC,-6.989275556,10,0.7588794397,True,True
+NEPSE,A2+C,21,Anam,-6.984130608,9,0.7588794397,True,True
+NEPSE,A2+C,21,TR-P,-6.982247094,8,0.7543771886,True,True
+NEPSE,A2+C,21,P,-6.978408014,7,0.6508254127,True,True
+NEPSE,A2+C,21,GK,-6.972660579,6,0.5017508754,True,True
+NEPSE,A2+C,21,Anam posterior (exploratory),-6.984076064,5,0.3326663332,True,True
+NEPSE,A2+C,21,o2+GK,-6.953068304,4,0.3326663332,True,True
+NEPSE,A2+C,21,YZ (daily form),-6.951847826,3,0.2651325663,True,True
+NEPSE,A2+C,21,RS,-6.964165169,2,0.2541270635,True,True
+NEPSE,A2+C,21,o2+P,-6.952739284,1,0.2496248124,True,False
+NEPSE,A2,21,HAR-open-free,-6.856472659,0,1,True,True
+NEPSE,A2,21,P,-6.843953313,13,0.655827914,True,True
+NEPSE,A2,21,TR-P,-6.843473736,11,0.655827914,True,True
+NEPSE,A2,21,GK,-6.843151339,15,0.655827914,True,True
+NEPSE,A2,21,Anam,-6.841809003,12,0.655827914,True,True
+NEPSE,A2,21,o2+GK,-6.84140619,16,0.655827914,True,True
+NEPSE,A2,21,"Anam, open-free special case (b=0)",-6.840676999,14,0.655827914,True,True
+NEPSE,A2,21,YZ (daily form),-6.83742729,10,0.655827914,True,True
+NEPSE,A2,21,EWMA,-6.829178308,9,0.655827914,True,True
+NEPSE,A2,21,o2+P,-6.836408014,8,0.6163081541,True,True
+NEPSE,A2,21,RS,-6.834934228,6,0.6163081541,True,True
+NEPSE,A2,21,1/2 CC + 1/2 open-free,-6.831315886,7,0.6163081541,True,True
+NEPSE,A2,21,HAR-CC,-6.816634763,5,0.6163081541,True,True
+NEPSE,A2,21,GJR,-6.810742463,4,0.5897948974,True,True
+NEPSE,A2,21,GARCH,-6.811400614,3,0.5622811406,True,True
+NEPSE,A2,21,Anam posterior (exploratory),-6.825477098,2,0.304152076,True,True
+NEPSE,A2,21,CC,-6.79929948,1,0.304152076,True,True
+NEPSE,C,21,GJR,-7.305186632,0,1,True,True
+NEPSE,C,21,GARCH,-7.299003231,16,0.244122061,True,False
+NEPSE,C,21,HAR-CC,-7.296654629,15,0.244122061,True,False
+NEPSE,C,21,CC,-7.292312474,14,0.244122061,True,False
+NEPSE,C,21,EWMA,-7.265811257,13,0.1630815408,True,False
+NEPSE,C,21,1/2 CC + 1/2 open-free,-7.273063918,12,0.1625812906,True,False
+NEPSE,C,21,Anam posterior (exploratory),-7.240026347,7,0,False,False
+NEPSE,C,21,HAR-open-free,-7.235331616,8,0,False,False
+NEPSE,C,21,"Anam, open-free special case (b=0)",-7.233912314,11,0,False,False
+NEPSE,C,21,Anam,-7.220814525,10,0,False,False
+NEPSE,C,21,TR-P,-7.213565791,9,0,False,False
+NEPSE,C,21,P,-7.202617091,6,0,False,False
+NEPSE,C,21,GK,-7.191567625,5,0,False,False
+NEPSE,C,21,RS,-7.181440301,4,0,False,False
+NEPSE,C,21,o2+P,-7.147963442,1,0,False,False
+NEPSE,C,21,YZ (daily form),-7.1449327,3,0,False,False
+NEPSE,C,21,o2+GK,-7.143407702,2,0,False,False
+NIFTY50,test half,5,HAR-open-free,-8.380010709,0,1,True,True
+NIFTY50,test half,5,GJR,-8.379188724,16,0.9454727364,True,True
+NIFTY50,test half,5,Anam,-8.370629856,15,0.7768884442,True,True
+NIFTY50,test half,5,Anam posterior (exploratory),-8.368854814,14,0.7768884442,True,True
+NIFTY50,test half,5,TR-P,-8.366653215,13,0.7768884442,True,True
+NIFTY50,test half,5,o2+GK,-8.36477001,12,0.7768884442,True,True
+NIFTY50,test half,5,"Anam, open-free special case (b=0)",-8.364698705,10,0.7768884442,True,True
+NIFTY50,test half,5,o2+P,-8.363123973,9,0.7768884442,True,True
+NIFTY50,test half,5,GARCH,-8.356830012,11,0.7768884442,True,True
+NIFTY50,test half,5,HAR-CC,-8.354544869,8,0.7768884442,True,True
+NIFTY50,test half,5,GK,-8.353199977,7,0.2621310655,True,True
+NIFTY50,test half,5,1/2 CC + 1/2 open-free,-8.350707696,4,0.2621310655,True,True
+NIFTY50,test half,5,P,-8.347404958,5,0.2621310655,True,True
+NIFTY50,test half,5,EWMA,-8.324196669,6,0.2621310655,True,True
+NIFTY50,test half,5,YZ (daily form),-8.347520381,3,0.2551275638,True,True
+NIFTY50,test half,5,CC,-8.329568869,1,0.01300650325,False,False
+NIFTY50,test half,5,RS,-8.324614176,2,0.01300650325,False,False
+NIFTY50,test half,21,HAR-open-free,-8.189729031,0,1,True,True
+NIFTY50,test half,21,HAR-CC,-8.177803111,16,0.7473736868,True,True
+NIFTY50,test half,21,GARCH,-8.171582884,15,0.7473736868,True,True
+NIFTY50,test half,21,GJR,-8.166296879,13,0.7473736868,True,True
+NIFTY50,test half,21,Anam,-8.163743952,14,0.7473736868,True,True
+NIFTY50,test half,21,CC,-8.163230149,11,0.7473736868,True,True
+NIFTY50,test half,21,"Anam, open-free special case (b=0)",-8.157834,12,0.7473736868,True,True
+NIFTY50,test half,21,o2+P,-8.15682578,10,0.7473736868,True,True
+NIFTY50,test half,21,1/2 CC + 1/2 open-free,-8.162443965,9,0.6928464232,True,True
+NIFTY50,test half,21,TR-P,-8.148393085,8,0.6928464232,True,True
+NIFTY50,test half,21,Anam posterior (exploratory),-8.151874901,7,0.5447723862,True,True
+NIFTY50,test half,21,P,-8.089305386,6,0.4377188594,True,True
+NIFTY50,test half,21,o2+GK,-8.136714498,5,0.2526263132,True,True
+NIFTY50,test half,21,GK,-8.067957385,4,0.2526263132,True,True
+NIFTY50,test half,21,EWMA,-8.102758197,3,0.1735867934,True,False
+NIFTY50,test half,21,RS,-8.032391492,2,0.1115557779,True,False
+NIFTY50,test half,21,YZ (daily form),-8.102342372,1,0.1045522761,True,False
+SP500,test half,5,TR-P,-8.450966607,0,1,True,True
+SP500,test half,5,GK,-8.449634002,16,0.8579289645,True,True
+SP500,test half,5,o2+GK,-8.448819757,15,0.8579289645,True,True
+SP500,test half,5,YZ (daily form),-8.448507237,14,0.8579289645,True,True
+SP500,test half,5,P,-8.443973465,12,0.6883441721,True,True
+SP500,test half,5,HAR-open-free,-8.439992946,13,0.6883441721,True,True
+SP500,test half,5,o2+P,-8.442330269,11,0.5177588794,True,True
+SP500,test half,5,Anam,-8.442330269,9,0.5177588794,True,True
+SP500,test half,5,Anam posterior (exploratory),-8.442330269,10,0.5177588794,True,True
+SP500,test half,5,"Anam, open-free special case (b=0)",-8.439014988,8,0.5177588794,True,True
+SP500,test half,5,GJR,-8.415652399,7,0.5177588794,True,True
+SP500,test half,5,RS,-8.416050413,6,0.1355677839,True,False
+SP500,test half,5,EWMA,-8.37530562,5,0.1355677839,True,False
+SP500,test half,5,1/2 CC + 1/2 open-free,-8.415483592,4,0.05652826413,False,False
+SP500,test half,5,GARCH,-8.407450923,3,0.05652826413,False,False
+SP500,test half,5,HAR-CC,-8.398025464,2,0.03351675838,False,False
+SP500,test half,5,CC,-8.385225342,1,0.0005002501251,False,False
+SP500,test half,21,HAR-open-free,-8.300869737,0,1,True,True
+SP500,test half,21,GARCH,-8.290917028,16,0.8334167084,True,True
+SP500,test half,21,HAR-CC,-8.28576628,15,0.8334167084,True,True
+SP500,test half,21,P,-8.278532594,13,0.8334167084,True,True
+SP500,test half,21,GK,-8.2727686,14,0.8334167084,True,True
+SP500,test half,21,o2+P,-8.272423816,7,0.8334167084,True,True
+SP500,test half,21,Anam,-8.272423816,6,0.8334167084,True,True
+SP500,test half,21,Anam posterior (exploratory),-8.272423816,5,0.8334167084,True,True
+SP500,test half,21,1/2 CC + 1/2 open-free,-8.271565947,9,0.8334167084,True,True
+SP500,test half,21,CC,-8.269926765,11,0.8334167084,True,True
+SP500,test half,21,YZ (daily form),-8.267943564,10,0.8334167084,True,True
+SP500,test half,21,o2+GK,-8.267143492,8,0.8334167084,True,True
+SP500,test half,21,RS,-8.265303475,12,0.8334167084,True,True
+SP500,test half,21,EWMA,-8.255709161,4,0.8334167084,True,True
+SP500,test half,21,TR-P,-8.270752714,2,0.7753876938,True,True
+SP500,test half,21,"Anam, open-free special case (b=0)",-8.270743234,3,0.7753876938,True,True
+SP500,test half,21,GJR,-8.212480071,1,0.7753876938,True,True
+DSE 2023-2026,test half,5,GJR,-6.504579193,0,1,True,True
+DSE 2023-2026,test half,5,HAR-CC,-6.503025262,16,0.1580790395,True,False
+DSE 2023-2026,test half,5,GARCH,-6.500143778,15,0.152076038,True,False
+DSE 2023-2026,test half,5,HAR-open-free,-6.498384286,14,0.152076038,True,False
+DSE 2023-2026,test half,5,"Anam, open-free special case (b=0)",-6.498296686,13,0.08454227114,False,False
+DSE 2023-2026,test half,5,1/2 CC + 1/2 open-free,-6.498673263,12,0.0340170085,False,False
+DSE 2023-2026,test half,5,P,-6.492578873,11,0.002501250625,False,False
+DSE 2023-2026,test half,5,TR-P,-6.492951873,9,0.00100050025,False,False
+DSE 2023-2026,test half,5,CC,-6.49164408,10,0.00100050025,False,False
+DSE 2023-2026,test half,5,Anam,-6.488375223,7,0,False,False
+DSE 2023-2026,test half,5,GK,-6.487673951,8,0,False,False
+DSE 2023-2026,test half,5,RS,-6.478073051,3,0,False,False
+DSE 2023-2026,test half,5,o2+P,-6.472881138,5,0,False,False
+DSE 2023-2026,test half,5,Anam posterior (exploratory),-6.47274316,1,0,False,False
+DSE 2023-2026,test half,5,o2+GK,-6.470259533,2,0,False,False
+DSE 2023-2026,test half,5,EWMA,-6.469335813,6,0,False,False
+DSE 2023-2026,test half,5,YZ (daily form),-6.467180234,4,0,False,False
+DSE 2023-2026,test half,21,HAR-open-free,-6.457840777,0,1,True,True
+DSE 2023-2026,test half,21,P,-6.457618922,16,0.9614807404,True,True
+DSE 2023-2026,test half,21,1/2 CC + 1/2 open-free,-6.456242089,14,0.9484742371,True,True
+DSE 2023-2026,test half,21,"Anam, open-free special case (b=0)",-6.456238409,13,0.9484742371,True,True
+DSE 2023-2026,test half,21,GARCH,-6.455336298,15,0.9484742371,True,True
+DSE 2023-2026,test half,21,GJR,-6.45524503,11,0.9484742371,True,True
+DSE 2023-2026,test half,21,GK,-6.455114781,12,0.9484742371,True,True
+DSE 2023-2026,test half,21,HAR-CC,-6.454692918,10,0.8494247124,True,True
+DSE 2023-2026,test half,21,TR-P,-6.45386147,9,0.396198099,True,True
+DSE 2023-2026,test half,21,RS,-6.45085338,8,0.124062031,True,False
+DSE 2023-2026,test half,21,Anam,-6.451474909,7,0.08754377189,False,False
+DSE 2023-2026,test half,21,CC,-6.44947448,6,0.08654327164,False,False
+DSE 2023-2026,test half,21,EWMA,-6.444065919,5,0.07803901951,False,False
+DSE 2023-2026,test half,21,Anam posterior (exploratory),-6.443473432,4,0,False,False
+DSE 2023-2026,test half,21,o2+P,-6.439316534,3,0,False,False
+DSE 2023-2026,test half,21,o2+GK,-6.438463436,2,0,False,False
+DSE 2023-2026,test half,21,YZ (daily form),-6.435895567,1,0,False,False
+Vietnam 2007-2020,test half,5,HAR-open-free,-6.293441729,0,1,True,True
+Vietnam 2007-2020,test half,5,GARCH,-6.290512411,16,0.1415707854,True,False
+Vietnam 2007-2020,test half,5,GJR,-6.289779413,14,0.1015507754,True,False
+Vietnam 2007-2020,test half,5,HAR-CC,-6.289471333,15,0.1015507754,True,False
+Vietnam 2007-2020,test half,5,1/2 CC + 1/2 open-free,-6.288227825,13,0.02701350675,False,False
+Vietnam 2007-2020,test half,5,"Anam, open-free special case (b=0)",-6.28093441,12,0,False,False
+Vietnam 2007-2020,test half,5,Anam,-6.272799827,8,0,False,False
+Vietnam 2007-2020,test half,5,CC,-6.270851344,11,0,False,False
+Vietnam 2007-2020,test half,5,TR-P,-6.270618715,9,0,False,False
+Vietnam 2007-2020,test half,5,Anam posterior (exploratory),-6.269936088,7,0,False,False
+Vietnam 2007-2020,test half,5,EWMA,-6.262824206,10,0,False,False
+Vietnam 2007-2020,test half,5,o2+P,-6.247164548,6,0,False,False
+Vietnam 2007-2020,test half,5,o2+GK,-6.242149058,5,0,False,False
+Vietnam 2007-2020,test half,5,YZ (daily form),-6.237935634,4,0,False,False
+Vietnam 2007-2020,test half,5,P,-6.216408991,3,0,False,False
+Vietnam 2007-2020,test half,5,GK,-6.167398357,2,0,False,False
+Vietnam 2007-2020,test half,5,RS,-6.131290156,1,0,False,False
+Vietnam 2007-2020,test half,21,HAR-open-free,-6.342761839,0,1,True,True
+Vietnam 2007-2020,test half,21,1/2 CC + 1/2 open-free,-6.342689312,16,0.9474737369,True,True
+Vietnam 2007-2020,test half,21,GARCH,-6.339739599,15,0.3011505753,True,True
+Vietnam 2007-2020,test half,21,HAR-CC,-6.338077259,14,0.2491245623,True,False
+Vietnam 2007-2020,test half,21,GJR,-6.337918897,13,0.2491245623,True,False
+Vietnam 2007-2020,test half,21,"Anam, open-free special case (b=0)",-6.337035164,12,0.2491245623,True,False
+Vietnam 2007-2020,test half,21,CC,-6.335161205,11,0.006503251626,False,False
+Vietnam 2007-2020,test half,21,EWMA,-6.3318851,10,0.006503251626,False,False
+Vietnam 2007-2020,test half,21,TR-P,-6.330231626,9,0.006503251626,False,False
+Vietnam 2007-2020,test half,21,Anam,-6.331488921,8,0,False,False
+Vietnam 2007-2020,test half,21,Anam posterior (exploratory),-6.327410513,7,0,False,False
+Vietnam 2007-2020,test half,21,o2+P,-6.304004113,6,0,False,False
+Vietnam 2007-2020,test half,21,o2+GK,-6.303761221,5,0,False,False
+Vietnam 2007-2020,test half,21,YZ (daily form),-6.300012072,4,0,False,False
+Vietnam 2007-2020,test half,21,P,-6.296010736,3,0,False,False
+Vietnam 2007-2020,test half,21,GK,-6.268337948,2,0,False,False
+Vietnam 2007-2020,test half,21,RS,-6.25960144,1,0,False,False
+DSE 2009-2021,test half,5,HAR-open-free,-6.570857209,0,1,True,True
+DSE 2009-2021,test half,5,"Anam, open-free special case (b=0)",-6.560788135,16,0.220110055,True,False
+DSE 2009-2021,test half,5,1/2 CC + 1/2 open-free,-6.558273405,15,0.220110055,True,False
+DSE 2009-2021,test half,5,TR-P,-6.558145779,14,0.220110055,True,False
+DSE 2009-2021,test half,5,Anam,-6.557744178,12,0.220110055,True,False
+DSE 2009-2021,test half,5,Anam posterior (exploratory),-6.557306693,13,0.220110055,True,False
+DSE 2009-2021,test half,5,HAR-CC,-6.552320095,11,0.220110055,True,False
+DSE 2009-2021,test half,5,GARCH,-6.551941366,9,0.220110055,True,False
+DSE 2009-2021,test half,5,GJR,-6.550912813,10,0.220110055,True,False
+DSE 2009-2021,test half,5,P,-6.546533212,8,0.220110055,True,False
+DSE 2009-2021,test half,5,o2+P,-6.540585311,6,0.220110055,True,False
+DSE 2009-2021,test half,5,GK,-6.536460414,7,0.220110055,True,False
+DSE 2009-2021,test half,5,CC,-6.535689046,5,0.220110055,True,False
+DSE 2009-2021,test half,5,o2+GK,-6.534474462,4,0.220110055,True,False
+DSE 2009-2021,test half,5,YZ (daily form),-6.531235086,3,0.220110055,True,False
+DSE 2009-2021,test half,5,EWMA,-6.389131463,2,0.220110055,True,False
+DSE 2009-2021,test half,5,RS,-6.523816547,1,0.02751375688,False,False
+DSE 2009-2021,test half,21,HAR-open-free,-6.513252716,0,1,True,True
+DSE 2009-2021,test half,21,"Anam, open-free special case (b=0)",-6.503153978,14,0.5822911456,True,True
+DSE 2009-2021,test half,21,1/2 CC + 1/2 open-free,-6.502910677,16,0.5822911456,True,True
+DSE 2009-2021,test half,21,Anam posterior (exploratory),-6.50244124,15,0.5822911456,True,True
+DSE 2009-2021,test half,21,TR-P,-6.501986979,13,0.5822911456,True,True
+DSE 2009-2021,test half,21,Anam,-6.501827476,11,0.5822911456,True,True
+DSE 2009-2021,test half,21,GARCH,-6.498841802,12,0.5822911456,True,True
+DSE 2009-2021,test half,21,GJR,-6.496958298,10,0.4142071036,True,True
+DSE 2009-2021,test half,21,HAR-CC,-6.498353043,9,0.3171585793,True,True
+DSE 2009-2021,test half,21,P,-6.495596946,8,0.1970985493,True,False
+DSE 2009-2021,test half,21,o2+P,-6.49268614,5,0.1970985493,True,False
+DSE 2009-2021,test half,21,GK,-6.492192577,6,0.1970985493,True,False
+DSE 2009-2021,test half,21,EWMA,-6.478027329,7,0.1970985493,True,False
+DSE 2009-2021,test half,21,o2+GK,-6.491310689,3,0.1675837919,True,False
+DSE 2009-2021,test half,21,CC,-6.490914894,4,0.1675837919,True,False
+DSE 2009-2021,test half,21,RS,-6.488296787,2,0.07153576788,False,False
+DSE 2009-2021,test half,21,YZ (daily form),-6.48876545,1,0.06653326663,False,False
+Morocco 2012-2026,test half,5,HAR-open-free,-6.825155769,0,1,True,True
+Morocco 2012-2026,test half,5,1/2 CC + 1/2 open-free,-6.817890562,15,0.4857428714,True,True
+Morocco 2012-2026,test half,5,GJR,-6.81627707,16,0.4857428714,True,True
+Morocco 2012-2026,test half,5,"Anam, open-free special case (b=0)",-6.815380356,13,0.4857428714,True,True
+Morocco 2012-2026,test half,5,GARCH,-6.814559724,14,0.4857428714,True,True
+Morocco 2012-2026,test half,5,HAR-CC,-6.814332755,12,0.4857428714,True,True
+Morocco 2012-2026,test half,5,Anam posterior (exploratory),-6.812051269,11,0.3901950975,True,True
+Morocco 2012-2026,test half,5,Anam,-6.807005847,10,0.01350675338,False,False
+Morocco 2012-2026,test half,5,CC,-6.804633157,9,0.01350675338,False,False
+Morocco 2012-2026,test half,5,TR-P,-6.803272584,8,0.01350675338,False,False
+Morocco 2012-2026,test half,5,o2+P,-6.800791229,7,0.01350675338,False,False
+Morocco 2012-2026,test half,5,o2+GK,-6.79583517,5,0.01350675338,False,False
+Morocco 2012-2026,test half,5,YZ (daily form),-6.795425332,4,0.01350675338,False,False
+Morocco 2012-2026,test half,5,EWMA,-6.775536115,6,0.01350675338,False,False
+Morocco 2012-2026,test half,5,P,-6.553013479,2,0.01350675338,False,False
+Morocco 2012-2026,test half,5,GK,-6.2953708,3,0.01350675338,False,False
+Morocco 2012-2026,test half,5,RS,-1.055791807,1,0.01350675338,False,False
+Morocco 2012-2026,test half,21,HAR-open-free,-6.812454762,0,1,True,True
+Morocco 2012-2026,test half,21,"Anam, open-free special case (b=0)",-6.803813656,15,0.6583291646,True,True
+Morocco 2012-2026,test half,21,Anam posterior (exploratory),-6.802879705,16,0.6583291646,True,True
+Morocco 2012-2026,test half,21,1/2 CC + 1/2 open-free,-6.801866864,14,0.6583291646,True,True
+Morocco 2012-2026,test half,21,Anam,-6.800695769,13,0.6583291646,True,True
+Morocco 2012-2026,test half,21,TR-P,-6.79825696,12,0.6583291646,True,True
+Morocco 2012-2026,test half,21,o2+P,-6.795986607,11,0.6583291646,True,True
+Morocco 2012-2026,test half,21,YZ (daily form),-6.795408575,9,0.6583291646,True,True
+Morocco 2012-2026,test half,21,GJR,-6.795282199,10,0.6583291646,True,True
+Morocco 2012-2026,test half,21,o2+GK,-6.795224719,7,0.6583291646,True,True
+Morocco 2012-2026,test half,21,HAR-CC,-6.794658604,8,0.6583291646,True,True
+Morocco 2012-2026,test half,21,GARCH,-6.794108906,6,0.6583291646,True,True
+Morocco 2012-2026,test half,21,EWMA,-6.787441037,5,0.3276638319,True,True
+Morocco 2012-2026,test half,21,CC,-6.787198371,4,0.09254627314,False,False
+Morocco 2012-2026,test half,21,P,-6.591925433,3,0.04302151076,False,False
+Morocco 2012-2026,test half,21,GK,-6.347847137,2,0.04302151076,False,False
+Morocco 2012-2026,test half,21,RS,-1.753491818,1,0.04302151076,False,False

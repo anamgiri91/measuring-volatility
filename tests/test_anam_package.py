@@ -89,7 +89,8 @@ def _nepse_calendar():
 
 def _research_single(d, kernel, train, test_start, win, scheme, calendar):
     """M20's corrected evaluation of one forecast, from the research module's features."""
-    sym, r2, date = d["symbol"], d["CC"], d["date"]
+    sym, r2, date = d["symbol"], FB.clean_square(d["CC"]), d["date"]
+    kernel = FB.clean_square(kernel)
     valid = kernel.notna() & r2.notna()
     Xv = kernel.where(valid)
     cur = FB.rolling_rows(Xv, sym, win)
@@ -154,3 +155,21 @@ def test_the_frozen_evaluation_still_reproduces_table_34(indices, s40):
             assert t.loc["Anam", "phi"] == pytest.approx(row.phi, abs=1e-9)
             assert t.loc["Anam", "QLIKE"] == pytest.approx(row.QLIKE, rel=1e-9)
             assert int(t.loc["Anam", "n"]) == int(row.n)
+
+
+def test_the_research_and_package_rules_for_zero_are_the_same():
+    rng = np.random.default_rng(0)
+    x = pd.Series(np.where(rng.random(600) < 0.4, 0.0, rng.exponential(1e-4, 600)))
+    x[rng.random(600) < 0.05] = 1e-33                    # residues of equal prices
+    x[rng.random(600) < 0.05] = np.nan
+    by = pd.Series(np.repeat(["A", "B", "C"], 200))
+    assert FB.ZERO_SQUARE == EV.ZERO_SQUARE
+    pd.testing.assert_series_equal(FB.clean_square(x), EV.clean_square(x))
+    for n, mp in ((5, None), (250, 60), (22, 10)):
+        a = FB.rolling_rows(FB.clean_square(x), by, n, mp)
+        b = EV.rolling_mean_exact(EV.clean_square(x), by, n, mp)
+        pd.testing.assert_series_equal(a, b)
+    # a window of exact zeros has a mean of exactly zero, not a residue
+    z = pd.Series([1e-3, 2e-3] + [0.0] * 30)
+    m = FB.rolling_rows(z, pd.Series(["A"] * 32), 5)
+    assert (m.iloc[7:] == 0.0).all()
