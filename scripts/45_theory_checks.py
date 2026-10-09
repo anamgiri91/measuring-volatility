@@ -1,0 +1,1121 @@
+"""Checks of the theory section (paper/theory/), under plan M19 (M19_THEORY_CHECKS_PLAN.md).
+
+POST HOC relative to plans M14-M18: the six propositions were derived after those plans' results
+were known, to explain them. The prediction tested in Part C was fixed in M19 before this script
+existed.
+
+Part A  Every closed form, identity and inequality of Propositions 1-6 is set against a simulation
+        or a numerical integral. One row per check goes to the ledger (table121). Brownian extremes
+        use the exact Brownian-bridge maximum and minimum within each step.
+Part B  Applications: arithmetic on frozen tables, or frozen code re-run (table122).
+B1  The sharp lower bound on the opening error's share of the proxy, (1 - b)^2 E[o^2]/E[OC], by
+    NEPSE regime and for the NIFTY 50, with the M15 joint bootstrap.
+B2  The error's scale implied by the share of opens at the session high or low (Proposition 2),
+    against the scale implied by b under independence.
+B3  The censoring factor against b/b_interior, and the decomposition of NEPSE's fall in b at the
+    band reform (Proposition 3).
+B4  NEPSE's applied calibration after the reform against the lag path of Proposition 5, the
+    variance per date of the calibration, and the window that balances lag against noise.
+Part C  The one test (Proposition 4): the security-level loss difference between the full and the
+    open-free form against the security's own b, on the five frozen panel test spans (table123).
+
+Every number the LaTeX quotes is written as a macro to paper/theory/generated/numbers.tex, with
+the table fragments it inputs, so that no number in the theory section is typed by hand.
+
+Usage
+    python scripts/45_theory_checks.py            # Parts A, B and C (about ten minutes)
+    python scripts/45_theory_checks.py --quick    # Part A only, smaller simulations (for tests)
+"""
+from __future__ import annotations
+
+from _env import bootstrap
+
+ROOT = bootstrap(["scipy"])
+
+import argparse
+import functools
+import importlib.util
+import math
+import sys
+import time
+import warnings
+
+import numpy as np
+import pandas as pd
+from scipy import integrate
+from scipy.stats import chi2, norm, spearmanr
+
+TAB = ROOT / "output" / "tables"
+GEN = ROOT / "paper" / "theory" / "generated"
+INPUTS = ROOT / "data" / "external" / "frontier"
+SEED = 20261009
+LN2 = math.log(2.0)
+FLOAT_FMT = "%.10g"
+PKG = ROOT / "anam-estimator" / "src"
+
+
+def _load(name: str, file: str):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "scripts" / file)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+# =============================================================================================
+# Ledger, numbers and Monte Carlo helpers
+# =============================================================================================
+
+class Ledger:
+    """One row per check. ``rule`` says how ``ok`` was decided."""
+
+    def __init__(self) -> None:
+        self.rows: list[dict] = []
+
+    def add(self, prop: str, check: str, design: str, theory: float, value: float, se: float,
+            rule: str, ok: bool) -> None:
+        self.rows.append({"proposition": prop, "check": check, "design": design,
+                          "theory": float(theory), "value": float(value), "se": float(se),
+                          "rule": rule, "pass": bool(ok)})
+
+    def mc(self, prop, check, design, theory, value, se, k=4.0):
+        ok = abs(value - theory) <= k * se
+        self.add(prop, check, design, theory, value, se, f"|value - theory| <= {k:g} SE", ok)
+
+    def ident(self, prop, check, design, theory, value, tol=1e-9):
+        ok = abs(value - theory) <= tol * max(1.0, abs(theory))
+        self.add(prop, check, design, theory, value, np.nan, f"identity, relative error <= {tol:g}", ok)
+
+    def numeric(self, prop, check, design, theory, value, tol=1e-6):
+        ok = abs(value - theory) <= tol
+        self.add(prop, check, design, theory, value, np.nan, f"numerical, |error| <= {tol:g}", ok)
+
+    def holds(self, prop, check, design, lhs, rhs, ok, rule):
+        self.add(prop, check, design, rhs, lhs, np.nan, rule, ok)
+
+    def frame(self) -> pd.DataFrame:
+        return pd.DataFrame(self.rows)
+
+
+class Numbers:
+    """Macros for the LaTeX: \\thn{key} expands to the formatted value."""
+
+    def __init__(self) -> None:
+        self.m: dict[str, str] = {}
+
+    def put(self, key: str, value, nd: int = 3, pct: bool = False, sign: bool = False) -> None:
+        if key in self.m:
+            raise KeyError(f"duplicate number {key}")
+        if isinstance(value, str):
+            self.m[key] = value
+            return
+        v = float(value) * (100.0 if pct else 1.0)
+        s = f"{abs(v):,.{nd}f}".replace(",", "{,}")
+        if v < 0 and float(s.replace("{,}", "")) != 0:
+            s = r"\ensuremath{-}" + s
+        elif sign and v > 0:
+            s = "+" + s
+        self.m[key] = s
+
+    def write(self, path) -> None:
+        lines = ["% Generated by scripts/45_theory_checks.py -- do not edit by hand.",
+                 "% Every number the theory section quotes is defined here."]
+        for k in sorted(self.m):
+            lines.append(r"\expandafter\def\csname thn@" + k + r"\endcsname{" + self.m[k] + "}")
+        path.write_text("\n".join(lines) + "\n")
+
+
+def batch_mean(x: np.ndarray, nb: int = 40) -> tuple[float, float]:
+    x = np.asarray(x, dtype=float)
+    n = len(x) // nb * nb
+    b = x[:n].reshape(nb, -1).mean(1)
+    return float(x.mean()), float(b.std(ddof=1) / math.sqrt(nb))
+
+
+def batch_ratio(num: np.ndarray, den: np.ndarray, nb: int = 40) -> tuple[float, float]:
+    """Ratio of sums with a delete-one-batch jackknife standard error."""
+    n = len(num) // nb * nb
+    rn, rd = num[:n].reshape(nb, -1).sum(1), den[:n].reshape(nb, -1).sum(1)
+    jk = (rn.sum() - rn) / (rd.sum() - rd)
+    se = math.sqrt((nb - 1) / nb * np.sum((jk - jk.mean()) ** 2))
+    return float(num.sum() / den.sum()), float(se)
+
+
+def brownian_bars(n: int, steps: int, rng) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Standard Brownian motion on [0, 1]: terminal value D, maximum M and minimum m. The extremes
+    of each step are drawn exactly from the Brownian bridge between the step's endpoints."""
+    dt = 1.0 / steps
+    W, M, m = np.zeros(n), np.zeros(n), np.zeros(n)
+    for _ in range(steps):
+        W1 = W + rng.standard_normal(n) * math.sqrt(dt)
+        g2 = (W1 - W) ** 2
+        M = np.maximum(M, 0.5 * (W + W1 + np.sqrt(g2 - 2 * dt * np.log(1.0 - rng.random(n)))))
+        m = np.minimum(m, 0.5 * (W + W1 - np.sqrt(g2 - 2 * dt * np.log(1.0 - rng.random(n)))))
+        W = W1
+    return W, M, m
+
+
+# =============================================================================================
+# Closed forms (Propositions 2 and 3)
+# =============================================================================================
+
+def p_max_min(a: float, b: float, K: int = 40) -> float:
+    """P(M < a, -m < b) for standard Brownian motion on [0, 1], by the method of images. Below a
+    band width of 0.3 the probability of staying inside is below 1e-20 and is returned as zero."""
+    L = a + b
+    if L < 0.3:
+        return 0.0
+    k = np.arange(-K, K + 1) * 2.0 * L
+    return float(np.sum(norm.cdf(a + k) - norm.cdf(-b + k) - norm.cdf(a + 2 * b + k) + norm.cdf(b + k)))
+
+
+def J(s: float) -> float:
+    """E[(-m) 1{M < s}] = int_0^inf P(M < s, -m > t) dt."""
+    if s <= 0:
+        return 0.0
+    pm = 2.0 * norm.cdf(s) - 1.0
+    return integrate.quad(lambda t: pm - p_max_min(s, t), 0.0, 12.0, limit=400, epsabs=1e-13)[0]
+
+
+def t1(r: float) -> float:
+    """E[((eta - M)^+)^2] for eta ~ N(0, r^2) independent of standard Brownian motion."""
+    return ((1.0 + r * r) * math.atan(r) - r) / math.pi
+
+
+def t2(r: float) -> float:
+    """E[(eta - M)^+ M]."""
+    return (r - math.atan(r)) / math.pi
+
+
+def t3(r: float) -> float:
+    """E[(eta - M)^+ (-m)], a one-dimensional integral of the joint law of the extremes."""
+    return integrate.quad(lambda s: J(s) * norm.sf(s / r), 0.0, 10.0 * r + 1.0, limit=400, epsabs=1e-13)[0]
+
+
+def t4(r: float) -> float:
+    """E[(eta - M)^+ (M - D)], from the joint law of the maximum and the terminal value."""
+    return r * r / 4.0 + (r - (1.0 + r * r) * math.atan(r)) / (2.0 * math.pi)
+
+
+@functools.lru_cache(maxsize=None)
+def delta_R(r: float) -> float:
+    """E[R^2] - 4 ln 2: the excess squared range when the open's error has scale r = sigma_eta/sigma_c."""
+    return 2.0 * t1(r) + 4.0 * (t2(r) + t3(r))
+
+
+def bias_P(r):  return delta_R(r) / (4.0 * LN2)
+def bias_GK(r): return 0.5 * delta_R(r) - (2.0 * LN2 - 1.0) * r * r
+def bias_RS(r): return 2.0 * t4(r)                     # = r^2/2 - t1(r)
+def p_extreme(r): return 2.0 * math.atan(r) / math.pi  # the open is the session high or low
+def yz_k(n=21): return 0.34 / (1.34 + (n + 1) / (n - 1))
+
+
+def F_gauss(k):
+    """Censoring factor b/b_latent for a Gaussian latent open clipped at +-k standard deviations."""
+    num = 2.0 * norm.cdf(k) - 1.0
+    return num / (num - 2.0 * k * norm.pdf(k) + 2.0 * k * k * norm.sf(k))
+
+
+def mills(k):
+    return norm.pdf(k) / norm.sf(k)
+
+
+def g_appendix_a(b):
+    return ((math.sqrt(5.0 - 4.0 * b) - 1.0) / 2.0) ** 2
+
+
+# =============================================================================================
+# Part A
+# =============================================================================================
+
+def check_p1(L: Ledger, N: Numbers, n: int, rng) -> None:
+    P = "1"
+    designs = {
+        # name: (o*, eta, x = e_c + eps) generators and the theoretical b
+        "independent error": (0.4, None, 0.6, 0.8, 0.4 / (0.4 + 0.6)),
+        "proportional overreaction (theta = 0.8)": (0.4, 0.8, 0.3, 0.8, 1.8 * 0.4 / (1.8 ** 2 * 0.4 + 0.3)),
+        "stale open, 45% of the move (theta = -0.55)": (0.4, -0.55, 0.0, 0.8, 1.0 / 0.45),
+        "pure overreaction (theta = 1.5, no idiosyncratic error)": (0.4, 1.5, 0.0, 0.8, 1.0 / 2.5),
+        "independent error, Student-t(4) tails": (0.4, None, 0.6, 0.8, 0.4),
+    }
+    for name, (s2, theta, v2, q2, b_th) in designs.items():
+        if "Student" in name:
+            tt = lambda v: math.sqrt(v / 2.0) * rng.standard_t(4, n)      # variance v
+            ostar, eta, x = tt(s2), tt(v2), tt(q2)
+        else:
+            ostar = rng.normal(0, math.sqrt(s2), n)
+            nu = rng.normal(0, math.sqrt(v2), n) if v2 > 0 else np.zeros(n)
+            eta = (theta * ostar if theta is not None else 0.0) + nu
+            x = rng.normal(0, math.sqrt(q2), n)
+        o, r = ostar + eta, ostar + x
+        c = r - o
+        b, se = batch_ratio(o * r, o * o)
+        L.mc(P, "b = E[o r]/E[o^2] equals the closed form", name, b_th, b, se)
+        blp, se2 = batch_ratio(o * ostar, o * o)
+        L.mc(P, "b is the best linear predictor coefficient of o* on o", name, b_th, blp, se2)
+        b_hat = (o * r).sum() / (o * o).sum()
+        L.ident(P, "E[o c] = -(1 - b) E[o^2] (sample identity)", name, (b_hat - 1) * (o * o).sum(), (o * c).sum())
+        bt = (o * ostar).sum() / (o * o).sum()
+        L.ident(P, "E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)", name,
+                (1 - bt) ** 2 * (o * o).sum() + ((ostar - bt * o) ** 2).sum(), (eta * eta).sum())
+        e2, sm = (eta * eta).mean() / (o * o).mean(), (1 - b_th) ** 2
+        L.holds(P, "sharp bound E[eta^2]/E[o^2] >= (1 - b)^2", name, e2, sm, e2 >= sm - 4 * se,
+                "value >= bound (within 4 SE of b)")
+        if theta is not None and v2 == 0 and theta > 0:
+            s_e, se_e = batch_ratio(eta * eta, o * o)
+            L.mc(P, "the sharp bound is attained under pure proportional overreaction", name, sm, s_e, se_e)
+    # the published (Appendix A) bound is below the sharp bound for every b in [0, 1)
+    grid = np.linspace(0.0, 0.999, 1000)
+    gap = np.array([(1 - b) ** 2 - g_appendix_a(b) for b in grid])
+    L.holds(P, "(1 - b)^2 > ((sqrt(5 - 4b) - 1)/2)^2 on [0, 1)", "grid of 1,000 values", gap.min(), 0.0,
+            bool((gap > 0).all()), "strictly positive gap everywhere")
+    N.put("p1-ratio-at-03", (1 - 0.3) ** 2 / g_appendix_a(0.3), 2)
+    # identification: three structures with one Gaussian law of (o, r) and different E[o*^2]
+    mo2, mor, mr2 = 1.0, 0.3, 1.2
+    structs = {"I: error independent of news": (0.3, 0.0, 0.7, 0.9),
+               "II: pure overreaction (lower end)": (0.09, 1 / 0.3 - 1, 0.0, 1.11),
+               "III: all of r is the efficient open (upper end)": (1.2, -0.75, 0.925, 0.0)}
+    covs = {}
+    for name, (s2, theta, v2, q2) in structs.items():
+        ostar = rng.normal(0, math.sqrt(s2), n)
+        eta = theta * ostar + (rng.normal(0, math.sqrt(v2), n) if v2 > 0 else 0.0)
+        x = rng.normal(0, math.sqrt(q2), n) if q2 > 0 else np.zeros(n)
+        o, r = ostar + eta, ostar + x
+        for lab, num, th in (("E[o^2]", o * o, mo2), ("E[o r]", o * r, mor), ("E[r^2]", r * r, mr2)):
+            v, se = batch_mean(num)
+            L.mc(P, f"identified set: {lab} is the same in every structure", name, th, v, se)
+        v, se = batch_mean(ostar * ostar)
+        L.mc(P, "identified set: E[o*^2] at the stated point", name, s2, v, se)
+        covs[name] = s2
+    L.ident(P, "identified set for E[o*^2] is [b^2 E[o^2], E[r^2]]: lower end", "structure II",
+            (mor / mo2) ** 2 * mo2, covs["II: pure overreaction (lower end)"])
+    L.ident(P, "identified set for E[o*^2] is [b^2 E[o^2], E[r^2]]: upper end", "structure III",
+            mr2, covs["III: all of r is the efficient open (upper end)"])
+
+
+def check_p2(L: Ledger, N: Numbers, n: int, steps: int, rng) -> None:
+    P = "2"
+    D, M, m = brownian_bars(n, steps, rng)
+    R0, RS0 = M - m, M * (M - D) + m * (m - D)
+    v, se = batch_mean(R0 ** 2)
+    L.mc(P, "E[(M - m)^2] = 4 ln 2 (Parkinson, no error)", "Brownian session", 4 * LN2, v, se)
+    v, se = batch_mean(RS0)
+    L.mc(P, "E[RS] = sigma_c^2 (Rogers-Satchell, no error)", "Brownian session", 1.0, v, se)
+    v, se = batch_mean(1.0 * (D <= M) * (D >= m))
+    L.ident(P, "the close lies inside the session range", "Brownian session", 1.0, v)
+    s2 = 0.5
+    ostar = rng.normal(0, math.sqrt(s2), n)
+    k = yz_k(21)
+    for rho in (0.25, 0.5, 1.0, 2.0):
+        des = f"sigma_eta/sigma_c = {rho:g}"
+        eta = rho * rng.standard_normal(n)
+        o, r = ostar + eta, ostar + D
+        c = D - eta
+        hi, lo = np.maximum(eta, M), np.minimum(eta, m)
+        R = hi - lo
+        u, d = hi - eta, lo - eta
+        RS = u * (u - c) + d * (d - c)
+        GK, GK0 = 0.5 * R ** 2 - (2 * LN2 - 1) * c ** 2, 0.5 * R0 ** 2 - (2 * LN2 - 1) * D ** 2
+        v, se = batch_mean(r * r)
+        L.mc(P, "close-to-close is unbiased: E[r^2] = E[o*^2] + sigma_c^2", des, s2 + 1.0, v, se)
+        v, se = batch_mean(c * c - D * D)
+        L.mc(P, "open-to-close carries the whole error: E[c^2] - sigma_c^2 = E[eta^2]", des, rho ** 2, v, se)
+        v, se = batch_mean(o * o - ostar * ostar)
+        L.mc(P, "the overnight square carries the whole error: E[o^2] - E[o*^2] = E[eta^2]", des, rho ** 2, v, se)
+        b = (o * r).sum() / (o * o).sum()
+        L.ident(P, "o^2 + c^2 - r^2 = -2 o c = 2(1 - b) o^2 in sums", des, 2 * (1 - b) * (o * o).sum(),
+                (o * o + c * c - r * r).sum())
+        v, se = batch_mean(R ** 2 - R0 ** 2)
+        L.mc(P, "Parkinson: E[R^2] - 4 ln 2 = Delta_R (exact integral)", des, delta_R(rho), v, se)
+        v, se = batch_mean(RS - RS0)
+        L.mc(P, "Rogers-Satchell bias = rho^2/2 - [(1 + rho^2) atan(rho) - rho]/pi", des, bias_RS(rho), v, se)
+        v, se = batch_mean(GK - GK0)
+        L.mc(P, "Garman-Klass bias = Delta_R/2 - (2 ln 2 - 1) rho^2", des, bias_GK(rho), v, se)
+        v, se = batch_mean(((eta > M) | (eta < m)).astype(float))
+        L.mc(P, "P(open is the session high or low) = (2/pi) atan(rho)", des, p_extreme(rho), v, se)
+        v, se = batch_mean(np.maximum(eta - M, 0) ** 2)
+        L.mc(P, "E[((eta - M)^+)^2] closed form", des, t1(rho), v, se)
+        v, se = batch_mean(np.maximum(eta - M, 0) * M)
+        L.mc(P, "E[(eta - M)^+ M] closed form", des, t2(rho), v, se)
+        v, se = batch_mean(np.maximum(eta - M, 0) * (M - D))
+        L.mc(P, "E[(eta - M)^+ (M - D)] closed form", des, t4(rho), v, se)
+        yz, yz0 = o * o + k * c * c + (1 - k) * RS, ostar ** 2 + k * D * D + (1 - k) * RS0
+        v, se = batch_mean(yz - yz0)
+        L.mc(P, "Yang-Zhang daily form bias = (1 + k) rho^2 + (1 - k) RS bias", des,
+             (1 + k) * rho ** 2 + (1 - k) * bias_RS(rho), v, se)
+        v, se = batch_mean(o * o + R ** 2 / (4 * LN2) - ostar ** 2 - R0 ** 2 / (4 * LN2))
+        L.mc(P, "overnight^2 + Parkinson bias = rho^2 + Delta_R/(4 ln 2)", des, rho ** 2 + bias_P(rho), v, se)
+        L.holds(P, "range bounds: 0 <= Delta_R <= (8/pi) rho + rho^2", des, delta_R(rho), (8 / math.pi) * rho + rho ** 2,
+                0 <= delta_R(rho) <= (8 / math.pi) * rho + rho ** 2, "lower <= value <= upper")
+        L.holds(P, "pathwise: M - m <= R <= M - m + |eta|", des, float(np.max(R - R0 - np.abs(eta))), 0.0,
+                bool((R >= R0 - 1e-15).all() and (R <= R0 + np.abs(eta) + 1e-12).all()), "every path")
+        for key, val in (("P", bias_P(rho) / rho ** 2), ("RS", bias_RS(rho) / rho ** 2), ("GK", bias_GK(rho) / rho ** 2),
+                         ("ext", p_extreme(rho))):
+            N.put(f"p2-{key}-{str(rho).replace('.', 'p')}", val, 3)
+        N.put(f"p2-Pratio-{str(rho).replace('.', 'p')}", delta_R(rho) / (2 * LN2 * rho ** 2), 4)
+    # small-noise limits (first-order loadings)
+    for rr in (0.2, 0.1, 0.05):
+        L.numeric(P, "small noise: Delta_R/(2 ln 2 rho^2) -> 1", f"rho = {rr:g}", 1.0, delta_R(rr) / (2 * LN2 * rr ** 2),
+                  tol=2e-3)
+    for ss in (0.04, 0.02, 0.01):
+        L.numeric(P, "meander limit: J(s)/s -> 2 ln 2", f"s = {ss:g}", 2 * LN2, J(ss) / ss, tol=4 * ss)
+    rr = 0.01
+    loads = {"c^2 (open-to-close)": (1.0, 1.0), "Parkinson": (bias_P(rr) / rr ** 2, 0.5),
+             "Garman-Klass": (bias_GK(rr) / rr ** 2, 1 - LN2), "Rogers-Satchell": (bias_RS(rr) / rr ** 2, 0.5),
+             "overnight^2 + Parkinson": (1 + bias_P(rr) / rr ** 2, 1.5),
+             "overnight^2 + Garman-Klass": (1 + bias_GK(rr) / rr ** 2, 2 - LN2),
+             "Yang-Zhang daily form": (1 + k + (1 - k) * bias_RS(rr) / rr ** 2, (3 + k) / 2)}
+    for name, (val, th) in loads.items():
+        L.numeric(P, "first-order loading of the error variance", f"{name}, rho = 0.01", th, val, tol=1e-2)
+    N.put("p2-yz-k", k, 4)
+    N.put("p2-yz-load", (3 + k) / 2, 3)
+    N.put("p2-gk-load", 1 - LN2, 3)
+    N.put("p2-gk2-load", 2 - LN2, 3)
+
+
+def check_p3(L: Ledger, N: Numbers, n: int, rng) -> None:
+    P = "3"
+    for name, df in (("Gaussian", None), ("elliptical Student-t(4)", 4)):
+        z = rng.standard_normal((n, 2))
+        cov = np.array([[1.0, 0.35], [0.35, 1.2]])
+        x = z @ np.linalg.cholesky(cov).T
+        if df:
+            x = x / np.sqrt(rng.chisquare(df, n) / df)[:, None]
+        oL, r = x[:, 0], x[:, 1]
+        for k in (0.75, 1.1, 1.5):
+            des = f"{name}, band at {k:g} sd"
+            beta = k * oL.std()
+            o = np.clip(oL, -beta, beta)
+            bL = (oL * r).sum() / (oL * oL).sum()
+            b, se = batch_ratio(o * r, o * o)
+            F_s = (o * oL).sum() / (o * o).sum()
+            L.mc(P, "b = b_latent x E[g(o) o]/E[g(o)^2]", des, bL * F_s, b, se)
+            if df is None:
+                L.mc(P, "Gaussian factor F(k) = (2 Phi(k) - 1)/E[min(z^2, k^2)]", des, bL * F_gauss(k), b, se)
+            L.holds(P, "F >= 1 (pointwise g(o)(o - g(o)) >= 0)", des, F_s, 1.0, F_s >= 1.0, "value >= 1")
+            inner = np.abs(oL) < beta
+            bi, sei = batch_ratio(o[inner] * r[inner], o[inner] ** 2)
+            L.mc(P, "interior zone: b_interior = b_latent", des, bL, bi, sei)
+            bp, sep = batch_ratio(o[~inner] * r[~inner], o[~inner] ** 2)
+            L.mc(P, "pinned zone: b_pinned = b_latent E[|o| | pinned]/beta", des,
+                 bL * np.abs(oL[~inner]).mean() / beta, bp, sep)
+            if df is None:
+                L.mc(P, "Gaussian pinned ratio = inverse Mills ratio / k", des, bL * mills(k) / k, bp, sep)
+    ks = np.linspace(0.01, 6.0, 2000)
+    Fk = F_gauss(ks)
+    L.holds(P, "F(k) is strictly decreasing", "grid k in [0.01, 6]", float(np.diff(Fk).max()), 0.0,
+            bool((np.diff(Fk) < 0).all()), "every difference negative")
+    L.numeric(P, "F(k) -> 1 as k -> infinity", "k = 6", 1.0, float(F_gauss(6.0)), tol=1e-6)
+    L.numeric(P, "k F(k) -> 2 phi(0) as k -> 0", "k = 1e-4", 2 * norm.pdf(0), float(1e-4 * F_gauss(1e-4)), tol=1e-3)
+    ts = np.linspace(0.01, 8.0, 2000)
+    lt = mills(ts) / ts
+    L.holds(P, "inverse Mills ratio / t is strictly decreasing (monotone ratio lemma input)", "grid t in [0.01, 8]",
+            float(np.diff(lt).max()), 0.0, bool((np.diff(lt) < 0).all()), "every difference negative")
+    gord = norm.sf(ts) - ts * norm.pdf(ts) / (1 + ts * ts)
+    L.holds(P, "Gordon's inequality 1 - Phi(t) > t phi(t)/(1 + t^2)", "grid t in [0.01, 8]", float(gord.min()), 0.0,
+            bool((gord > 0).all()), "strictly positive")
+    N.put("p3-F-1p1", F_gauss(1.1), 3)
+
+
+def sim_het_panel(tau2, share, T: int, steps: int, seed: int, decay: str = "instant") -> pd.DataFrame:
+    """Daily bars for securities whose opens differ: tau2[i] is the opening-error variance as a multiple
+    of the security's overnight variance, share[i] its overnight share. Common log-AR(1) volatility."""
+    rng = np.random.default_rng(seed)
+    dates = pd.bdate_range("2015-01-01", periods=T)
+    f = np.zeros(T)
+    for t in range(1, T):
+        f[t] = 0.98 * f[t - 1] + 0.15 * rng.standard_normal()
+    frames = []
+    for i, (tv, sh) in enumerate(zip(tau2, share)):
+        var = 0.02 ** 2 * math.exp(0.3 * rng.standard_normal()) * np.exp(f - f.mean())
+        s_on, s_in = np.sqrt(sh * var), np.sqrt((1 - sh) * var)
+        ostar = rng.normal(0, s_on)
+        err = rng.normal(0, np.sqrt(tv) * s_on)
+        path = np.cumsum(rng.normal(0, 1, (T, steps)) * (s_in / math.sqrt(steps))[:, None], axis=1)
+        log_pc = math.log(100.0) + np.concatenate([[0.0], np.cumsum(ostar + path[:, -1])[:-1]])
+        log_open = log_pc + ostar + err
+        dec = np.linspace(1.0, 0.0, steps)[None, :] if decay == "linear" else np.zeros((1, steps))
+        intr = log_pc[:, None] + ostar[:, None] + path + err[:, None] * dec
+        frames.append(pd.DataFrame({"symbol": f"S{i:03d}", "date": dates, "open": np.exp(log_open),
+                                    "high": np.exp(np.maximum(log_open, intr.max(1))),
+                                    "low": np.exp(np.minimum(log_open, intr.min(1))),
+                                    "close": np.exp(intr[:, -1])}))
+    return pd.concat(frames, ignore_index=True)
+
+
+def level_shape(sym: pd.Series, Y: pd.Series, f: pd.Series) -> pd.DataFrame:
+    """Per security: rows, mean QLIKE, c* = mean(Y/f), level = c* - 1 - ln c*, shape = loss - level."""
+    q = Y / f
+    df = pd.DataFrame({"symbol": sym.to_numpy(), "q": q.to_numpy(), "loss": (q - np.log(q) - 1).to_numpy()})
+    g = df.groupby("symbol")
+    out = pd.DataFrame({"n": g.size(), "loss": g["loss"].mean(), "cstar": g["q"].mean()})
+    out["level"] = out["cstar"] - 1 - np.log(out["cstar"])
+    out["shape"] = out["loss"] - out["level"]
+    return out
+
+
+def check_p4(L: Ledger, N: Numbers, quick: bool, rng) -> None:
+    P = "4"
+    sys.path.insert(0, str(PKG))
+    from anam_estimator import AnamModel
+    nsec, T = 120, 900          # the same design in both modes: fewer securities cannot show the sign
+    lu = np.exp(np.random.default_rng(SEED + 40).uniform(math.log(0.05), math.log(8.0), nsec))
+    designs = {"common opening-error variance": [1.0] * nsec, "opening-error variances 0.05 to 8": list(lu)}
+    res = {}
+    for name, tau2 in designs.items():
+        df = sim_het_panel(tau2, [0.3] * nsec, T=T, steps=40, seed=SEED + 41)
+        cut = df["date"].sort_values().unique()[T // 2]
+        comp = {}
+        for form in ("full", "open-free"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                bt = AnamModel(form=form, horizon=5).fit(df, train_end=cut).backtest()
+            ls = level_shape(bt["symbol"], bt["realised"], bt["forecast"])
+            q = bt["realised"] / bt["forecast"]
+            L.ident(P, "loss = shape + level, row-weighted over securities (exact)", f"{name}, {form}",
+                    float((q - np.log(q) - 1).mean()), float((ls["n"] * (ls["shape"] + ls["level"])).sum() / ls["n"].sum()))
+            comp[form] = ls
+            if form == "full":
+                # the pooled QLIKE-optimal scale sets the row-weighted mean of c* to one
+                f0, Y = bt["forecast"].to_numpy(), bt["realised"].to_numpy()
+                kopt = float(np.mean(Y / f0))
+                ls_opt = level_shape(bt["symbol"], bt["realised"], bt["forecast"] * kopt)
+                L.ident(P, "first-order condition: the optimal pooled scale makes mean c* = 1", name, 1.0,
+                        float((ls_opt["n"] * ls_opt["cstar"]).sum() / ls_opt["n"].sum()))
+        tr = df[df["date"] < cut].sort_values(["symbol", "date"])
+        pc = tr.groupby("symbol")["close"].shift(1)
+        o, r = np.log(tr["open"] / pc), np.log(tr["close"] / pc)
+        bi = ((o * r).groupby(tr["symbol"]).sum() / (o * o).groupby(tr["symbol"]).sum())
+        a, b = comp["full"], comp["open-free"]
+        w = a["n"] / a["n"].sum()
+        dtot, dlev = float((w * (a["loss"] - b["loss"])).sum()), float((w * (a["level"] - b["level"])).sum())
+        rho_s = spearmanr(a["loss"] - b["loss"], bi.reindex(a.index))[0]
+        res[name] = (dtot, dlev, dtot - dlev, rho_s)
+    hom, het = res["common opening-error variance"], res["opening-error variances 0.05 to 8"]
+    L.holds(P, "common error variance: the full form has the lower loss", "simulated panel", hom[0], 0.0, hom[0] < 0, "dtotal < 0")
+    L.holds(P, "dispersed error variances: the open-free form has the lower loss", "simulated panel", het[0], 0.0, het[0] > 0, "dtotal > 0")
+    L.holds(P, "dispersed error variances: the advantage is a level advantage", "simulated panel", het[1], het[0],
+            het[1] >= het[0] > 0, "dlevel >= dtotal > 0")
+    L.holds(P, "dispersed error variances: loss difference falls with own b", "simulated panel", het[3], 0.0, het[3] < 0,
+            "Spearman < 0")
+    L.holds(P, "common error variance: no association with own b", "simulated panel", abs(hom[3]), 0.25,
+            abs(hom[3]) < 0.25, "|Spearman| < 0.25")
+    for key, (dt, dl, ds, rs) in (("hom", hom), ("het", het)):
+        N.put(f"p4-sim-{key}-dtotal", dt, 4)
+        N.put(f"p4-sim-{key}-dlevel", dl, 4)
+        N.put(f"p4-sim-{key}-dshape", ds, 4)
+        N.put(f"p4-sim-{key}-rho", rs, 2)
+    N.put("p4-sim-nsec", f"{nsec}")
+    # the stylized level ratio psi(beta) = E[(beta o)^2 + P]/E[r^2] with the exact Parkinson excess
+    nn = 200_000 if quick else 600_000
+    D, M, m = brownian_bars(nn, 64 if quick else 128, rng)
+    s2 = 0.5
+    ostar = rng.normal(0, math.sqrt(s2), nn)
+    for rho in (0.5, 1.0):
+        eta = rho * rng.standard_normal(nn)
+        o, r = ostar + eta, ostar + D
+        R = np.maximum(eta, M) - np.minimum(eta, m)
+        for beta in (0.0, 0.5, 1.0):
+            psi = (beta ** 2 * (s2 + rho ** 2) + 1.0 + bias_P(rho)) / (s2 + 1.0)
+            v, se = batch_ratio((beta * o) ** 2 + R ** 2 / (4 * LN2), r * r)
+            L.mc(P, "level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2]",
+                 f"rho = {rho:g}, beta = {beta:g}", psi, v, se)
+    # dispersion of ln psi across securities: n-only heterogeneity favours beta = 0, s-only beta = 1
+    g = np.random.default_rng(SEED + 42)
+    s_i, n_i = np.full(500, 0.3), g.uniform(0.0, 0.6, 500)
+    disp = [np.var(np.log(1 - (1 - bb ** 2) * s_i + (bb ** 2 + 0.5) * n_i)) for bb in np.linspace(0, 1, 11)]
+    L.holds(P, "error-only heterogeneity: level dispersion increases in beta", "500 securities", float(np.diff(disp).min()),
+            0.0, bool((np.diff(disp) > 0).all()), "every difference positive")
+    s_i, n_i = g.uniform(0.1, 0.6, 500), np.full(500, 0.2)
+    disp = [np.var(np.log(1 - (1 - bb ** 2) * s_i + (bb ** 2 + 0.5) * n_i)) for bb in np.linspace(0, 1, 11)]
+    L.holds(P, "overnight-share-only heterogeneity: level dispersion decreases in beta, zero at 1", "500 securities",
+            float(np.diff(disp).max()), 0.0, bool((np.diff(disp) < 0).all() and disp[-1] < 1e-20), "decreasing to zero")
+
+
+def check_p5(L: Ledger, N: Numbers, quick: bool, rng) -> None:
+    P = "5"
+    T, tau, Lw = 400, 200, 60
+    errs = []
+    for Nsec in (100, 1_000, 10_000, 100_000):
+        g = np.random.default_rng(SEED + 50)
+        V = np.exp(np.cumsum(0.05 * g.standard_normal(T)))
+        reg1 = np.arange(T) >= tau
+        mA, rho = np.where(reg1, 1.3, 1.0), np.where(reg1, 0.65, 0.95)
+        A = V * mA * g.gamma(2.0 * Nsec, 1.0 / (2.0 * Nsec), T)
+        R = rho * V * mA * g.gamma(0.5 * Nsec, 1.0 / (0.5 * Nsec), T)
+        kap = pd.Series(R).rolling(Lw, min_periods=20).sum() / pd.Series(A).rolling(Lw, min_periods=20).sum()
+        om = pd.Series(np.where(reg1, A, 0.0)).rolling(Lw, min_periods=20).sum() / pd.Series(A).rolling(Lw, min_periods=20).sum()
+        pred = om * 0.65 + (1 - om) * 0.95
+        sel = slice(tau, tau + Lw + 20)
+        errs.append(float(np.abs(kap[sel] - pred[sel]).max()))
+    L.holds(P, "lag path: kappa -> omega rho1 + (1 - omega) rho0 as N grows", "N = 1e2, 1e3, 1e4, 1e5 securities",
+            errs[-1], 0.005, bool(np.all(np.diff(errs) < 0) and errs[-1] < 0.005), "max error falls with N, < 0.005 at 1e5")
+    N.put("p5-sim-err-1e2", errs[0], 4)
+    N.put("p5-sim-err-1e5", errs[-1], 4)
+    # constant kernel mass: the weights are exactly linear
+    A = np.ones(T)
+    om = pd.Series(np.where(np.arange(T) >= tau, A, 0.0)).rolling(Lw).sum() / pd.Series(A).rolling(Lw).sum()
+    j = np.arange(Lw)
+    L.ident(P, "constant kernel mass: omega_j = (j + 1)/L", "L = 60", 0.0,
+            float(np.abs(om.to_numpy()[tau:tau + Lw] - (j + 1) / Lw).max()))
+    # bias-variance window
+    lam, delta, sz = 1 / 250, 0.35, 0.25
+    Ts = 100_000 if quick else 400_000
+    g = np.random.default_rng(SEED + 51)
+    state = np.cumsum(g.random(Ts) < lam) % 2
+    lrho = np.where(state == 1, delta, 0.0)
+    Rr = np.exp(lrho) * (1 + sz * g.standard_normal(Ts))
+    grid = [5, 10, 15, 20, 25, 30, 40, 60, 80, 120]
+    loss = {}
+    for Lg in grid:
+        kk = pd.Series(Rr).rolling(Lg).mean().to_numpy()
+        e = np.log(kk) - lrho
+        loss[Lg] = 0.5 * float(np.nanmean(e ** 2))
+    Lstar = math.sqrt(3 * sz ** 2 / (lam * delta ** 2))
+    best = min(loss, key=loss.get)
+    L.holds(P, "the simulated loss is minimised next to L* = sqrt(3 v/(lambda delta^2))", f"L* = {Lstar:.1f}",
+            best, Lstar, abs(best - Lstar) <= 6.0, "argmin within one grid step of L*")
+    th_min = math.sqrt(lam * delta ** 2 * sz ** 2 / 3)
+    L.holds(P, "minimum loss = sqrt(lambda delta^2 v/3) to second order", f"L* = {Lstar:.1f}", loss[best], th_min,
+            abs(loss[best] / th_min - 1) < 0.15, "within 15%")
+    N.put("p5-sim-Lstar", Lstar, 1)
+    N.put("p5-sim-argmin", f"{best}")
+
+
+def check_p6(L: Ledger, N: Numbers, quick: bool) -> None:
+    P = "6"
+    from nepsevol.calibration import calibrate
+    beta_true = np.array([1.0, 0.8, 1.3])
+
+    def sim(seed, ma, Nsec=150, T=500):
+        r = np.random.default_rng(seed)
+        rows = []
+        for i in range(Nsec):
+            e = r.standard_normal(T + 30) * 0.3
+            h = np.zeros(T + 30)
+            for t in range(1, T + 30):
+                h[t] = 0.95 * h[t - 1] + e[t]
+            IV = np.exp(h[30:] + 0.2 * r.standard_normal())
+            gsh, e0, e1, e2 = (r.standard_normal(T) for _ in range(4))
+            ma1 = lambda x: np.concatenate([[x[0]], x[1:] + ma * x[:-1]])
+            U = [IV * (0.8 * ma1(e0) + 0.6 * ma1(gsh)), IV * (0.5 * ma1(e1) + 0.6 * ma1(gsh)),
+                 IV * (0.7 * ma1(e2) - 0.4 * ma1(gsh))]
+            alpha = (0.0, 0.3, -0.1)
+            X = np.column_stack([alpha[k] + beta_true[k] * IV + U[k] for k in range(3)])
+            rows.append(pd.DataFrame({"sym": i, "t": np.arange(T), "X0": X[:, 0], "X1": X[:, 1], "X2": X[:, 2],
+                                      "IV": IV, "U0": U[0], "U1": U[1]}))
+        return pd.concat(rows, ignore_index=True)
+
+    def run(d, skip):
+        Z = np.column_stack([d.groupby("sym")["X0"].transform(lambda z: z.shift(skip).rolling(w).mean()) for w in (1, 5, 22)])
+        dates = pd.Timestamp("2020-01-01") + pd.to_timedelta(d["t"], "D")
+        return calibrate(d[["X0", "X1", "X2"]].to_numpy(), Z, d["sym"].to_numpy(), ["X0", "X1", "X2"], "X0",
+                         date=dates, cluster="date")
+
+    R = 20 if quick else 100
+    out = {}
+    for label, ma, skip in (("valid: serially independent errors, instruments dated t-1", 0.0, 1),
+                            ("invalid: MA(1) errors, instruments dated t-1", 0.6, 1),
+                            ("remedy: MA(1) errors, instruments dated t-2", 0.6, 2)):
+        bs, rej, r1 = [], [], []
+        for rep in range(R):
+            res = run(sim(SEED + 600 + rep, ma), skip)
+            bs.append(res.beta)
+            rej.append(res.J > chi2.ppf(0.95, res.J_df))
+            r1.append(res.rank_one_share)
+        bs, rej = np.array(bs), np.array(rej)
+        out[label] = (bs, rej, np.array(r1))
+        for kx in (1, 2):
+            mb, sb = bs[:, kx].mean(), bs[:, kx].std(ddof=1) / math.sqrt(R)
+            if label.startswith("invalid"):
+                L.holds(P, f"invalid instruments bias the slope of X{kx}", label, mb, beta_true[kx],
+                        abs(mb - beta_true[kx]) > 10 * sb, "more than 10 SE from the truth")
+            else:
+                L.mc(P, f"the instrumented slope of X{kx} is consistent", label, beta_true[kx], mb, sb)
+        if label.startswith("valid"):
+            share = rej[:, 1:].mean()
+            lo, hi = (0.01, 0.12) if not quick else (0.0, 0.25)
+            L.holds(P, "J test size at 5% under valid instruments", label, share, 0.05, lo <= share <= hi,
+                    f"rejection share in [{lo:g}, {hi:g}]")
+            L.holds(P, "rank-one share near one under the model", label, float(np.mean(r1)), 0.99,
+                    float(np.mean(r1)) > 0.99, "mean share > 0.99")
+            N.put("p6-size", share, 2)
+            N.put("p6-beta1", bs[:, 1].mean(), 3)
+            N.put("p6-beta2", bs[:, 2].mean(), 3)
+        elif label.startswith("invalid"):
+            L.holds(P, "J test detects invalid instruments", label, rej[:, 1:].mean(), 0.9, rej[:, 1:].mean() >= 0.9,
+                    "rejection share >= 0.9")
+            N.put("p6-bad-beta1", bs[:, 1].mean(), 3)
+            N.put("p6-bad-beta2", bs[:, 2].mean(), 3)
+            N.put("p6-power", rej[:, 1:].mean(), 2)
+        else:
+            N.put("p6-fix-beta1", bs[:, 1].mean(), 3)
+            N.put("p6-fix-beta2", bs[:, 2].mean(), 3)
+    N.put("p6-reps", f"{R}")
+    # OLS attenuation and the ratio decomposition, one large panel
+    d = sim(SEED + 700, 0.0, Nsec=300)
+    dm = lambda s: s - d.groupby("sym")[s.name].transform("mean")
+    X0, X1, IV, U0, U1 = (dm(d[c]) for c in ("X0", "X1", "IV", "U0", "U1"))
+    ols = float((X1 * X0).sum() / (X0 * X0).sum())
+    form = float((0.8 * (IV * IV).sum() + (U1 * U0).sum()) / ((IV * IV).sum() + (U0 * U0).sum()))
+    se = abs(ols) * 0.02
+    L.holds(P, "OLS slope = (beta Var(IV) + Cov(U_k, U_0))/(Var(IV) + Var(U_0))", "300 securities x 500 sessions",
+            ols, form, abs(ols - form) < 0.02 * abs(form), "within 2% (cross terms vanish only in expectation)")
+    N.put("p6-ols", ols, 3)
+    from nepsevol.calibration import decompose_ratio
+    mk, m0 = float(d["X1"].mean()), float(d["X0"].mean())
+    rr, bb, dd = decompose_ratio(mk, m0, 0.8)
+    L.ident(P, "mean ratio = slope + additive share (exact)", "300 securities", mk / m0, bb + dd)
+    # the optimal composite needs only Sigma_X and beta (Sherman-Morrison)
+    g = np.random.default_rng(SEED + 701)
+    B = g.uniform(0.6, 1.4, 4)
+    Q = g.standard_normal((4, 4))
+    Om = Q @ Q.T + 0.5 * np.eye(4)
+    Sx = 2.0 * np.outer(B, B) + Om
+    w1 = np.linalg.solve(Sx, B); w1 /= B @ w1
+    w2 = np.linalg.solve(Om, B); w2 /= B @ w2
+    L.ident(P, "Sigma_X^-1 beta / (beta' Sigma_X^-1 beta) = Omega_U^-1 beta / (beta' Omega_U^-1 beta)",
+            "random 4 x 4 design", 0.0, float(np.abs(w1 - w2).max()), tol=1e-10)
+
+
+# =============================================================================================
+# Part B
+# =============================================================================================
+
+def part_b(N: Numbers) -> pd.DataFrame:
+    rows = []
+    s37 = _load("s37_m19", "37_opening_price.py")
+    s34 = s37.s34
+    # ---- B1: sharp bound with the M15 joint bootstrap ------------------------------------------
+    d = s37.build()
+    o, c, r, OC = (d[k].to_numpy() for k in ("o", "c", "r", "OC"))
+    ok = np.isfinite(o) & np.isfinite(c)
+    regime = d["regime"].to_numpy()
+    idx = {reg: np.flatnonzero(ok & (regime == reg)) for reg in s37.REGIMES}
+
+    def stats(ii, w):
+        if w.sum() == 0:
+            return [np.nan] * 5
+        o2 = (w * o[ii] ** 2).sum()
+        b = (w * o[ii] * r[ii]).sum() / o2
+        q = o2 / (w * OC[ii]).sum()
+        ga = ((math.sqrt(5 - 4 * b) - 1) / 2) ** 2 if b < 1 else 0.0
+        return [b, q, (1 - b) ** 2 * q if b < 1 else 0.0, ga * q, (1 - b) * q]
+
+    def evaluate(mult=None):
+        w_all = np.ones(len(d)) if mult is None else mult
+        out = []
+        for reg in s37.REGIMES:
+            out += stats(idx[reg], w_all[idx[reg]])
+        return np.array(out)
+
+    point = evaluate()
+    t97 = pd.read_csv(TAB / "table97_m15_posthoc.csv")
+    for j, reg in enumerate(s37.REGIMES):
+        x4 = t97[(t97.regime == reg) & (t97.analysis == "X4")].set_index("statistic")["value"]
+        assert abs(point[5 * j] - x4["b"]) < 1e-9 and abs(point[5 * j + 1] - x4["E[o^2]/E[OC]"]) < 1e-9
+        assert abs(point[5 * j + 3] - x4["lower bound on E[eta^2]/E[OC], any correlation with news"]) < 1e-9
+    print("  B1: table97 reproduced; bootstrapping the sharp bound (499 replicates)")
+    boot = s34.joint_bootstrap(d, {"m": lambda fr, mult: evaluate(mult)}, seed=s37.SEED)
+    lo, hi = s34.ci(boot["m"])
+    names = ["b", "E[o^2]/E[OC]", "sharp bound (1-b)^2 E[o^2]/E[OC]", "published bound g(b) E[o^2]/E[OC]",
+             "independence (1-b) E[o^2]/E[OC]"]
+    keys = ["b", "o2oc", "sharp", "pub", "ind"]
+    for j, reg in enumerate(s37.REGIMES):
+        for k_, (nm, key) in enumerate(zip(names, keys)):
+            p, l_, h_ = point[5 * j + k_], lo[5 * j + k_], hi[5 * j + k_]
+            rows.append({"part": "B1", "proposition": "1", "sample": f"NEPSE {reg}", "statistic": nm,
+                         "value": p, "lo": l_, "hi": h_})
+            N.put(f"b1-{reg}-{key}", p, 3)
+            N.put(f"b1-{reg}-{key}-lo", l_, 3)
+            N.put(f"b1-{reg}-{key}-hi", h_, 3)
+            if key in ("sharp", "pub", "ind"):
+                N.put(f"b1-{reg}-{key}-pct", p, 1, pct=True)
+        N.put(f"b1-{reg}-sharp-over-pub", point[5 * j + 2] / point[5 * j + 3], 2)
+    nf = s37.nifty()
+    f = nf[nf["date"] != pd.Timestamp("2012-10-05")].reset_index(drop=True)
+    fo, fc, fr, fOC = (f[k].to_numpy() for k in ("o", "c", "r", "OC"))
+    fi = np.flatnonzero(np.isfinite(fo) & np.isfinite(fc))
+
+    def eval_n(mult=None):
+        w = np.ones(len(f)) if mult is None else mult
+        o2 = (w[fi] * fo[fi] ** 2).sum()
+        b = (w[fi] * fo[fi] * fr[fi]).sum() / o2
+        q = o2 / (w[fi] * fOC[fi]).sum()
+        ga = ((math.sqrt(5 - 4 * b) - 1) / 2) ** 2 if b < 1 else 0.0
+        return np.array([b, q, (1 - b) ** 2 * q if b < 1 else 0.0, ga * q, (1 - b) * q])
+
+    pn = eval_n()
+    t95 = pd.read_csv(TAB / "table95_m15_nifty.csv")
+    assert abs(pn[0] - t95[(t95["sample"] == "excl. 2012-10-05") & (t95.statistic == "b")]["value"].iloc[0]) < 1e-9
+    bn = s34.joint_bootstrap(f, {"m": lambda fr_, mult: eval_n(mult)}, seed=s37.SEED, resample_securities=False)
+    lon, hin = s34.ci(bn["m"])
+    for k_, (nm, key) in enumerate(zip(names, keys)):
+        rows.append({"part": "B1", "proposition": "1", "sample": "NIFTY 50 (excl. 2012-10-05)", "statistic": nm,
+                     "value": pn[k_], "lo": lon[k_], "hi": hin[k_]})
+        N.put(f"b1-NIFTY-{key}", pn[k_], 3)
+        N.put(f"b1-NIFTY-{key}-lo", lon[k_], 3)
+        N.put(f"b1-NIFTY-{key}-hi", hin[k_], 3)
+    # ---- B2: two estimates of the error's scale --------------------------------------------------
+    for reg in s37.REGIMES:
+        t = t97[t97.regime == reg].set_index("statistic")
+        s = t.loc["share of non-stale opens that are the session high or low"]
+        x = t.loc["E[eta^2]/E[OC] if eta is independent of news, (1 - b) E[o^2]/E[OC]"]
+        arc = [math.tan(math.pi * v / 2) for v in (s["value"], s["lo"], s["hi"])]
+        ind = [math.sqrt(v / (1 - v)) for v in (x["value"], x["lo"], x["hi"])]
+        rows.append({"part": "B2", "proposition": "2", "sample": f"NEPSE {reg}",
+                     "statistic": "sigma_eta/sigma_c from the share of opens at the high or low, tan(pi s/2)",
+                     "value": arc[0], "lo": arc[1], "hi": arc[2]})
+        rows.append({"part": "B2", "proposition": "2", "sample": f"NEPSE {reg}",
+                     "statistic": "sigma_eta/sigma_c from b under independence, sqrt(x/(1-x))",
+                     "value": ind[0], "lo": ind[1], "hi": ind[2]})
+        N.put(f"b2-{reg}-share", s["value"], 1, pct=True)
+        N.put(f"b2-{reg}-arc", arc[0], 2)
+        N.put(f"b2-{reg}-arc-lo", arc[1], 2)
+        N.put(f"b2-{reg}-arc-hi", arc[2], 2)
+        N.put(f"b2-{reg}-ind", ind[0], 2)
+        N.put(f"b2-{reg}-ind-lo", ind[1], 2)
+        N.put(f"b2-{reg}-ind-hi", ind[2], 2)
+    # ---- B3: the censoring factor and the decomposition ------------------------------------------
+    t89 = pd.read_csv(TAB / "table89_m15_unbiasedness.csv")
+    val = lambda reg, grp, st: float(t89[(t89.regime == reg) & (t89.group == grp) & (t89.statistic == st)]["value"].iloc[0])
+    bvals = {}
+    for reg in s37.REGIMES:
+        b = val(reg, "all", "unbiasedness coefficient b = E[o r]/E[o^2]")
+        bi = val(reg, "interior", "b")
+        stale = val(reg, "all", "share of opens equal to the previous close")
+        pin = val(reg, "all", "share of opens pinned at the band in force")
+        bp = val(reg, "pinned", "b")
+        pin_ns = pin / (1 - stale)
+        k = float(norm.isf(pin_ns / 2))
+        bvals[reg] = (b, bi)
+        for st, v in (("pinned share among non-stale opens", pin_ns), ("k = band in standard deviations", k),
+                      ("Gaussian censoring factor F(k)", F_gauss(k)), ("observed b / b_interior", b / bi),
+                      ("Gaussian pinned ratio lambda(k)/k", mills(k) / k), ("observed b_pinned / b_interior", bp / bi)):
+            rows.append({"part": "B3", "proposition": "3", "sample": f"NEPSE {reg}", "statistic": st, "value": v,
+                         "lo": np.nan, "hi": np.nan})
+        for key, v, nd in (("pin", pin_ns, 3), ("k", k, 2), ("F", F_gauss(k), 2), ("Fobs", b / bi, 2),
+                           ("pr", mills(k) / k, 2), ("probs", bp / bi, 2), ("b", b, 3), ("bint", bi, 3), ("bpin", bp, 3)):
+            N.put(f"b3-{reg}-{key}", v, nd)
+    (bA2, biA2), (bC, biC) = bvals["A2"], bvals["C"]
+    tot = math.log(bA2 / bC)
+    parts = {"censoring under the old band, ln(b_A2/b_int,A2)": math.log(bA2 / biA2),
+             "change in the interior, ln(b_int,A2/b_int,C)": math.log(biA2 / biC),
+             "departure from linearity in C, ln(b_int,C/b_C)": math.log(biC / bC)}
+    assert abs(sum(parts.values()) - tot) < 1e-12
+    rows.append({"part": "B3", "proposition": "3", "sample": "NEPSE A2 -> C", "statistic": "ln(b_A2/b_C)", "value": tot,
+                 "lo": np.nan, "hi": np.nan})
+    for (nm, v), key in zip(parts.items(), ("cens", "int", "nonlin")):
+        rows.append({"part": "B3", "proposition": "3", "sample": "NEPSE A2 -> C", "statistic": nm, "value": v,
+                     "lo": np.nan, "hi": np.nan})
+        N.put(f"b3-dec-{key}", v, 3)
+        N.put(f"b3-dec-{key}-share", v / tot, 0, pct=True)
+    N.put("b3-dec-total", tot, 3)
+    N.put("b3-dec-ratio", bA2 / bC, 2)
+    # ---- B4: the calibration after the reform ----------------------------------------------------
+    rows += part_b4(N)
+    return pd.DataFrame(rows)
+
+
+def part_b4(N: Numbers) -> list[dict]:
+    s40 = _load("s40_m19", "40_anam_holdout.py")
+    s41 = _load("s41_m19", "41_anam_posthoc.py")
+    AN = s40.AN
+    d = s40.nepse()
+    date = d["date"]
+    b60 = AN.open_quality_panel(d["o"], d["r"], date)
+    A60 = AN.kernel(d["o"], d["c"], d["u"], d["d"], b60)
+    kap = s41.pooled_ratio(d["CC"], A60, date, 60)              # per date, the frozen calibration
+    # reproduce table106b's applied calibration (block means over stock-days) before predicting it
+    dates = np.sort(date.unique())
+    pos = {t: i for i, t in enumerate(dates)}
+    reform = pos[np.datetime64("2026-04-20")]
+    blk = date.map(lambda t: (pos[np.datetime64(t)] - reform) // 10)
+    k_rows = date.map(kap)
+    t106b = pd.read_csv(TAB / "table106b_anam_posthoc_trajectory.csv").set_index("first_session_offset")
+    g = pd.DataFrame({"blk": blk, "k": k_rows})
+    for off, kv in t106b["kappa_applied"].items():
+        assert abs(g.loc[g.blk == off // 10, "k"].mean() - kv) < 1e-9
+    ok = A60.notna() & d["CC"].notna()
+    Rs = d["CC"].where(ok).groupby(date).sum()
+    As = A60.where(ok).groupby(date).sum()
+    reg_by_date = d.groupby("date")["regime"].first()
+    tau = pd.Timestamp("2026-04-20")
+    pre = Rs.index[Rs.index < tau][-60:]
+    C = Rs.index[Rs.index >= tau]
+    rho0, rho1 = Rs[pre].sum() / As[pre].sum(), Rs[C].sum() / As[C].sum()
+    post_mass = As.where(As.index >= tau, 0.0).rolling(60, min_periods=1).sum() / As.rolling(60, min_periods=1).sum()
+    pred = post_mass * rho1 + (1 - post_mass) * rho0
+    kC, pC = kap.reindex(C), pred.reindex(C)
+    lin = pd.Series(np.minimum((np.arange(len(C)) + 1) / 60.0, 1.0), index=C) * rho1 + \
+        (1 - pd.Series(np.minimum((np.arange(len(C)) + 1) / 60.0, 1.0), index=C)) * rho0
+    sst = float(((kC - rho1) ** 2).sum())
+    rmse, r2 = float(np.sqrt(((kC - pC) ** 2).mean())), 1 - float(((kC - pC) ** 2).sum()) / sst
+    rmse_l, r2_l = float(np.sqrt(((kC - lin) ** 2).mean())), 1 - float(((kC - lin) ** 2).sum()) / sst
+    # the variance per date of the calibration's log, from the regimes before the reform
+    zs = []
+    regs = ["A1", "B", "A2"]
+    rho_reg = {}
+    for reg in regs + ["C"]:
+        ix = reg_by_date.index[reg_by_date == reg]
+        rho_reg[reg] = Rs[ix].sum() / As[ix].sum()
+        if reg != "C":
+            zs.append(((Rs[ix] - rho_reg[reg] * As[ix]) / (rho_reg[reg] * As[ix].mean())).to_numpy())
+    z = np.concatenate(zs)
+    v = nw_lrv(z, 10)
+    deltas = [math.log(rho_reg[b_] / rho_reg[a_]) for a_, b_ in zip(["A1", "B", "A2"], ["B", "A2", "C"])]
+    Tn = int(sum(reg_by_date.isin(regs + ["C"])))
+    Lstar = math.sqrt(3 * v * Tn / sum(dl * dl for dl in deltas))
+    # predicted excess (level) loss over C by calibration window, against table106
+    def ex_loss(L_):
+        om = np.minimum((np.arange(len(C)) + 1) / L_, 1.0)
+        kk = om * rho1 + (1 - om) * rho_reg["A2"]
+        return float(np.mean(0.5 * ((np.log(kk) - math.log(rho1)) ** 2 + v / L_)))
+    pl = {L_: ex_loss(L_) for L_ in (10, 20, 60, 120)}
+    t106 = pd.read_csv(TAB / "table106_anam_posthoc_calibration.csv")
+    out = [{"part": "B4", "proposition": "5", "sample": "NEPSE C", "statistic": st, "value": val_, "lo": np.nan, "hi": np.nan}
+           for st, val_ in (("rho0, 60 dates before the reform", rho0), ("rho1, regime C", rho1),
+                            ("RMSE of the predicted calibration path", rmse),
+                            ("share of sum (kappa - rho1)^2 explained by the lag path", r2),
+                            ("RMSE, linear weights", rmse_l), ("share explained, linear weights", r2_l),
+                            ("v, long-run variance per date of the calibration's log", v),
+                            ("L*, bias-variance window from NEPSE's three regime boundaries", Lstar))]
+    for a_, b_, dl in zip(["A1", "B", "A2"], ["B", "A2", "C"], deltas):
+        out.append({"part": "B4", "proposition": "5", "sample": f"NEPSE {a_} -> {b_}", "statistic": "delta = ln(rho_after/rho_before)",
+                    "value": dl, "lo": np.nan, "hi": np.nan})
+        N.put(f"b4-delta-{a_}{b_}", dl, 3)
+    for L_ in (20, 60, 120):
+        for win in (5, 21):
+            q = t106[(t106.window == win) & (t106.estimator == f"Anam, calibration {L_} dates")]["QLIKE"].iloc[0]
+            q10 = t106[(t106.window == win) & (t106.estimator == "Anam, calibration 10 dates")]["QLIKE"].iloc[0]
+            out.append({"part": "B4", "proposition": "5", "sample": "NEPSE C", "statistic": f"observed QLIKE({L_}) - QLIKE(10), window {win}",
+                        "value": q - q10, "lo": np.nan, "hi": np.nan})
+            N.put(f"b4-obs-{L_}-{win}", q - q10, 3)
+        out.append({"part": "B4", "proposition": "5", "sample": "NEPSE C", "statistic": f"predicted level loss ({L_}) - (10)",
+                    "value": pl[L_] - pl[10], "lo": np.nan, "hi": np.nan})
+        N.put(f"b4-pred-{L_}", pl[L_] - pl[10], 3)
+        if L_ == 60:
+            for win in (5, 21):
+                obs = t106[(t106.window == win) & (t106.estimator == "Anam, calibration 60 dates")]["QLIKE"].iloc[0] - \
+                    t106[(t106.window == win) & (t106.estimator == "Anam, calibration 10 dates")]["QLIKE"].iloc[0]
+                N.put(f"b4-pred-share-{win}", (pl[60] - pl[10]) / obs, 0, pct=True)
+    for key, v_, nd in (("rho0", rho0, 3), ("rho1", rho1, 3), ("rmse", rmse, 3), ("r2", r2, 2), ("rmse-lin", rmse_l, 3),
+                        ("r2-lin", r2_l, 2), ("v", v, 2), ("Lstar", Lstar, 0), ("T", Tn, 0), ("rhoA1", rho_reg["A1"], 3),
+                        ("rhoB", rho_reg["B"], 3), ("rhoA2", rho_reg["A2"], 3), ("rhoC", rho_reg["C"], 3),
+                        ("nC", len(C), 0)):
+        N.put(f"b4-{key}", v_, nd)
+    N.put("b4-r2-pct", r2, 0, pct=True)
+    print(f"  B4: rho0 {rho0:.3f} rho1 {rho1:.3f}; path RMSE {rmse:.4f}, explained {r2:.3f}; v {v:.3f}; L* {Lstar:.1f}")
+    return out
+
+
+def nw_lrv(z: np.ndarray, lags: int) -> float:
+    z = z - z.mean()
+    n = len(z)
+    v = float(z @ z) / n
+    for l_ in range(1, lags + 1):
+        v += 2 * (1 - l_ / (lags + 1)) * float(z[l_:] @ z[:-l_]) / n
+    return v
+
+
+# =============================================================================================
+# Part C: the pooling test
+# =============================================================================================
+
+def part_c(N: Numbers) -> pd.DataFrame:
+    if not INPUTS.exists():
+        sys.exit("data/external/frontier/ is missing: see data/external/README.md (Part C needs it)")
+    s44 = _load("s44_m19", "44_anam_recheck.py")
+    s40 = s44.s40
+    AN = s44.AN
+    VARIANT = s40.VARIANT
+    frozen = {"NEPSE": ("table101_anam_holdout_forecast.csv", "A2+C")}
+    rows = []
+    rng = np.random.default_rng(SEED)
+    for market, d, mode, train, spans in s44.samples():
+        if mode != "panel":
+            continue
+        span = "A2+C" if market == "NEPSE" else "test half"
+        test = spans[span]
+        est, _ = s40.estimator_set(d, mode)
+        scheme = ("pool", AN.POOL_SESSIONS)
+        trm = train.reindex(d.index).fillna(False).astype(bool)
+        o, r = d["o"], d["r"]
+        okb = trm & o.notna() & r.notna()
+        num = (o * r).where(okb).groupby(d["symbol"]).sum()
+        den = (o * o).where(okb).groupby(d["symbol"]).sum()
+        nz = ((o != 0) & okb).groupby(d["symbol"]).sum()
+        b_train = (num / den).where(nz >= 60)
+        b_pool = float(num.sum() / den.sum())
+        tem = test.reindex(d.index).fillna(False).astype(bool)
+        okt = tem & o.notna() & r.notna()
+        b_test = ((o * r).where(okt).groupby(d["symbol"]).sum() / (o * o).where(okt).groupby(d["symbol"]).sum()).where(
+            ((o != 0) & okt).groupby(d["symbol"]).sum() >= 60)
+        ftab = pd.read_csv(TAB / (frozen.get(market, ("table113_anam_morocco_forecast.csv" if market.startswith("Morocco")
+                                                       else "table108_anam_frontier_forecast.csv", "test half"))[0]))
+        for win in s40.WINDOWS:
+            out = s44.forecast_rows(d, est, train, test, win, scheme)
+            full, free = out["Anam"], out[VARIANT]
+            assert full.index.equals(free.index)
+            fz = ftab[(ftab.market == market) & (ftab.test_span == span) & (ftab.window == win)].set_index("estimator")
+            for nm, x in (("Anam", full), (VARIANT, free)):
+                q = x["fut"] / x["f"]
+                assert abs(float((q - np.log(q) - 1).mean()) - fz.loc[nm, "QLIKE"]) < 1e-9, (market, win, nm)
+            sym = d.loc[full.index, "symbol"]
+            a, b = level_shape(sym, full["fut"], full["f"]), level_shape(sym, free["fut"], free["f"])
+            keep = a.index[a["n"] >= 20]
+            a, b = a.loc[keep], b.loc[keep]
+            w = a["n"] / a["n"].sum()
+            dtot = float((w * (a["loss"] - b["loss"])).sum())
+            dlev = float((w * (a["level"] - b["level"])).sum())
+            dsh = dtot - dlev
+            dd = (a["loss"] - b["loss"])
+            bi = b_train.reindex(dd.index)
+            use = bi.notna()
+            x_, y_ = dd[use].to_numpy(), bi[use].to_numpy()
+            rho = float(spearmanr(x_, y_)[0])
+            bs = []
+            for _ in range(1999):
+                ii = rng.integers(0, len(x_), len(x_))
+                bs.append(spearmanr(x_[ii], y_[ii])[0])
+            lo, hi = np.nanpercentile(bs, [2.5, 97.5])
+            verdict = "confirmed" if hi < 0 else ("reversed" if lo > 0 else "not detected")
+            dl = (a["level"] - b["level"])[use]
+            rho_lev = float(spearmanr(dl.to_numpy(), y_)[0])
+            bt_ = b_test.reindex(dd.index)
+            u2 = bt_.notna()
+            rho_test = float(spearmanr(dd[u2].to_numpy(), bt_[u2].to_numpy())[0])
+            if dtot > 0:
+                mech = ("level advantage" if dlev >= dtot else ("level and shape" if dlev > 0 else "shape advantage"))
+            else:
+                mech = "full form better"
+            rows.append({"market": market, "test_span": span, "window": win, "n_securities": int(len(a)),
+                         "n_with_b": int(use.sum()), "n_rows": int(a["n"].sum()), "b_pooled_train": b_pool,
+                         "QLIKE_full": float((w * a["loss"]).sum()), "QLIKE_open_free": float((w * b["loss"]).sum()),
+                         "d_total": dtot, "d_level": dlev, "d_shape": dsh, "P4a_mechanism": mech,
+                         "spearman_d_b": rho, "lo": lo, "hi": hi, "P4b_verdict": verdict,
+                         "spearman_dlevel_b": rho_lev, "spearman_d_b_test_span": rho_test})
+            print(f"  C {market} h={win}: dtotal {dtot:+.4f} dlevel {dlev:+.4f} dshape {dsh:+.4f} ({mech}); "
+                  f"Spearman(d, b_i) {rho:+.3f} [{lo:+.3f}, {hi:+.3f}] {verdict}")
+    t = pd.DataFrame(rows)
+    pos = t[t.d_total > 0]
+    p4a_hold = (pos.P4a_mechanism == "level advantage").sum()
+    p4a = "supported" if p4a_hold == len(pos) else ("partly supported" if p4a_hold > len(pos) / 2 else "not supported")
+    nconf, nrev = int((t.P4b_verdict == "confirmed").sum()), int((t.P4b_verdict == "reversed").sum())
+    p4b = "supported" if (nconf > len(t) / 2 and nrev == 0) else "not supported"
+    t["P4a_overall"], t["P4b_overall"] = p4a, p4b
+    short = {"NEPSE": "nep", "DSE 2023-2026": "dsea", "Vietnam 2007-2020": "vn", "DSE 2009-2021": "dseb",
+             "Morocco 2012-2026": "ma"}
+    for _, rw in t.iterrows():
+        k = f"c-{short[rw.market]}-{rw.window}"
+        N.put(f"{k}-dtotal", rw.d_total, 4)
+        N.put(f"{k}-dlevel", rw.d_level, 4)
+        N.put(f"{k}-dshape", rw.d_shape, 4)
+        N.put(f"{k}-rho", rw.spearman_d_b, 2)
+        N.put(f"{k}-lo", rw.lo, 2)
+        N.put(f"{k}-hi", rw.hi, 2)
+        N.put(f"{k}-n", f"{rw.n_with_b}")
+        N.put(f"{k}-verdict", rw.P4b_verdict)
+        N.put(f"{k}-mech", rw.P4a_mechanism)
+        if rw.window == 5:
+            N.put(f"c-{short[rw.market]}-bpool", rw.b_pooled_train, 2)
+    N.put("c-n-cases", f"{len(t)}")
+    N.put("c-n-pos", f"{len(pos)}")
+    N.put("c-n-level", f"{int(p4a_hold)}")
+    N.put("c-n-dlevel-pos", f"{int((t.d_level > 0).sum())}")
+    N.put("c-n-dshape-pos", f"{int((t.d_shape > 0).sum())}")
+    N.put("c-n-confirmed", f"{nconf}")
+    N.put("c-n-reversed", f"{nrev}")
+    N.put("c-n-notdetected", f"{int((t.P4b_verdict == 'not detected').sum())}")
+    N.put("c-p4a", p4a)
+    N.put("c-p4b", p4b)
+    return t
+
+
+# =============================================================================================
+# Table fragments for the LaTeX
+# =============================================================================================
+
+def write_fragments(N: Numbers, ledger: pd.DataFrame, appl: pd.DataFrame | None, pool: pd.DataFrame | None) -> None:
+    lines = []
+    for p, g in ledger.groupby("proposition"):
+        lines.append(f"{p} & {len(g)} & {int(g['pass'].sum())} \\\\")
+    (GEN / "tab_checks.tex").write_text("\n".join(lines) + "\n")
+    N.put("checks-n", f"{len(ledger)}")
+    N.put("checks-pass", f"{int(ledger['pass'].sum())}")
+    N.put("checks-fail", f"{int((~ledger['pass']).sum())}")
+    if pool is not None:
+        lab = {"NEPSE": "NEPSE A2+C", "DSE 2023-2026": "Dhaka 2023--2026", "Vietnam 2007-2020": "Vietnam 2007--2020",
+               "DSE 2009-2021": "Dhaka 2009--2021", "Morocco 2012-2026": "Morocco 2012--2026"}
+        f = lambda v, nd=4: (r"\ensuremath{-}" if v < 0 else "") + f"{abs(v):.{nd}f}"
+        lines = []
+        for _, rw in pool.iterrows():
+            lines.append(f"{lab[rw.market]} & {rw.window} & {rw.n_with_b} & {f(rw.d_total)} & {f(rw.d_level)} & "
+                         f"{f(rw.d_shape)} & {f(rw.spearman_d_b, 2)} [{f(rw.lo, 2)}, {f(rw.hi, 2)}] & {rw.P4b_verdict} \\\\")
+        (GEN / "tab_pooling.tex").write_text("\n".join(lines) + "\n")
+    if appl is not None:
+        b1 = appl[appl.part == "B1"]
+        lines = []
+        for smp in b1["sample"].unique():
+            g = b1[b1["sample"] == smp].set_index("statistic")
+            def cell(st, nd=3):
+                rw = g.loc[st]
+                return f"{rw.value:.{nd}f} [{rw.lo:.{nd}f}, {rw.hi:.{nd}f}]"
+            name = smp.replace("NEPSE ", "NEPSE, ").replace(" (excl. 2012-10-05)", "")
+            lines.append(f"{name} & {g.loc['b', 'value']:.3f} & {g.loc['E[o^2]/E[OC]', 'value']:.3f} & "
+                         f"{cell('published bound g(b) E[o^2]/E[OC]')} & {cell('sharp bound (1-b)^2 E[o^2]/E[OC]')} & "
+                         f"{cell('independence (1-b) E[o^2]/E[OC]')} \\\\")
+        (GEN / "tab_bounds.tex").write_text("\n".join(lines) + "\n")
+        b3 = appl[appl.part == "B3"]
+        lines = []
+        for reg in ("A1", "B", "A2", "C"):
+            g = b3[b3["sample"] == f"NEPSE {reg}"].set_index("statistic")["value"]
+            lines.append(f"{reg} & {g['pinned share among non-stale opens']:.3f} & {g['k = band in standard deviations']:.2f} & "
+                         f"{g['Gaussian censoring factor F(k)']:.2f} & {g['observed b / b_interior']:.2f} & "
+                         f"{g['Gaussian pinned ratio lambda(k)/k']:.2f} & {g['observed b_pinned / b_interior']:.2f} \\\\")
+        (GEN / "tab_censoring.tex").write_text("\n".join(lines) + "\n")
+
+
+# =============================================================================================
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--quick", action="store_true", help="Part A only, with smaller simulations")
+    args = ap.parse_args()
+    quick = args.quick
+    t0 = time.time()
+    rng = np.random.default_rng(SEED)
+    L, N = Ledger(), Numbers()
+    print("M19 theory checks (post hoc relative to M14-M18; Part C's prediction frozen in M19)")
+    n1 = 200_000 if quick else 2_000_000
+    check_p1(L, N, n1, rng); print(f"  Proposition 1 checked ({time.time() - t0:.0f}s)")
+    check_p2(L, N, 60_000 if quick else 400_000, 64 if quick else 256, rng); print(f"  Proposition 2 checked ({time.time() - t0:.0f}s)")
+    check_p3(L, N, n1, rng); print(f"  Proposition 3 checked ({time.time() - t0:.0f}s)")
+    check_p4(L, N, quick, rng); print(f"  Proposition 4 checked ({time.time() - t0:.0f}s)")
+    check_p5(L, N, quick, rng); print(f"  Proposition 5 checked ({time.time() - t0:.0f}s)")
+    check_p6(L, N, quick); print(f"  Proposition 6 checked ({time.time() - t0:.0f}s)")
+    ledger = L.frame()
+    nfail = int((~ledger["pass"]).sum())
+    print(f"Part A: {len(ledger)} checks, {len(ledger) - nfail} pass, {nfail} fail")
+    if nfail:
+        print(ledger[~ledger["pass"]].to_string(index=False))
+    if quick:
+        return
+    appl = part_b(N)
+    print(f"Part B done ({time.time() - t0:.0f}s)")
+    pool = part_c(N)
+    print(f"Part C done ({time.time() - t0:.0f}s)")
+    GEN.mkdir(parents=True, exist_ok=True)
+    write_fragments(N, ledger, appl, pool)
+    ledger.to_csv(TAB / "table121_theory_checks.csv", index=False, float_format=FLOAT_FMT)
+    appl.to_csv(TAB / "table122_theory_applications.csv", index=False, float_format=FLOAT_FMT)
+    pool.to_csv(TAB / "table123_theory_pooling.csv", index=False, float_format=FLOAT_FMT)
+    N.write(GEN / "numbers.tex")
+    pd.set_option("display.width", 250)
+    pd.set_option("display.max_colwidth", 90)
+    print(appl.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
+    print(pool.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
+    print(f"P4a: {pool['P4a_overall'].iloc[0]}; P4b: {pool['P4b_overall'].iloc[0]}  ({time.time() - t0:.0f}s)")
+
+
+if __name__ == "__main__":
+    main()

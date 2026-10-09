@@ -1,0 +1,188 @@
+proposition,check,design,theory,value,se,rule,pass
+1,b = E[o r]/E[o^2] equals the closed form,independent error,0.4,0.3986387981,0.0008101624435,|value - theory| <= 4 SE,True
+1,b is the best linear predictor coefficient of o* on o,independent error,0.4,0.3993654404,0.0003726095219,|value - theory| <= 4 SE,True
+1,E[o c] = -(1 - b) E[o^2] (sample identity),independent error,-1202012.033,-1202012.033,,"identity, relative error <= 1e-09",True
+1,"E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)",independent error,1200815.042,1200815.042,,"identity, relative error <= 1e-09",True
+1,sharp bound E[eta^2]/E[o^2] >= (1 - b)^2,independent error,0.36,0.6007623528,,value >= bound (within 4 SE of b),True
+1,b = E[o r]/E[o^2] equals the closed form,proportional overreaction (theta = 0.8),0.4511278195,0.4508824653,0.0005104332018,|value - theory| <= 4 SE,True
+1,b is the best linear predictor coefficient of o* on o,proportional overreaction (theta = 0.8),0.4511278195,0.4510536395,0.0001555384768,|value - theory| <= 4 SE,True
+1,E[o c] = -(1 - b) E[o^2] (sample identity),proportional overreaction (theta = 0.8),-1751919.063,-1751919.063,,"identity, relative error <= 1e-09",True
+1,"E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)",proportional overreaction (theta = 0.8),1111652.141,1111652.141,,"identity, relative error <= 1e-09",True
+1,sharp bound E[eta^2]/E[o^2] >= (1 - b)^2,proportional overreaction (theta = 0.8),0.3012606705,0.3484337238,,value >= bound (within 4 SE of b),True
+1,b = E[o r]/E[o^2] equals the closed form,"stale open, 45% of the move (theta = -0.55)",2.222222222,2.223756623,0.002446053864,|value - theory| <= 4 SE,True
+1,b is the best linear predictor coefficient of o* on o,"stale open, 45% of the move (theta = -0.55)",2.222222222,2.222222222,1.519018811e-15,|value - theory| <= 4 SE,True
+1,E[o c] = -(1 - b) E[o^2] (sample identity),"stale open, 45% of the move (theta = -0.55)",198092.5267,198092.5267,,"identity, relative error <= 1e-09",True
+1,"E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)","stale open, 45% of the move (theta = -0.55)",241809.516,241809.516,,"identity, relative error <= 1e-09",True
+1,sharp bound E[eta^2]/E[o^2] >= (1 - b)^2,"stale open, 45% of the move (theta = -0.55)",1.49382716,1.49382716,,value >= bound (within 4 SE of b),True
+1,b = E[o r]/E[o^2] equals the closed form,"pure overreaction (theta = 1.5, no idiosyncratic error)",0.4,0.3996802944,0.0003694291189,|value - theory| <= 4 SE,True
+1,b is the best linear predictor coefficient of o* on o,"pure overreaction (theta = 1.5, no idiosyncratic error)",0.4,0.4,2.325513123e-16,|value - theory| <= 4 SE,True
+1,E[o c] = -(1 - b) E[o^2] (sample identity),"pure overreaction (theta = 1.5, no idiosyncratic error)",-3004360.193,-3004360.193,,"identity, relative error <= 1e-09",True
+1,"E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)","pure overreaction (theta = 1.5, no idiosyncratic error)",1801656.117,1801656.117,,"identity, relative error <= 1e-09",True
+1,sharp bound E[eta^2]/E[o^2] >= (1 - b)^2,"pure overreaction (theta = 1.5, no idiosyncratic error)",0.36,0.36,,value >= bound (within 4 SE of b),True
+1,the sharp bound is attained under pure proportional overreaction,"pure overreaction (theta = 1.5, no idiosyncratic error)",0.36,0.36,2.050909798e-16,|value - theory| <= 4 SE,True
+1,b = E[o r]/E[o^2] equals the closed form,"independent error, Student-t(4) tails",0.4,0.4004599117,0.001185451296,|value - theory| <= 4 SE,True
+1,b is the best linear predictor coefficient of o* on o,"independent error, Student-t(4) tails",0.4,0.3995133152,0.001082042446,|value - theory| <= 4 SE,True
+1,E[o c] = -(1 - b) E[o^2] (sample identity),"independent error, Student-t(4) tails",-1197983.386,-1197983.386,,"identity, relative error <= 1e-09",True
+1,"E[eta^2] = (1 - b)^2 E[o^2] + E[(o* - b o)^2] (sample identity, sample BLP)","independent error, Student-t(4) tails",1200107.853,1200107.853,,"identity, relative error <= 1e-09",True
+1,sharp bound E[eta^2]/E[o^2] >= (1 - b)^2,"independent error, Student-t(4) tails",0.36,0.600603294,,value >= bound (within 4 SE of b),True
+1,"(1 - b)^2 > ((sqrt(5 - 4b) - 1)/2)^2 on [0, 1)","grid of 1,000 values",0,1.995013958e-09,,strictly positive gap everywhere,True
+1,identified set: E[o^2] is the same in every structure,I: error independent of news,1,0.9998953309,0.0008609925829,|value - theory| <= 4 SE,True
+1,identified set: E[o r] is the same in every structure,I: error independent of news,0.3,0.2988316797,0.0007270619446,|value - theory| <= 4 SE,True
+1,identified set: E[r^2] is the same in every structure,I: error independent of news,1.2,1.200617513,0.001290041332,|value - theory| <= 4 SE,True
+1,identified set: E[o*^2] at the stated point,I: error independent of news,0.3,0.3001480664,0.000335849176,|value - theory| <= 4 SE,True
+1,identified set: E[o^2] is the same in every structure,II: pure overreaction (lower end),1,0.9980126761,0.001052315561,|value - theory| <= 4 SE,True
+1,identified set: E[o r] is the same in every structure,II: pure overreaction (lower end),0.3,0.2981837197,0.0007412611571,|value - theory| <= 4 SE,True
+1,identified set: E[r^2] is the same in every structure,II: pure overreaction (lower end),1.2,1.199639912,0.001300356562,|value - theory| <= 4 SE,True
+1,identified set: E[o*^2] at the stated point,II: pure overreaction (lower end),0.09,0.08982114085,9.470840049e-05,|value - theory| <= 4 SE,True
+1,identified set: E[o^2] is the same in every structure,III: all of r is the efficient open (upper end),1,0.9997670691,0.0009502059148,|value - theory| <= 4 SE,True
+1,identified set: E[o r] is the same in every structure,III: all of r is the efficient open (upper end),0.3,0.3004228983,0.0009236696734,|value - theory| <= 4 SE,True
+1,identified set: E[r^2] is the same in every structure,III: all of r is the efficient open (upper end),1.2,1.199694794,0.001281248297,|value - theory| <= 4 SE,True
+1,identified set: E[o*^2] at the stated point,III: all of r is the efficient open (upper end),1.2,1.199694794,0.001281248297,|value - theory| <= 4 SE,True
+1,"identified set for E[o*^2] is [b^2 E[o^2], E[r^2]]: lower end",structure II,0.09,0.09,,"identity, relative error <= 1e-09",True
+1,"identified set for E[o*^2] is [b^2 E[o^2], E[r^2]]: upper end",structure III,1.2,1.2,,"identity, relative error <= 1e-09",True
+2,"E[(M - m)^2] = 4 ln 2 (Parkinson, no error)",Brownian session,2.772588722,2.76681261,0.002709389354,|value - theory| <= 4 SE,True
+2,"E[RS] = sigma_c^2 (Rogers-Satchell, no error)",Brownian session,1,0.9997617545,0.0008261747991,|value - theory| <= 4 SE,True
+2,the close lies inside the session range,Brownian session,1,1,,"identity, relative error <= 1e-09",True
+2,close-to-close is unbiased: E[r^2] = E[o*^2] + sigma_c^2,sigma_eta/sigma_c = 0.25,1.5,1.49792839,0.003959891564,|value - theory| <= 4 SE,True
+2,open-to-close carries the whole error: E[c^2] - sigma_c^2 = E[eta^2],sigma_eta/sigma_c = 0.25,0.0625,0.06088678985,0.00060874046,|value - theory| <= 4 SE,True
+2,the overnight square carries the whole error: E[o^2] - E[o*^2] = E[eta^2],sigma_eta/sigma_c = 0.25,0.0625,0.06230647156,0.0006185668277,|value - theory| <= 4 SE,True
+2,o^2 + c^2 - r^2 = -2 o c = 2(1 - b) o^2 in sums,sigma_eta/sigma_c = 0.25,48192.06044,48192.06044,,"identity, relative error <= 1e-09",True
+2,Parkinson: E[R^2] - 4 ln 2 = Delta_R (exact integral),sigma_eta/sigma_c = 0.25,0.08664339001,0.08577726617,0.0003507354515,|value - theory| <= 4 SE,True
+2,Rogers-Satchell bias = rho^2/2 - [(1 + rho^2) atan(rho) - rho]/pi,sigma_eta/sigma_c = 0.25,0.02797464552,0.02808741122,0.0003385882578,|value - theory| <= 4 SE,True
+2,Garman-Klass bias = Delta_R/2 - (2 ln 2 - 1) rho^2,sigma_eta/sigma_c = 0.25,0.01917829744,0.0193684095,0.0002323262596,|value - theory| <= 4 SE,True
+2,P(open is the session high or low) = (2/pi) atan(rho),sigma_eta/sigma_c = 0.25,0.1559582608,0.155335,0.0005688106124,|value - theory| <= 4 SE,True
+2,E[((eta - M)^+)^2] closed form,sigma_eta/sigma_c = 0.25,0.00327535448,0.003302592811,3.734857496e-05,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ M] closed form,sigma_eta/sigma_c = 0.25,0.001598341169,0.001600565156,1.333501942e-05,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ (M - D)] closed form,sigma_eta/sigma_c = 0.25,0.01398732276,0.01382260449,0.0001053368017,|value - theory| <= 4 SE,True
+2,Yang-Zhang daily form bias = (1 + k) rho^2 + (1 - k) RS bias,sigma_eta/sigma_c = 0.25,0.09528555557,0.094964288,0.0006279539673,|value - theory| <= 4 SE,True
+2,overnight^2 + Parkinson bias = rho^2 + Delta_R/(4 ln 2),sigma_eta/sigma_c = 0.25,0.09374999727,0.09324408069,0.0006480838337,|value - theory| <= 4 SE,True
+2,range bounds: 0 <= Delta_R <= (8/pi) rho + rho^2,sigma_eta/sigma_c = 0.25,0.6991197724,0.08664339001,,lower <= value <= upper,True
+2,pathwise: M - m <= R <= M - m + |eta|,sigma_eta/sigma_c = 0.25,0,-1.247957771e-06,,every path,True
+2,close-to-close is unbiased: E[r^2] = E[o*^2] + sigma_c^2,sigma_eta/sigma_c = 0.5,1.5,1.49792839,0.003959891564,|value - theory| <= 4 SE,True
+2,open-to-close carries the whole error: E[c^2] - sigma_c^2 = E[eta^2],sigma_eta/sigma_c = 0.5,0.25,0.2525173289,0.00150325217,|value - theory| <= 4 SE,True
+2,the overnight square carries the whole error: E[o^2] - E[o*^2] = E[eta^2],sigma_eta/sigma_c = 0.5,0.25,0.2477367365,0.001359428919,|value - theory| <= 4 SE,True
+2,o^2 + c^2 - r^2 = -2 o c = 2(1 - b) o^2 in sums,sigma_eta/sigma_c = 0.5,199016.382,199016.382,,"identity, relative error <= 1e-09",True
+2,Parkinson: E[R^2] - 4 ln 2 = Delta_R (exact integral),sigma_eta/sigma_c = 0.5,0.3465282519,0.3467037202,0.001268316758,|value - theory| <= 4 SE,True
+2,Rogers-Satchell bias = rho^2/2 - [(1 + rho^2) atan(rho) - rho]/pi,sigma_eta/sigma_c = 0.5,0.09967542103,0.09746295707,0.0006528922086,|value - theory| <= 4 SE,True
+2,Garman-Klass bias = Delta_R/2 - (2 ln 2 - 1) rho^2,sigma_eta/sigma_c = 0.5,0.07669053566,0.07580583983,0.0004548663958,|value - theory| <= 4 SE,True
+2,P(open is the session high or low) = (2/pi) atan(rho),sigma_eta/sigma_c = 0.5,0.2951672353,0.2949525,0.0006000532829,|value - theory| <= 4 SE,True
+2,E[((eta - M)^+)^2] closed form,sigma_eta/sigma_c = 0.5,0.02532457897,0.02515352987,0.0001882401447,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ M] closed form,sigma_eta/sigma_c = 0.5,0.01157132544,0.01157946388,7.420823999e-05,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ (M - D)] closed form,sigma_eta/sigma_c = 0.5,0.04983771051,0.04919955609,0.000285185036,|value - theory| <= 4 SE,True
+2,Yang-Zhang daily form bias = (1 + k) rho^2 + (1 - k) RS bias,sigma_eta/sigma_c = 0.5,0.3706222886,0.3668056306,0.001552896367,|value - theory| <= 4 SE,True
+2,overnight^2 + Parkinson bias = rho^2 + Delta_R/(4 ln 2),sigma_eta/sigma_c = 0.5,0.3749836476,0.3727836709,0.001542291559,|value - theory| <= 4 SE,True
+2,range bounds: 0 <= Delta_R <= (8/pi) rho + rho^2,sigma_eta/sigma_c = 0.5,1.523239545,0.3465282519,,lower <= value <= upper,True
+2,pathwise: M - m <= R <= M - m + |eta|,sigma_eta/sigma_c = 0.5,0,-8.926838097e-07,,every path,True
+2,close-to-close is unbiased: E[r^2] = E[o*^2] + sigma_c^2,sigma_eta/sigma_c = 1,1.5,1.49792839,0.003959891564,|value - theory| <= 4 SE,True
+2,open-to-close carries the whole error: E[c^2] - sigma_c^2 = E[eta^2],sigma_eta/sigma_c = 1,1,0.9932758254,0.003479275534,|value - theory| <= 4 SE,True
+2,the overnight square carries the whole error: E[o^2] - E[o*^2] = E[eta^2],sigma_eta/sigma_c = 1,1,1.001568214,0.002968514205,|value - theory| <= 4 SE,True
+2,o^2 + c^2 - r^2 = -2 o c = 2(1 - b) o^2 in sums,sigma_eta/sigma_c = 1,796852.3716,796852.3716,,"identity, relative error <= 1e-09",True
+2,Parkinson: E[R^2] - 4 ln 2 = Delta_R (exact integral),sigma_eta/sigma_c = 1,1.377484928,1.371464911,0.003144786763,|value - theory| <= 4 SE,True
+2,Rogers-Satchell bias = rho^2/2 - [(1 + rho^2) atan(rho) - rho]/pi,sigma_eta/sigma_c = 1,0.3183098862,0.3192145236,0.001191498156,|value - theory| <= 4 SE,True
+2,Garman-Klass bias = Delta_R/2 - (2 ln 2 - 1) rho^2,sigma_eta/sigma_c = 1,0.3024481027,0.3020356051,0.0006965998318,|value - theory| <= 4 SE,True
+2,P(open is the session high or low) = (2/pi) atan(rho),sigma_eta/sigma_c = 1,0.5,0.499575,0.0008358302337,|value - theory| <= 4 SE,True
+2,E[((eta - M)^+)^2] closed form,sigma_eta/sigma_c = 1,0.1816901138,0.1808434067,0.0009923551187,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ M] closed form,sigma_eta/sigma_c = 1,0.06830988618,0.06842470058,0.0002917301106,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ (M - D)] closed form,sigma_eta/sigma_c = 1,0.1591549431,0.1580983211,0.00070751156,|value - theory| <= 4 SE,True
+2,Yang-Zhang daily form bias = (1 + k) rho^2 + (1 - k) RS bias,sigma_eta/sigma_c = 1,1.413299492,1.414709312,0.00334964412,|value - theory| <= 4 SE,True
+2,overnight^2 + Parkinson bias = rho^2 + Delta_R/(4 ln 2),sigma_eta/sigma_c = 1,1.496822669,1.49621962,0.003508497375,|value - theory| <= 4 SE,True
+2,range bounds: 0 <= Delta_R <= (8/pi) rho + rho^2,sigma_eta/sigma_c = 1,3.546479089,1.377484928,,lower <= value <= upper,True
+2,pathwise: M - m <= R <= M - m + |eta|,sigma_eta/sigma_c = 1,0,-4.156323921e-06,,every path,True
+2,close-to-close is unbiased: E[r^2] = E[o*^2] + sigma_c^2,sigma_eta/sigma_c = 2,1.5,1.49792839,0.003959891564,|value - theory| <= 4 SE,True
+2,open-to-close carries the whole error: E[c^2] - sigma_c^2 = E[eta^2],sigma_eta/sigma_c = 2,4,3.995321201,0.0109958448,|value - theory| <= 4 SE,True
+2,the overnight square carries the whole error: E[o^2] - E[o*^2] = E[eta^2],sigma_eta/sigma_c = 2,4,3.995570621,0.01049254283,|value - theory| <= 4 SE,True
+2,o^2 + c^2 - r^2 = -2 o c = 2(1 - b) o^2 in sums,sigma_eta/sigma_c = 2,3195271.485,3195271.485,,"identity, relative error <= 1e-09",True
+2,Parkinson: E[R^2] - 4 ln 2 = Delta_R (exact integral),sigma_eta/sigma_c = 2,5.29327978,5.284134761,0.01329762828,|value - theory| <= 4 SE,True
+2,Rogers-Satchell bias = rho^2/2 - [(1 + rho^2) atan(rho) - rho]/pi,sigma_eta/sigma_c = 2,0.8745378606,0.8715704443,0.00296065972,|value - theory| <= 4 SE,True
+2,Garman-Klass bias = Delta_R/2 - (2 ln 2 - 1) rho^2,sigma_eta/sigma_c = 2,1.101462446,1.09869733,0.002973286731,|value - theory| <= 4 SE,True
+2,P(open is the session high or low) = (2/pi) atan(rho),sigma_eta/sigma_c = 2,0.7048327647,0.7043225,0.0006179628184,|value - theory| <= 4 SE,True
+2,E[((eta - M)^+)^2] closed form,sigma_eta/sigma_c = 2,1.125462139,1.121748566,0.006342235468,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ M] closed form,sigma_eta/sigma_c = 2,0.28420339,0.283900527,0.001120731649,|value - theory| <= 4 SE,True
+2,E[(eta - M)^+ (M - D)] closed form,sigma_eta/sigma_c = 2,0.4372689303,0.4362404046,0.00184922596,|value - theory| <= 4 SE,True
+2,Yang-Zhang daily form bias = (1 + k) rho^2 + (1 - k) RS bias,sigma_eta/sigma_c = 2,5.310053077,5.302417811,0.01359405463,|value - theory| <= 4 SE,True
+2,overnight^2 + Parkinson bias = rho^2 + Delta_R/(4 ln 2),sigma_eta/sigma_c = 2,5.909147122,5.901419375,0.01492268781,|value - theory| <= 4 SE,True
+2,range bounds: 0 <= Delta_R <= (8/pi) rho + rho^2,sigma_eta/sigma_c = 2,9.092958179,5.29327978,,lower <= value <= upper,True
+2,pathwise: M - m <= R <= M - m + |eta|,sigma_eta/sigma_c = 2,0,-7.332197586e-06,,every path,True
+2,small noise: Delta_R/(2 ln 2 rho^2) -> 1,rho = 0.2,1,0.9999999974,,"numerical, |error| <= 0.002",True
+2,small noise: Delta_R/(2 ln 2 rho^2) -> 1,rho = 0.1,1,1,,"numerical, |error| <= 0.002",True
+2,small noise: Delta_R/(2 ln 2 rho^2) -> 1,rho = 0.05,1,1,,"numerical, |error| <= 0.002",True
+2,meander limit: J(s)/s -> 2 ln 2,s = 0.04,1.386294361,1.354387487,,"numerical, |error| <= 0.16",True
+2,meander limit: J(s)/s -> 2 ln 2,s = 0.02,1.386294361,1.370337734,,"numerical, |error| <= 0.08",True
+2,meander limit: J(s)/s -> 2 ln 2,s = 0.01,1.386294361,1.378315648,,"numerical, |error| <= 0.04",True
+2,first-order loading of the error variance,"c^2 (open-to-close), rho = 0.01",1,1,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"Parkinson, rho = 0.01",0.5,0.5,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"Garman-Klass, rho = 0.01",0.3068528194,0.3068528194,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"Rogers-Satchell, rho = 0.01",0.5,0.4978779765,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"overnight^2 + Parkinson, rho = 0.01",1.5,1.5,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"overnight^2 + Garman-Klass, rho = 0.01",1.306852819,1.306852819,,"numerical, |error| <= 0.01",True
+2,first-order loading of the error variance,"Yang-Zhang daily form, rho = 0.01",1.569672131,1.567845799,,"numerical, |error| <= 0.01",True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"Gaussian, band at 0.75 sd",0.5460062702,0.5459327628,0.001326576492,|value - theory| <= 4 SE,True
+3,"Gaussian factor F(k) = (2 Phi(k) - 1)/E[min(z^2, k^2)]","Gaussian, band at 0.75 sd",0.5459857089,0.5459327628,0.001326576492,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"Gaussian, band at 0.75 sd",1,1.562210925,,value >= 1,True
+3,interior zone: b_interior = b_latent,"Gaussian, band at 0.75 sd",0.3495086749,0.3464659774,0.001922233593,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"Gaussian, band at 0.75 sd",0.6193768553,0.6204120191,0.001734164505,|value - theory| <= 4 SE,True
+3,Gaussian pinned ratio = inverse Mills ratio / k,"Gaussian, band at 0.75 sd",0.6192259011,0.6204120191,0.001734164505,|value - theory| <= 4 SE,True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"Gaussian, band at 1.1 sd",0.4409012415,0.440934073,0.001060829351,|value - theory| <= 4 SE,True
+3,"Gaussian factor F(k) = (2 Phi(k) - 1)/E[min(z^2, k^2)]","Gaussian, band at 1.1 sd",0.4408405049,0.440934073,0.001060829351,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"Gaussian, band at 1.1 sd",1,1.261488693,,value >= 1,True
+3,interior zone: b_interior = b_latent,"Gaussian, band at 1.1 sd",0.3495086749,0.3491642633,0.001235572305,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"Gaussian, band at 1.1 sd",0.5102116699,0.5105305956,0.001238195296,|value - theory| <= 4 SE,True
+3,Gaussian pinned ratio = inverse Mills ratio / k,"Gaussian, band at 1.1 sd",0.5102182198,0.5105305956,0.001238195296,|value - theory| <= 4 SE,True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"Gaussian, band at 1.5 sd",0.38900773,0.3891049115,0.0009078711789,|value - theory| <= 4 SE,True
+3,"Gaussian factor F(k) = (2 Phi(k) - 1)/E[min(z^2, k^2)]","Gaussian, band at 1.5 sd",0.388982418,0.3891049115,0.0009078711789,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"Gaussian, band at 1.5 sd",1,1.113013089,,value >= 1,True
+3,interior zone: b_interior = b_latent,"Gaussian, band at 1.5 sd",0.3495086749,0.3494408264,0.001012396269,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"Gaussian, band at 1.5 sd",0.4517372305,0.4520965004,0.001197344131,|value - theory| <= 4 SE,True
+3,Gaussian pinned ratio = inverse Mills ratio / k,"Gaussian, band at 1.5 sd",0.4517229917,0.4520965004,0.001197344131,|value - theory| <= 4 SE,True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"elliptical Student-t(4), band at 0.75 sd",0.5514187647,0.549365828,0.001701711028,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"elliptical Student-t(4), band at 0.75 sd",1,1.565572764,,value >= 1,True
+3,interior zone: b_interior = b_latent,"elliptical Student-t(4), band at 0.75 sd",0.3522153537,0.3504032295,0.002032315409,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"elliptical Student-t(4), band at 0.75 sd",0.6567676605,0.65458737,0.002260088034,|value - theory| <= 4 SE,True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"elliptical Student-t(4), band at 1.1 sd",0.4628447833,0.4611103429,0.001463057615,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"elliptical Student-t(4), band at 1.1 sd",1,1.314095988,,value >= 1,True
+3,interior zone: b_interior = b_latent,"elliptical Student-t(4), band at 1.1 sd",0.3522153537,0.3516267192,0.001592713125,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"elliptical Student-t(4), band at 1.1 sd",0.5718766531,0.569012953,0.002332840818,|value - theory| <= 4 SE,True
+3,b = b_latent x E[g(o) o]/E[g(o)^2],"elliptical Student-t(4), band at 1.5 sd",0.4182213397,0.4166106343,0.00134088009,|value - theory| <= 4 SE,True
+3,F >= 1 (pointwise g(o)(o - g(o)) >= 0),"elliptical Student-t(4), band at 1.5 sd",1,1.187402353,,value >= 1,True
+3,interior zone: b_interior = b_latent,"elliptical Student-t(4), band at 1.5 sd",0.3522153537,0.3506808513,0.00133444382,|value - theory| <= 4 SE,True
+3,pinned zone: b_pinned = b_latent E[|o| | pinned]/beta,"elliptical Student-t(4), band at 1.5 sd",0.5303261284,0.5285859996,0.002748878883,|value - theory| <= 4 SE,True
+3,F(k) is strictly decreasing,"grid k in [0.01, 6]",0,-3.485012279e-11,,every difference negative,True
+3,F(k) -> 1 as k -> infinity,k = 6,1,1.000000002,,"numerical, |error| <= 1e-06",True
+3,k F(k) -> 2 phi(0) as k -> 0,k = 1e-4,0.7978845608,0.7979269987,,"numerical, |error| <= 0.001",True
+3,inverse Mills ratio / t is strictly decreasing (monotone ratio lemma input),"grid t in [0.01, 8]",0,-1.474753888e-05,,every difference negative,True
+3,Gordon's inequality 1 - Phi(t) > t phi(t)/(1 + t^2),"grid t in [0.01, 8]",0,2.780779149e-19,,strictly positive,True
+4,"loss = shape + level, row-weighted over securities (exact)","common opening-error variance, full",0.3225781165,0.3225781165,,"identity, relative error <= 1e-09",True
+4,first-order condition: the optimal pooled scale makes mean c* = 1,common opening-error variance,1,1,,"identity, relative error <= 1e-09",True
+4,"loss = shape + level, row-weighted over securities (exact)","common opening-error variance, open-free",0.3390508403,0.3390508403,,"identity, relative error <= 1e-09",True
+4,"loss = shape + level, row-weighted over securities (exact)","opening-error variances 0.05 to 8, full",0.3701648957,0.3701648957,,"identity, relative error <= 1e-09",True
+4,first-order condition: the optimal pooled scale makes mean c* = 1,opening-error variances 0.05 to 8,1,1,,"identity, relative error <= 1e-09",True
+4,"loss = shape + level, row-weighted over securities (exact)","opening-error variances 0.05 to 8, open-free",0.3599955561,0.3599955561,,"identity, relative error <= 1e-09",True
+4,common error variance: the full form has the lower loss,simulated panel,0,-0.01647272373,,dtotal < 0,True
+4,dispersed error variances: the open-free form has the lower loss,simulated panel,0,0.01016933953,,dtotal > 0,True
+4,dispersed error variances: the advantage is a level advantage,simulated panel,0.01016933953,0.01611571348,,dlevel >= dtotal > 0,True
+4,dispersed error variances: loss difference falls with own b,simulated panel,0,-0.20284742,,Spearman < 0,True
+4,common error variance: no association with own b,simulated panel,0.25,0.04039169387,,|Spearman| < 0.25,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 0.5, beta = 0",0.7499890984,0.7507188971,0.00132116818,|value - theory| <= 4 SE,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 0.5, beta = 0.5",0.8749890984,0.8761225621,0.001506917319,|value - theory| <= 4 SE,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 0.5, beta = 1",1.249989098,1.252333557,0.00222291473,|value - theory| <= 4 SE,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 1, beta = 0",0.997881779,0.9997386904,0.001838015417,|value - theory| <= 4 SE,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 1, beta = 0.5",1.247881779,1.249734917,0.002361125366,|value - theory| <= 4 SE,True
+4,level ratio psi(beta) = [beta^2 E[o^2] + sigma_c^2 + Parkinson excess]/E[r^2],"rho = 1, beta = 1",1.997881779,1.999723596,0.004162809181,|value - theory| <= 4 SE,True
+4,error-only heterogeneity: level dispersion increases in beta,500 securities,0,0.0002551072257,,every difference positive,True
+4,"overnight-share-only heterogeneity: level dispersion decreases in beta, zero at 1",500 securities,0,-0.0005071345487,,decreasing to zero,True
+5,lag path: kappa -> omega rho1 + (1 - omega) rho0 as N grows,"N = 1e2, 1e3, 1e4, 1e5 securities",0.005,0.000962231531,,"max error falls with N, < 0.005 at 1e5",True
+5,constant kernel mass: omega_j = (j + 1)/L,L = 60,0,0,,"identity, relative error <= 1e-09",True
+5,the simulated loss is minimised next to L* = sqrt(3 v/(lambda delta^2)),L* = 19.6,19.56151991,20,,argmin within one grid step of L*,True
+5,minimum loss = sqrt(lambda delta^2 v/3) to second order,L* = 19.6,0.003195048252,0.00299437589,,within 15%,True
+6,the instrumented slope of X1 is consistent,"valid: serially independent errors, instruments dated t-1",0.8,0.7941390665,0.002936225746,|value - theory| <= 4 SE,True
+6,the instrumented slope of X2 is consistent,"valid: serially independent errors, instruments dated t-1",1.3,1.294689496,0.005809759414,|value - theory| <= 4 SE,True
+6,J test size at 5% under valid instruments,"valid: serially independent errors, instruments dated t-1",0.05,0.09,,"rejection share in [0.01, 0.12]",True
+6,rank-one share near one under the model,"valid: serially independent errors, instruments dated t-1",0.99,0.9998331753,,mean share > 0.99,True
+6,invalid instruments bias the slope of X1,"invalid: MA(1) errors, instruments dated t-1",0.8,0.572153276,,more than 10 SE from the truth,True
+6,invalid instruments bias the slope of X2,"invalid: MA(1) errors, instruments dated t-1",1.3,0.5223536304,,more than 10 SE from the truth,True
+6,J test detects invalid instruments,"invalid: MA(1) errors, instruments dated t-1",0.9,1,,rejection share >= 0.9,True
+6,the instrumented slope of X1 is consistent,"remedy: MA(1) errors, instruments dated t-2",0.8,0.7887618093,0.004841041227,|value - theory| <= 4 SE,True
+6,the instrumented slope of X2 is consistent,"remedy: MA(1) errors, instruments dated t-2",1.3,1.294178453,0.009330454908,|value - theory| <= 4 SE,True
+6,"OLS slope = (beta Var(IV) + Cov(U_k, U_0))/(Var(IV) + Var(U_0))",300 securities x 500 sessions,0.5130738279,0.5107769178,,within 2% (cross terms vanish only in expectation),True
+6,mean ratio = slope + additive share (exact),300 securities,0.9886731295,0.9886731295,,"identity, relative error <= 1e-09",True
+6,Sigma_X^-1 beta / (beta' Sigma_X^-1 beta) = Omega_U^-1 beta / (beta' Omega_U^-1 beta),random 4 x 4 design,0,5.551115123e-17,,"identity, relative error <= 1e-10",True

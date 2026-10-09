@@ -22,6 +22,7 @@ SKIP_NAMES = {"SUBMISSION_MANIFEST.json", ".DS_Store"}
 # third-party inputs placed locally and never packaged (gitignored; pinned by SHA-256 in
 # src/nepsevol/frontier.py and documented in data/external/README.md)
 SKIP_PREFIXES = ("data/external/frontier/",)
+LATEX_BUILD = {".aux", ".bbl", ".blg", ".fdb_latexmk", ".fls", ".log", ".out", ".toc", ".gz"}
 
 
 def sha256(p: pathlib.Path) -> str:
@@ -43,6 +44,8 @@ def files():
             continue
         if str(rel).startswith(SKIP_PREFIXES):
             continue
+        if str(rel).startswith("paper/theory/") and rel.suffix in LATEX_BUILD:   # LaTeX intermediates
+            continue
         yield {"path": str(rel), "bytes": p.stat().st_size, "sha256": sha256(p)}
 
 
@@ -60,7 +63,9 @@ def pytest_result() -> str:
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "16 (round 16: a post hoc recheck of every claim made for Anam's estimator, with the "
+    "revision": "17 (round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their "
+                "proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of "
+                "Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the "
                 "overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added "
                 "as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans "
                 "M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round "
@@ -84,7 +89,7 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round16_revisions.py, in order",
+                          "through paper/apply_round17_revisions.py, in order",
         "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv "
                 "by the revision scripts, which fail if a superseded value survives in the text "
                 "or if a headline number does not reach it.",
@@ -222,6 +227,31 @@ manifest = {
         "new_scripts": ["scripts/44_anam_recheck.py", "paper/apply_round16_revisions.py"],
         "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
         "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
+    },
+    "revision_17_changes": {
+        "theory": {
+            "document": "paper/theory/theory.tex (section_theory.tex, appendix_proofs.tex, references.bib) and its "
+                        "compiled theory.pdf; every number is a macro from paper/theory/generated/numbers.tex",
+            "plan": "M19_THEORY_CHECKS_PLAN.md (frozen in its own commit before scripts/45_theory_checks.py existed)",
+            "script": "scripts/45_theory_checks.py (POST HOC relative to M14-M18; Part C's prediction fixed in M19)",
+            "outputs": "output/tables/table121_theory_checks.csv (every check of Propositions 1-6 against simulation "
+                       "or numerical integration), table122_theory_applications.csv (the sharp bound, the error's "
+                       "scale, the censoring factor and decomposition, the calibration lag), "
+                       "table123_theory_pooling.csv (plan M19's pooling test)",
+            "result": "Every check of the six propositions passes. Applications: the sharp bound on the opening "
+                      "error is more than twice the published one; about a third of the fall in b at the band "
+                      "reform is the end of censoring and almost two thirds the overshoot of large opens; the lag "
+                      "path describes the applied calibration after the reform almost exactly but explains only "
+                      "a small part of the forecast-loss gap between calibration windows. Plan M19's one test was "
+                      "not supported: the open-free form's lower loss always included a level component, but the "
+                      "shape component also favoured it in most cases, and the cross-sectional prediction was "
+                      "confirmed in four of ten cases and reversed in one.",
+        },
+        "corrections": "AUDIT-REGISTER.md M-026: Appendix A's bound on the opening error is valid but not sharp, "
+                       "and its stated attainment was wrong; the sharp bound replaces the claim",
+        "new_scripts": ["scripts/45_theory_checks.py", "paper/apply_round17_revisions.py"],
+        "new_tests": ["tests/test_theory_checks.py"],
+        "new_documents": ["M19_THEORY_CHECKS_PLAN.md", "M19_THEORY_CHECKS_RESULTS.md", "paper/theory/"],
     },
     "anam_estimator_package": {
         "path": "anam-estimator/ (pyproject.toml, src/anam_estimator, tests, examples, README.md with a model card)",

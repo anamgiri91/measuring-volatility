@@ -45,20 +45,22 @@ do
   echo "===== scripts/${script} ====="
   python "scripts/${script}"
   if [ "${script}" = "41_anam_posthoc.py" ]; then
-    # M17 and M18, and the post hoc recheck of M16-M18 (script 44), read third-party inputs that are
-    # not packaged (data/external/README.md); their frozen tables 107-120 are shipped, so the run
+    # M17 and M18, the post hoc recheck of M16-M18 (script 44) and the theory checks (script 45, whose
+    # Part C reads the frontier panels) read third-party inputs that are not packaged
+    # (data/external/README.md); their frozen tables 107-123 are shipped, so the run
     # continues without them.
     if [ -d data/external/frontier ]; then
       for optional in \
         42_anam_frontier.py \
         43_anam_morocco.py \
-        44_anam_recheck.py
+        44_anam_recheck.py \
+        45_theory_checks.py
       do
         echo "===== scripts/${optional} ====="
         python "scripts/${optional}"
       done
     else
-      echo "===== scripts/42_anam_frontier.py, 43_anam_morocco.py and 44_anam_recheck.py skipped: data/external/frontier/ not present ====="
+      echo "===== scripts/42_anam_frontier.py, 43_anam_morocco.py, 44_anam_recheck.py and 45_theory_checks.py skipped: data/external/frontier/ not present ====="
     fi
   fi
 done

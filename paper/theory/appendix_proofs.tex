@@ -1,0 +1,345 @@
+% Appendix B: proofs of Propositions 1-6.
+\section{Proofs}\label{app:proofs}
+
+All moments are raw, $\Phi$ and $\phi$ are the standard normal distribution and density, and
+$\Phibar=1-\Phi$. For a standard Brownian motion $W$ on $[0,1]$, let $M=\sup W$, $m=\inf W$ and
+$D=W(1)$. Each numbered claim below was checked numerically by
+\texttt{scripts/45\_theory\_checks.py}, as recorded in Table~\ref{tab:checks}.
+
+\subsection*{B.1 Proof of Proposition~\ref{prop:ident}}
+
+\emph{(a)} By Assumption~\ref{as:orth}, $\E[ox]=\E[\os x]+\E[\eta x]=0$. Since $r=\os+x$,
+\[
+  \E[or]=\E[o\os]+\E[ox]=\E[o\os].
+\]
+The map $\gamma\mapsto\E[(\os-\gamma o)^2]=\E[\os^2]-2\gamma\E[o\os]+\gamma^2\E[o^2]$ is a convex
+quadratic minimised at $\gamma=\E[o\os]/\E[o^2]=b$. Hence $b\,o$ is the best linear predictor of
+$\os$, and $C_{-}e^{b o}$ that of the efficient open on the log scale. If $\E[\os\mid o]=\gamma o$,
+then $\E[o\os]=\E[o\,\E[\os\mid o]]=\gamma\E[o^2]$, so $\gamma=b$.
+
+\emph{(b)} Since $c=r-o$, we have $\E[oc]=\E[or]-\E[o^2]=(b-1)\E[o^2]$.
+
+\emph{(c)} Write $\eta=o-\os=(1-b)o-(\os-bo)$. Then
+\[
+  \E[\eta^2]=(1-b)^2\E[o^2]-2(1-b)\E[o(\os-bo)]+\E[(\os-bo)^2].
+\]
+The middle term vanishes, because $\E[o(\os-bo)]=\E[o\os]-b\E[o^2]=0$ by~(a). The last term is
+non-negative, and it is zero if and only if $\os=bo$ almost surely. That is the stated condition.
+For $b>0$, it is equivalent to $\eta=\{(1-b)/b\}\os$: an error proportional to the news.
+
+\emph{(d)} The three cases:
+\begin{itemize}
+  \item If $\E[\os\eta]=0$, then $\E[o\os]=\E[\os^2]$ and $\E[o^2]=\E[\os^2]+\E[\eta^2]$, so
+        $(1-b)\E[o^2]=\E[o^2]-\E[\os^2]=\E[\eta^2]$.
+  \item If $\eta=\theta\os+\nu$ with $\E[\os\nu]=0$, then $o=(1+\theta)\os+\nu$. Hence
+        $\E[o\os]=(1+\theta)\E[\os^2]$ and $\E[o^2]=(1+\theta)^2\E[\os^2]+\E[\nu^2]$.
+  \item The stale open is the case $\theta=\lambda-1$ and $\nu=0$, which gives $b=1/\lambda$.
+\end{itemize}
+
+\emph{(e)} Write $m_{oo}=\E[o^2]$ and $m_{rr}=\E[r^2]$. By~(a), $\E[or]=bm_{oo}$ and
+$\E[r^2]=\E[\os^2]+\E[x^2]$, since $\E[\os x]=0$.
+\begin{itemize}
+  \item \emph{Necessity.} By~(c), $0\le\E[(\os-bo)^2]=\E[\os^2]-b^2m_{oo}$, and
+        $\E[\os^2]\le m_{rr}$.
+  \item \emph{Sufficiency.} Fix $s\in[b^2m_{oo},m_{rr}]$. Let $(o,\os)$ be a centred Gaussian
+        vector with $\E[o^2]=m_{oo}$, $\E[o\os]=bm_{oo}$ and $\E[\os^2]=s$. Its covariance matrix
+        is positive semi-definite because $sm_{oo}\ge b^2m_{oo}^2$. Let $x$ be an independent
+        centred Gaussian with $\E[x^2]=m_{rr}-s$, and set $\eta=o-\os$.
+\end{itemize}
+In the sufficiency construction, Assumption~\ref{as:orth} holds. The vector $(o,r)=(o,\os+x)$ is
+centred Gaussian with $\E[o^2]=m_{oo}$, $\E[or]=bm_{oo}$ and $\E[r^2]=m_{rr}$, the same law for
+every $s$. The range of $\E[\eta^2]$ follows from~(c) with
+$\E[(\os-bo)^2]=s-b^2m_{oo}$.
+
+\emph{The published bound.} For $b\in[0,1)$:
+\[
+  \tfrac12\{\sqrt{5-4b}-1\}<1-b
+  \iff \sqrt{5-4b}<3-2b
+  \iff 5-4b<9-12b+4b^2
+  \iff 0<4(1-b)^2.
+\]
+So the bound of Appendix~A is strictly below~\eqref{eq:sharp}, and by~(c) it is never attained
+when $b<1$. \qed
+
+\subsection*{B.2 Proof of Proposition~\ref{prop:classical}}
+
+\emph{(a)} The identity is $(o+c)^2=o^2+2oc+c^2$. Taking expectations and using
+Proposition~\ref{prop:ident}(b) gives the result.
+
+By Brownian scaling, we take $\sigma_c=1$ from here on. Every expectation below scales with
+$\sigma_c^2$, and $\rho=\sigma_\eta$. Measured from the efficient open, the printed path is
+$\{\eta\}\cup\{W(s):s\in(0,1]\}$. Its extremes are $\tilde h=\max(\eta,M)$ and
+$\tilde l=\min(\eta,m)$. Then:
+\[
+  R=\tilde h-\tilde l,\qquad u=\tilde h-\eta,\qquad d=\tilde l-\eta,\qquad c=D-\eta,\qquad r=\os+D.
+\]
+
+\emph{(b)} Independence gives $\E[r^2]=\E[\os^2]+1$ and $\E[o^2]-\E[\os^2]=\E[\eta^2]$. The same
+argument gives $\E[c^2]-1=\E[\eta^2]-2\E[D\eta]=\E[\eta^2]$.
+
+\emph{(c), the representation.} Since $M\ge0\ge m$, the range has three cases:
+\begin{itemize}
+  \item $R=M-m$ if $\eta\in[m,M]$;
+  \item $R=\eta-m$ if $\eta>M$;
+  \item $R=M-\eta$ if $\eta<m$.
+\end{itemize}
+Hence $R=(M-m)+(\eta-M)^++(m-\eta)^+$, with at most one of the last two terms positive. This gives
+$M-m\le R\le M-m+|\eta|$, because $(\eta-M)^+\le\eta^+$ and $(m-\eta)^+\le\eta^-$. Squaring,
+\[
+  R^2-(M-m)^2=(\eta-M)(\eta+M-2m)\ind\{\eta>M\}+(m-\eta)(2M-m-\eta)\ind\{\eta<m\}.
+\]
+The map $(W,\eta)\mapsto(-W,-\eta)$ preserves the joint law and exchanges the two terms. So
+\begin{equation*}
+  \Delta_R:=\E[R^2]-4\ln2=2\E[((\eta-M)^+)^2]+4\E[(\eta-M)^+M]+4\E[(\eta-M)^+(-m)].
+\end{equation*}
+Here $\E[(M-m)^2]=4\ln2$ \citep{Feller1951,Parkinson1980}. Call the three expectations $T_1$,
+$T_2$ and $T_3$.
+
+\emph{(c), $T_1$ and $T_2$.} By the reflection principle, $M$ has the law of $|Z'|$ with $Z'$
+standard normal, independent of $\eta=\rho Z$. Write $(Z,Z')=\varrho(\cos\varphi,\sin\varphi)$, so
+that $\varrho^2\sim\chi^2_2$ (with $\E\varrho^2=2$) is independent of
+$\varphi\sim U(-\pi,\pi]$. Then $(\rho Z-|Z'|)^+=\varrho(\rho\cos\varphi-|\sin\varphi|)^+$. This is
+positive exactly when $|\varphi|<\alpha:=\arctan\rho$. Hence
+\begin{align*}
+T_1&=\frac{2}{\pi}\int_0^\alpha(\rho\cos\varphi-\sin\varphi)^2\,d\varphi=\frac{(1+\rho^2)\alpha-\rho}{\pi},\\
+T_2&=\frac{2}{\pi}\int_0^\alpha(\rho\cos\varphi-\sin\varphi)\sin\varphi\,d\varphi=\frac{\rho-\alpha}{\pi}.
+\end{align*}
+Both integrals use $\sin^2\alpha=\rho^2/(1+\rho^2)$ and $\sin2\alpha=2\rho/(1+\rho^2)$.
+
+\emph{(c), $T_3$.} For $y>0$, $(y-M)^+=\int_0^y\ind\{M<s\}\,ds$. Conditioning on $\eta$ and using
+Fubini,
+\begin{align*}
+  T_3&=\int_0^\infty J(s)\,P(\eta>s)\,ds=\int_0^\infty J(s)\,\Phibar(s/\rho)\,ds,\\
+  J(s)&=\E[(-m)\ind\{M<s\}]=\int_0^\infty\{P(M<s)-G(s,t)\}\,dt.
+\end{align*}
+Here $P(M<s)=2\Phi(s)-1$. The joint distribution of the extremes is given by the method of images
+\citep[e.g.][]{BorodinSalminen2002}: for $a,b>0$ and $\ell=a+b$,
+\begin{multline}\label{eq:G}
+  G(a,b)=P(M<a,\,-m<b)\\=\sum_{k=-\infty}^{\infty}\bigl\{\Phi(a+2k\ell)-\Phi(-b+2k\ell)-\Phi(a+2b+2k\ell)+\Phi(b+2k\ell)\bigr\}.
+\end{multline}
+Substituting $T_1$, $T_2$ and $T_3$ gives~\eqref{eq:deltaR}.
+
+\emph{(c), the bounds.} $\Delta_R\ge0$ is immediate from $R\ge M-m$. For the upper bound, use
+$R\le M-m+|\eta|$, $\E[M-m]=2\sqrt{2/\pi}$ and $\E|\eta|=\rho\sqrt{2/\pi}$:
+\[
+  \E[R^2]\le4\ln2+\frac{8}{\pi}\rho+\rho^2.
+\]
+
+\emph{(c), the small-error limit.} As $\rho\to0$, $(1+\rho^2)\arctan\rho-\rho=\tfrac23\rho^3+O(\rho^5)$ and
+$\rho-\arctan\rho=\tfrac13\rho^3+O(\rho^5)$, so $T_1$ and $T_2$ are $O(\rho^3)$. Substituting
+$s=\rho v$,
+\[
+  T_3=\rho^2\int_0^\infty\frac{J(\rho v)}{\rho v}\,v\,\Phibar(v)\,dv.
+\]
+Conditional on $M<s$, the path $-W$ converges as $s\downarrow0$ to a Brownian meander
+\citep{DurrettIglehartMiller1977}. The meander's maximum has mean $\sqrt{2\pi}\ln2$
+\citep{DurrettIglehart1977}, and the maximum's density at zero is $f_M(0)=\sqrt{2/\pi}$.
+Hence
+\[
+  J(s)/s\to f_M(0)\,\sqrt{2\pi}\ln2=2\ln2.
+\]
+The check script confirms the limit numerically from~\eqref{eq:G}.
+
+The ratio $J(s)/s$ is bounded:
+\begin{itemize}
+  \item on $(0,1]$, because it is continuous with a finite limit at zero;
+  \item for $s>1$, by $\E[-m]=\sqrt{2/\pi}$.
+\end{itemize}
+Dominated convergence therefore gives $T_3/\rho^2\to2\ln2\int_0^\infty v\Phibar(v)\,dv=\tfrac12\ln2$.
+So $\Delta_R=4T_3+O(\rho^3)=2\ln2\,\rho^2\{1+o(1)\}$.
+
+\emph{(d)} Write $RS=(\tilde h-\eta)(\tilde h-D)+(\tilde l-\eta)(\tilde l-D)$, using
+$u-c=\tilde h-D$ and $d-c=\tilde l-D$. Without an error, $RS_0=M(M-D)+m(m-D)$, with
+$\E[RS_0]=1$ \citep{RogersSatchell1991}. The difference $RS-RS_0$ is:
+\begin{itemize}
+  \item $-\eta(M+m-2D)$ on $\{m\le\eta\le M\}$;
+  \item $-\eta(m-D)-M(M-D)$ on $\{\eta>M\}$;
+  \item the mirror image of the second case on $\{\eta<m\}$.
+\end{itemize}
+Since $\E[\eta(M+m-2D)]=0$, the first case contributes
+$\E[\eta(M+m-2D)(\ind\{\eta>M\}+\ind\{\eta<m\})]$. Collecting terms and using the symmetry,
+\[
+  \E[RS]-1=2\E[\ind\{\eta>M\}(\eta-M)(M-D)]=2\E[(\eta-M)^+(M-D)].
+\]
+By the reflection principle, $(M,D)$ has density $2(2a-x)\phi(2a-x)$ on $a\ge\max(0,x)$.
+Substituting $z=2a-x$ gives
+\[
+  \E[(M-D)\ind\{M\in da\}]=2\int_a^\infty(z-a)z\phi(z)\,dz\,da=2\Phibar(a)\,da.
+\]
+Hence $\E[(\eta-M)^+(M-D)]=2\int_0^\infty\E[(\eta-a)^+]\Phibar(a)\,da$. Write
+$\Phibar(a)=P(Z''>a)$ for an independent standard normal $Z''$. The expectation becomes
+\[
+  2\E\bigl[\ind\{\eta>0,Z''>0\}\{\eta\mu-\mu^2/2\}\bigr],\qquad \mu=\min(\eta,Z'').
+\]
+The polar coordinates used for $T_1$ evaluate this to $\rho^2/4-T_1/2$. Therefore
+$\E[RS]-1=\rho^2/2-T_1$.
+
+\emph{(e)} $\E[GK]=\tfrac12(4\ln2+\Delta_R)-(2\ln2-1)(1+\rho^2)$, by~(b) and~(c).
+
+\emph{(f)} $P(\eta>M)=P(\rho Z>|Z'|)=\alpha/\pi$, the angle of the cone divided by $2\pi$. The
+event $\{\eta<m\}$ is disjoint from it and has the same probability.
+
+\emph{(g)} The loadings follow from~(b)--(e) and the small-error limit of~(c):
+\begin{itemize}
+  \item Parkinson: $\Delta_R/(4\ln2)\sim\rho^2/2$;
+  \item Garman--Klass: $\ln2\,\rho^2-(2\ln2-1)\rho^2=(1-\ln2)\rho^2$;
+  \item Rogers--Satchell: $\rho^2/2+O(\rho^3)$;
+  \item the daily Yang--Zhang form: $\rho^2\{1+k+(1-k)/2\}=\tfrac{3+k}{2}\rho^2$.
+\end{itemize}
+\qed
+
+\subsection*{B.3 Proof of Proposition~\ref{prop:band}}
+
+\emph{(a)} By the tower property, $\E[g(o_L)r]=\E[g(o_L)\E[r\mid o_L]]=b_L\E[g(o_L)o_L]$. For the
+clip function, $g(y)\{y-g(y)\}$ is:
+\begin{itemize}
+  \item $0$ if $|y|\le\beta$;
+  \item $\beta(y-\beta)>0$ if $y>\beta$;
+  \item $-\beta(y+\beta)>0$ if $y<-\beta$.
+\end{itemize}
+Hence $\E[g(o_L)o_L]\ge\E[g(o_L)^2]$, with equality if and only if $P(|o_L|>\beta)=0$.
+
+\emph{(b)} On $A=\{|o_L|<\beta\}$, $g(o_L)=o_L$ and $\E[o_Lr\ind_A]=b_L\E[o_L^2\ind_A]$. On $A^c$,
+$g(o_L)=\beta\operatorname{sign}(o_L)$. So $\E[g(o_L)r\ind_{A^c}]=b_L\beta\E[|o_L|\ind_{A^c}]$ and
+$\E[g(o_L)^2\ind_{A^c}]=\beta^2P(A^c)$.
+
+\emph{(c)} Let $z=o_L/\sigma$. The function $g$ is Lipschitz with $g'(z)=\ind\{|z|<k\}$ almost
+everywhere, so Stein's identity \citep{Stein1981} gives $\E[g(z)z]=\E[g'(z)]=2\Phi(k)-1$. Also
+\[
+  \E[g(z)^2]=\E[z^2\ind\{|z|\le k\}]+k^2P(|z|>k)=2\Phi(k)-1-2k\phi(k)+2k^2\Phibar(k).
+\]
+These two expectations have integral forms:
+\[
+  N(k):=2\Phi(k)-1=\int_0^k2\phi(t)\,dt,\qquad D(k):=\E[\min(z^2,k^2)]=\int_0^k4t\,\Phibar(t)\,dt.
+\]
+
+\begin{lemma}\label{lem:ratio}
+Let $a,c>0$ be continuous on $(0,\infty)$, with $a/c$ strictly decreasing. Then
+$k\mapsto\int_0^ka\big/\int_0^kc$ is strictly decreasing.
+\end{lemma}
+\begin{proof}
+Write $A(k)=\int_0^ka$ and $C(k)=\int_0^kc$. The derivative of $A/C$ has the sign of
+$a(k)C(k)-c(k)A(k)=c(k)\int_0^kc(t)\{a(k)/c(k)-a(t)/c(t)\}\,dt$. This is negative because the
+integrand is negative for $t<k$.
+\end{proof}
+
+Here $a(t)/c(t)=\lambda(t)/(2t)$, with $\lambda=\phi/\Phibar$. Since $\lambda'=\lambda(\lambda-t)$,
+\[
+  (\lambda/t)'=\lambda(t\lambda-t^2-1)/t^2.
+\]
+This is negative if and only if $\lambda(t)<t+1/t$, which is Gordon's
+\citeyearpar{Gordon1941} inequality $\Phibar(t)>t\phi(t)/(1+t^2)$. Lemma~\ref{lem:ratio}
+therefore makes $F=N/D$ strictly decreasing. The limits follow from:
+\begin{itemize}
+  \item $N(k),D(k)\to1$ as $k\to\infty$;
+  \item $N(k)=2\phi(0)k+O(k^3)$ and $D(k)=k^2+O(k^3)$ as $k\to0$.
+\end{itemize}
+The pinned ratio is $\E[|z|\mid|z|>k]/k=\lambda(k)/k$.
+
+\emph{(d)} The decomposition is a telescoping identity. Under Assumption~\ref{as:band}:
+\begin{itemize}
+  \item in regime~0, $b_0/b_0^{\mathrm{int}}=F_0$ by~(a) and~(b);
+  \item in regime~1, $b_1^{\mathrm{int}}/b_1=1/F_1\le1$.
+\end{itemize}
+\qed
+
+\subsection*{B.4 Proof of Proposition~\ref{prop:pool}}
+
+\emph{(a)} For any $c>0$,
+\[
+  \QL(Y,f)-\QL(Y,cf)=\frac{Y}{f}\Bigl(1-\frac1c\Bigr)-\ln c.
+\]
+Average over security $i$'s forecasts and put $c=c^*_i=\E_i[Y/f]$. The result is
+$c^*_i-1-\ln c^*_i=q(c^*_i)$, which is non-negative because $\ln c\le c-1$. The same algebra holds
+for sample means. Moreover, $c^*_i$ minimises $c\mapsto\E_i[\QL(Y,cf)]$, whose derivative is
+$1/c-\E_i[Y/f]/c^2$. So the first term is the loss after the best rescaling.
+
+\emph{(b)} The pooled loss of $\kappa f$ is $\sum_iw_i\E_i[\QL(Y,\kappa f)]$. Its derivative in
+$\kappa$ vanishes when $\sum_iw_i\E_i[Y/(\kappa f)]=1$. The second-order form follows from
+$q(c)=\tfrac12(c-1)^2+O((c-1)^3)$ and $\ln c=(c-1)+O((c-1)^2)$.
+
+\emph{(c)} The three expectations are:
+\begin{itemize}
+  \item $\E[(\beta o)^2]=\beta^2(\E[\os{}^2]+\sigma_\eta^2)$, by independence;
+  \item $\E[R^2]/(4\ln2)=\sigma_c^2\{1+\Delta_R(\rho)/(4\ln2)\}$, by Proposition~\ref{prop:classical}(c);
+  \item $\E[r^2]=\E[\os{}^2]+\sigma_c^2$.
+\end{itemize}
+Divide the sum of the first two by the third. The first-order form uses
+$\Delta_R/(4\ln2)=\rho^2/2+o(\rho^2)$.
+
+\emph{(d), error-only heterogeneity.} Put $s_i\equiv s$. Then $\psi_i=a+\gamma n_i$, with
+$a=1-(1-\beta^2)s$ and $\gamma=\beta^2+\tfrac12$, so
+$\Var(\ln\psi_i)=\Var(\ln(a/\gamma+n_i))$. For a non-degenerate $n\ge0$, the map
+$\xi\mapsto\Var(\ln(\xi+n))$ is strictly decreasing on $\xi>0$. Its derivative is
+$2\Cov(\ln(\xi+n),1/(\xi+n))<0$, because the two variables are strictly oppositely monotone in
+$n$. Also,
+\[
+  \frac{d(a/\gamma)}{d(\beta^2)}=\frac{s\gamma-a}{\gamma^2}=\frac{\tfrac32s-1}{\gamma^2},
+\]
+which is negative when $s<2/3$. So the variance increases with $\beta$.
+
+\emph{(d), overnight-share-only heterogeneity.} Put $n_i\equiv n$. Then
+$\psi_i=(1+\gamma n)\{1-t\,s_i\}$, with $t=(1-\beta^2)/(1+\gamma n)$ strictly decreasing in
+$\beta$. The map $t\mapsto\Var(\ln(1-ts))$ is strictly increasing on $[0,1/\max s)$. Its
+derivative is $2\Cov(\ln(1-ts),-s/(1-ts))>0$, because both variables are strictly decreasing in
+$s$. At $\beta=1$, $t=0$ and the variance is zero. \qed
+
+\subsection*{B.5 Proof of Proposition~\ref{prop:lag}}
+
+\emph{(a)} The window holds $L$ dates. By assumption $R_s/N=\rho_{j(s)}a_s+o_p(1)$ and
+$A_s/N=a_s+o_p(1)$ for each of them. Since $\sum_sa_s>0$, the continuous mapping theorem gives
+\[
+  \kappa_t=\frac{\sum_sR_s/N}{\sum_sA_s/N}\to\frac{\sum_s\rho_{j(s)}a_s}{\sum_sa_s}=\omega_t\rho_1+(1-\omega_t)\rho_0.
+\]
+
+\emph{(b)} If $a_s$ is constant, $\omega_{\tau+j}$ is the share of post-change dates among the
+$L$, which is $\min(j+1,L)/L$.
+
+\emph{(c)} Write $\ln\kappa_t-\ln\rho_t=\mathrm{bias}_t+\epsilon_t$, with $\E\epsilon_t=0$ and
+$\E\epsilon_t^2=v/L$ to first order. The cross term is zero because the bias is deterministic
+given the change dates. With probability $1-O(\lambda L)$, no second change falls in the window
+after a change at $\tau$. Then, for $0\le j<L$,
+\[
+  \mathrm{bias}_{\tau+j}=\ln\{(1-\omega_j)\rho_0+\omega_j\rho_1\}-\ln\rho_1=\pm(1-\omega_j)\delta+O(\delta^2),
+\]
+and the bias is zero afterwards. Summing with the linear weights of~(b),
+\[
+  \sum_{j=0}^{L-1}(1-\omega_j)^2\delta^2=\delta^2\frac{(L-1)(2L-1)}{6L}=\frac{\delta^2L}{3}+O(\delta^2).
+\]
+Changes arrive at rate $\lambda$ per date, so the long-run average squared bias per date is
+$\lambda\delta^2L/3$, up to terms of higher order in $\delta$ and $\lambda L$. Adding the variance
+gives $\tfrac12(\lambda\delta^2L/3+v/L)$. Minimising over $L$ gives
+$L^*=\sqrt{3v/(\lambda\delta^2)}$, and substituting $L^*$ gives the minimum
+$\sqrt{\lambda\delta^2v/3}$. The level loss of a scale error $e^{\epsilon}$ is
+$q(e^{\epsilon})=\epsilon^2/2+O(\epsilon^3)$, as in Proposition~\ref{prop:pool}(b). \qed
+
+\subsection*{B.6 Proof of Proposition~\ref{prop:iv}}
+
+\emph{(a)} By iterated expectations,
+$\E[U_{it}\mid\mathcal F_{i,t-1}]=\E[\E[U_{it}\mid IV_{it},\mathcal F_{i,t-1}]\mid\mathcal F_{i,t-1}]=0$.
+So $\E[X_{k,it}\mid\mathcal F_{i,t-1}]=\alpha_{k,i}+\beta_kV_{it}$. For $Z\in\mathcal F_{i,t-1}$
+within a security, $\Cov(X_k,Z)=\Cov(\E[X_k\mid\mathcal F_{t-1}],Z)=\beta_k\Cov(V,Z)$, and the
+same holds for $k=0$ with $\beta_0=1$. Forward orthogonal deviations remove $\alpha_{k,i}$ while
+keeping the transformed errors orthogonal to instruments dated $t-1$ \citep{ArellanoBover1995}.
+
+\emph{(b)} With $X=\alpha+\beta IV+U$ and $IV$ uncorrelated with $U$:
+\begin{itemize}
+  \item $\Cov(X_k,X_0)=\beta_k\Var(IV)+\Cov(U_k,U_0)$;
+  \item $\Var(X_0)=\Var(IV)+\Var(U_0)$.
+\end{itemize}
+The mean-ratio decomposition is an identity.
+
+\emph{(c)} In general, $\Cov(X_k,Z)=\beta_k\Cov(IV,Z)+\Cov(U_k,Z)$. Also
+$\Cov(IV,Z)=\Cov(V,Z)$, because $IV-V$ is uncorrelated with $\mathcal F_{t-1}$. If $U$ is a moving
+average of order $q$ with respect to $\mathcal F$, then $\E[U_t\mid\mathcal F_{t-q-1}]=0$, so
+instruments in $\mathcal F_{t-q-1}$ are uncorrelated with $U_t$.
+
+\emph{(d)} These are the standard results for generalised method of moments estimators
+\citep{Hansen1982}, applied to the moment conditions of~(a) after the transformation.
+
+\emph{(e)} Minimising $w'\Sigma_Xw$ subject to $w'\beta=1$ gives $w\propto\Sigma_X^{-1}\beta$. By
+the Sherman--Morrison formula,
+\[
+  \Sigma_X^{-1}\beta=\frac{\Omega_U^{-1}\beta}{1+\Var(IV)\,\beta'\Omega_U^{-1}\beta}\propto\Omega_U^{-1}\beta.
+\]
+Equivalently, under the constraint, $w'\Sigma_Xw=\Var(IV)+w'\Omega_Uw$. \qed

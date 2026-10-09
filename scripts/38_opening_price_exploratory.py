@@ -23,10 +23,14 @@ X4  A bound that does NOT assume the opening error is independent of overnight n
         E[eta^2] >= E[o^2] * ((sqrt(5 - 4b) - 1) / 2)^2        (b < 1),
 
     by Cauchy-Schwarz when E[e_o eta] >= 0 (then E[e_o^2] <= E[o^2]; raw moments, as in b) and directly when it is
-    negative (then E[eta^2] > -E[o c] = (1 - b) E[o^2], which exceeds the bound). The bound is
-    attained when eta is perfectly correlated with the news; under independence the value is
-    (1 - b) E[o^2]. Both are reported as shares of the open-to-close benchmark E[OC], beside the
-    kernel-based share.
+    negative (then E[eta^2] > -E[o c] = (1 - b) E[o^2], which exceeds the bound). CORRECTED IN
+    ROUND 17 (AUDIT-REGISTER M-026): this docstring used to say the bound is attained when eta is
+    perfectly correlated with the news. It is not. The bound is valid but not sharp; the sharp bound
+    is E[eta^2] >= (1 - b)^2 E[o^2], attained exactly when eta is proportional to the efficient open
+    (theory supplement, Proposition 1; computed with intervals by scripts/45_theory_checks.py,
+    table122). Under independence the value is (1 - b) E[o^2]. The weaker bound and the
+    independence value are reported here as shares of the open-to-close benchmark E[OC], beside the
+    kernel-based share; this script's outputs are unchanged.
 X5  The regime fingerprints the manuscript uses to date the closing rule (descriptive): the share
     of closes off the exchange's 0.1-rupee price grid, which a last-trade close cannot produce and
     a fifteen-minute VWAP close almost always does, by regime and on the excluded 2025-09-18

@@ -15,6 +15,6 @@ pytest==8.4.2
 # (arch.data.sp500, arch.data.vix); the holdout cannot reach other market-data hosts.
 arch==8.0.0
 
-# Transitive, pinned deliberately: statsmodels pulls scipy in, and the pin keeps the
-# resolved environment deterministic. No shipped module imports scipy directly.
+# Pinned deliberately: statsmodels pulls scipy in, and scripts/34, 35 and 45 import it directly
+# (45 for the Brownian-extreme integrals and the Gaussian closed forms of the theory checks).
 scipy==1.18.1
