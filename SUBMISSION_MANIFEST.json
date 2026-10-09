@@ -1,7 +1,7 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
   "revision": "17 (round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-09T12:38:39+00:00",
+  "generated_utc": "2026-10-09T12:40:02+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -15,7 +15,7 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "343 passed, 1 skipped in 46.88s",
+    "pytest": "344 passed in 45.61s",
     "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference environment (earlier rounds)",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
