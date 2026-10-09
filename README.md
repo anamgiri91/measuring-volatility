@@ -64,19 +64,32 @@ write o = ln(O/PC), r = ln(C/PC), h = ln(H/PC), l = ln(L/PC) and R = ln(H/L).
 
 ### Using it
 
-```python
-from nepsevol.estimators.anam import anam_estimator
+Install the standalone package (Python 3.9 or later; it needs only numpy and pandas):
 
-# df: one row per security and session, sorted by (symbol, date), with open, high, low, close and
-# prev_close -- the previous session's close, adjusted for corporate actions and NaN across a gap.
-full = anam_estimator(df, window=21, mode="panel")                     # the estimator frozen in M16
-open_free = anam_estimator(df, window=21, mode="panel", open_free=True)  # the frontier-market form
-# each returns b, kernel, kappa and var: the calibrated 21-session variance, in daily units.
-# Annualise with the market's own session count, not an imported 252.
+```bash
+pip install "anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator"
 ```
 
-For a single series such as an index, use `mode="series"`. The implementation is
-`src/nepsevol/estimators/anam.py`; its property tests are in `tests/test_anam_estimator.py`.
+```python
+import pandas as pd
+from anam_estimator import AnamModel, anam_estimator
+
+prices = pd.read_csv("prices.csv")   # date, open, high, low, close (+ symbol for several securities)
+
+est = anam_estimator(prices, form="open-free", annualize="observed")   # the estimate on every bar
+model = AnamModel(form="open-free", horizon=5).fit(prices)            # a fitted forecasting model
+print(model.forecast())                                               # the next 5 sessions, per security
+```
+
+The package also offers a command line (`anam-estimator prices.csv --form open-free`), a backtest, a way
+to save fitted models, and simulated data to try it on (`simulate_bars()`).
+[`anam-estimator/README.md`](anam-estimator/README.md) covers input formats, the two forms, the model
+and its model card. Annualise with the market's own session count (`annualize="observed"`), not an
+imported 252.
+
+Inside this repository, `src/nepsevol/estimators/anam.py` is the original that produced the paper's
+tables, with property tests in `tests/test_anam_estimator.py`. The package reproduces it exactly, and its
+forecasts reproduce the paper's forecast test (`tests/test_anam_package.py`).
 
 ### How it did out of sample
 
@@ -270,6 +283,7 @@ series used by M16 is read from the `arch` package (version 8.0.0).
 - `M16_ANAM_ESTIMATOR_PLAN.md` / `M16_ANAM_ESTIMATOR_RESULTS.md` — **Anam's estimator** (`src/nepsevol/estimators/anam.py`), a daily-bar volatility estimator for markets whose opening price cannot be trusted: the overnight move weighted by the open's measured unbiasedness b, the range extended to the effective open, a close-to-close blend that grows as the open degrades, and calibration to close-to-close variance across the market's cross-section. Designed on NEPSE regimes A1 and B, with M15's full-sample findings already known (the plan lists them); plan frozen (commit `3296dad`; cited as `dc41f1e` in the frozen documents, see the commit map under `M-017` in `AUDIT-REGISTER.md`) before the estimator was computed on the holdout. **Holdout:** no range-based estimator has significantly lower loss on the NEPSE holdout, NIFTY 50 or the S&P 500 (where b̂ is capped at one and the estimator is exactly overnight² + Parkinson), it ranks first on NIFTY 50, and its calibrated level is within 1.1% of close-to-close where rules were stable (as any estimator's is under the same calibration; see `ANAM_RECHECK_POSTHOC.md`); but plain close-to-close beats it in the 90 sessions after NEPSE's April 2026 band reform, and three of the plan's NEPSE predictions failed. Manuscript Section 6.8.
 - `M17_ANAM_FRONTIER_PLAN.md` / `M17_ANAM_FRONTIER_RESULTS.md` — Anam's estimator, unchanged, in two more frontier markets: Bangladesh (Dhaka Stock Exchange, 2023-2026 and, with repaired dates, 2009-2021) and Vietnam (2007-2020), panels built by `src/nepsevol/frontier.py`. Plan frozen (commit `ff124bd`; cited as `db417ac`, see `M-017`) before any estimator was computed on these data. **Result:** it beats every classical range-based estimator in all three panels at both horizons (36 of 36 comparisons, under the plan's QLIKE loss) and its calibrated level is within 1% of close-to-close variance, but it does not beat plain close-to-close at 5 sessions in either primary panel and loses to it in Vietnam at 21 sessions, so the plan's summary claim G fails. Its open-free special case, a reported variant, had the lowest loss at 5 sessions in every panel (post hoc reading). The author's Dhaka file has day and month exchanged in pre-2023 dates; see the plan and `data/external/README.md`. Inputs are third-party and not packaged. Manuscript Section 6.8.
 - `M18_ANAM_MOROCCO_PLAN.md` / `M18_ANAM_MOROCCO_RESULTS.md` — both forms of Anam's estimator on the Casablanca Stock Exchange (Morocco, 77 shares, 2012-2026, data supplied by the author), with the open-free form tested as a hypothesis fixed before any return or estimator was computed on the data. Plan frozen (commit `b4de86d`). **Result:** every binding hypothesis holds. The open-free form has the lowest loss of all nine estimators at 5 and 21 sessions and beats close-to-close (t = -4.53) and the full estimator (t = -4.75) at 5; the full estimator also beats close-to-close at 5 (t = -2.06); both calibrated levels are 1.005. Manuscript Section 6.8.
+- `anam-estimator/` — **the installable package**: Anam's estimator and the `AnamModel` forecasting model, a command line, simulated data and a model card (`anam-estimator/README.md`); numpy and pandas only, installable straight from GitHub with pip. Its arithmetic is a verbatim copy of `src/nepsevol/estimators/anam.py`, and `tests/test_anam_package.py` checks that it reproduces the research code and the paper's forecasts exactly; its own tests are in `anam-estimator/tests/`.
 - `ANAM_RECHECK_POSTHOC.md` — the POST HOC recheck of every claim made for Anam's estimator, run after all M16-M18 verdicts were known (`scripts/44_anam_recheck.py`, package Tables 117-120, paper Tables 37-38): what was overstated and how it was corrected (`M-020` to `M-025`), which verdicts survive other inference, another loss function and a Holm correction, the level under a shared calibration, and the data assumptions tested. No frozen verdict changes.
 - `OPTIONAL_ITEMS_FOLLOWUP.md` — follow-up on the remaining optional items: literature-integration confirmation, the structured abstract, the master-coverage sensitivity check (Table 17), JEL/data-availability/funding/conflict-of-interest statements, and the table-header/CI-precision fixes.
 - `data/processed/` — frozen paper-facing stock-day panels in CSV format (see `data/processed/README.md`).

@@ -17,7 +17,7 @@ import sys
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parent
-SKIP_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ipynb_checkpoints"}
+SKIP_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ipynb_checkpoints", "build", "dist"}
 SKIP_NAMES = {"SUBMISSION_MANIFEST.json", ".DS_Store"}
 # third-party inputs placed locally and never packaged (gitignored; pinned by SHA-256 in
 # src/nepsevol/frontier.py and documented in data/external/README.md)
@@ -38,6 +38,8 @@ def files():
             continue
         rel = p.relative_to(ROOT)
         if set(rel.parts) & SKIP_DIRS or rel.name in SKIP_NAMES:
+            continue
+        if any(part.endswith(".egg-info") for part in rel.parts):   # local package builds
             continue
         if str(rel).startswith(SKIP_PREFIXES):
             continue
@@ -220,6 +222,17 @@ manifest = {
         "new_scripts": ["scripts/44_anam_recheck.py", "paper/apply_round16_revisions.py"],
         "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
         "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
+    },
+    "anam_estimator_package": {
+        "path": "anam-estimator/ (pyproject.toml, src/anam_estimator, tests, examples, README.md with a model card)",
+        "install": "pip install \"anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git"
+                   "#subdirectory=anam-estimator\"",
+        "contents": "anam_estimator() (the estimate on every bar), AnamModel (fit, forecast, backtest, score, "
+                    "save/load), a command line, simulate_bars(); depends on numpy and pandas only",
+        "verified": "its arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py; "
+                    "tests/test_anam_package.py checks that it equals the research module on every NEPSE "
+                    "stock-day and both indices and that its forecasts equal the paper's forecast test origin "
+                    "by origin; anam-estimator/tests holds the package's own tests",
     },
     "revision_14_changes": {
         "M14_instrumented_calibration": {

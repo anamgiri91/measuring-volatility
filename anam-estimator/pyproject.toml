@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anam-estimator"
+dynamic = ["version"]
+description = "Anam's estimator: daily-bar volatility for markets whose opening price cannot be trusted"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+authors = [{ name = "Anam Giri" }]
+dependencies = ["numpy>=1.22", "pandas>=1.5"]
+keywords = ["volatility", "OHLC", "range-based estimator", "Parkinson", "Yang-Zhang",
+            "frontier markets", "volatility forecasting", "opening auction"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+anam-estimator = "anam_estimator.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/anamgiri91/measuring-volatility/tree/main/anam-estimator"
+Paper = "https://github.com/anamgiri91/measuring-volatility"
+
+[tool.setuptools.dynamic]
+version = { attr = "anam_estimator._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+anam_estimator = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

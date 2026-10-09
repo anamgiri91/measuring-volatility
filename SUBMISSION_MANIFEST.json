@@ -1,7 +1,7 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
   "revision": "16 (round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-08T22:16:22+00:00",
+  "generated_utc": "2026-10-09T03:31:08+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -15,7 +15,7 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "289 passed in 35.61s",
+    "pytest": "326 passed in 35.63s",
     "paper_facing_pipeline": "run_paper_analysis.sh completed successfully in the reference environment (earlier rounds)",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
@@ -106,6 +106,12 @@
     "new_documents": [
       "ANAM_RECHECK_POSTHOC.md"
     ]
+  },
+  "anam_estimator_package": {
+    "path": "anam-estimator/ (pyproject.toml, src/anam_estimator, tests, examples, README.md with a model card)",
+    "install": "pip install \"anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator\"",
+    "contents": "anam_estimator() (the estimate on every bar), AnamModel (fit, forecast, backtest, score, save/load), a command line, simulate_bars(); depends on numpy and pandas only",
+    "verified": "its arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py; tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day and both indices and that its forecasts equal the paper's forecast test origin by origin; anam-estimator/tests holds the package's own tests"
   },
   "revision_14_changes": {
     "M14_instrumented_calibration": {
@@ -279,8 +285,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 34800,
-      "sha256": "02794fcf99d761ea37e9802a9362c737a7a772b7f043c16dcea9f3eb0398f2af"
+      "bytes": 35875,
+      "sha256": "8eec129384404c26944481f168689b6efebd9470e44e982a4997d5e61fedeb9d"
     },
     {
       "path": "REFEREE_RESPONSE.md",
@@ -298,9 +304,109 @@
       "sha256": "60becd72b8335308a4cdc37a8c4751c584dc6b1a409012e493da0fd2e35f03d5"
     },
     {
+      "path": "anam-estimator/LICENSE",
+      "bytes": 1165,
+      "sha256": "66dd5711c968a916b20278e346efe65502215a6f3facd158af714a34e5434d64"
+    },
+    {
+      "path": "anam-estimator/README.md",
+      "bytes": 8376,
+      "sha256": "81c6e327f8b851c20bd130d786e29ef2c606b2a02bd33fc48f291cc327c65604"
+    },
+    {
+      "path": "anam-estimator/examples/quickstart.py",
+      "bytes": 1760,
+      "sha256": "6e445facf3b9e49da8d7fe0f2f281a40e93f61f47c03810b1a44e8c21de91fe5"
+    },
+    {
+      "path": "anam-estimator/pyproject.toml",
+      "bytes": 1432,
+      "sha256": "ae73d2ed4a98fcaabfaf9b3da25c3d1e097d6b6d2efc1e42f00991515e16aad0"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/__init__.py",
+      "bytes": 1596,
+      "sha256": "c475d9df4bf45808c5db900754df13bcacd3befe8cb9ab068ed06e2917e4c66f"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/__main__.py",
+      "bytes": 48,
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/_version.py",
+      "bytes": 22,
+      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/cli.py",
+      "bytes": 3522,
+      "sha256": "6cf56355463a214366214f86fd58785e6dae8cfae162ef97f8f1683611ff9a47"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/core.py",
+      "bytes": 7008,
+      "sha256": "670740ffbf16322ffbd37a549a5380c2e4b6990a8d141fdf7e157f44c8b10678"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/data.py",
+      "bytes": 7909,
+      "sha256": "31b972913a0e9710de95f8f5e804b7a2d7f4cea1a5bfeadf1719b064ff151431"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/estimator.py",
+      "bytes": 6002,
+      "sha256": "0e347582911f8b79c28b37bcb3e1a7453cb8a3a1ab3a80b27bbb421d329e7ad9"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/model.py",
+      "bytes": 16420,
+      "sha256": "a69abc8dfe679d739d69e63d9b1a473261c6d1a37d1052de5261d242576de1f7"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/simulate.py",
+      "bytes": 3284,
+      "sha256": "cbc691e35d488b85c2b08472d7851003d1960e8ab901045e286f7bf26abf44f3"
+    },
+    {
+      "path": "anam-estimator/tests/conftest.py",
+      "bytes": 542,
+      "sha256": "6cd5812c9ed12492ad26da8730e215d0d21ddf99e2b8ae75d2e289f52e3729a9"
+    },
+    {
+      "path": "anam-estimator/tests/test_cli.py",
+      "bytes": 644,
+      "sha256": "187b46759e25cddeae95ea63d5b8c24bded7e8d9f7a2c2393b881417b6d97c26"
+    },
+    {
+      "path": "anam-estimator/tests/test_core.py",
+      "bytes": 1661,
+      "sha256": "1a90b6c9743f08d5d890e4f5060b9270c8cb9616fb81f586b6713ba9b89a9489"
+    },
+    {
+      "path": "anam-estimator/tests/test_data.py",
+      "bytes": 3234,
+      "sha256": "fbbd16b457a959d3089fafd5276c7f0edfda55bed570b375ba1ec6c49e87e388"
+    },
+    {
+      "path": "anam-estimator/tests/test_estimator.py",
+      "bytes": 2558,
+      "sha256": "0a6e8bcbdf9e6e85972c213336e2628fa2142471e6a3a9aa17342a3c08b9001b"
+    },
+    {
+      "path": "anam-estimator/tests/test_model.py",
+      "bytes": 3000,
+      "sha256": "e63f2bcf76843dd6844d42c632187e32be82cbcfbe927021c8fb45385eb2f508"
+    },
+    {
       "path": "build_manifest.py",
-      "bytes": 20030,
-      "sha256": "cbf95e36bb5ae46d8d0ea0791110fe33c8482303a744ed4ead9d29e01dd3300c"
+      "bytes": 21090,
+      "sha256": "a9e92c0bfcbb6749bb676caaf7be7961c69a17d11d8fb1847bc639e5cd9ef08f"
     },
     {
       "path": "data/audit/README.md",
@@ -1369,8 +1475,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 702,
-      "sha256": "d5049d8def43e1a42180ea000bc937c9ba368e6f102ea9d8742fa2e440333af7"
+      "bytes": 806,
+      "sha256": "21e0153a52d4e695101378bdf9aefcff13180769182429e538f408c3e3d60a01"
     },
     {
       "path": "requirements.txt",
@@ -1579,8 +1685,8 @@
     },
     {
       "path": "src/nepsevol/estimators/anam.py",
-      "bytes": 12531,
-      "sha256": "4df1ea0eedb4dd261aabbbd655a03e7d14957e78755959747f48b2e6ab822f1e"
+      "bytes": 12693,
+      "sha256": "4627a6f8cc908eca87ee91c6fb15aca6462fae3cb981da5a6eca96130923cdd9"
     },
     {
       "path": "src/nepsevol/estimators/microsim.py",
@@ -1658,31 +1764,6 @@
       "sha256": "bd6ea09644e7a73045ef525feffbfcb9cda24d33580a4ee3f8ae0964088116b8"
     },
     {
-      "path": "src/nepsevol.egg-info/PKG-INFO",
-      "bytes": 321,
-      "sha256": "c25d1929e76548782a610a143622264fd327bd9c6cd8b84e06617a587f0d050d"
-    },
-    {
-      "path": "src/nepsevol.egg-info/SOURCES.txt",
-      "bytes": 1013,
-      "sha256": "58928464044385580f8f2d4839156d1d4a65864faab2912fd976f4c9bb3bbede"
-    },
-    {
-      "path": "src/nepsevol.egg-info/dependency_links.txt",
-      "bytes": 1,
-      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
-    },
-    {
-      "path": "src/nepsevol.egg-info/requires.txt",
-      "bytes": 57,
-      "sha256": "a9b598a8d603b51e152c9ef899ecf8a8d21e8a67f3768d9039e3fb1f40d5f4e0"
-    },
-    {
-      "path": "src/nepsevol.egg-info/top_level.txt",
-      "bytes": 9,
-      "sha256": "3887b7b8541921225187ea2dffdf07bcb55e9ddf1bfc0b8b0863aefd372c9615"
-    },
-    {
       "path": "tests/test_anam_estimator.py",
       "bytes": 7130,
       "sha256": "58daa0d0adb594a72c959310119935d5a53119d7fafc8d4328801c837e75e54a"
@@ -1696,6 +1777,11 @@
       "path": "tests/test_anam_morocco_results.py",
       "bytes": 3074,
       "sha256": "a3371e8bc1e63621ec1d649008154d01169ffe2d8cc45044ca1d87b5eba982bd"
+    },
+    {
+      "path": "tests/test_anam_package.py",
+      "bytes": 6254,
+      "sha256": "c65450cc830b3a12c91903864055e42fa6e2f0aaee7ee5884106feb584a8e69d"
     },
     {
       "path": "tests/test_anam_recheck.py",

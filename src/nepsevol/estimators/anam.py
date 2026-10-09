@@ -200,8 +200,10 @@ def anam_estimator(df: pd.DataFrame, window: int = 21, mode: str = "panel", by: 
 
     ``open_free=True`` gives the open-free form, b = 0 throughout: 0.8 x true-range Parkinson plus
     0.2 r^2, calibrated the same way. It is the special case the frozen M16 plan reported as a
-    variant; M18 tested it as a hypothesis fixed in advance, and it is the form the frontier-market
-    evidence supports (manuscript Section 6.8). The default, ``False``, is the estimator frozen in M16.
+    variant; M18 tested it as a hypothesis fixed in advance, and of the two forms it is the one the
+    frontier-market evidence favours (manuscript Section 6.8; ``ANAM_RECHECK_POSTHOC.md``). The default,
+    ``False``, is the estimator frozen in M16. The installable package ``anam-estimator/`` copies this
+    arithmetic verbatim (``tests/test_anam_package.py``).
     """
     if mode not in ("panel", "series"):
         raise ValueError(f"mode must be 'panel' or 'series', got {mode!r}")
