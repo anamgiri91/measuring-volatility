@@ -19,11 +19,12 @@ from .core import (LAMBDA0, MIN_POOL_DATES, MIN_SERIES_SESSIONS, POOL_SESSIONS, 
                    open_quality_panel, open_quality_series)
 from .data import observed_sessions_per_year, prepare
 from .estimator import FORMS, anam_estimator, estimate
+from .ml import AnamMLModel
 from .model import PHI_GRID, AnamModel, qlike
 from .simulate import simulate_bars
 
 __all__ = [
-    "__version__", "AnamModel", "anam_estimator", "estimate", "prepare", "observed_sessions_per_year",
+    "__version__", "AnamModel", "AnamMLModel", "anam_estimator", "estimate", "prepare", "observed_sessions_per_year",
     "simulate_bars",
     "qlike", "FORMS", "PHI_GRID", "LAMBDA0", "POOL_SESSIONS", "MIN_POOL_DATES", "SERIES_SESSIONS",
     "MIN_SERIES_SESSIONS", "bar_coordinates", "open_quality_panel", "open_quality_series",
