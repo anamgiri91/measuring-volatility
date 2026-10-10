@@ -455,3 +455,63 @@ At $\sigma_\eta=0$, $A=\os^2+(M-m)^2/(4\ln2)$, with mean $s^2+1$. So the loading
 $\pi(o)$ in place of $(b\,o)^2$, $\E[\pi(o)]=s^2$ exactly by~(a). The same steps then give
 $s^2+1+\tfrac12\rho^2+o(\rho^2)$, a loading of $+\tfrac12$. \qed
 
+\subsection*{B.8 Proof of Proposition~\ref{prop:market}}
+
+\emph{(a)} By definition $m_{-i}=(N-1)^{-1}\sum_{j\ne i}(\beta_jf+\zeta_j+\eta_j)$, a measurable
+function of $f$ and $(\zeta_j,\eta_j)_{j\ne i}$. By Assumption~\ref{as:panel} these are independent of
+$(\zeta_i,\eta_i)$. Security $i$'s print $o_i$ does not enter the sum.
+
+\emph{(b)} $m_{-i}-\bar\beta_{-i}f=(N-1)^{-1}\sum_{j\ne i}(\zeta_j+\eta_j)$. The summands are independent
+with mean zero, so the second moment of the sum is the sum of the second moments. Bounding each by the
+largest gives the inequality.
+
+\emph{(c)} Write $\epsilon_{-i}=m_{-i}-\bar\beta_{-i}f$. Since $\epsilon_{-i}$ has mean zero and is
+independent of $f$, $\E[m_{-i}^2]=\bar\beta_{-i}^2\sigma_f^2+\E[\epsilon_{-i}^2]$, and the second term
+is $V_{N,i}$ by~(b). Next,
+\[
+  \E[r_im_{-i}]=\E[(\beta_if+\zeta_i+x_i)(\bar\beta_{-i}f+\epsilon_{-i})]=\beta_i\bar\beta_{-i}\sigma_f^2.
+\]
+Three terms vanish:
+\begin{itemize}
+  \item $\E[\zeta_i\epsilon_{-i}]=0$ and $\E[\zeta_if]=0$, by independence and zero means;
+  \item $\E[\beta_if\,\epsilon_{-i}]=0$, by the same argument;
+  \item $\E[x_im_{-i}]=0$, because $m_{-i}$ is a function of what is known at the open, by the last
+        clause of the assumption.
+\end{itemize}
+Summing over $i$ and dividing gives $b_M$. With equal betas $\bar\beta_{-i}=\beta$, and the ratio tends
+to one because $V_N\to0$ by~(b).
+
+\emph{(d)} By the same steps,
+$\E[o_ir_i]=\beta_i^2\sigma_f^2+\E[\zeta_i^2]+\E[\zeta_i\eta_i]$, using $\E[o_ix_i]=0$, and
+$\E[o_i^2]=\beta_i^2\sigma_f^2+\E[(\zeta_i+\eta_i)^2]$. Write $S_M=\sum_i\beta_i^2\sigma_f^2$ and
+$S_I=\sum_i\E[(\zeta_i+\eta_i)^2]$. Then
+\[
+  b=\frac{\sum_i\E[o_ir_i]}{\sum_i\E[o_i^2]}=\frac{S_M+b_IS_I}{S_M+S_I}=\mu+(1-\mu)\,b_I.
+\]
+In a sample, the parts $o_{I,i}=o_i-o_M$ sum to zero within each date, so
+$\sum o_Mo_I=\sum_to_{M,t}\sum_io_{I,i,t}=0$. Hence:
+\begin{itemize}
+  \item $\sum o^2=\sum o_M^2+\sum o_I^2$;
+  \item $\sum o\,r=\sum o_Mr+\sum o_Ir=\hat b_M\sum o_M^2+\hat b_I\sum o_I^2$.
+\end{itemize}
+Dividing the second line by the first gives the identity.
+
+\emph{(e)} If $o_i\ne0$, then $o^*=0$, so $R^*=\max(h,0)-\min(l,0)=TR$ and the overnight term vanishes.
+On a bar with a range, $D=4\ln2$, and $A=(1-w)TR^2/(4\ln2)+wr^2$, the open-free kernel.
+
+If the bar never left the previous close, then $o=c=u=d=0$ and so $h=l=r=0$. The open printed at the
+previous close, so $o^*=m_{-i}$. Then $R^*=|m_{-i}|$ and $D=1$, so $A=(1-w)(m_{-i}^2+m_{-i}^2)$. Its
+expectation follows from~(c). The open-free kernel is $(1-\lambda_0)\cdot0+\lambda_0\cdot0=0$.
+
+\emph{(f)} We take each property in turn.
+\begin{itemize}
+  \item With one observation, $R_1=\max(0,W(1))-\min(0,W(1))=|W(1)|$, so $\lambda_1=\E[W(1)^2]=1$.
+  \item The grid $\{j/(kn)\}$ contains $\{j/n\}$. A maximum over more points is no smaller, and a
+        minimum no larger, so $R_{kn}\ge R_n$ pathwise.
+  \item Every discrete range is at most the continuous range $\sup_{[0,1]}W-\inf_{[0,1]}W$, which
+        includes $W(0)=0$. That range has second moment $4\ln2$ \citep{Parkinson1980}.
+  \item Paths are continuous, so the discrete maximum and minimum converge to the supremum and infimum
+        as the mesh $1/n\to0$. The squares are dominated by the square of the continuous range, which
+        is integrable, so $\lambda_n\to4\ln2$ by dominated convergence. \qed
+\end{itemize}
+

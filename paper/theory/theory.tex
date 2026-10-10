@@ -2,6 +2,7 @@
 % Build:  python scripts/45_theory_checks.py      (writes generated/numbers.tex and the table fragments)
 %         python scripts/46_theory_proofs.py      (writes generated/proofs.tex and tab_proofs.tex)
 %         python scripts/48_kernel_theory.py      (writes generated/kernel.tex and tab_kernel.tex)
+%         python scripts/54_market_open_theory.py (writes generated/market_open.tex and tab_market_open.tex)
 %         latexmk -pdf theory.tex                  (in this directory)
 % Every number below is a macro \thn{key} defined in generated/numbers.tex; none is typed by hand.
 \documentclass[11pt]{article}
@@ -35,6 +36,7 @@
 \input{generated/numbers.tex}
 \input{generated/proofs.tex}
 \input{generated/kernel.tex}
+\input{generated/market_open.tex}
 % table bodies are read with the primitive \input, which expands inside a tabular before \bottomrule
 \makeatletter
 \newcommand{\tabinput}[1]{\@@input #1 }
@@ -59,7 +61,7 @@
 \begin{abstract}
 \noindent
 The daily bar's opening price can carry a transient error that the session undoes, as it does in
-Nepal's auction-set open. This document develops the statistics of that problem and states seven
+Nepal's auction-set open. This document develops the statistics of that problem and states eight
 propositions, with complete proofs in Appendix~B. It shows what the unbiasedness coefficient
 $b=\E[or]/\E[o^2]$ identifies, with a sharp lower bound on the error that replaces a weaker
 published one. It derives exactly how much of the error each classical range estimator absorbs,
@@ -76,7 +78,11 @@ simulation or numerical integration by \texttt{scripts/45\_theory\_checks.py}. T
 \texttt{scripts/46\_theory\_proofs.py}, symbolically with SymPy wherever the step is algebra or
 calculus. Of its \thn{proofs-n} steps, \thn{proofs-pass} pass. The seventh proposition's closed forms
 were checked by \texttt{scripts/48\_kernel\_theory.py} (\thn{k7-checks-n} checks, \thn{k7-checks-pass}
-passing). The applications to the NEPSE data
+passing). An eighth proposition explains why a single coefficient fails. In a panel, the open's reliability
+is a weighted mean of two parts: a market part that the session keeps almost entirely, and a stock-specific part
+that it mostly reverses. The market's move can be read from the other securities' opens, free of the security's
+own error. Its checks are in \texttt{scripts/54\_market\_open\_theory.py} (\thn{m8-checks-n} checks,
+\thn{m8-checks-pass} passing). The applications to the NEPSE data
 and the one new test were fixed in advance in plan M19.
 \end{abstract}
 

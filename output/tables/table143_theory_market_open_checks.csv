@@ -1,0 +1,36 @@
+proposition,check,design,theory,value,se,rule,pass
+8,(a) E[m_-i eta_i] = 0,"N=30, corr(zeta, eta)=0.4, 200,000 dates",0,-0.0004565384358,0.001099549477,|value - theory| <= 4 SE,True
+8,"(a) Cov(m_-i^2, eta_i^2) = 0","N=30, security 0",0,-0.03324938838,0.02753661648,|value - theory| <= 4 SE,True
+8,(a) m_-i does not move with security i's own print,"pathwise, every date",0,1.776356839e-15,,"identity, relative error <= 1e-09",True
+8,(b) E[(m_-i - beta_bar_-i f)^2] = V_N,N=10,0.8888888889,0.8827385434,0.007861428779,|value - theory| <= 4 SE,True
+8,(c) E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N,"N=10, mean over i",0,-0.006173686082,0.0169841706,|value - theory| <= 4 SE,True
+8,(c) pooled projection of r on m_-i,N=10,0.4970029442,0.4901287321,0.00586678861,|value - theory| <= 4 SE,True
+8,(b) E[(m_-i - beta_bar_-i f)^2] = V_N,N=30,0.275862069,0.2783287145,0.002653960345,|value - theory| <= 4 SE,True
+8,(c) E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N,"N=30, mean over i",0,0.01862384384,0.01270378746,|value - theory| <= 4 SE,True
+8,(c) pooled projection of r on m_-i,N=30,0.7803819463,0.7716083972,0.005171804726,|value - theory| <= 4 SE,True
+8,(b) E[(m_-i - beta_bar_-i f)^2] = V_N,N=100,0.08080808081,0.08021896223,0.0008029259955,|value - theory| <= 4 SE,True
+8,(c) E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N,"N=100, mean over i",0,0.007018346757,0.01164316451,|value - theory| <= 4 SE,True
+8,(c) pooled projection of r on m_-i,N=100,0.9298022315,0.9229576011,0.004875468429,|value - theory| <= 4 SE,True
+8,(b) E[(m_-i - beta_bar_-i f)^2] = V_N,N=300,0.02675585284,0.0266347617,0.0002629498526,|value - theory| <= 4 SE,True
+8,(c) E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N,"N=300, mean over i",0,-0.01024242143,0.009153501539,|value - theory| <= 4 SE,True
+8,(c) pooled projection of r on m_-i,N=300,0.9708540773,0.97948932,0.005285954301,|value - theory| <= 4 SE,True
+8,(d) b = mu + (1 - mu) b_I,"N=50, corr(zeta, eta)=0.0",0.5658398158,0.5655930745,0.001045648494,|value - theory| <= 4 SE,True
+8,(d) b = mu + (1 - mu) b_I,"N=50, corr(zeta, eta)=0.5",0.5671538066,0.5679885886,0.0007626121884,|value - theory| <= 4 SE,True
+8,(d) b = mu + (1 - mu) b_I,"N=50, corr(zeta, eta)=-0.3",0.5972582933,0.5958164302,0.001316173987,|value - theory| <= 4 SE,True
+8,(d) sample identity b = mu b_M + (1 - mu) b_I (inclusive mean),"2,000 dates x 40",0.5502272511,0.5502272511,,"identity, relative error <= 1e-10",True
+8,(d) the two parts are orthogonal in the sample,same,0,6.320670603e-19,,"identity, relative error <= 1e-12",True
+8,(e) stale bar: A = 2 (1 - w) m^2,"1,000 bars",0,0,,"identity, relative error <= 1e-15",True
+8,(e) open moved: A equals the open-free kernel,"1,000 bars with a range",0,2.300697049e-16,,"identity, relative error <= 1e-12",True
+8,(f) lambda_1 = 1,single observation,1,1.002933409,0.003160657747,|value - theory| <= 4 SE,True
+8,(f) lambda_n increases (n=1),Monte Carlo,0,1.002933409,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=1),Monte Carlo,2.772588722,1.002933409,,value < 4 ln 2 + 4 SE,True
+8,(f) lambda_n increases (n=2),Monte Carlo,1.002933409,1.224932894,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=2),Monte Carlo,2.772588722,1.224932894,,value < 4 ln 2 + 4 SE,True
+8,(f) lambda_n increases (n=5),Monte Carlo,1.224932894,1.580314603,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=5),Monte Carlo,2.772588722,1.580314603,,value < 4 ln 2 + 4 SE,True
+8,(f) lambda_n increases (n=20),Monte Carlo,1.580314603,2.06811182,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=20),Monte Carlo,2.772588722,2.06811182,,value < 4 ln 2 + 4 SE,True
+8,(f) lambda_n increases (n=200),Monte Carlo,2.06811182,2.510288797,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=200),Monte Carlo,2.772588722,2.510288797,,value < 4 ln 2 + 4 SE,True
+8,(f) lambda_n increases (n=2000),Monte Carlo,2.510288797,2.684142586,,value > previous - 4 SE,True
+8,(f) lambda_n < 4 ln 2 (n=2000),Monte Carlo,2.772588722,2.684142586,,value < 4 ln 2 + 4 SE,True

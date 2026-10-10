@@ -11,7 +11,8 @@ Sections~6.6--6.8 of the paper report four facts:
   \item a pooled calibration lagged the band reform.
 \end{itemize}
 This section gives the statistics behind those facts in six propositions. A seventh,
-added after an independent audit, says what Anam's estimator does with a noisy open. Proofs are in
+added after an independent audit, says what Anam's estimator does with a noisy open. An eighth, derived
+during the development of Anam~II (plan M22), says what the cross-section of opens can recover. Proofs are in
 Appendix~\ref{app:proofs}. The script \texttt{scripts/45\_theory\_checks.py} compared each closed
 form, identity and inequality with a simulation or a numerical integral, as plan M19 required. The
 plan was registered before the script was written. Table~\ref{tab:checks} lists the checks. A second
@@ -604,6 +605,136 @@ exposure at all.
 Kernel & First order & $\rho=0.5$ & $\rho=1$ & First order & $\rho=0.5$ & $\rho=1$ \\
 \midrule
 \tabinput{generated/tab_kernel.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The market-implied open}\label{sec:market}
+
+Propositions~\ref{prop:ident} and~\ref{prop:kernel} treat one security's open. A panel offers more. On
+each date many securities open together. Each opening error is the security's own, while part of each
+efficient overnight move is common to all. This subsection states what the cross-section can recover and
+what it cannot. It was derived during the development of Anam~II, the estimator of plan M22, and was
+written after that plan was frozen.
+
+\begin{assumption}[A common overnight factor, and errors that are each security's own]\label{as:panel}
+On one date, securities $i=1,\dots,N$ have $\os_i=\beta_if+\zeta_i$, $o_i=\os_i+\eta_i$ and
+$r_i=\os_i+x_i$. Here:
+\begin{itemize}
+  \item $f$ is the market's efficient overnight move, with variance $\sigma_f^2$;
+  \item the pairs $(\zeta_i,\eta_i)$ have zero means and finite second moments, and are independent
+        across securities and of $f$;
+  \item within a pair, a security's error $\eta_i$ may be correlated with its own news $\zeta_i$;
+  \item nothing known at the open, including the other securities' opens, predicts the rest of any
+        session: $\E[x_i\mid f,(\zeta_j,\eta_j)_{j\le N}]=0$.
+\end{itemize}
+\end{assumption}
+
+The leave-one-out mean of the overnight returns, $m_{-i}=(N-1)^{-1}\sum_{j\ne i}o_j$, is the
+\emph{market-implied open} of security $i$. Write:
+\begin{itemize}
+  \item $\bar\beta_{-i}$ for the mean of the other securities' $\beta_j$;
+  \item $V_{N,i}=(N-1)^{-2}\sum_{j\ne i}\E[(\zeta_j+\eta_j)^2]$;
+  \item $\mu=\sum_i\beta_i^2\sigma_f^2/\sum_i\E[o_i^2]$, the market's share of the overnight second
+        moment;
+  \item $b_I=\sum_i\{\E[\zeta_i^2]+\E[\zeta_i\eta_i]\}/\sum_i\E[(\zeta_i+\eta_i)^2]$, the pooled
+        reliability of the securities' own parts.
+\end{itemize}
+
+\begin{proposition}[The market-implied open]\label{prop:market}
+Under Assumption~\ref{as:panel}:
+\begin{enumerate}[label=(\alph*)]
+  \item $m_{-i}$ is a function of $f$ and of the other securities' $(\zeta_j,\eta_j)$ only. It is
+        therefore independent of security $i$'s own news and error $(\zeta_i,\eta_i)$, and it does not
+        move when security $i$'s opening print does.
+  \item $\E[(m_{-i}-\bar\beta_{-i}f)^2]=V_{N,i}\le\max_j\E[(\zeta_j+\eta_j)^2]/(N-1)$. The
+        market-implied open converges in mean square to the market's efficient overnight move as the
+        cross-section grows.
+  \item $\E[m_{-i}^2]=\bar\beta_{-i}^2\sigma_f^2+V_{N,i}$, and the pooled projection of the
+        close-to-close return on the market-implied open is
+        \[
+          b_M=\frac{\sum_i\beta_i\bar\beta_{-i}\sigma_f^2}{\sum_i(\bar\beta_{-i}^2\sigma_f^2+V_{N,i})}.
+        \]
+        With equal betas it is $\beta^2\sigma_f^2/(\beta^2\sigma_f^2+V_N)$. This tends to one: the
+        session keeps the market's move. A finite cross-section attenuates it.
+  \item The coefficient of Proposition~\ref{prop:ident}, pooled over the securities, is
+        \[
+          b=\mu\cdot1+(1-\mu)\,b_I,
+        \]
+        the mean of the two parts' reliabilities weighted by their shares of the overnight second
+        moment. In a sample the same decomposition is an identity. Take $o_M$ as the date's
+        cross-sectional mean, including $i$, and $o_I=o-o_M$. Then
+        $\hat b=\hat\mu\hat b_M+(1-\hat\mu)\hat b_I$ exactly, with $\hat b_M$, $\hat b_I$ and
+        $\hat\mu$ the sample counterparts.
+  \item The kernel of Anam~II is
+        \[
+          A=(1-w)\Bigl\{o^{*2}+\frac{R^{*2}}{D}\Bigr\}+w\,r^2,\qquad R^*=\max(h,o^*)-\min(l,o^*).
+        \]
+        Here $o^*=m_{-i}$ when the open printed at the previous close ($o_i=0$), and $o^*=0$ otherwise.
+        The divisor is $D=1$ on a one-price bar and $D=4\ln2$ otherwise. Two cases follow:
+        \begin{itemize}
+          \item on a bar whose open moved and which has a range, $A$ is the open-free kernel of
+                Proposition~\ref{prop:kernel};
+          \item on a bar that never left the previous close, $A=2(1-w)m_{-i}^2$, with expectation
+                $2(1-w)(\bar\beta_{-i}^2\sigma_f^2+V_{N,i})$, while the open-free kernel is zero.
+        \end{itemize}
+  \item Let $\lambda_n=\E[R_n^2]$, where $R_n=\max\{0,W(\tfrac1n),\dots,W(1)\}-\min\{0,W(\tfrac1n),\dots,W(1)\}$
+        for a standard Brownian motion observed $n$ times after its start. Then:
+        \begin{itemize}
+          \item $\lambda_1=1$;
+          \item $\lambda_n\le\lambda_{kn}$ for every integer $k\ge1$;
+          \item $\lambda_n\le4\ln2$, and $\lambda_n\to4\ln2$.
+        \end{itemize}
+        A bar with one price is the case $n=1$, so its divisor is 1, not Parkinson's $4\ln2$.
+\end{enumerate}
+\end{proposition}
+
+\textbf{Why a single coefficient failed.} Part~(d) is why reading the open through one coefficient did
+not beat ignoring it in plan M20. On the training spans of the five frontier panels:
+\begin{itemize}
+  \item the session keeps the market part of the overnight move almost entirely, with $\hat b_M$
+        between \thn{m8-bM-min} and \thn{m8-bM-max};
+  \item it reverses most of the securities' own parts, with $\hat b_I$ between \thn{m8-bI-min} and
+        \thn{m8-bI-max};
+  \item the market part is only \thn{m8-mu-min}--\thn{m8-mu-max}\% of the overnight second moment.
+\end{itemize}
+So $\hat b$ is close to $\hat b_I$ (Table~\ref{tab:market}). One coefficient shrinks the reliable component
+by the unreliable one's factor.
+
+\textbf{The market's move is measured without the stock's error.} Parts~(a)--(c) say how far it can be
+measured. A large cross-section measures it almost exactly. Morocco's \thn{m8-MA-n} securities a date
+attenuate the leave-one-out projection. Part~(c) predicts that attenuation from each date's
+cross-sectional dispersion, as $1-\sum V_N/\sum m^2$ (the table's last column but two).
+
+\textbf{Stale bars and stale opens.} A stale print is the case of non-synchronous trading that
+\citet{ScholesWilliams1977} and \citet{LoMacKinlay1990} studied for returns. A security that did not
+trade away from the previous close has a latent price that still moved with the market, and its later
+returns realise that move. Part~(e) shows how the kernel credits it. The factor 2 counts both the move and
+the step back to the stale print; the calibration $\kappa$ sets the level.
+
+\textbf{Why only stale opens.} Anam~II reads the market's move only where the open printed at the previous
+close, because the move is common only on average. A security with $\beta_i\ne\bar\beta$ would be
+credited $\bar\beta^2\sigma_f^2$ in place of $\beta_i^2\sigma_f^2$. By Proposition~\ref{prop:pool}(b),
+such a misallocation that differs across securities is a level loss under a pooled calibration. The
+development record shows this cost where betas are dispersed, in Vietnam.
+
+\textbf{The one-price divisor.} Part~(f) is a fact about discrete monitoring
+\citep{BroadieGlassermanKou1997,ChristensenPodolskij2007}. Parkinson's constant is the limit of many
+observations. Simulation puts $\lambda_n$ at \thn{m8-lambda-1}, \thn{m8-lambda-2}, \thn{m8-lambda-5},
+\thn{m8-lambda-20} and \thn{m8-lambda-200} for $n=1,2,5,20,200$, against $4\ln2=\thn{m8-fourln2}$.
+
+\textbf{Verification.} The script \texttt{54\_market\_open\_theory.py} runs \thn{m8-checks-n} checks, of
+which \thn{m8-checks-pass} pass (ledger: table~143). Across the six panels, the sample identity of
+part~(d) holds to within \thn{m8-gap-max}.
+
+\begin{table}[t]
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\caption{The open's reliability by component, on each panel's training span (Proposition~\ref{prop:market}). $o_M$ is the date's cross-sectional mean overnight return, $o_I=o-o_M$, and $\hat\mu=\sum o_M^2/\sum o^2$. ``LOO'' is the pooled projection of $r$ on the leave-one-out mean $m_{-i}$; ``predicted'' is part~(c)'s attenuation, $1-\sum V_N/\sum m^2$, with $V_N$ the date's cross-sectional variance of $o$ over $N-1$. $^\dagger$Pakistan entered plan M22 unseen; it is reported here after that plan's evaluation. Ledger: \texttt{table144\_theory\_\allowbreak market\_\allowbreak open\_\allowbreak data.csv}.}\label{tab:market}
+\begin{tabular}{lrcccrccrr}
+\toprule
+Panel & $N$/date & $\hat b$ & $\hat b_M$ & $\hat b_I$ & $\hat\mu$ & LOO $b_M$ & Predicted & Stale opens & One price \\
+\midrule
+\tabinput{generated/tab_market_open.tex}
 \bottomrule
 \end{tabular}
 \end{table}
