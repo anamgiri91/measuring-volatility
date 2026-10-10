@@ -1,0 +1,39 @@
+hypothesis,what,market,span,window,seen,d,t,p,margin,practically_equivalent,p_holm,verdict
+H1,Anam II against M20's open-free HAR,NEPSE,A2+C,5,True,-0.007165976557,-0.7479326823,0.4545007631,0.006522419787,False,0.4545007631,no detectable difference
+H1,Anam II against M20's open-free HAR,DSE 2023-2026,test half,5,True,-0.01632519638,-6.337381381,2.337030049e-10,0.00522030411,False,1.402218029e-09,better
+H1,Anam II against M20's open-free HAR,DSE 2009-2021,test half,5,True,-0.003079978047,-1.439888255,0.1498990166,0.005459959115,False,0.2997980332,no detectable difference
+H1,Anam II against M20's open-free HAR,Vietnam 2007-2020,test half,5,True,-0.007795930306,-5.584993331,2.337091825e-08,0.00560950398,False,1.168545912e-07,better
+H1,Anam II against M20's open-free HAR,Morocco 2012-2026,test half,5,True,-0.009708301429,-1.930650275,0.05352631608,0.006525127712,False,0.1605789482,no detectable difference
+H1,Anam II against M20's open-free HAR,Pakistan 2016-2026,test half,5,False,-0.01384363263,-3.948707757,7.857420564e-05,0.006422757469,False,0.0003142968226,better
+H1,Anam II against M20's open-free HAR,NEPSE,A2+C,21,True,-0.00813235745,-0.6613518376,0.508386705,0.003656564475,False,1,no detectable difference
+H1,Anam II against M20's open-free HAR,DSE 2023-2026,test half,21,True,-0.01113463196,-3.567666418,0.0003601746267,0.002702177164,False,0.00216104776,better
+H1,Anam II against M20's open-free HAR,DSE 2009-2021,test half,21,True,0.0004513095694,0.1155131229,0.9080384195,0.003124718743,False,1,no detectable difference
+H1,Anam II against M20's open-free HAR,Vietnam 2007-2020,test half,21,True,-0.004501406916,-1.889559308,0.05881692369,0.002720686813,False,0.2352676948,no detectable difference
+H1,Anam II against M20's open-free HAR,Morocco 2012-2026,test half,21,True,0.003113013436,0.4827554151,0.6292694112,0.003396067083,False,1,no detectable difference
+H1,Anam II against M20's open-free HAR,Pakistan 2016-2026,test half,21,False,-0.008961944526,-2.440429162,0.01466982274,0.003232798439,False,0.07334911368,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",NEPSE,A2+C,5,True,-2.56759537e-05,-0.0836904436,0.9333025554,0.006451016781,True,0.9814558394,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",DSE 2023-2026,test half,5,True,-0.01315013133,-5.893109199,3.789957688e-09,0.005188760871,False,2.273974613e-08,better
+H2,"the market-implied open against the open-free kernel, same dynamics",DSE 2009-2021,test half,5,True,-0.0008384747657,-1.671361106,0.09465037332,0.005447930083,True,0.3674648529,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",Vietnam 2007-2020,test half,5,True,-0.002357337622,-2.28620109,0.02224249703,0.005557540572,True,0.1112124852,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",Morocco 2012-2026,test half,5,True,-0.001979582591,-0.6891515228,0.4907279197,0.00644593688,False,0.9814558394,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",Pakistan 2016-2026,test half,5,False,0.0009570009746,1.685634535,0.09186621322,0.006274722797,True,0.3674648529,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",NEPSE,A2+C,21,True,-2.738965316e-05,-0.2590278196,0.7956137759,0.003575514797,True,1,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",DSE 2023-2026,test half,21,True,-0.007731560372,-2.892438168,0.003822644168,0.002668146448,False,0.01911322084,better
+H2,"the market-implied open against the open-free kernel, same dynamics",DSE 2009-2021,test half,21,True,-0.002503929659,-3.775826149,0.000159478198,0.003151742984,False,0.0009568691879,better
+H2,"the market-implied open against the open-free kernel, same dynamics",Vietnam 2007-2020,test half,21,True,-0.0006796136477,-0.5229160145,0.6010326997,0.002682498738,False,1,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",Morocco 2012-2026,test half,21,True,-0.000887425012,-0.2634358747,0.7922146428,0.003436071468,False,1,no detectable difference
+H2,"the market-implied open against the open-free kernel, same dynamics",Pakistan 2016-2026,test half,21,False,0.0007192104354,1.562661881,0.1181321448,0.00313598689,True,0.472528579,no detectable difference
+H3,Anam II against the best return-only forecast,NEPSE,A2+C,5,True,-0.0003269068845,-0.0294437332,0.9765106939,0.00645402909,False,0.9765106939,no detectable difference
+H3,Anam II against the best return-only forecast,DSE 2023-2026,test half,5,True,-0.01013028909,-2.952599777,0.003151102161,0.005159871675,False,0.006302204323,better
+H3,Anam II against the best return-only forecast,DSE 2009-2021,test half,5,True,-0.02302437414,-6.109485746,9.995268231e-10,0.005630944425,False,4.997634116e-09,better
+H3,Anam II against the best return-only forecast,Vietnam 2007-2020,test half,5,True,-0.01072524868,-8.532181604,1.436133776e-17,0.005647191509,False,8.616802658e-17,better
+H3,Anam II against the best return-only forecast,Morocco 2012-2026,test half,5,True,-0.02053131594,-3.970838181,7.162021423e-05,0.006627367333,False,0.00021552517,better
+H3,Anam II against the best return-only forecast,Pakistan 2016-2026,test half,5,False,-0.02043140322,-4.038119988,5.38812925e-05,0.006488895631,False,0.00021552517,better
+H3,Anam II against the best return-only forecast,NEPSE,A2+C,21,True,-0.006263952378,-0.3292794295,0.7419444908,0.003637880425,False,0.7419444908,no detectable difference
+H3,Anam II against the best return-only forecast,DSE 2023-2026,test half,21,True,-0.01373037891,-2.942023798,0.003260748668,0.002728134633,False,0.01304299467,better
+H3,Anam II against the best return-only forecast,DSE 2009-2021,test half,21,True,-0.01584310782,-2.367790265,0.01789467694,0.003279486565,False,0.05368403082,no detectable difference
+H3,Anam II against the best return-only forecast,Vietnam 2007-2020,test half,21,True,-0.007523646364,-6.159217819,7.310511755e-10,0.002750905642,False,4.386307053e-09,better
+H3,Anam II against the best return-only forecast,Morocco 2012-2026,test half,21,True,-0.01523284245,-3.403756536,0.0006646596723,0.003579525642,False,0.003323298362,better
+H3,Anam II against the best return-only forecast,Pakistan 2016-2026,test half,21,False,-0.01910414449,-2.240550304,0.02505521885,0.003334220439,False,0.05368403082,no detectable difference
+P1,overall reading of H1,all panels,primary,,,,,,,,,supported: Anam II improves on M20's open-free HAR (better at h=5 in 3 of 6; worse in 0 panel-horizons)
+P2,predicted pattern of H2 at h=5,five seen panels,primary,5,True,,,,,,,"3 of 5 as predicted: DSE 2023-2026, NEPSE, DSE 2009-2021"

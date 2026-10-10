@@ -1,0 +1,137 @@
+market,span,window,model,loss,eliminated,mcs_p,in_mcs_90,in_mcs_75
+NEPSE,A2+C,5,1/2 Anam II + 1/2 GJR,-7.06160753,0,1,True,True
+NEPSE,A2+C,5,GJR,-7.050899041,6,0.859929965,True,True
+NEPSE,A2+C,5,Anam II,-7.050530927,5,0.859929965,True,True
+NEPSE,A2+C,5,FHARL open-free,-7.050505251,4,0.859929965,True,True
+NEPSE,A2+C,5,r* (best return-only),-7.05020402,3,0.859929965,True,True
+NEPSE,A2+C,5,HAR-open-free,-7.04336495,2,0.743871936,True,True
+NEPSE,A2+C,5,CC,-7.039711891,1,0.6563281641,True,True
+NEPSE,A2,5,HAR-open-free,-6.835933492,0,1,True,True
+NEPSE,A2,5,Anam II,-6.828715575,6,0.6578289145,True,True
+NEPSE,A2,5,FHARL open-free,-6.828448445,5,0.6443221611,True,True
+NEPSE,A2,5,1/2 Anam II + 1/2 GJR,-6.825635116,4,0.6018009005,True,True
+NEPSE,A2,5,r* (best return-only),-6.800936177,3,0.1025512756,True,False
+NEPSE,A2,5,GJR,-6.79807819,2,0.1025512756,True,False
+NEPSE,A2,5,CC,-6.783502124,1,0.1025512756,True,False
+NEPSE,C,5,GJR,-7.377570029,0,1,True,True
+NEPSE,C,5,r* (best return-only),-7.371901139,6,0.7373686843,True,True
+NEPSE,C,5,1/2 Anam II + 1/2 GJR,-7.363863631,5,0.7373686843,True,True
+NEPSE,C,5,CC,-7.361259455,4,0.7373686843,True,True
+NEPSE,C,5,FHARL open-free,-7.331053103,2,0,False,False
+NEPSE,C,5,Anam II,-7.330717134,3,0,False,False
+NEPSE,C,5,HAR-open-free,-7.306103682,1,0,False,False
+NEPSE,A2+C,21,1/2 Anam II + 1/2 GJR,-7.011567008,0,1,True,True
+NEPSE,A2+C,21,Anam II,-7.006604303,6,0.8394197099,True,True
+NEPSE,A2+C,21,FHARL open-free,-7.006576913,5,0.8394197099,True,True
+NEPSE,A2+C,21,r* (best return-only),-7.00034035,3,0.8394197099,True,True
+NEPSE,A2+C,21,GJR,-7.00034035,4,0.8394197099,True,True
+NEPSE,A2+C,21,HAR-open-free,-6.998471945,2,0.8394197099,True,True
+NEPSE,A2+C,21,CC,-6.989275556,1,0.2506253127,True,True
+NEPSE,A2,21,HAR-open-free,-6.856472659,0,1,True,True
+NEPSE,A2,21,Anam II,-6.851300197,6,0.6378189095,True,True
+NEPSE,A2,21,FHARL open-free,-6.851269393,5,0.6378189095,True,True
+NEPSE,A2,21,1/2 Anam II + 1/2 GJR,-6.840675766,4,0.2696348174,True,True
+NEPSE,A2,21,GJR,-6.810742463,3,0.05652826413,False,False
+NEPSE,A2,21,r* (best return-only),-6.810742463,2,0.04752376188,False,False
+NEPSE,A2,21,CC,-6.79929948,1,0,False,False
+NEPSE,C,21,r* (best return-only),-7.305186632,6,1,True,True
+NEPSE,C,21,GJR,-7.305186632,0,1,True,True
+NEPSE,C,21,CC,-7.292312474,4,0.2851425713,True,True
+NEPSE,C,21,1/2 Anam II + 1/2 GJR,-7.290990356,5,0.2851425713,True,True
+NEPSE,C,21,FHARL open-free,-7.262944709,1,0.0005002501251,False,False
+NEPSE,C,21,Anam II,-7.26293571,3,0.0005002501251,False,False
+NEPSE,C,21,HAR-open-free,-7.235331616,2,0.0005002501251,False,False
+NIFTY50,test half,5,1/2 Anam II + 1/2 GJR,-8.382161718,0,1,True,True
+NIFTY50,test half,5,HAR-open-free,-8.380010709,5,0.9284642321,True,True
+NIFTY50,test half,5,GJR,-8.379188724,4,0.9284642321,True,True
+NIFTY50,test half,5,r* (best return-only),-8.379188724,3,0.9094547274,True,True
+NIFTY50,test half,5,Anam II,-8.378227757,2,0.9094547274,True,True
+NIFTY50,test half,5,CC,-8.329568869,1,0.001500750375,False,False
+NIFTY50,test half,21,HAR-open-free,-8.189729031,0,1,True,True
+NIFTY50,test half,21,Anam II,-8.188729591,5,0.2551275638,True,True
+NIFTY50,test half,21,1/2 Anam II + 1/2 GJR,-8.181628435,4,0.2551275638,True,True
+NIFTY50,test half,21,CC,-8.163230149,3,0.2076038019,True,False
+NIFTY50,test half,21,GJR,-8.166296879,2,0.196098049,True,False
+NIFTY50,test half,21,r* (best return-only),-8.166296879,1,0.1905952976,True,False
+SP500,test half,5,Anam II,-8.440743248,0,1,True,True
+SP500,test half,5,HAR-open-free,-8.439992946,5,0.6208104052,True,True
+SP500,test half,5,1/2 Anam II + 1/2 GJR,-8.436141241,4,0.6208104052,True,True
+SP500,test half,5,GJR,-8.415652399,3,0.3031515758,True,True
+SP500,test half,5,r* (best return-only),-8.415652399,2,0.2531265633,True,True
+SP500,test half,5,CC,-8.385225342,1,0.01350675338,False,False
+SP500,test half,21,Anam II,-8.302771107,0,1,True,True
+SP500,test half,21,HAR-open-free,-8.300869737,5,0.4017008504,True,True
+SP500,test half,21,1/2 Anam II + 1/2 GJR,-8.275768043,4,0.4017008504,True,True
+SP500,test half,21,CC,-8.269926765,3,0.4017008504,True,True
+SP500,test half,21,r* (best return-only),-8.212480071,1,0.4017008504,True,True
+SP500,test half,21,GJR,-8.212480071,2,0.4017008504,True,True
+DSE 2023-2026,test half,5,Anam II,-6.514709482,0,1,True,True
+DSE 2023-2026,test half,5,1/2 Anam II + 1/2 GJR,-6.514606176,6,0.9499749875,True,True
+DSE 2023-2026,test half,5,r* (best return-only),-6.504579193,4,0.0005002501251,False,False
+DSE 2023-2026,test half,5,GJR,-6.504579193,5,0.0005002501251,False,False
+DSE 2023-2026,test half,5,FHARL open-free,-6.501559351,3,0,False,False
+DSE 2023-2026,test half,5,HAR-open-free,-6.498384286,2,0,False,False
+DSE 2023-2026,test half,5,CC,-6.49164408,1,0,False,False
+DSE 2023-2026,test half,21,Anam II,-6.468975408,0,1,True,True
+DSE 2023-2026,test half,21,1/2 Anam II + 1/2 GJR,-6.466887303,6,0.332166083,True,True
+DSE 2023-2026,test half,21,FHARL open-free,-6.461243848,5,0.004002001001,False,False
+DSE 2023-2026,test half,21,HAR-open-free,-6.457840777,3,0.004002001001,False,False
+DSE 2023-2026,test half,21,GJR,-6.45524503,4,0.004002001001,False,False
+DSE 2023-2026,test half,21,r* (best return-only),-6.45524503,2,0.00300150075,False,False
+DSE 2023-2026,test half,21,CC,-6.44947448,1,0,False,False
+Vietnam 2007-2020,test half,5,1/2 Anam II + 1/2 GJR,-6.304102064,0,1,True,True
+Vietnam 2007-2020,test half,5,Anam II,-6.30123766,6,0.0005002501251,False,False
+Vietnam 2007-2020,test half,5,FHARL open-free,-6.298880322,5,0.0005002501251,False,False
+Vietnam 2007-2020,test half,5,HAR-open-free,-6.293441729,4,0,False,False
+Vietnam 2007-2020,test half,5,r* (best return-only),-6.290512411,3,0,False,False
+Vietnam 2007-2020,test half,5,GJR,-6.289779413,2,0,False,False
+Vietnam 2007-2020,test half,5,CC,-6.270851344,1,0,False,False
+Vietnam 2007-2020,test half,21,Anam II,-6.347263246,0,1,True,True
+Vietnam 2007-2020,test half,21,FHARL open-free,-6.346583632,6,0.5927963982,True,True
+Vietnam 2007-2020,test half,21,1/2 Anam II + 1/2 GJR,-6.346526047,5,0.5372686343,True,True
+Vietnam 2007-2020,test half,21,HAR-open-free,-6.342761839,4,0.04402201101,False,False
+Vietnam 2007-2020,test half,21,r* (best return-only),-6.339739599,3,0,False,False
+Vietnam 2007-2020,test half,21,GJR,-6.337918897,2,0,False,False
+Vietnam 2007-2020,test half,21,CC,-6.335161205,1,0,False,False
+DSE 2009-2021,test half,5,Anam II,-6.573937187,0,1,True,True
+DSE 2009-2021,test half,5,FHARL open-free,-6.573098712,6,0.5912956478,True,True
+DSE 2009-2021,test half,5,1/2 Anam II + 1/2 GJR,-6.572261212,5,0.5912956478,True,True
+DSE 2009-2021,test half,5,HAR-open-free,-6.570857209,4,0.3821910955,True,True
+DSE 2009-2021,test half,5,r* (best return-only),-6.550912813,2,0,False,False
+DSE 2009-2021,test half,5,GJR,-6.550912813,3,0,False,False
+DSE 2009-2021,test half,5,CC,-6.535689046,1,0,False,False
+DSE 2009-2021,test half,21,HAR-open-free,-6.513252716,0,1,True,True
+DSE 2009-2021,test half,21,Anam II,-6.512801406,6,0.9709854927,True,True
+DSE 2009-2021,test half,21,1/2 Anam II + 1/2 GJR,-6.51260711,5,0.9709854927,True,True
+DSE 2009-2021,test half,21,FHARL open-free,-6.510297477,4,0.4472236118,True,True
+DSE 2009-2021,test half,21,GJR,-6.496958298,3,0.02451225613,False,False
+DSE 2009-2021,test half,21,r* (best return-only),-6.496958298,2,0.02301150575,False,False
+DSE 2009-2021,test half,21,CC,-6.490914894,1,0,False,False
+Morocco 2012-2026,test half,5,Anam II,-6.834864071,0,1,True,True
+Morocco 2012-2026,test half,5,FHARL open-free,-6.832884488,6,0.4882441221,True,True
+Morocco 2012-2026,test half,5,1/2 Anam II + 1/2 GJR,-6.831591778,5,0.2236118059,True,False
+Morocco 2012-2026,test half,5,HAR-open-free,-6.825155769,4,0.05502751376,False,False
+Morocco 2012-2026,test half,5,r* (best return-only),-6.814332755,3,0.00100050025,False,False
+Morocco 2012-2026,test half,5,GJR,-6.81627707,2,0,False,False
+Morocco 2012-2026,test half,5,CC,-6.804633157,1,0,False,False
+Morocco 2012-2026,test half,21,HAR-open-free,-6.812454762,0,1,True,True
+Morocco 2012-2026,test half,21,Anam II,-6.809341748,6,0.6363181591,True,True
+Morocco 2012-2026,test half,21,FHARL open-free,-6.808454323,5,0.3531765883,True,True
+Morocco 2012-2026,test half,21,1/2 Anam II + 1/2 GJR,-6.80660203,4,0.2006003002,True,False
+Morocco 2012-2026,test half,21,GJR,-6.795282199,3,0.004002001001,False,False
+Morocco 2012-2026,test half,21,r* (best return-only),-6.794108906,2,0.004002001001,False,False
+Morocco 2012-2026,test half,21,CC,-6.787198371,1,0.004002001001,False,False
+Pakistan 2016-2026,test half,5,FHARL open-free,-6.544603918,0,1,True,True
+Pakistan 2016-2026,test half,5,Anam II,-6.543646917,6,0.6208104052,True,True
+Pakistan 2016-2026,test half,5,1/2 Anam II + 1/2 GJR,-6.542717387,5,0.6208104052,True,True
+Pakistan 2016-2026,test half,5,HAR-open-free,-6.529803285,4,0.001500750375,False,False
+Pakistan 2016-2026,test half,5,GJR,-6.523215514,3,0.001500750375,False,False
+Pakistan 2016-2026,test half,5,r* (best return-only),-6.523215514,2,0.0005002501251,False,False
+Pakistan 2016-2026,test half,5,CC,-6.514644077,1,0,False,False
+Pakistan 2016-2026,test half,21,FHARL open-free,-6.469517727,0,1,True,True
+Pakistan 2016-2026,test half,21,Anam II,-6.468798517,6,0.6153076538,True,True
+Pakistan 2016-2026,test half,21,1/2 Anam II + 1/2 GJR,-6.467065671,5,0.6153076538,True,True
+Pakistan 2016-2026,test half,21,CC,-6.459666503,4,0.1915957979,True,False
+Pakistan 2016-2026,test half,21,HAR-open-free,-6.459836572,3,0.1375687844,True,False
+Pakistan 2016-2026,test half,21,GJR,-6.449694372,2,0.09254627314,False,False
+Pakistan 2016-2026,test half,21,r* (best return-only),-6.449694372,1,0.08804402201,False,False
