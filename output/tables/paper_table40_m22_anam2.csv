@@ -1,0 +1,13 @@
+Test sample,Horizon (sessions),Anam II minus HAR on the open-free kernel (H1): d (t),H1: Holm p (verdict),"Market-implied open minus open-free kernel, same dynamics (H2): d (t)",H2: Holm p (verdict),Anam II minus best return-only (H3): d (t),H3: Holm p (verdict),In the 90% confidence set (Anam II / HAR on open-free / best return-only)
+"NEPSE, regimes A2 and C",5,-0.0072 (-0.75),0.455 (no difference),-0.0000 (-0.08),"0.981 (no difference, inside the margin)",-0.0003 (-0.03),0.977 (no difference),yes / yes / yes
+"NEPSE, regimes A2 and C",21,-0.0081 (-0.66),1.000 (no difference),-0.0000 (-0.26),"1.000 (no difference, inside the margin)",-0.0063 (-0.33),0.742 (no difference),yes / yes / yes
+Dhaka 2023-2026,5,-0.0163 (-6.34),<0.001 (better),-0.0132 (-5.89),<0.001 (better),-0.0101 (-2.95),0.006 (better),yes / no / no
+Dhaka 2023-2026,21,-0.0111 (-3.57),0.002 (better),-0.0077 (-2.89),0.019 (better),-0.0137 (-2.94),0.013 (better),yes / no / no
+Dhaka 2009-2021 (dates repaired),5,-0.0031 (-1.44),0.300 (no difference),-0.0008 (-1.67),"0.367 (no difference, inside the margin)",-0.0230 (-6.11),<0.001 (better),yes / yes / no
+Dhaka 2009-2021 (dates repaired),21,+0.0005 (+0.12),1.000 (no difference),-0.0025 (-3.78),<0.001 (better),-0.0158 (-2.37),0.054 (no difference),yes / yes / no
+Vietnam 2007-2020,5,-0.0078 (-5.58),<0.001 (better),-0.0024 (-2.29),"0.111 (no difference, inside the margin)",-0.0107 (-8.53),<0.001 (better),no / no / no
+Vietnam 2007-2020,21,-0.0045 (-1.89),0.235 (no difference),-0.0007 (-0.52),1.000 (no difference),-0.0075 (-6.16),<0.001 (better),yes / no / no
+Morocco 2012-2026,5,-0.0097 (-1.93),0.161 (no difference),-0.0020 (-0.69),0.981 (no difference),-0.0205 (-3.97),<0.001 (better),yes / no / no
+Morocco 2012-2026,21,+0.0031 (+0.48),1.000 (no difference),-0.0009 (-0.26),1.000 (no difference),-0.0152 (-3.40),0.003 (better),yes / yes / no
+Pakistan 2016-2026 (unseen),5,-0.0138 (-3.95),<0.001 (better),+0.0010 (+1.69),"0.367 (no difference, inside the margin)",-0.0204 (-4.04),<0.001 (better),yes / no / no
+Pakistan 2016-2026 (unseen),21,-0.0090 (-2.44),0.073 (no difference),+0.0007 (+1.56),"0.473 (no difference, inside the margin)",-0.0191 (-2.24),0.054 (no difference),yes / yes / no

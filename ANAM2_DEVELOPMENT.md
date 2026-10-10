@@ -86,6 +86,19 @@ That is why reading the open through b did not beat ignoring it. It also suggest
 open, and only that. The market's move can be measured from the other stocks' opens, without the stock's own
 opening error: the leave-one-out mean o_M,−i.
 
+> **Correction (10 October 2026, written after plan M22 was run; audit register `M-036`).** The two paragraphs
+> above overstate the table in three ways.
+>
+> * **b_M's least value.** Rounded once, it is 0.63 (Dhaka 2023–26, 0.6349). The 0.64 above was rounded twice.
+> * **The market's largest share.** Rounded once, it is 20% (Dhaka 2009–21, 20.49%), not 21%.
+> * **The stock-specific part.** b_I is 0.52 in Vietnam and 0.70 in Morocco, so the session does not reverse most
+>   of that part there. What holds in every panel is that the session keeps less of it than of the market's part
+>   (b_I < b_M). The market's part is therefore the more reliable component, not a reliable one beside an
+>   unreliable one.
+>
+> The frozen plan (`M22_ANAM2_PLAN.md`) and the module's docstring (`nepsevol.estimators.anam2`) repeat the
+> original wording. They keep it, because their digests are recorded. No decision depended on it.
+
 ## The rounds
 
 | Round | Question | What was tried | What happened |

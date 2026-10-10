@@ -44,7 +44,7 @@ def primary(df):
 
 
 def test_table_39_is_the_paper_table_and_follows_table_38(doc):
-    assert len(doc.tables) == 39
+    assert len(doc.tables) >= 39          # round 20 adds Table 40
     assert sum(p.text.startswith("Table 39.") for p in doc.paragraphs) == 1
     t = pd.read_csv(TAB / "paper_table39_m20_corrected.csv", dtype=str).fillna("")
     cells = [[c.text for c in row.cells] for row in doc.tables[38].rows]

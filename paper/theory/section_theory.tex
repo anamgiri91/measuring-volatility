@@ -692,14 +692,14 @@ Under Assumption~\ref{as:panel}:
 \textbf{Why a single coefficient failed.} Part~(d) is why reading the open through one coefficient did
 not beat ignoring it in plan M20. On the training spans of the five frontier panels:
 \begin{itemize}
-  \item the session keeps the market part of the overnight move almost entirely, with $\hat b_M$
+  \item the session keeps most of the market part of the overnight move, with $\hat b_M$
         between \thn{m8-bM-min} and \thn{m8-bM-max};
-  \item it reverses most of the securities' own parts, with $\hat b_I$ between \thn{m8-bI-min} and
-        \thn{m8-bI-max};
+  \item it keeps less of the securities' own parts in every panel, with $\hat b_I$ between
+        \thn{m8-bI-min} and \thn{m8-bI-max};
   \item the market part is only \thn{m8-mu-min}--\thn{m8-mu-max}\% of the overnight second moment.
 \end{itemize}
-So $\hat b$ is close to $\hat b_I$ (Table~\ref{tab:market}). One coefficient shrinks the reliable component
-by the unreliable one's factor.
+So $\hat b$ is close to $\hat b_I$ (Table~\ref{tab:market}). One coefficient shrinks the more reliable
+component by the less reliable one's factor.
 
 \textbf{The market's move is measured without the stock's error.} Parts~(a)--(c) say how far it can be
 measured. A large cross-section measures it almost exactly. Morocco's \thn{m8-MA-n} securities a date
@@ -789,7 +789,9 @@ Proposition~\ref{prop:kernel} was added after both scripts' first runs. Its clos
 against simulation and numerical integrals by \texttt{scripts/\allowbreak 48\_kernel\_theory.py},
 in \thn{k7-checks-n} checks, of which \thn{k7-checks-pass} pass
 (\texttt{table133\_theory\_\allowbreak kernel\_\allowbreak checks.csv}). Its proof is in the step
-ledger with the others.
+ledger with the others. Proposition~\ref{prop:market} was added during the development of Anam~II. Its checks are
+in \texttt{scripts/\allowbreak 54\_market\_\allowbreak open\_\allowbreak theory.py}, and its proof, step by step,
+is in the same ledger.
 
 \begin{table}[h]
 \centering\small

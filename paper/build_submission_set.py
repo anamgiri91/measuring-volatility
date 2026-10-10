@@ -87,8 +87,8 @@ TOP_TIER = [
     ("Journal_of_Empirical_Finance", "Journal of Empirical Finance", "Editors",
      "It publishes empirical work on volatility measurement and market design, and this paper "
      "combines both: a calibration test for daily-bar volatility estimators, evidence that a change in "
-     "market-design rules coincided with a change in what those estimators measure, and an estimator built on "
-     "that evidence and tested out of sample in four frontier markets, against return-only forecasts."),
+     "market-design rules coincided with a change in what those estimators measure, and two estimators built on "
+     "that evidence and tested out of sample in up to five frontier markets, against return-only forecasts."),
     ("Journal_of_Financial_Econometrics", "Journal of Financial Econometrics", "Editors",
      "It publishes research on the measurement of volatility, and this paper tests daily-bar "
      "estimators' calibration with volatility persistence as the instrument, without a high-frequency "
@@ -124,8 +124,10 @@ ABSTRACT_SHORT = (
     "package, which widened its pre-open price band, coincided with a sharp change in what daily bars "
     "measure. The paper builds an estimator for markets whose open is unreliable, tests it out of sample "
     "in four frontier markets and two benchmark indices, and retests it against forecasts built from "
-    "returns alone after an audit corrected the evaluation. No estimator is claimed to dominate "
-    "close-to-close everywhere.")
+    "returns alone after an audit corrected the evaluation. A second estimator, which reads a stale "
+    "opening price from the other stocks' overnight moves, improves on the best of those forecasts in "
+    "three of six frontier-market panels at five sessions, one of them in Pakistan, a market that played "
+    "no part in its design. No estimator is claimed to dominate close-to-close everywhere.")
 
 
 def anonymise(doc):
@@ -188,8 +190,12 @@ def neutralise_eponym(doc) -> int:
     sys.path.insert(0, str(PAPER))
     from apply_round15_revisions import NAME
     stem = NAME.split("'")[0]
-    rules = [(re.compile(r"(^|(?<=[.!?]\s))" + re.escape(NAME)), "The proposed estimator"),
+    second = f"{stem} II"        # Section 6.9's second-generation estimator
+    rules = [(re.compile(r" \(" + re.escape(second) + r"\)"), ""),     # Section 6.9's heading names it in brackets
+             (re.compile(r"(^|(?<=[.!?]\s))" + re.escape(NAME)), "The proposed estimator"),
              (re.compile(re.escape(NAME)), "the proposed estimator"),
+             (re.compile(r"(^|(?<=[.!?]\s))" + re.escape(second) + r"\b"), "The second proposed estimator"),
+             (re.compile(re.escape(second) + r"\b"), "the second proposed estimator"),
              (re.compile(r"\b" + re.escape(stem) + r"\b"), "Proposed")]
     count = 0
 
@@ -313,7 +319,7 @@ def title_page(doc_style_from):
         "The original stock-level NEPSE downloads are not redistributed because their "
         "redistribution terms are unresolved; the build script is included as the complete "
         "cleaning specification and the processed panels are sufficient to reproduce every NEPSE "
-        "and index result. The Bangladeshi, Vietnamese and Moroccan results need third-party files "
+        "and index result. The Bangladeshi, Vietnamese, Moroccan and Pakistani results need third-party files "
         "that the package documents and pins by digest but does not redistribute; a run without them "
         "reports itself as a partial reproduction.")
     add("Ethics. Not applicable. The study uses aggregate market price data only.")
@@ -385,7 +391,11 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "that the estimator's open-free form beats close-to-close at five sessions in six of the seven "
         "samples, but that forecasts built from returns alone (GARCH-type and HAR models) are about as "
         "accurate in most of them. Both evaluations are reported, and a prospective test on sessions "
-        "after the audit is frozen.")
+        "after the audit is frozen. A second estimator then reads the overnight move of a stock whose "
+        "open printed at the previous close from the other stocks' opens, and gives the forecast factor-HAR "
+        "dynamics. Under a further plan, frozen before it was tested, it has lower loss than the corrected "
+        "evaluation's most accurate forecast at five sessions in three of six frontier-market panels, "
+        "including Pakistan's, a market that played no part in its design, and higher loss in none.")
     add("")
     add("What the paper does not claim. Latent variance is unobserved, so results are reported "
         "relative to stated benchmarks, and no estimator is claimed to dominate generally. The "
@@ -403,13 +413,16 @@ def cover_letter(doc_style_from, journal_name, salutation, fit, numbers):
         "results are reported as they are. Its "
         "level on the close-to-close scale comes from its calibration, which the classical estimators "
         "can be given too, and its record against close-to-close changes with the loss function; a "
-        "post hoc recheck reports both.")
+        "post hoc recheck reports both. The second estimator was designed when the corrected "
+        "evaluation's results on its other test spans were known, and most of its gain comes from its "
+        "dynamics rather than from the market-implied open, which helps detectably only where stale "
+        "prices are pervasive.")
     add("")
     add("Reproducibility. A reproducibility package accompanies the submission: frozen data, producer "
         "scripts, a claim-to-output reproducibility map, an audit register recording defects "
         "found and fixed, and a test suite that fails if the manuscript and the package "
         "disagree. It reproduces every result on the NEPSE panels and the two indices; the "
-        "Bangladeshi, Vietnamese and Moroccan results need third-party files that it documents and "
+        "Bangladeshi, Vietnamese, Moroccan and Pakistani results need third-party files that it documents and "
         "pins by digest but cannot redistribute, and a run without them reports itself as partial. "
         "Every number in the manuscript is interpolated from the frozen output tables by script "
         "rather than transcribed.")

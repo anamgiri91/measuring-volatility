@@ -122,11 +122,13 @@ def test_nepse_protocol_keeps_close_to_close_primary(body):
 
 def test_every_reading_of_the_recheck_is_labelled_post_hoc(body):
     # Round 19 adds plan M20, whose Holm adjustment was fixed in advance; a sentence that reports it is labelled
-    # by its table (39) or its plan instead, so this rule now accepts either label too.
+    # by its table (39) or its plan instead, so this rule now accepts either label too. Round 20 does the same for
+    # plan M22 (Table 40).
     for sentence in re.split(r"(?<=[.!?])\s+", body):
         if "MSE" in sentence or "Holm" in sentence:
             assert ("post hoc" in sentence.lower() or "Table 37" in sentence or "Tables 37 and 38" in sentence
-                    or "Table 39" in sentence or "plan M20" in sentence), sentence[:100]
+                    or "Table 39" in sentence or "plan M20" in sentence or "Table 40" in sentence
+                    or "plan M22" in sentence), sentence[:100]
 
 
 def test_limitations_run_through_sixteenth():

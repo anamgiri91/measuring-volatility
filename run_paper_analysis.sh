@@ -57,11 +57,15 @@ do
     # Part C reads the frontier panels), the corrected evaluation of plan M20 (script 47, four of whose
     # seven samples are frontier panels), the checks of Proposition 7 (script 48, whose Part C reads
     # the frontier panels), the M21 parameter freeze (script 50, which never overwrites the frozen
-    # table: it reports whether it reproduces it) and the post hoc residue check of the frozen tables
-    # (script 51) read third-party inputs that are not packaged (data/external/README.md).
+    # table: it reports whether it reproduces it), the post hoc residue check of the frozen tables
+    # (script 51), plan M22's evaluation of Anam II (script 52, whose unseen market is Pakistan) and its
+    # weight freeze (script 53, which never overwrites either), and the checks of Proposition 8 (script
+    # 54, whose data part reads every panel's training span) read third-party inputs that are not
+    # packaged (data/external/README.md). Script 54 runs before script 46, which reads its ledger.
     # Their committed tables are shipped, so the run continues without them, as a partial reproduction.
     OPTIONAL=(42_anam_frontier.py 43_anam_morocco.py 44_anam_recheck.py 45_theory_checks.py
-              47_corrected_evaluation.py 48_kernel_theory.py 50_m21_freeze.py 51_frozen_residue_check.py)
+              47_corrected_evaluation.py 48_kernel_theory.py 50_m21_freeze.py 51_frozen_residue_check.py
+              52_m22_evaluation.py 53_m22_freeze.py 54_market_open_theory.py)
     if [ -d data/external/frontier ]; then
       for optional in \
         42_anam_frontier.py \
@@ -71,7 +75,10 @@ do
         47_corrected_evaluation.py \
         48_kernel_theory.py \
         50_m21_freeze.py \
-        51_frozen_residue_check.py
+        51_frozen_residue_check.py \
+        52_m22_evaluation.py \
+        53_m22_freeze.py \
+        54_market_open_theory.py
       do
         echo "===== scripts/${optional} ====="
         python "scripts/${optional}"
@@ -81,8 +88,8 @@ do
       echo "===== SKIPPED (data/external/frontier/ not present): ${OPTIONAL[*]} ====="
       SKIPPED+=("${OPTIONAL[@]}")
     fi
-    # the step-by-step verification of the theory's proofs reads the committed outputs of scripts 45 and
-    # 48 and the NEPSE sample only, and the audit sensitivities read the NEPSE sample only, so both always run
+    # the step-by-step verification of the theory's proofs reads the committed outputs of scripts 45, 48
+    # and 54 and the NEPSE sample only, and the audit sensitivities read the NEPSE sample only, so both always run
     for always in \
       46_theory_proofs.py \
       49_audit_sensitivities.py

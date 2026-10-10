@@ -1035,6 +1035,47 @@ pd.DataFrame(_t39, columns=[
 ]).to_csv(TAB / "paper_table39_m20_corrected.csv", index=False)
 print("wrote paper_table39 (the corrected evaluation, plan M20)")
 
+# ─────────────────────────── Manuscript Table 40: Anam II, the market-implied open (plan M22)
+# Plan M22 was frozen before Anam II was computed on any test row and before any return was computed on the
+# Pakistan data (scripts/52). One row per panel and horizon: the three hypotheses' differences (d, the
+# stock-day mean difference in canonical QLIKE, negative favouring Anam II) with their date-clustered t, the
+# Holm-adjusted p across the six panels and the verdict, and membership of the 90% model confidence set. The
+# indices have no cross-section and no decision; Section 6.9 reports them in the text.
+_c138 = pd.read_csv(TAB / "table138_m22_comparison.csv")
+_c139 = pd.read_csv(TAB / "table139_m22_claims.csv")
+_c140 = pd.read_csv(TAB / "table140_m22_mcs.csv")
+_PANELS22 = [("NEPSE, regimes A2 and C", "NEPSE", "A2+C"), ("Dhaka 2023-2026", "DSE 2023-2026", "test half"),
+             ("Dhaka 2009-2021 (dates repaired)", "DSE 2009-2021", "test half"),
+             ("Vietnam 2007-2020", "Vietnam 2007-2020", "test half"), ("Morocco 2012-2026", "Morocco 2012-2026", "test half"),
+             ("Pakistan 2016-2026 (unseen)", "Pakistan 2016-2026", "test half")]
+
+
+def _holm22(r) -> str:
+    _p = "<0.001" if r.p_holm < 0.001 else f"{r.p_holm:.3f}"
+    _v = {"better": "better", "worse": "worse", "no detectable difference": "no difference"}[r.verdict]
+    return f"{_p} ({_v}{', inside the margin' if r.practically_equivalent and _v == 'no difference' else ''})"
+
+
+_t40 = []
+for _lab, _mk, _sp in _PANELS22:
+    for _w in (5, 21):
+        _row = [_lab, _w]
+        for _h in ("H1", "H2", "H3"):
+            _r = _c139[(_c139.hypothesis == _h) & (_c139.market == _mk) & (_c139.window == _w)].iloc[0]
+            assert _r.span == _sp
+            _row += [f"{_r.d:+.4f} ({_r.t:+.2f})", _holm22(_r)]
+        _m = _c140[(_c140.market == _mk) & (_c140.span == _sp) & (_c140.window == _w)].set_index("model")
+        _row.append(" / ".join("yes" if bool(_m.loc[k, "in_mcs_90"]) else "no"
+                               for k in ("Anam II", "HAR-open-free", "r* (best return-only)")))
+        _t40.append(_row)
+pd.DataFrame(_t40, columns=[
+    "Test sample", "Horizon (sessions)", "Anam II minus HAR on the open-free kernel (H1): d (t)", "H1: Holm p (verdict)",
+    "Market-implied open minus open-free kernel, same dynamics (H2): d (t)", "H2: Holm p (verdict)",
+    "Anam II minus best return-only (H3): d (t)", "H3: Holm p (verdict)",
+    "In the 90% confidence set (Anam II / HAR on open-free / best return-only)",
+]).to_csv(TAB / "paper_table40_m22_anam2.csv", index=False)
+print("wrote paper_table40 (Anam II, plan M22)")
+
 checks += [
     ["M16_holdout_verdicts", "; ".join(f"{r.rule} {r.market} {r.verdict}" for r in _d105[_d105.rule != "rival"].itertuples()),
      "verdict", "40_anam_holdout.py"],
@@ -1058,6 +1099,14 @@ checks += [
      "47_corrected_evaluation.py"],
     ["M20_rule_B3_Holm_p_5_sessions", "; ".join(f"{row[0]} {row[4]}" for row in _t39 if row[1] == 5), "one-sided p",
      "47_corrected_evaluation.py"],
+    ["M22_H1_Anam_II_minus_HAR_open_free", "; ".join(f"{row[0]} h={row[1]} {row[2]} {row[3]}" for row in _t40),
+     "d (t), Holm p (verdict)", "52_m22_evaluation.py"],
+    ["M22_H2_market_implied_open_same_dynamics", "; ".join(f"{row[0]} h={row[1]} {row[4]} {row[5]}" for row in _t40),
+     "d (t), Holm p (verdict)", "52_m22_evaluation.py"],
+    ["M22_H3_Anam_II_minus_best_return_only", "; ".join(f"{row[0]} h={row[1]} {row[6]} {row[7]}" for row in _t40),
+     "d (t), Holm p (verdict)", "52_m22_evaluation.py"],
+    ["M22_P1_primary_reading", _c139.loc[_c139.hypothesis == "P1", "verdict"].iloc[0], "verdict",
+     "52_m22_evaluation.py"],
 ]
 
 pd.DataFrame(checks, columns=["Result", "Value", "Scale", "Producer"]).to_csv(

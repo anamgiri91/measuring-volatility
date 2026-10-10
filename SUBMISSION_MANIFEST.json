@@ -1,13 +1,13 @@
 {
   "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-  "revision": "19 (round 19: the independent audit of 9 October 2026 answered point by point (RESEARCH_AUDIT_RESPONSE.md); the forecast evaluation corrected under plan M20, frozen before it was run, with return-only forecasts, ablations and a model confidence set (manuscript Table 39); plan M21's prospective test frozen; Proposition 7 added to the theory supplement; the overstated claims corrected (AUDIT-REGISTER M-028 to M-034); round 18: every step of every proof in the theory supplement verified by scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
-  "generated_utc": "2026-10-09T19:04:58+00:00",
+  "revision": "20 (round 20: Anam II, the market-implied open, designed on training spans only (ANAM2_DEVELOPMENT.md) and tested under plan M22, frozen before it was computed on any test row, with Pakistan as a market used at no stage of its design (manuscript Section 6.9 and Table 40); its weights frozen for the prospective test; Proposition 8 added to the theory supplement; three overstated statements about the open's two parts corrected (AUDIT-REGISTER M-035 to M-037); round 19: the independent audit of 9 October 2026 answered point by point (RESEARCH_AUDIT_RESPONSE.md); the forecast evaluation corrected under plan M20, frozen before it was run, with return-only forecasts, ablations and a model confidence set (manuscript Table 39); plan M21's prospective test frozen; Proposition 7 added to the theory supplement; the overstated claims corrected (AUDIT-REGISTER M-028 to M-034); round 18: every step of every proof in the theory supplement verified by scripts/46_theory_proofs.py, symbolically wherever the step is algebra or calculus, with the precision edits it asked for (AUDIT-REGISTER M-027); round 17: a theory supplement in LaTeX, paper/theory/, with six propositions and their proofs, each checked by scripts/45_theory_checks.py under plan M19, and the correction of Appendix A that it forced (AUDIT-REGISTER M-026); round 16: a post hoc recheck of every claim made for Anam's estimator, with the overstatements it found corrected (AUDIT-REGISTER M-020 to M-025) and the recheck added as Tables 37-38; round 15 moved Anam's estimator and its out-of-sample tests under plans M16-M18 into the manuscript as Section 6.8 and Tables 33-36, with a new title; round 14 added the M14 instrumented calibration and the M15 opening-price analysis; earlier rounds answered the referee report of 2026-09-02 and the audits that followed it)",
+  "generated_utc": "2026-10-10T15:04:24+00:00",
   "manuscript": {
     "revised_source": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
     "as_reviewed": "paper/manuscript_as_reviewed_pre_revision.pdf",
     "as_reviewed_note": "This PDF is the PRE-revision manuscript the first-round referee actually read, retained ONLY so the revision can be checked against it. It is NOT the current manuscript -- 'revised_source' above is -- and was renamed from the ambiguous 'NEPSE_Volatility_Final_Manuscript.pdf' after a forensic audit found the old name was being mistaken for the current file. No PDF rendering of the current .docx exists in this package as of this manifest: the environment that produced this revision has no docx-to-PDF renderer (Word/LibreOffice/pandoc) available, so a camera-ready PDF must still be exported from 'revised_source' before submission.",
     "double_anonymous_set": "paper/submission/",
-    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round19_revisions.py, in order",
+    "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py through paper/apply_round20_revisions.py, in order",
     "canonical_source": "The .docx above is the canonical editable manuscript. The revision scripts record every edit and the checks behind it, starting from a pre-revision draft that is not distributed (the --base of paper/apply_referee_revisions.py), so they document the revision rather than rebuild the file from nothing (audit item A14).",
     "note": "Every figure quoted in the manuscript is interpolated from output/tables/*.csv by the revision scripts, which fail if a superseded value survives in the text or if a headline number does not reach it."
   },
@@ -16,8 +16,9 @@
     "PAPER_REVISIONS.md": "The pre-referee revision notes. Retained for provenance; REFEREE_RESPONSE.md supersedes it and resolves the five items it left open."
   },
   "validation": {
-    "pytest": "389 passed in 59.71s",
+    "pytest": "431 passed in 60.36s (0:01:00)",
     "paper_facing_pipeline": "no run of run_paper_analysis.sh has written output/run_status.json; the runner records one from round 19 on (audit item A10)",
+    "round_20_runs": "Run individually in round 20 on Python 3.13 / x86-64 Linux, with the third-party inputs present, Pakistan's included: scripts 52 (plan M22, all eight samples), 53, 54, 46 and 25, then paper/apply_round20_revisions.py and paper/build_submission_set.py. Script 52 asserts that M20's open-free HAR, rebuilt by M20's own code, reproduces table 127 on every seen sample before any comparison is made, and that the three frozen files' digests equal those in the plan. The full runner was not rerun end to end in round 20.",
     "round_19_runs": "Run individually in round 19 on Python 3.13 / x86-64 Linux, with the third-party inputs present: scripts 46, 47 (plan M20, all seven samples), 48, 49, 50, 51 and 25, then paper/apply_round19_revisions.py. Script 47 asserts that its step S0 reproduces the frozen tables 101, 108 and 113, and script 51 that its frozen run does. The full runner was not rerun end to end in round 19; 'paper_facing_pipeline' records the last run that wrote output/run_status.json, if any.",
     "round_14_rerun": "Every producer step of run_paper_analysis.sh except 30 (which rewrites the build manifest's provenance) was rerun in a clean copy on Python 3.13.16 / numpy 2.5.3 / x86-64 Linux on 2026-10-08. Every manuscript-facing table (output/tables/paper_table*.csv), PAPER_RESULTS_CHECK.csv and every M14 and M15 table (table74-97) reproduced byte-for-byte. 36 earlier intermediate tables and the two processed samples differed only in floating-point rounding (largest relative difference 9e-13; one Spearman correlation by 1e-7 through the ordering of near-ties), consistent with the newer numpy build; the committed files are the reference-environment outputs and were not replaced.",
     "verified_on": [
@@ -109,6 +110,38 @@
       "ANAM_RECHECK_POSTHOC.md"
     ]
   },
+  "revision_20_changes": {
+    "anam2": {
+      "development": "ANAM2_DEVELOPMENT.md; scripts/dev_anam2/; output/dev_anam2/ledger.csv (195 variants, training spans only; not evidence)",
+      "plan": "M22_ANAM2_PLAN.md (frozen in commit d1d7c0f with src/nepsevol/estimators/anam2.py, scripts/52_m22_evaluation.py and the Pakistan reader in src/nepsevol/frontier.py, before Anam II was computed on any test row and before any return was computed on the Pakistan data)",
+      "script": "scripts/52_m22_evaluation.py; scripts/53_m22_freeze.py (Part C, never overwrites)",
+      "outputs": "output/tables/table138-142; manuscript Table 40 (output/tables/paper_table40_m22_anam2.csv)",
+      "results": "M22_ANAM2_RESULTS.md",
+      "result": "P1 supported: Anam II has lower loss than M20's open-free HAR at 5 sessions in 3 of 6 panels (Dhaka 2023-2026, Vietnam and Pakistan, the unseen market) and higher loss in none of 12 panel-horizons. It beats the best return-only forecast at 5 sessions in 5 of 6. Most of the gain is the factor-HAR dynamics; with the dynamics fixed, the market-implied open helps detectably only in Dhaka (2023-2026 at both horizons, 2009-2021 at 21 sessions). P2: 3 of 5 predictions held. On the indices every difference lies inside the practical margin.",
+      "unseen_market": "Pakistan Stock Exchange: 101 ordinary equities, 225,058 stock-days, 2016-10-13 to 2026-10-08; third-party file pinned by digest under data/external/frontier/psx/ (not packaged; data/external/README.md)"
+    },
+    "theory": "Proposition 8 (paper/theory/section_theory.tex; proof B.8): the market-implied open; scripts/54_market_open_theory.py (35 checks, table143; data on each panel's training span, table144); scripts/46_theory_proofs.py now 385 steps, 185 symbolic",
+    "corrections": "AUDIT-REGISTER.md M-035 (plan M22 and what it should be judged against), M-036 (three overstated statements about the open's two parts), M-037 (the new reference)",
+    "new_scripts": [
+      "scripts/52_m22_evaluation.py",
+      "scripts/53_m22_freeze.py",
+      "scripts/54_market_open_theory.py",
+      "scripts/dev_anam2/",
+      "paper/apply_round20_revisions.py"
+    ],
+    "new_tests": [
+      "tests/test_m22_anam2.py",
+      "tests/test_m22_results.py",
+      "tests/test_anam2_package.py",
+      "tests/test_round20_revisions.py",
+      "anam-estimator/tests/test_market.py"
+    ],
+    "new_documents": [
+      "ANAM2_DEVELOPMENT.md",
+      "M22_ANAM2_PLAN.md",
+      "M22_ANAM2_RESULTS.md"
+    ]
+  },
   "revision_19_changes": {
     "audit": "audits/2026-10-09_research_audit.md and audits/2026-10-09_publication_plan.md (as received); RESEARCH_AUDIT_RESPONSE.md answers A01-A15: twelve accepted, three accepted in part with the disputed part argued (A02 features, A09 parameter uncertainty, A13 importance)",
     "corrected_evaluation": {
@@ -185,7 +218,8 @@
     "path": "anam-estimator/ (pyproject.toml, src/anam_estimator, tests, examples, README.md with a model card)",
     "install": "pip install \"anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator\"",
     "contents": "anam_estimator() (the estimate on every bar), AnamModel (fit, forecast, backtest, score, save/load), a command line, simulate_bars(); depends on numpy and pandas only",
-    "tested": "its estimator's arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py, and tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day and both indices; since version 0.2.0 its forecasting model uses the corrected evaluation of plan M20 (anam_estimator.evaluation), and the same test checks it origin by origin against the research code's single-model corrected evaluation; anam-estimator/tests holds the package's own tests"
+    "tested": "its estimator's arithmetic is a verbatim copy of src/nepsevol/estimators/anam.py, and tests/test_anam_package.py checks that it equals the research module on every NEPSE stock-day and both indices; since version 0.2.0 its forecasting model uses the corrected evaluation of plan M20 (anam_estimator.evaluation), and the same test checks it origin by origin against the research code's single-model corrected evaluation; anam-estimator/tests holds the package's own tests",
+    "anam2": "since version 0.3.0, AnamIIModel (anam_estimator.market; needs the [market] extra, scipy) is the second generation for a panel; tests/test_anam2_package.py checks that its kernel, calibration, components, weights and losses equal the research module's (plan M22) on NEPSE and the NIFTY 50"
   },
   "revision_14_changes": {
     "M14_instrumented_calibration": {
@@ -258,14 +292,19 @@
       "sha256": "486766269e00139963f667105a831885c5a8e83e90aa8321a9a0f2edab70a12b"
     },
     {
+      "path": "ANAM2_DEVELOPMENT.md",
+      "bytes": 15089,
+      "sha256": "cf2d5965450d3c290544f7a951acb0ca8f23c9e34cc7e2e9110811f39e45c366"
+    },
+    {
       "path": "ANAM_RECHECK_POSTHOC.md",
       "bytes": 12109,
       "sha256": "38e521fa4eb9db279e58adfca581b16422d0c081584c6320b7e6bde6f368ce13"
     },
     {
       "path": "AUDIT-REGISTER.md",
-      "bytes": 68286,
-      "sha256": "d8f80d93ffb2e23396bbb6ba0e47a96bd7dcd47b963994e52a71fd9c8509e142"
+      "bytes": 72334,
+      "sha256": "2088b9cd803e63130b7c9a94d8d6a8a3a160279585a3f4c0c3adc1d002aa2884"
     },
     {
       "path": "ESTIMAND_NOTE.md",
@@ -373,6 +412,16 @@
       "sha256": "9a5bcffe46d7a9e5596d78e4e9a36f1e7c8d29ea18a02146215b1ce6730b9f37"
     },
     {
+      "path": "M22_ANAM2_PLAN.md",
+      "bytes": 14448,
+      "sha256": "183506d1fe837844fdd5f2c3936dbf91e3bf296819e18805dd8f35bdf6d46094"
+    },
+    {
+      "path": "M22_ANAM2_RESULTS.md",
+      "bytes": 20629,
+      "sha256": "e15537181070b94d27ce1253faab5d9e9f38a5daa6289bd666ed19520146037c"
+    },
+    {
       "path": "M7_ANALYSIS_PLAN.md",
       "bytes": 5293,
       "sha256": "c3ba9301a8bedf45f933677027bb8617788b54649e665797f2bce506a4f10f8c"
@@ -384,8 +433,8 @@
     },
     {
       "path": "PAPER_RESULTS_CHECK.csv",
-      "bytes": 9776,
-      "sha256": "4d8dc55f8ac9429f83e5d7a29a0b8e4900258ffb944a583fd41ea804c48102d5"
+      "bytes": 12597,
+      "sha256": "1d1f1c774f825e0f9770f7e9c8a11def261c401829b12aa972656825ba010531"
     },
     {
       "path": "PAPER_REVISIONS.md",
@@ -394,8 +443,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 50447,
-      "sha256": "94c109acfad7a9ee745346baa6bb37c27ea1dcdf622d9a5af220e1b66544b3b7"
+      "bytes": 58635,
+      "sha256": "537a41c1f3eedd747dcf3e66ded94dc67374730a1562897b64927a3ffab3d754"
     },
     {
       "path": "REFEREE_RESPONSE.md",
@@ -409,8 +458,8 @@
     },
     {
       "path": "REPRODUCIBILITY_MAP.csv",
-      "bytes": 28345,
-      "sha256": "46790059aa5daa4fe605c185807670430424a7a9595c24e5931d0002ca6ca98b"
+      "bytes": 30761,
+      "sha256": "c7b1a98d1b7ee0e3b69c6268b5a38a6963337d30ce5facb23cd9d1ab8ec0de06"
     },
     {
       "path": "RESEARCH_AUDIT_RESPONSE.md",
@@ -424,8 +473,8 @@
     },
     {
       "path": "anam-estimator/README.md",
-      "bytes": 11382,
-      "sha256": "97d2d9bad666ded3c260645b4acf14fc28d2305576d3f15da8d9b71f238925e6"
+      "bytes": 15544,
+      "sha256": "49eaa9e46ebfaa8424f74d9ddeced76ac99f8af4fba902828c0fb1ad454c6228"
     },
     {
       "path": "anam-estimator/examples/quickstart.py",
@@ -434,13 +483,13 @@
     },
     {
       "path": "anam-estimator/pyproject.toml",
-      "bytes": 1480,
-      "sha256": "5b47205a736d279fba176ad06c00f1bb0baf1319ae5e9a7f57ea78dce0327559"
+      "bytes": 1518,
+      "sha256": "24716a467488ad0db33d266bc687cb697fed95a3edb4216fc7bf5131aa62921d"
     },
     {
       "path": "anam-estimator/src/anam_estimator/__init__.py",
-      "bytes": 1737,
-      "sha256": "6f095f99a91c8fb74ab557a20342cf2f965db7a84365bcaa57e503a57aed6e19"
+      "bytes": 1918,
+      "sha256": "e3c1c5810f6839c81708ab68c8a22777966d5ab01ae94fa2eac5738af4d347cc"
     },
     {
       "path": "anam-estimator/src/anam_estimator/__main__.py",
@@ -450,7 +499,7 @@
     {
       "path": "anam-estimator/src/anam_estimator/_version.py",
       "bytes": 22,
-      "sha256": "667d4a15b970b851e20d17510224670c14646cfb6d5a1e388ca6b9cc6da8bf41"
+      "sha256": "56b5e91c3bb77ab933c25fd65eba883419bdc5691cc94cb9dc840e8f4e3674eb"
     },
     {
       "path": "anam-estimator/src/anam_estimator/cli.py",
@@ -476,6 +525,11 @@
       "path": "anam-estimator/src/anam_estimator/evaluation.py",
       "bytes": 15365,
       "sha256": "5b5b2fcab89d071829df232c53056a307381c986c8e263116dcc83ebce79b858"
+    },
+    {
+      "path": "anam-estimator/src/anam_estimator/market.py",
+      "bytes": 20641,
+      "sha256": "c385d3d3e7cfc01569aed3835a3d5d831cd8d8598a6fb71c8395ad236981b30a"
     },
     {
       "path": "anam-estimator/src/anam_estimator/ml.py",
@@ -528,6 +582,11 @@
       "sha256": "e8aa3f162925da13c4d461162568737be58619d0da72862693f03eae44a24783"
     },
     {
+      "path": "anam-estimator/tests/test_market.py",
+      "bytes": 3532,
+      "sha256": "19232d1edaff1478b47ddb94bb7da28ef9d63c4d9e397e0a6c5c0d72a2d06185"
+    },
+    {
       "path": "anam-estimator/tests/test_ml.py",
       "bytes": 2112,
       "sha256": "764dc1846b4ade624f102be11293db3a178e488d40d088db1e3ef75bfd6eb72d"
@@ -549,8 +608,8 @@
     },
     {
       "path": "build_manifest.py",
-      "bytes": 30729,
-      "sha256": "0933ab22cb94f921841f84f0e3a4687921ef9009e9429c91734e75b6ee6d5bfb"
+      "bytes": 35124,
+      "sha256": "2c40c58c60f9d057885b6365e71828a87990a8009fca9912ecc156eac01303c1"
     },
     {
       "path": "data/audit/README.md",
@@ -564,8 +623,8 @@
     },
     {
       "path": "data/external/README.md",
-      "bytes": 9394,
-      "sha256": "d97ae013afa9d03c435a025321796742aa265dad7002e3661c16e66d7222be62"
+      "bytes": 10880,
+      "sha256": "6b26441e1c159079c6ce3be29aa7119f63857f4c24ab77721b4a2d75607ef214"
     },
     {
       "path": "data/external/india_vix.csv",
@@ -636,6 +695,416 @@
       "path": "data/raw/README.md",
       "bytes": 813,
       "sha256": "e3b006067b1337c8743adcaead4c6699bd4fbd9c69a8c0335c20d285ff0deb90"
+    },
+    {
+      "path": "output/dev_anam2/e0_describe.csv",
+      "bytes": 1392,
+      "sha256": "e1172691ef334bf0ad4bb0652f3bfe7fec666c2d04218ec8100708f9a1eaf43b"
+    },
+    {
+      "path": "output/dev_anam2/e10_DSE_2009-2021.csv",
+      "bytes": 17063,
+      "sha256": "b280f19259f12a64b76cbc5a0bf26068344950a1c89875fcde952eb63c34239b"
+    },
+    {
+      "path": "output/dev_anam2/e10_DSE_2023-2026.csv",
+      "bytes": 16657,
+      "sha256": "71b0169ad393fe05d73a026f6918917ef2d1a3c1b80669c29e3922edd17faeb6"
+    },
+    {
+      "path": "output/dev_anam2/e10_Morocco_2012-2026.csv",
+      "bytes": 17691,
+      "sha256": "bb3bbd8d78db528450ba05d188161c72302bdb5c9ae849f436a34151d9e93885"
+    },
+    {
+      "path": "output/dev_anam2/e10_NEPSE.csv",
+      "bytes": 10703,
+      "sha256": "a333d03307cf355f6b7d1ee12a36f2395ad0045d0beb2d7cbb19d554f531eaa8"
+    },
+    {
+      "path": "output/dev_anam2/e10_Vietnam_2007-2020.csv",
+      "bytes": 17590,
+      "sha256": "b5c88391aacc0f8d9048791c0c03a27a1ee822ee1705c3c8ccfe33df82123db6"
+    },
+    {
+      "path": "output/dev_anam2/e11_DSE_2023-2026.csv",
+      "bytes": 3973,
+      "sha256": "b3cac3e8d72c5a6339c162797a3610e4f991f01ac2a9f3d8a77291b4365202eb"
+    },
+    {
+      "path": "output/dev_anam2/e11_Morocco_2012-2026.csv",
+      "bytes": 4260,
+      "sha256": "ed25f0e18649846c08833216a9893e370c7720dc830a0a764faf6c971800fe43"
+    },
+    {
+      "path": "output/dev_anam2/e11_NEPSE.csv",
+      "bytes": 2556,
+      "sha256": "3448e0b1cc030234df248d8b3875f3fb8183f46840892367cfc7d2fc6184d6f0"
+    },
+    {
+      "path": "output/dev_anam2/e12_DSE_2023-2026.csv",
+      "bytes": 7266,
+      "sha256": "d67583f2d32e8cea643ac2a47cb4e4f1602fe54eb973c55f2955fab82e95fa97"
+    },
+    {
+      "path": "output/dev_anam2/e12_Morocco_2012-2026.csv",
+      "bytes": 7708,
+      "sha256": "e6e37d38f6cc53d6f0227ade8d0f5d0d2489c12e7aef7787316c4e938ec8ee4a"
+    },
+    {
+      "path": "output/dev_anam2/e12_NEPSE.csv",
+      "bytes": 4731,
+      "sha256": "949ad77ce11b4f69210fb37660b7efd0edfb31cb206d9e369fee02cf3369fd6e"
+    },
+    {
+      "path": "output/dev_anam2/e12_NIFTY50.csv",
+      "bytes": 1921,
+      "sha256": "8a31f1c778b100c5b682f7b8a3686cee7f0b2683db3e7f3deb7160fa7a22b4a7"
+    },
+    {
+      "path": "output/dev_anam2/e12_SP500.csv",
+      "bytes": 1963,
+      "sha256": "e9e4e9442f96926cf52b735a55ac0997ead790cb12835d174495e47fff3b4e7d"
+    },
+    {
+      "path": "output/dev_anam2/e13_DSE_2023-2026.csv",
+      "bytes": 6468,
+      "sha256": "4b8bbca25467d64fe83fcd60011cca584156d929c05cb9bd3cac49e8cbd2f4ef"
+    },
+    {
+      "path": "output/dev_anam2/e13_Morocco_2012-2026.csv",
+      "bytes": 6881,
+      "sha256": "6b91eedc8a340b87ebe34f05d1dfbb86c94ba94fa3eb7855d62e9348d3da3406"
+    },
+    {
+      "path": "output/dev_anam2/e13_NEPSE.csv",
+      "bytes": 4179,
+      "sha256": "1e8eb25eddd036b010710d3e3c0208d2a79e8723ac9b9ee7ed038f5721b41d82"
+    },
+    {
+      "path": "output/dev_anam2/e13_Vietnam_2007-2020.csv",
+      "bytes": 6906,
+      "sha256": "966339d4228910a4ecfe598c979b3394e29fe6ad26e13caf0420d283352fbb3e"
+    },
+    {
+      "path": "output/dev_anam2/e14_DSE_2009-2021.csv",
+      "bytes": 6681,
+      "sha256": "5abffc0e5a10e5f0dbb30ea0626ee07de605b84f6f34002c8d3b63cd20cd2093"
+    },
+    {
+      "path": "output/dev_anam2/e14_DSE_2023-2026.csv",
+      "bytes": 6347,
+      "sha256": "a87fd1855fd56e6fc07ffe94c084caa0b97691d6d2fe94ab7c792a5088908369"
+    },
+    {
+      "path": "output/dev_anam2/e14_Morocco_2012-2026.csv",
+      "bytes": 6872,
+      "sha256": "44879bb094d0b111daa8484f89aadd9497a0eafb02195ac26fd523e6dae020b4"
+    },
+    {
+      "path": "output/dev_anam2/e14_NEPSE.csv",
+      "bytes": 4099,
+      "sha256": "96d063c503dcda04dce2f1a1e1271c4f527b2063a30a79951cefb3444a507a3c"
+    },
+    {
+      "path": "output/dev_anam2/e14_Vietnam_2007-2020.csv",
+      "bytes": 6841,
+      "sha256": "33dd93263ed3b6d883a21fb14fd52f3296930520d1fe5d7bb2a2edabcbe6bd2f"
+    },
+    {
+      "path": "output/dev_anam2/e16_DSE_2009-2021.csv",
+      "bytes": 20272,
+      "sha256": "927b1b6e726cd30314e606fc6d793a404c78bc1448d700ce64b71b9aaff45c1b"
+    },
+    {
+      "path": "output/dev_anam2/e16_DSE_2023-2026.csv",
+      "bytes": 19715,
+      "sha256": "511abfb9e423057c57c10b7acf2bce0c5fc559b2fa52903e5cae33926a6c73ba"
+    },
+    {
+      "path": "output/dev_anam2/e16_Morocco_2012-2026.csv",
+      "bytes": 20643,
+      "sha256": "9014c692a09404c485174313eb5117c6dc82fff76a475391f120ddcebb8d9e3d"
+    },
+    {
+      "path": "output/dev_anam2/e16_NEPSE.csv",
+      "bytes": 12873,
+      "sha256": "0fdef148a327581751dfd02d98e5f3a2aa2ed9c4e533e6c019f7ae276773b66c"
+    },
+    {
+      "path": "output/dev_anam2/e16_NIFTY50.csv",
+      "bytes": 7239,
+      "sha256": "5a586015936fb9ca25501150f151987eef27572730875e00546364e2f164e047"
+    },
+    {
+      "path": "output/dev_anam2/e16_SP500.csv",
+      "bytes": 7214,
+      "sha256": "1744aa13c62a3d7d21db38bf3281558e74907e6c3364f89f10729815004e102f"
+    },
+    {
+      "path": "output/dev_anam2/e16_Vietnam_2007-2020.csv",
+      "bytes": 20810,
+      "sha256": "3a78019e0e2551aa8ed00140b54f5b6c673319643ab7fa54e27f8c6c57ece44b"
+    },
+    {
+      "path": "output/dev_anam2/e1_DSE_2009-2021.csv",
+      "bytes": 2670,
+      "sha256": "e129dc21329a46bcc976df838489d24659c481167cdb1225f9c845850396fca7"
+    },
+    {
+      "path": "output/dev_anam2/e1_DSE_2023-2026.csv",
+      "bytes": 2655,
+      "sha256": "0ea457832e66d4869a186d428e4d5ba4925dadfa71ae1e24eca0aaac6796ed78"
+    },
+    {
+      "path": "output/dev_anam2/e1_Morocco_2012-2026.csv",
+      "bytes": 2742,
+      "sha256": "3182eecedcaaefdf832b42be01c8159fad1a8f31a2bec567f891795b89769334"
+    },
+    {
+      "path": "output/dev_anam2/e1_NEPSE.csv",
+      "bytes": 4854,
+      "sha256": "00f5dfd2bd3e598636e2d213872a88d9f30a217698117ef98c3d88e4c1df9a74"
+    },
+    {
+      "path": "output/dev_anam2/e1_NIFTY50.csv",
+      "bytes": 2472,
+      "sha256": "fe27237a5b253317b8f5fc1791a0d2d6d8505bc053867a1c2b557c183cb97083"
+    },
+    {
+      "path": "output/dev_anam2/e1_SP500.csv",
+      "bytes": 2427,
+      "sha256": "a35def35c6704fd36749093bdab0b46ae3e872443adeb23cab62e616025742ef"
+    },
+    {
+      "path": "output/dev_anam2/e1_Vietnam_2007-2020.csv",
+      "bytes": 2746,
+      "sha256": "10be2dcfe3b9f3bfb1ba1e2ece4de38a021984bd1a2b766cbe8a602dc4d3cecd"
+    },
+    {
+      "path": "output/dev_anam2/e3_DSE_2009-2021.csv",
+      "bytes": 3097,
+      "sha256": "55d8a5d5c57edb48f7bc890c8167c649b20185526051c5a5a7d2df73339850b1"
+    },
+    {
+      "path": "output/dev_anam2/e3_DSE_2023-2026.csv",
+      "bytes": 3005,
+      "sha256": "c5785ef79dac1689b7ab64f708bb32c8190e35a8bf085028e2cd52a1d4993155"
+    },
+    {
+      "path": "output/dev_anam2/e3_Morocco_2012-2026.csv",
+      "bytes": 3169,
+      "sha256": "afb21b3ba53ef07322615afeadd58e2a4c991b5e0a3f834a337b906aac3e5853"
+    },
+    {
+      "path": "output/dev_anam2/e3_NEPSE.csv",
+      "bytes": 5698,
+      "sha256": "ad71f3d7843d8eac767c008d39884844578e6947112066c57cadfe14a7b2a4c2"
+    },
+    {
+      "path": "output/dev_anam2/e3_NIFTY50.csv",
+      "bytes": 1495,
+      "sha256": "5a0286d2da9b7adbba17a6b2ba8c9e86cb19b20bcb0b30e3194380083b47dd9b"
+    },
+    {
+      "path": "output/dev_anam2/e3_SP500.csv",
+      "bytes": 1481,
+      "sha256": "d421835259e1f92c45d0d381cc298298a35eb6e991c2e7d133d593f8c1b59f53"
+    },
+    {
+      "path": "output/dev_anam2/e3_Vietnam_2007-2020.csv",
+      "bytes": 3199,
+      "sha256": "cc52151939a06bf3a786fa7646d8bff4c9aecd6c24ef31efcadf48f30e5715a9"
+    },
+    {
+      "path": "output/dev_anam2/e4_DSE_2009-2021.csv",
+      "bytes": 3293,
+      "sha256": "aeb6b8cf75185e23f1a52d1ca006ebf3f0af3b701a6594c2c5380c49227561d2"
+    },
+    {
+      "path": "output/dev_anam2/e4_DSE_2023-2026.csv",
+      "bytes": 3162,
+      "sha256": "11891b79ba83d2cc10d0eb2b090b26348e7b0e7bd5858808a7a7ca6b789a6a2e"
+    },
+    {
+      "path": "output/dev_anam2/e4_Morocco_2012-2026.csv",
+      "bytes": 3341,
+      "sha256": "e0ead61dca12ad06f3080fa15b8a72acd0dc0530a5d0fe16ad12dad88cfb7385"
+    },
+    {
+      "path": "output/dev_anam2/e4_NEPSE.csv",
+      "bytes": 6033,
+      "sha256": "82530b2b2ef2c1594a21af9d0a662dbfd3389f2657a65f0701ac057c37f60a5d"
+    },
+    {
+      "path": "output/dev_anam2/e4_NIFTY50.csv",
+      "bytes": 3008,
+      "sha256": "9c94cec5340befc72ac511f95624e3febc2080c2b1e1da72fc21d1c193c935dc"
+    },
+    {
+      "path": "output/dev_anam2/e4_SP500.csv",
+      "bytes": 2999,
+      "sha256": "9bd48dc8ebdeec4e3447acbc2206962225c4bd234fa0cfa29348f4b0775425ba"
+    },
+    {
+      "path": "output/dev_anam2/e4_Vietnam_2007-2020.csv",
+      "bytes": 3356,
+      "sha256": "6bb4df6d9ba6c74d5287c0ce215487e70b7d6920b34115eb33e4b0d961c834ce"
+    },
+    {
+      "path": "output/dev_anam2/e5_Morocco_2012-2026.csv",
+      "bytes": 1911,
+      "sha256": "b55e26e633cf6394a136b889991dae2dd9afae92b511b603e1a9ab6ee2ebc4ed"
+    },
+    {
+      "path": "output/dev_anam2/e5_NEPSE.csv",
+      "bytes": 3408,
+      "sha256": "313d725c65540d592fb97c44daf63e27287c9bc9b557e19df5244d8ed5446bab"
+    },
+    {
+      "path": "output/dev_anam2/e6_DSE_2009-2021.csv",
+      "bytes": 15007,
+      "sha256": "b1044ace524e98bf01c0aaad3d88db2b0866ddad87c68eb077fc4f4b61974e0d"
+    },
+    {
+      "path": "output/dev_anam2/e6_DSE_2023-2026.csv",
+      "bytes": 14661,
+      "sha256": "1434c34d6890b4caea9cbba9c2d3d0cf3b9cfb92f5e90953d0f629d24e1e7b54"
+    },
+    {
+      "path": "output/dev_anam2/e6_Morocco_2012-2026.csv",
+      "bytes": 15306,
+      "sha256": "b1b164e1dbaa3acdacb4a418494234779e0d511d8e49e77c6107a32b2f6ed2a0"
+    },
+    {
+      "path": "output/dev_anam2/e6_NEPSE.csv",
+      "bytes": 9424,
+      "sha256": "b4b56beffdaa872c058e7bd36ebe8ddfd1c1227ab9ecc094470dc3f73b27902e"
+    },
+    {
+      "path": "output/dev_anam2/e6_NIFTY50.csv",
+      "bytes": 9787,
+      "sha256": "5ba9e25b4249688ec911fc768f644b82d0f22e025e505a53ab2d4beb2e8107dd"
+    },
+    {
+      "path": "output/dev_anam2/e6_SP500.csv",
+      "bytes": 9609,
+      "sha256": "b8024162360f5fabe2d66789e4b04e39ba636b55c6ff781562bc013d5693ed1a"
+    },
+    {
+      "path": "output/dev_anam2/e6_Vietnam_2007-2020.csv",
+      "bytes": 15516,
+      "sha256": "4a561ddfb1d038cdca97a90eeadf4801c8f03f87ad021498708c5666a677af8d"
+    },
+    {
+      "path": "output/dev_anam2/e7_DSE_2009-2021.csv",
+      "bytes": 14030,
+      "sha256": "733b03c572cfec62f002ff51a784e8f2e35fc354b4b354b9052d2756488c07cc"
+    },
+    {
+      "path": "output/dev_anam2/e7_DSE_2023-2026.csv",
+      "bytes": 13725,
+      "sha256": "6b58a5d233b86654ab778d867eb32ac74b1227017659deb1c3024a35f5137469"
+    },
+    {
+      "path": "output/dev_anam2/e7_Morocco_2012-2026.csv",
+      "bytes": 14633,
+      "sha256": "0a62bd9b520ade914d440ecb88028b749cba608a63349dc65978ddc045038693"
+    },
+    {
+      "path": "output/dev_anam2/e7_NEPSE.csv",
+      "bytes": 8527,
+      "sha256": "773d0f3a44c3e0114b2b889a377065758b229f9a8016cd45dd0623ae2289e533"
+    },
+    {
+      "path": "output/dev_anam2/e7_NIFTY50.csv",
+      "bytes": 6854,
+      "sha256": "09abe3c78a6e9a392ded5ab437ebdaacdcd1bc1c84e8c91ae63284ed23b282d4"
+    },
+    {
+      "path": "output/dev_anam2/e7_SP500.csv",
+      "bytes": 6593,
+      "sha256": "7e5597aad53fb3cba80d7ce3f9a5d44e24c6e17f30d040e2e3590c5e9d9b008d"
+    },
+    {
+      "path": "output/dev_anam2/e7_Vietnam_2007-2020.csv",
+      "bytes": 14625,
+      "sha256": "17458f781c658ad96b38ae37667f3180992bf82fc3885851de05d865a12af378"
+    },
+    {
+      "path": "output/dev_anam2/e8_DSE_2009-2021.csv",
+      "bytes": 5832,
+      "sha256": "edabd06982778ad29c0f795746d2e790d11557298e096c1ec1c4feb621ca0b2c"
+    },
+    {
+      "path": "output/dev_anam2/e8_DSE_2023-2026.csv",
+      "bytes": 5698,
+      "sha256": "ec82791c6f9c1bee45948c91e80f56841845223cc728d9f8d2def6acb8a1bb9f"
+    },
+    {
+      "path": "output/dev_anam2/e8_Morocco_2012-2026.csv",
+      "bytes": 6041,
+      "sha256": "5a1f3d0921d83d261f1deb94053d5af23bf965b2f37034d2ee0fb7ba4d660394"
+    },
+    {
+      "path": "output/dev_anam2/e8_NEPSE.csv",
+      "bytes": 3595,
+      "sha256": "522a406356400e068dbdd0ab9e3387083c6614a791e8c059b72ef051709abe7d"
+    },
+    {
+      "path": "output/dev_anam2/e8_NIFTY50.csv",
+      "bytes": 3366,
+      "sha256": "1fc43afa8111daf5fb649399aec25b9f4edc584d61fb8edf21628d27801c9b98"
+    },
+    {
+      "path": "output/dev_anam2/e8_SP500.csv",
+      "bytes": 3290,
+      "sha256": "62af42991a7cce31ca65b4a3df732d9da8a7a267dd1900bbd30675ec2499c631"
+    },
+    {
+      "path": "output/dev_anam2/e8_Vietnam_2007-2020.csv",
+      "bytes": 6162,
+      "sha256": "9ae6e01de71fe2cf7984fe73002bd90d90d95f237c449e3118411304d81d376b"
+    },
+    {
+      "path": "output/dev_anam2/e9_DSE_2009-2021.csv",
+      "bytes": 8160,
+      "sha256": "95c8c1d46ad09303178b22be14a3d00f8537ad3dcfffd6610a8195b9602ba0d1"
+    },
+    {
+      "path": "output/dev_anam2/e9_DSE_2023-2026.csv",
+      "bytes": 7946,
+      "sha256": "3a627856e82a4d4920d518bca0473553d812a0b2f775246887d3a0dbb849b56e"
+    },
+    {
+      "path": "output/dev_anam2/e9_Morocco_2012-2026.csv",
+      "bytes": 8355,
+      "sha256": "c98369cdd62a91e74f682cf03f482f7cb74af8f178469ecedf06c52d2b0ce862"
+    },
+    {
+      "path": "output/dev_anam2/e9_NEPSE.csv",
+      "bytes": 5117,
+      "sha256": "210af02481baa0024e4a25acbd7ce0aea762285e21cd46ea3529be4884ac1c85"
+    },
+    {
+      "path": "output/dev_anam2/e9_NIFTY50.csv",
+      "bytes": 2928,
+      "sha256": "478dc497be1dc6965ed21d50bcfd89241a9353d3f96baa4f62391959e21dd25d"
+    },
+    {
+      "path": "output/dev_anam2/e9_SP500.csv",
+      "bytes": 2865,
+      "sha256": "123cea78da4e77a70d6422887bdc1382d7cfb1f00227eafb2fcfa0eb1a036a8e"
+    },
+    {
+      "path": "output/dev_anam2/e9_Vietnam_2007-2020.csv",
+      "bytes": 8481,
+      "sha256": "94da8dce254336da9763c2315e07682edde2a4f9b45390d7dd98f4a4d3a3dfea"
+    },
+    {
+      "path": "output/dev_anam2/ledger.csv",
+      "bytes": 118807,
+      "sha256": "03987de2ae2b798accbf3fa5e950721b373158c4b0f00463af2aac043e88e9ee"
     },
     {
       "path": "output/figures/fig12_cross_market.pdf",
@@ -893,6 +1362,11 @@
       "sha256": "df5be701d0b1c80a5b6c837e1049a6a9d0950db2bffd49963d56d51c3f2d3fab"
     },
     {
+      "path": "output/tables/paper_table40_m22_anam2.csv",
+      "bytes": 2219,
+      "sha256": "954c6c3d280b3f4f10975e649e2f8a818380085b4b28c3a1bdb43c1cfa6cbf6b"
+    },
+    {
       "path": "output/tables/paper_table4_cross_market_fingerprint.csv",
       "bytes": 369,
       "sha256": "474533ee4ff255f79e93445bbdcecb30042fc53b2834992c32c96406572e53fe"
@@ -1054,8 +1528,8 @@
     },
     {
       "path": "output/tables/table124_theory_proof_steps.csv",
-      "bytes": 37468,
-      "sha256": "e7a0d7e5a06cab379b315332ceb2e4e5221f74590d8bfff619469b029148bdcf"
+      "bytes": 45443,
+      "sha256": "cd9c250b81803da7e316c94de49ab9067dcd059a5b3a62f9ba793f0e161a85d3"
     },
     {
       "path": "output/tables/table125_m20_correction_steps.csv",
@@ -1121,6 +1595,41 @@
       "path": "output/tables/table137_frozen_residue_check.csv",
       "bytes": 8853,
       "sha256": "8f398bc4f987df5c839f254bd63e9e163242ff0872ae6120aab9967315afcb78"
+    },
+    {
+      "path": "output/tables/table138_m22_comparison.csv",
+      "bytes": 63590,
+      "sha256": "122033d8bd74ccc210acb440cfbca60f83095ca2f8abe70ce0d7d7b766911552"
+    },
+    {
+      "path": "output/tables/table139_m22_claims.csv",
+      "bytes": 6816,
+      "sha256": "bdb68a371e6606d44b762feb03585fb8721079b47620eea166012c24c2eb86fe"
+    },
+    {
+      "path": "output/tables/table140_m22_mcs.csv",
+      "bytes": 9620,
+      "sha256": "d06a3443b5cce2052822cdecac2052cf544f5ed1f07b2f3a5583439d79b23a81"
+    },
+    {
+      "path": "output/tables/table141_m22_panels.csv",
+      "bytes": 1753,
+      "sha256": "948980fb17e8956447fe8e2717ac82d77554ce7ebf66a06ccf544f55ea4cef9b"
+    },
+    {
+      "path": "output/tables/table142_m22_frozen_weights.csv",
+      "bytes": 9163,
+      "sha256": "dd7623145a2d2c6e566d807c473080f55ae470bcae381e018059b7c8cbda2867"
+    },
+    {
+      "path": "output/tables/table143_theory_market_open_checks.csv",
+      "bytes": 3977,
+      "sha256": "a9c5f7880037c0d147c8d6d1f4ebec9c99dc69b152845ba2105d22853fc28246"
+    },
+    {
+      "path": "output/tables/table144_theory_market_open_data.csv",
+      "bytes": 989,
+      "sha256": "04473644ef46bb8e3c4597bbb8c341994b6bac0372088882dc67b154e6fcaa40"
     },
     {
       "path": "output/tables/table14_cross_market_fingerprint.csv",
@@ -1579,8 +2088,8 @@
     },
     {
       "path": "paper/NEPSE_Volatility_Manuscript_Revised_2026-09.docx",
-      "bytes": 2243446,
-      "sha256": "95e7ba561c271815c2aacf5fbf6d8858cc63f5ed5390d6b13fb2595af4f3ca53"
+      "bytes": 2248168,
+      "sha256": "64e86a77b0f8b95ca804c8aed5f8ea57481c6441d3e82ecd8adcd8e268978732"
     },
     {
       "path": "paper/apply_referee_revisions.py",
@@ -1638,6 +2147,11 @@
       "sha256": "a0cc744789799b7468bef88c9cb9e2f53b04e11fa135aad8bde71d9354a66b80"
     },
     {
+      "path": "paper/apply_round20_revisions.py",
+      "bytes": 42648,
+      "sha256": "ac6da48207d0762fa1d6733195afda0c72f8f9f5370778539088d02b1af1b6b2"
+    },
+    {
       "path": "paper/apply_round3_revisions.py",
       "bytes": 52629,
       "sha256": "26c12bfc15cd8bc1226f3e5b3aa29ee7d0ac37fadf4f50b06b01d353901883f7"
@@ -1674,8 +2188,8 @@
     },
     {
       "path": "paper/build_submission_set.py",
-      "bytes": 25203,
-      "sha256": "d2d26284ce6f8309e3d0d1a27390728eb230074564594610ae2eb56984248f4d"
+      "bytes": 26679,
+      "sha256": "d6a93b319886ac7a687a584bf8cda4ca732a50484aa5e217d5f46aed92e900d1"
     },
     {
       "path": "paper/manuscript_as_reviewed_pre_revision.pdf",
@@ -1684,43 +2198,43 @@
     },
     {
       "path": "paper/submission/01_title_page.docx",
-      "bytes": 37858,
-      "sha256": "a45b0308c13bb3ed429859796ece2fb499be0faf0e69d27c421cfd8723f0c9a3"
+      "bytes": 37967,
+      "sha256": "34c33eee760c665d41e61bc9648957dcd86f1d2ada50fda9724422119738cd21"
     },
     {
       "path": "paper/submission/02_manuscript_anonymous.docx",
-      "bytes": 2243336,
-      "sha256": "48ba7fd8e1bff7e427ef869e117d7083d95119f54548a560acbb8c27c6cf4634"
+      "bytes": 2248064,
+      "sha256": "1a2db6cf1bf87ed40054716d2f29c1c926b2aca62799098e8d3a9939916eaa86"
     },
     {
       "path": "paper/submission/03_cover_letter_Asian_Journal_of_Economics_and_Banking.docx",
-      "bytes": 39183,
-      "sha256": "eeb229497b6bc15b4f19ec60f5d44d8442c53ae6177663efd4ca9c24ec65119d"
+      "bytes": 39441,
+      "sha256": "1da5964dde3196675fdd525b2358eb8c71191199dca9e7bae1631620f22ef4e4"
     },
     {
       "path": "paper/submission/03_cover_letter_Investment_Management_and_Financial_Innovations.docx",
-      "bytes": 39169,
-      "sha256": "dd469632f31c5da39286b156d3eef97d5f7260a66ad5c0fb29aad4fc33b9b4aa"
+      "bytes": 39425,
+      "sha256": "c93a2e5e1dedca9966bc17eb31da2cc0885885b8c97fa8d1ccef656aff39b3aa"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Empirical_Finance.docx",
-      "bytes": 39194,
-      "sha256": "1e2bc669e383e34d972f383c144f9bc5c733da91f58d3f2ea69788acb4e80cd5"
+      "bytes": 39456,
+      "sha256": "e45e2e52967fdaf848443e9c0730a66d0a35a85676acfaddd5f0cdb4e6b83551"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Econometrics.docx",
-      "bytes": 39192,
-      "sha256": "a6f6218790400aa58c2ddebd3d2985130db65dd30bc5caad37c6c5a51df25e50"
+      "bytes": 39444,
+      "sha256": "9eb8df945f724b03a1dd058a30d5fa477c8006e5d74548f79f78285384a5c7f2"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Financial_Markets.docx",
-      "bytes": 39180,
-      "sha256": "6a16e7943bf6182b679d601671fdc069c7a4660a3f43fd6dc90d142e3b3bc161"
+      "bytes": 39437,
+      "sha256": "19041f5ffc763c0e2332e9b8b2d492f6698c6851693378e7699b90780cd611b1"
     },
     {
       "path": "paper/submission/03_cover_letter_Journal_of_Risk_and_Financial_Management.docx",
-      "bytes": 39218,
-      "sha256": "693408d64c07dde800772e13736b0d691bc3ea60afd4361c37897fd8d0b12cd7"
+      "bytes": 39474,
+      "sha256": "f2554b88ad99cb1c9ebcc5e7663e40a276e4500eae6ddc724e63eab8b7ca45f0"
     },
     {
       "path": "paper/theory/.gitignore",
@@ -1729,13 +2243,18 @@
     },
     {
       "path": "paper/theory/appendix_proofs.tex",
-      "bytes": 23090,
-      "sha256": "a0de46a2274ee1f647d430e48e35f0aa5caadab58e716928f34ea1d996018184"
+      "bytes": 26457,
+      "sha256": "452f2476d9edf60582d653387ef6e7c6f8fdae86cd5105d8e9e77686b52e4942"
     },
     {
       "path": "paper/theory/generated/kernel.tex",
       "bytes": 5427,
       "sha256": "d7a87d438b393b611b008cea32e79011dd05bddb29f73f693002045d650db005"
+    },
+    {
+      "path": "paper/theory/generated/market_open.tex",
+      "bytes": 4316,
+      "sha256": "8eb732bb4965879a4705127663e45c380d1a659464657fd2fd2716009364e5ff"
     },
     {
       "path": "paper/theory/generated/numbers.tex",
@@ -1745,7 +2264,7 @@
     {
       "path": "paper/theory/generated/proofs.tex",
       "bytes": 558,
-      "sha256": "895f0737477ef1f40d616aa2a3a9be1edc9c30f80066aa7bf9acee03ea34dad3"
+      "sha256": "bad83e17cfd2e9c33cd0d951d8adfcc06f749760cd29ddc0f42511aaabfd7c22"
     },
     {
       "path": "paper/theory/generated/tab_bounds.tex",
@@ -1768,34 +2287,39 @@
       "sha256": "d1577d182fd0c10884ff418f956466b27a9d6621847e1383a815c1fa1ed90adb"
     },
     {
+      "path": "paper/theory/generated/tab_market_open.tex",
+      "bytes": 555,
+      "sha256": "eab6abe03d8ddf89bcdc8ed17e3e4f2617dfdafdefadf864e110fa3523c50647"
+    },
+    {
       "path": "paper/theory/generated/tab_pooling.tex",
       "bytes": 1169,
       "sha256": "2d4f8181856eba074a197094217a2fdb3c7a8ac41ed984fc74991a922ca1e492"
     },
     {
       "path": "paper/theory/generated/tab_proofs.tex",
-      "bytes": 442,
-      "sha256": "86be8cb1be5b2e2a7245531463647485be21a26ecbf2a87a731d46f5e71314ca"
+      "bytes": 492,
+      "sha256": "dd06f27c64fcdbd931e10b754c663af5029eebc44ce22fd870742e0dd44c2e46"
     },
     {
       "path": "paper/theory/references.bib",
-      "bytes": 5567,
-      "sha256": "2b5b8e34c3ed4c6d1c545bea898395f975b2d34f5ce37cc4a4622e9605fcc598"
+      "bytes": 6983,
+      "sha256": "046a09f605e9f98a38ee20b1c692c392b13dda8f4abb8a71e8980fcd5e251e90"
     },
     {
       "path": "paper/theory/section_theory.tex",
-      "bytes": 41455,
-      "sha256": "570eb2f9e41fc27458a12129b941f8cc51c6c39b23fe7a44c12755e8b482b28f"
+      "bytes": 50157,
+      "sha256": "1c655d85b7cd428e9043893ce630557767387cb2deea54bdc5cacbe4cd32ade4"
     },
     {
       "path": "paper/theory/theory.pdf",
-      "bytes": 530893,
-      "sha256": "3801ee64cec3c41572f8b587464a8ce7d8f5b07160831558bf25d157d2ec4748"
+      "bytes": 562627,
+      "sha256": "c1c682d17fb21c903b4bb01371f485b39cd49c96aadf598835a9953500639333"
     },
     {
       "path": "paper/theory/theory.tex",
-      "bytes": 4349,
-      "sha256": "5287bad7d92bac12844d8702f7e72f28c18e7155ec1a79f9f6f11d5fa2225768"
+      "bytes": 4940,
+      "sha256": "fa2bc78fe99341f46064499a16d862f5817df68fa5bbe5a50d7152d5e524c89e"
     },
     {
       "path": "pyproject.toml",
@@ -1809,8 +2333,8 @@
     },
     {
       "path": "run_paper_analysis.sh",
-      "bytes": 6323,
-      "sha256": "fa8f0dd5dd5d013e984f16ebdd5c58db31e60a63943a313de69cdda58d050f67"
+      "bytes": 6809,
+      "sha256": "a641a83ba7a7266eee50e615158b731b41058b068b20ef06ae3f668d00cb1858"
     },
     {
       "path": "scripts/02_build_panel.py",
@@ -1859,8 +2383,8 @@
     },
     {
       "path": "scripts/25_submission_tables.py",
-      "bytes": 64290,
-      "sha256": "32aba47ba15600e8f1d43e0ca8996e0bb08b6867e43a69d0fb387ecd18ec4747"
+      "bytes": 67617,
+      "sha256": "36e7e04ba09b22b72952bc48fc16ba522e4231f3182dd66fb06d3b12b7be2351"
     },
     {
       "path": "scripts/26_robustness.py",
@@ -1964,8 +2488,8 @@
     },
     {
       "path": "scripts/46_theory_proofs.py",
-      "bytes": 76480,
-      "sha256": "7faec0dfd3aad6e4cf8f53d9602aadb5a325b1272ffa004b5a298043a7bc7fcc"
+      "bytes": 83684,
+      "sha256": "407539ab8b60fd4bdd322830fba6b9730d1ace784326abd52ebe1c50506b09f9"
     },
     {
       "path": "scripts/47_corrected_evaluation.py",
@@ -1993,9 +2517,154 @@
       "sha256": "843e94f60202695fd8b297e6c85ad304f3f4ec49becbc71af27c8dd7d9b82e31"
     },
     {
+      "path": "scripts/52_m22_evaluation.py",
+      "bytes": 18863,
+      "sha256": "be719d826226e6df64e0eee2e39909763b9d11322c34a97ddb6f56ec3d1528c7"
+    },
+    {
+      "path": "scripts/53_m22_freeze.py",
+      "bytes": 4596,
+      "sha256": "c9d314b28a578c9d9af780dac7d6209160eeb9fab1285b694e8363a4fddd3aa9"
+    },
+    {
+      "path": "scripts/54_market_open_theory.py",
+      "bytes": 14560,
+      "sha256": "176c2a0aa225a9ac25f24661cb44bcf631a85f3fb3564316e53a5005b02c3d2a"
+    },
+    {
       "path": "scripts/_env.py",
       "bytes": 2216,
       "sha256": "595779cfbb173b7cc7a54a726cfa36120481ea7ab3a24a9df637f57190180e6a"
+    },
+    {
+      "path": "scripts/dev_anam2/README.md",
+      "bytes": 1823,
+      "sha256": "087014759892604cff37e8f74dc0bc62436be5b576e8ac04788b4e6e88b8678e"
+    },
+    {
+      "path": "scripts/dev_anam2/diag_vn.py",
+      "bytes": 2271,
+      "sha256": "58d209089b3f0ac2a5100bcb9b01b14a22720731c8c4de3aa25bbcf9545c01be"
+    },
+    {
+      "path": "scripts/dev_anam2/e0_describe.py",
+      "bytes": 1515,
+      "sha256": "5b15d50a6f43a87525fb04e959436ba6b14ec6bb4a8f59c1d7877e10e263a9de"
+    },
+    {
+      "path": "scripts/dev_anam2/e10_marketopen.py",
+      "bytes": 5793,
+      "sha256": "b9fa99526bbae37f97bad78fc987e8f44c27aaa0cdd3a4695e5d85cc69953cc5"
+    },
+    {
+      "path": "scripts/dev_anam2/e11_marketmove.py",
+      "bytes": 6638,
+      "sha256": "d3d97d0f94d0341a362544607b05b34a710e0d42d04cdfaadc2e95b20270e8b8"
+    },
+    {
+      "path": "scripts/dev_anam2/e12_dynamics.py",
+      "bytes": 5608,
+      "sha256": "e9cd086c4007413dc7461cb84f1ce027e441aa18c897b3f6dbb0ef132315a5dd"
+    },
+    {
+      "path": "scripts/dev_anam2/e13_beta.py",
+      "bytes": 4655,
+      "sha256": "45b71791f538b565743196b12e5bcd7a4b0748502bc0841e5f6ca3e43ece350c"
+    },
+    {
+      "path": "scripts/dev_anam2/e14_level.py",
+      "bytes": 4534,
+      "sha256": "8ce0b29b3858c79debb5778a56c1d624985a48f10014f499b259a22d125df51e"
+    },
+    {
+      "path": "scripts/dev_anam2/e15_ml.py",
+      "bytes": 6502,
+      "sha256": "c5e696834ceb44fb5c8ef52f10a29a6ee312be181c9ada3c35025f8c419d2a4c"
+    },
+    {
+      "path": "scripts/dev_anam2/e16_final.py",
+      "bytes": 5610,
+      "sha256": "aad2e04da392528758d5349e7742d10db26ca8bff888a47e53ea108ea1c762e1"
+    },
+    {
+      "path": "scripts/dev_anam2/e1_kernels.py",
+      "bytes": 2693,
+      "sha256": "7c4267db32e4ce4aaea46715fcfe41afe532b1c793c357bab70f6546a6f49a99"
+    },
+    {
+      "path": "scripts/dev_anam2/e2_dynamics.py",
+      "bytes": 3301,
+      "sha256": "f471fb34a97141fcd05c37afcbeffb81c322054c1ba649660a8d7113aed96b5c"
+    },
+    {
+      "path": "scripts/dev_anam2/e4_measure.py",
+      "bytes": 3109,
+      "sha256": "fd18659475f5f8cd42c016235fcc45a90ca98a4fa802c3d9e395e4ec441e4384"
+    },
+    {
+      "path": "scripts/dev_anam2/e5_more.py",
+      "bytes": 5462,
+      "sha256": "d9c05776ae7e2b7b01a22abf4fcb9c26cafd81aca6c8853d84e03e97679d4f95"
+    },
+    {
+      "path": "scripts/dev_anam2/e6_consolidated.py",
+      "bytes": 4357,
+      "sha256": "0d5abb09aca2c72d96aa7fade26f3f7a12b88968b8d50e99ddaa6b363e9e7f07"
+    },
+    {
+      "path": "scripts/dev_anam2/e7_factorial.py",
+      "bytes": 4026,
+      "sha256": "1a6c2a4f92481ce0a2f3a2dfc428ab04813346dd5d59de72f9de65ac8849a1d7"
+    },
+    {
+      "path": "scripts/dev_anam2/e8_system.py",
+      "bytes": 5982,
+      "sha256": "7f0c16730ac63ce72e1a1f60d6d9d0f7690f59899968d054257662b353d993f7"
+    },
+    {
+      "path": "scripts/dev_anam2/e9_heavy.py",
+      "bytes": 7941,
+      "sha256": "7ce6770fc06336b921c7ce75af1d76a0a644b732492c098bb1fb81ad430f1ec6"
+    },
+    {
+      "path": "scripts/dev_anam2/harness.py",
+      "bytes": 1881,
+      "sha256": "d9860caea5eaf74d7f7b3a3b9c13ba0ea9a875eeaa7998f3cf3c3aa335fb8bd6"
+    },
+    {
+      "path": "scripts/dev_anam2/kernels2.py",
+      "bytes": 2376,
+      "sha256": "cabb0c8b7876eaa335b33d3d6bfa51772150fc8be77dd8995c375af07ef3a0b3"
+    },
+    {
+      "path": "scripts/dev_anam2/launch.sh",
+      "bytes": 295,
+      "sha256": "4815b03da95bbe311d3cef7556261a0eca77d5168065e06da2e3c840c67faeee"
+    },
+    {
+      "path": "scripts/dev_anam2/models2.py",
+      "bytes": 2272,
+      "sha256": "98d88dd8c1014f29bb0e3426e0b869c348c1f92a1f49c48ee553b705cb7923b4"
+    },
+    {
+      "path": "scripts/dev_anam2/runner.py",
+      "bytes": 1812,
+      "sha256": "446909de6bca407bf3823c33bd25d643e130cfd65aa826a35f6567a4a8de65fd"
+    },
+    {
+      "path": "scripts/dev_anam2/runner2.py",
+      "bytes": 2119,
+      "sha256": "dd6f410713f614760b3f869fb585f67b3712c21357e2ec838b7a49262e19dd38"
+    },
+    {
+      "path": "scripts/dev_anam2/sim_m1.py",
+      "bytes": 6395,
+      "sha256": "4563aa67f3d541693698a3d0b77ba1189597defce5064a775684ef3d94107268"
+    },
+    {
+      "path": "scripts/dev_anam2/summarize.py",
+      "bytes": 1844,
+      "sha256": "36c7235dcec793f0209cbc6d043a5eab900869e403d95e7d7c5d1e931e192cb3"
     },
     {
       "path": "src/nepsevol/__init__.py",
@@ -2048,6 +2717,11 @@
       "sha256": "ffddf075d33eb0ba67dea1ee36021128a09594bbb5dc3fb586cfa95902e2aca9"
     },
     {
+      "path": "src/nepsevol/estimators/anam2.py",
+      "bytes": 9291,
+      "sha256": "38be3fbc8482512764b127b0d5f9e3ae887726cb1e78f77e0d3742ff86fbc766"
+    },
+    {
       "path": "src/nepsevol/estimators/microsim.py",
       "bytes": 14166,
       "sha256": "8f388efa1a879499b82307408cc24eb9ff2a3e61ab1f15a6c7708cc7687e92df"
@@ -2074,8 +2748,8 @@
     },
     {
       "path": "src/nepsevol/frontier.py",
-      "bytes": 17971,
-      "sha256": "c924a850a92c24684cf4baae145da35bd5492b9f20ab9f0aa4d01860f5b32744"
+      "bytes": 21521,
+      "sha256": "0b6b1a92f5d52201c347941761900728b1b3202f8dfc67628e5deb3a5d2ea166"
     },
     {
       "path": "src/nepsevol/inference.py",
@@ -2126,6 +2800,11 @@
       "path": "src/nepsevol/volforecast.py",
       "bytes": 6709,
       "sha256": "2e18037c82601d51587c9f744dfc54f158d47b4f4ce095776d78fb667fc0d849"
+    },
+    {
+      "path": "tests/test_anam2_package.py",
+      "bytes": 4970,
+      "sha256": "6dd4cee0139ceb0ed84bb117dab6d6eca9e1be2caf625a705a601ece9eaced83"
     },
     {
       "path": "tests/test_anam_estimator.py",
@@ -2183,6 +2862,16 @@
       "sha256": "c53fc9ec800564b46d722de654aab4abae8426efde2c4487149de9f032d4efa3"
     },
     {
+      "path": "tests/test_m22_anam2.py",
+      "bytes": 11330,
+      "sha256": "dcee13250fcc493523a8e7d23bc7541b6f5fa49a145a89366eaf3f8449903e49"
+    },
+    {
+      "path": "tests/test_m22_results.py",
+      "bytes": 4936,
+      "sha256": "f69329985af6e88221d12c556b5892ac8204975f90e46177f21d7dcc80c50557"
+    },
+    {
       "path": "tests/test_opening_price.py",
       "bytes": 10951,
       "sha256": "f90fca2bcfb364b7915a1adb41c1ee40e196eb601a1d6d0412c004ea379ff04d"
@@ -2199,18 +2888,23 @@
     },
     {
       "path": "tests/test_round15_revisions.py",
-      "bytes": 7827,
-      "sha256": "dac292a91fff940e6d902a3ba956a43daa899a127ef1d00bab4f1336c15213dc"
+      "bytes": 7957,
+      "sha256": "ad6ded369d8eec408f4a2dbe265a6f07b1f11c00d77318acdaa1b1cbcd26a7ef"
     },
     {
       "path": "tests/test_round16_revisions.py",
-      "bytes": 7669,
-      "sha256": "bbfc042023bcd28fb8ce41d3de4d44cf626996e73eb25a23e49b3b1c2c74d8a8"
+      "bytes": 7795,
+      "sha256": "fdb243a983950c5a6afd791c7729be03f4d50ce5012b7c982e7588d890257fa0"
     },
     {
       "path": "tests/test_round19_revisions.py",
-      "bytes": 11629,
-      "sha256": "1f0a8b36fad3c0286e7aac0f51b0d94829a4d3dc8bb9129268c2863bcb11eace"
+      "bytes": 11663,
+      "sha256": "74d24e1a691432091acb7fcc50fbcf593f8585c54ea5a88411ccae72b3a8a89a"
+    },
+    {
+      "path": "tests/test_round20_revisions.py",
+      "bytes": 10758,
+      "sha256": "9dc76d3501e53070b954727c7bc676e9c1d9ea969b54e56a072e76c447b22a38"
     },
     {
       "path": "tests/test_round3_revisions.py",
@@ -2219,13 +2913,13 @@
     },
     {
       "path": "tests/test_theory_checks.py",
-      "bytes": 13561,
-      "sha256": "b869b1b26b7e609590361aa7b5fb83b1e8f761caf4bf13b680948446780651c3"
+      "bytes": 13603,
+      "sha256": "42149bdbbf5b47056ddb7d8bd5ab0fd6b2e9ebe03b75003f9049a50eab0d64a1"
     },
     {
       "path": "tests/test_theory_proofs.py",
-      "bytes": 7032,
-      "sha256": "4c14f893a97be73a0cff4b6a7c94ff9ab7acbc20ef63247ba9f3aaadbd4a705f"
+      "bytes": 7094,
+      "sha256": "d2eafa7363668473dbc594e705beb9ea6bc8698a33a9dc9095d54c79d89e970f"
     }
   ]
 }

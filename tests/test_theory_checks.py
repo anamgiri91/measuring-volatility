@@ -39,7 +39,7 @@ def numbers() -> dict[str, str]:
     """The generated macros: script 45's numbers and script 46's step counts."""
     pat = re.compile(r"\\csname thn@(.+?)\\endcsname\{(.*)\}$")
     out = {}
-    for f in ("numbers.tex", "proofs.tex", "kernel.tex"):
+    for f in ("numbers.tex", "proofs.tex", "kernel.tex", "market_open.tex"):
         for line in (GEN / f).read_text().splitlines():
             m = pat.search(line)
             if m:
@@ -106,7 +106,7 @@ def test_every_number_the_latex_quotes_is_defined():
     missing = sorted(used - set(defined))
     assert not missing, f"undefined generated numbers: {missing}"
     for frag in ("tab_bounds.tex", "tab_censoring.tex", "tab_checks.tex", "tab_pooling.tex", "tab_proofs.tex",
-                 "tab_kernel.tex"):
+                 "tab_kernel.tex", "tab_market_open.tex"):
         assert (GEN / frag).exists(), frag
 
 

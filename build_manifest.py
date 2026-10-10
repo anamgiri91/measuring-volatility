@@ -72,7 +72,8 @@ def run_status():
 
 manifest = {
     "package": "NEPSE Volatility Journal Submission Reproducibility Package",
-    "revision": "19 (round 19: the independent audit of 9 October 2026 answered point by point "
+    "revision": "20 (round 20: Anam II, the market-implied open, designed on training spans only (ANAM2_DEVELOPMENT.md) and tested under plan M22, frozen before it was computed on any test row, with Pakistan as a market used at no stage of its design (manuscript Section 6.9 and Table 40); its weights frozen for the prospective test; Proposition 8 added to the theory supplement; three overstated statements about the open's two parts corrected (AUDIT-REGISTER M-035 to M-037); "
+                "round 19: the independent audit of 9 October 2026 answered point by point "
                 "(RESEARCH_AUDIT_RESPONSE.md); the forecast evaluation corrected under plan M20, frozen before it "
                 "was run, with return-only forecasts, ablations and a model confidence set (manuscript Table 39); "
                 "plan M21's prospective test frozen; Proposition 7 added to the theory supplement; the overstated "
@@ -105,7 +106,7 @@ manifest = {
                             "before submission.",
         "double_anonymous_set": "paper/submission/",
         "regenerated_by": "paper/apply_referee_revisions.py, then paper/apply_round3_revisions.py "
-                          "through paper/apply_round19_revisions.py, in order",
+                          "through paper/apply_round20_revisions.py, in order",
         "canonical_source": "The .docx above is the canonical editable manuscript. The revision scripts record "
                             "every edit and the checks behind it, starting from a pre-revision draft that is not "
                             "distributed (the --base of paper/apply_referee_revisions.py), so they document the revision rather than "
@@ -124,6 +125,12 @@ manifest = {
     "validation": {
         "pytest": pytest_result(),
         "paper_facing_pipeline": run_status(),
+        "round_20_runs": "Run individually in round 20 on Python 3.13 / x86-64 Linux, with the third-party "
+                         "inputs present, Pakistan's included: scripts 52 (plan M22, all eight samples), 53, 54, 46 "
+                         "and 25, then paper/apply_round20_revisions.py and paper/build_submission_set.py. Script "
+                         "52 asserts that M20's open-free HAR, rebuilt by M20's own code, reproduces table 127 on "
+                         "every seen sample before any comparison is made, and that the three frozen files' digests "
+                         "equal those in the plan. The full runner was not rerun end to end in round 20.",
         "round_19_runs": "Run individually in round 19 on Python 3.13 / x86-64 Linux, with the third-party "
                          "inputs present: scripts 46, 47 (plan M20, all seven samples), 48, 49, 50, 51 and 25, "
                          "then paper/apply_round19_revisions.py. Script 47 asserts that its step S0 reproduces "
@@ -254,6 +261,37 @@ manifest = {
         "new_tests": ["tests/test_round16_revisions.py", "tests/test_anam_recheck.py"],
         "new_documents": ["ANAM_RECHECK_POSTHOC.md"],
     },
+    "revision_20_changes": {
+        "anam2": {
+            "development": "ANAM2_DEVELOPMENT.md; scripts/dev_anam2/; output/dev_anam2/ledger.csv (195 variants, "
+                           "training spans only; not evidence)",
+            "plan": "M22_ANAM2_PLAN.md (frozen in commit d1d7c0f with src/nepsevol/estimators/anam2.py, "
+                    "scripts/52_m22_evaluation.py and the Pakistan reader in src/nepsevol/frontier.py, before Anam II "
+                    "was computed on any test row and before any return was computed on the Pakistan data)",
+            "script": "scripts/52_m22_evaluation.py; scripts/53_m22_freeze.py (Part C, never overwrites)",
+            "outputs": "output/tables/table138-142; manuscript Table 40 (output/tables/paper_table40_m22_anam2.csv)",
+            "results": "M22_ANAM2_RESULTS.md",
+            "result": "P1 supported: Anam II has lower loss than M20's open-free HAR at 5 sessions in 3 of 6 panels "
+                      "(Dhaka 2023-2026, Vietnam and Pakistan, the unseen market) and higher loss in none of 12 "
+                      "panel-horizons. It beats the best return-only forecast at 5 sessions in 5 of 6. Most of the "
+                      "gain is the factor-HAR dynamics; with the dynamics fixed, the market-implied open helps "
+                      "detectably only in Dhaka (2023-2026 at both horizons, 2009-2021 at 21 sessions). P2: 3 of 5 "
+                      "predictions held. On the indices every difference lies inside the practical margin.",
+            "unseen_market": "Pakistan Stock Exchange: 101 ordinary equities, 225,058 stock-days, 2016-10-13 to "
+                             "2026-10-08; third-party file pinned by digest under data/external/frontier/psx/ "
+                             "(not packaged; data/external/README.md)",
+        },
+        "theory": "Proposition 8 (paper/theory/section_theory.tex; proof B.8): the market-implied open; "
+                  "scripts/54_market_open_theory.py (35 checks, table143; data on each panel's training span, "
+                  "table144); scripts/46_theory_proofs.py now 385 steps, 185 symbolic",
+        "corrections": "AUDIT-REGISTER.md M-035 (plan M22 and what it should be judged against), M-036 (three "
+                       "overstated statements about the open's two parts), M-037 (the new reference)",
+        "new_scripts": ["scripts/52_m22_evaluation.py", "scripts/53_m22_freeze.py", "scripts/54_market_open_theory.py",
+                        "scripts/dev_anam2/", "paper/apply_round20_revisions.py"],
+        "new_tests": ["tests/test_m22_anam2.py", "tests/test_m22_results.py", "tests/test_anam2_package.py",
+                      "tests/test_round20_revisions.py", "anam-estimator/tests/test_market.py"],
+        "new_documents": ["ANAM2_DEVELOPMENT.md", "M22_ANAM2_PLAN.md", "M22_ANAM2_RESULTS.md"],
+    },
     "revision_19_changes": {
         "audit": "audits/2026-10-09_research_audit.md and audits/2026-10-09_publication_plan.md (as received); "
                  "RESEARCH_AUDIT_RESPONSE.md answers A01-A15: twelve accepted, three accepted in part with the "
@@ -340,6 +378,10 @@ manifest = {
                   "plan M20 (anam_estimator.evaluation), and the same test checks it origin by origin against the "
                   "research code's single-model corrected evaluation; anam-estimator/tests holds the package's "
                   "own tests",
+        "anam2": "since version 0.3.0, AnamIIModel (anam_estimator.market; needs the [market] extra, scipy) is "
+                 "the second generation for a panel; tests/test_anam2_package.py checks that its kernel, "
+                 "calibration, components, weights and losses equal the research module's (plan M22) on NEPSE "
+                 "and the NIFTY 50",
     },
     "revision_14_changes": {
         "M14_instrumented_calibration": {

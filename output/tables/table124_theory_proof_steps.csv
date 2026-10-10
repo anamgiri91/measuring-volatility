@@ -260,7 +260,7 @@ model,-,,,c = e_c - eta + eps equals r - o,symbolic,simplifies to 0,True
 7,c,B.7,c,psi'(a) = -Phibar(a),symbolic,simplifies to 0,True
 7,c,B.7,c,psi(0) = 1/sqrt(2 pi),symbolic,simplifies to 0,True
 7,c,B.7,c,E[(Z - a)^+] = psi(a),symbolic,simplifies to 0,True
-7,c,B.7,c,E[(s Z - u)^+] = s psi(u/s),symbolic-50dp,zero to 50 digits at 12 random points (max |residual| 1.4e-191),True
+7,c,B.7,c,E[(s Z - u)^+] = s psi(u/s),symbolic,simplifies to 0,True
 7,c,B.7,c,d/ds {s psi(u/s)} = phi(u/s),symbolic,simplifies to 0,True
 7,c,B.7,c,E[(eta^+)^2] = rho^2/2,symbolic,simplifies to 0,True
 7,c,B.7,c,f_M(0) = 2 phi(0) = sqrt(2/pi),symbolic,simplifies to 0,True
@@ -302,6 +302,70 @@ model,-,,,c = e_c - eta + eps equals r - o,symbolic,simplifies to 0,True
 7,c,B.7,c,"first-order loading of the full kernel (s=2.0), against simulation (script 48)",Monte Carlo,"theory -0.5, simulated -0.498252 (SE 0.092)",True
 7,c,B.7,c,"first-order loading of the full kernel, posterior overnight term (s=2.0), against simulation (script 48)",Monte Carlo,"theory 0.5, simulated 0.502528 (SE 0.092)",True
 7,c,B.7,c,"first-order loading of the overnight^2 + Parkinson (s=2.0), against simulation (script 48)",Monte Carlo,"theory 1.5, simulated 1.50399 (SE 0.092)",True
+8,a,B.8,a,m_-i does not depend on security i's news: d m_-i / d zeta_i = 0,symbolic,simplifies to 0,True
+8,a,B.8,a,m_-i does not depend on security i's error: d m_-i / d eta_i = 0,symbolic,simplifies to 0,True
+8,a,B.8,a,E[m_-i eta_i] = 0 (independence and zero means),symbolic,simplifies to 0,True
+8,b,B.8,b,m_-i - beta_bar_-i f = (N-1)^-1 sum_{j != i} (zeta_j + eta_j),symbolic,simplifies to 0,True
+8,b,B.8,b,E[(m_-i - beta_bar_-i f)^2] = V_N (second moments add),symbolic,simplifies to 0,True
+8,b,B.8,b,"V_N <= max / (N - 1) on 2,000 random draws of the second moments",numerical,sum of N-1 terms <= (N-1) max,True
+8,c,B.8,c,E[m_-i^2] = beta_bar_-i^2 sigma_f^2 + V_N,symbolic,simplifies to 0,True
+8,c,B.8,c,E[r_i m_-i] = beta_i beta_bar_-i sigma_f^2 (E[x_i m_-i] = 0 by the assumption),symbolic,simplifies to 0,True
+8,c,B.8,c,equal betas: b_M = beta^2 sigma_f^2 / (beta^2 sigma_f^2 + V_N),symbolic,simplifies to 0,True
+8,c,B.8,c,and b_M -> 1 as V_N -> 0,symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i r_i] = beta_i^2 sigma_f^2 + E[zeta_i^2] + E[zeta_i eta_i] (i = 1),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i^2] = beta_i^2 sigma_f^2 + E[(zeta_i + eta_i)^2] (i = 1),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i r_i] = beta_i^2 sigma_f^2 + E[zeta_i^2] + E[zeta_i eta_i] (i = 2),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i^2] = beta_i^2 sigma_f^2 + E[(zeta_i + eta_i)^2] (i = 2),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i r_i] = beta_i^2 sigma_f^2 + E[zeta_i^2] + E[zeta_i eta_i] (i = 3),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i^2] = beta_i^2 sigma_f^2 + E[(zeta_i + eta_i)^2] (i = 3),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i r_i] = beta_i^2 sigma_f^2 + E[zeta_i^2] + E[zeta_i eta_i] (i = 4),symbolic,simplifies to 0,True
+8,d,B.8,d,E[o_i^2] = beta_i^2 sigma_f^2 + E[(zeta_i + eta_i)^2] (i = 4),symbolic,simplifies to 0,True
+8,d,B.8,d,b = mu + (1 - mu) b_I,symbolic,simplifies to 0,True
+8,d,B.8,d,"in a sample, sum o_M o_I = 0 date by date",pathwise,"max |residual| over 3,000 paths = 2.7e-14",True
+8,d,B.8,d,the sample identity b = mu b_M + (1 - mu) b_I,pathwise,max |residual| over 1 paths = 1.1e-16,True
+8,e,B.8,e,"where the open moved and the bar has a range, A is the open-free kernel",pathwise,"max |residual| over 20,000 paths = 7.2e-16",True
+8,e,B.8,e,a bar that never left the previous close: A = 2 (1 - w) m^2,pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,e,B.8,e,there the open-free kernel is 0,pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,f,B.8,f,lambda_1 = E[W(1)^2] = 1,symbolic,simplifies to 0,True
+8,f,B.8,f,R_n <= R_4n on nested grids (n = 1),pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,f,B.8,f,R_n <= R_4n on nested grids (n = 2),pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,f,B.8,f,R_n <= R_4n on nested grids (n = 5),pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,f,B.8,f,R_n <= R_4n on nested grids (n = 10),pathwise,"max |residual| over 20,000 paths = 0.0e+00",True
+8,a,B.8,a,"E[m_-i eta_i] = 0 (N=30, corr(zeta, eta)=0.4, 200,000 dates), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value -0.000456538",True
+8,a,B.8,a,"Cov(m_-i^2, eta_i^2) = 0 (N=30, security 0), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value -0.0332494",True
+8,a,B.8,a,"m_-i does not move with security i's own print (pathwise, every date), script 54",pathwise,"identity, relative error <= 1e-09: theory 0, value 1.77636e-15",True
+8,b,B.8,b,"E[(m_-i - beta_bar_-i f)^2] = V_N (N=10), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.888889, value 0.882739",True
+8,c,B.8,c,"E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N (N=10, mean over i), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value -0.00617369",True
+8,c,B.8,c,"pooled projection of r on m_-i (N=10), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.497003, value 0.490129",True
+8,b,B.8,b,"E[(m_-i - beta_bar_-i f)^2] = V_N (N=30), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.275862, value 0.278329",True
+8,c,B.8,c,"E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N (N=30, mean over i), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value 0.0186238",True
+8,c,B.8,c,"pooled projection of r on m_-i (N=30), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.780382, value 0.771608",True
+8,b,B.8,b,"E[(m_-i - beta_bar_-i f)^2] = V_N (N=100), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.0808081, value 0.080219",True
+8,c,B.8,c,"E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N (N=100, mean over i), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value 0.00701835",True
+8,c,B.8,c,"pooled projection of r on m_-i (N=100), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.929802, value 0.922958",True
+8,b,B.8,b,"E[(m_-i - beta_bar_-i f)^2] = V_N (N=300), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.0267559, value 0.0266348",True
+8,c,B.8,c,"E[m_-i^2] = beta_bar^2 sigma_f^2 + V_N (N=300, mean over i), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0, value -0.0102424",True
+8,c,B.8,c,"pooled projection of r on m_-i (N=300), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.970854, value 0.979489",True
+8,d,B.8,d,"b = mu + (1 - mu) b_I (N=50, corr(zeta, eta)=0.0), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.56584, value 0.565593",True
+8,d,B.8,d,"b = mu + (1 - mu) b_I (N=50, corr(zeta, eta)=0.5), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.567154, value 0.567989",True
+8,d,B.8,d,"b = mu + (1 - mu) b_I (N=50, corr(zeta, eta)=-0.3), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 0.597258, value 0.595816",True
+8,d,B.8,d,"sample identity b = mu b_M + (1 - mu) b_I (inclusive mean) (2,000 dates x 40), script 54",pathwise,"identity, relative error <= 1e-10: theory 0.550227, value 0.550227",True
+8,d,B.8,d,"the two parts are orthogonal in the sample (same), script 54",pathwise,"identity, relative error <= 1e-12: theory 0, value 6.32067e-19",True
+8,e,B.8,e,"stale bar: A = 2 (1 - w) m^2 (1,000 bars), script 54",pathwise,"identity, relative error <= 1e-15: theory 0, value 0",True
+8,e,B.8,e,"open moved: A equals the open-free kernel (1,000 bars with a range), script 54",pathwise,"identity, relative error <= 1e-12: theory 0, value 2.3007e-16",True
+8,f,B.8,f,"lambda_1 = 1 (single observation), script 54",Monte Carlo,"|value - theory| <= 4 SE: theory 1, value 1.00293",True
+8,f,B.8,f,"lambda_n increases (n=1) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 0, value 1.00293",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=1) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 1.00293",True
+8,f,B.8,f,"lambda_n increases (n=2) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 1.00293, value 1.22493",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=2) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 1.22493",True
+8,f,B.8,f,"lambda_n increases (n=5) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 1.22493, value 1.58031",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=5) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 1.58031",True
+8,f,B.8,f,"lambda_n increases (n=20) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 1.58031, value 2.06811",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=20) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 2.06811",True
+8,f,B.8,f,"lambda_n increases (n=200) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 2.06811, value 2.51029",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=200) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 2.51029",True
+8,f,B.8,f,"lambda_n increases (n=2000) (Monte Carlo), script 54",Monte Carlo,"value > previous - 4 SE: theory 2.51029, value 2.68414",True
+8,f,B.8,f,"lambda_n < 4 ln 2 (n=2000) (Monte Carlo), script 54",Monte Carlo,"value < 4 ln 2 + 4 SE: theory 2.77259, value 2.68414",True
 paper,6.7,,,"Var(r) = Var(o) + Var(c) + 2 Cov(o, c) for sample moments (ddof = 1, n = 4 symbolic)",symbolic,simplifies to 0,True
 paper,6.7,,,"YZ - Var(r) = (1 - k)[mean RS - Var(c)] - 2 Cov(o, c), exactly",symbolic,simplifies to 0,True
 paper,4.5,,,Yang-Zhang weight k = 0.34/(1.34 + (n+1)/(n-1)) at n = 21,numerical,"target 0.1393442623, computed 0.1393442623, tolerance 1e-15",True

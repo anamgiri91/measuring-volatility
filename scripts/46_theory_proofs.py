@@ -968,6 +968,127 @@ def prop7(S: Steps, quick: bool) -> None:
               "Monte Carlo", bool(r._8), f"theory {r.theory:.6g}, simulated {r.value:.6g} (SE {r.se:.2g})")
 
 
+# =============================================================================================
+# Proposition 8 (Appendix B.8): the market-implied open
+# =============================================================================================
+
+def prop8(S: Steps, quick: bool) -> None:
+    """Every step of B.8. The algebra is symbolic on a panel of N = 4 securities (security 1 is i); the
+    sample identity, the kernel cases and the discrete range are pathwise; script 54's checks are added."""
+    from nepsevol.estimators import anam as AN_
+    from nepsevol.estimators import anam2 as A2_
+    N = 4
+    f = sp.Symbol("f", real=True)
+    zt = sp.symbols("zeta1:5", real=True)
+    et = sp.symbols("eta1:5", real=True)
+    xs = sp.symbols("x1:5", real=True)
+    bt = sp.symbols("beta1:5", positive=True)
+    sf, = sp.symbols("sigma_f", positive=True),
+    sz = sp.symbols("sz1:5", positive=True)
+    se = sp.symbols("se1:5", positive=True)
+    cz = sp.symbols("c1:5", real=True)
+    sx = sp.symbols("sx1:5", positive=True)
+    rv = [f, *zt, *et, *xs]
+    mom = {}
+    for u_ in rv:
+        for v_ in rv:
+            mom[frozenset((u_, v_))] = sp.Integer(0)
+    mom[frozenset((f,))] = sf ** 2
+    for j in range(N):
+        mom[frozenset((zt[j],))] = sz[j] ** 2
+        mom[frozenset((et[j],))] = se[j] ** 2
+        mom[frozenset((zt[j], et[j]))] = cz[j]
+        mom[frozenset((xs[j],))] = sx[j] ** 2
+    o = [bt[j] * f + zt[j] + et[j] for j in range(N)]
+    r = [bt[j] * f + zt[j] + xs[j] for j in range(N)]
+    m1 = sum(o[1:]) / (N - 1)
+    bbar1 = sum(bt[1:]) / (N - 1)
+    V1 = sum(sz[j] ** 2 + se[j] ** 2 + 2 * cz[j] for j in range(1, N)) / (N - 1) ** 2
+    # (a)
+    S.sym("8", "a", "B.8", "a", "m_-i does not depend on security i's news: d m_-i / d zeta_i = 0", sp.diff(m1, zt[0]))
+    S.sym("8", "a", "B.8", "a", "m_-i does not depend on security i's error: d m_-i / d eta_i = 0", sp.diff(m1, et[0]))
+    S.sym("8", "a", "B.8", "a", "E[m_-i eta_i] = 0 (independence and zero means)", E(m1 * et[0], rv, mom))
+    # (b)
+    err = m1 - bbar1 * f
+    S.sym("8", "b", "B.8", "b", "m_-i - beta_bar_-i f = (N-1)^-1 sum_{j != i} (zeta_j + eta_j)",
+          err - sum(zt[j] + et[j] for j in range(1, N)) / (N - 1))
+    S.sym("8", "b", "B.8", "b", "E[(m_-i - beta_bar_-i f)^2] = V_N (second moments add)", E(err ** 2, rv, mom) - V1)
+    rng = np.random.default_rng(SEED + 8)
+    ok = True
+    for _ in range(2000):
+        a2 = rng.uniform(0.1, 3.0, N - 1)
+        ok &= a2.sum() / (N - 1) ** 2 <= a2.max() / (N - 1) + 1e-15
+    S.add("8", "b", "B.8", "b", "V_N <= max / (N - 1) on 2,000 random draws of the second moments", "numerical", bool(ok),
+          "sum of N-1 terms <= (N-1) max")
+    # (c)
+    S.sym("8", "c", "B.8", "c", "E[m_-i^2] = beta_bar_-i^2 sigma_f^2 + V_N", E(m1 ** 2, rv, mom) - (bbar1 ** 2 * sf ** 2 + V1))
+    S.sym("8", "c", "B.8", "c", "E[r_i m_-i] = beta_i beta_bar_-i sigma_f^2 (E[x_i m_-i] = 0 by the assumption)",
+          E(r[0] * m1, rv, mom) - bt[0] * bbar1 * sf ** 2)
+    beta_, sf_, V_ = sp.symbols("beta s_f V", positive=True)
+    bM = (beta_ * beta_ * sf_ ** 2) / (beta_ ** 2 * sf_ ** 2 + V_)
+    S.sym("8", "c", "B.8", "c", "equal betas: b_M = beta^2 sigma_f^2 / (beta^2 sigma_f^2 + V_N)",
+          bM - beta_ ** 2 * sf_ ** 2 / (beta_ ** 2 * sf_ ** 2 + V_))
+    S.sym("8", "c", "B.8", "c", "and b_M -> 1 as V_N -> 0", sp.limit(bM, V_, 0) - 1)
+    # (d)
+    for i in range(N):
+        S.sym("8", "d", "B.8", "d", f"E[o_i r_i] = beta_i^2 sigma_f^2 + E[zeta_i^2] + E[zeta_i eta_i] (i = {i + 1})",
+              E(o[i] * r[i], rv, mom) - (bt[i] ** 2 * sf ** 2 + sz[i] ** 2 + cz[i]))
+        S.sym("8", "d", "B.8", "d", f"E[o_i^2] = beta_i^2 sigma_f^2 + E[(zeta_i + eta_i)^2] (i = {i + 1})",
+              E(o[i] ** 2, rv, mom) - (bt[i] ** 2 * sf ** 2 + sz[i] ** 2 + se[i] ** 2 + 2 * cz[i]))
+    SM = sum(bt[j] ** 2 for j in range(N)) * sf ** 2
+    SI = sum(sz[j] ** 2 + se[j] ** 2 + 2 * cz[j] for j in range(N))
+    bI = sum(sz[j] ** 2 + cz[j] for j in range(N)) / SI
+    mu = SM / (SM + SI)
+    b = sum(E(o[j] * r[j], rv, mom) for j in range(N)) / sum(E(o[j] ** 2, rv, mom) for j in range(N))
+    S.sym("8", "d", "B.8", "d", "b = mu + (1 - mu) b_I", b - (mu + (1 - mu) * bI))
+    T_, n_ = (300, 25) if quick else (3000, 40)
+    O = rng.normal(0, 1, (T_, n_)) + rng.normal(0, 0.5, (T_, 1))
+    R_ = 0.6 * O + rng.normal(0, 1, (T_, n_))
+    oM = O.mean(axis=1, keepdims=True) * np.ones_like(O)
+    oI = O - oM
+    S.path("8", "d", "B.8", "d", "in a sample, sum o_M o_I = 0 date by date", (oM * oI).sum(axis=1), tol=1e-10)
+    bh = (O * R_).sum() / (O * O).sum()
+    muh = (oM ** 2).sum() / (O ** 2).sum()
+    bMh = (oM * R_).sum() / (oM ** 2).sum()
+    bIh = (oI * R_).sum() / (oI ** 2).sum()
+    S.path("8", "d", "B.8", "d", "the sample identity b = mu b_M + (1 - mu) b_I", np.array([bh - (muh * bMh + (1 - muh) * bIh)]), tol=1e-12)
+    # (e)
+    n = 2000 if quick else 20000
+    PC = np.full(n, 100.0)
+    Op = PC * np.exp(rng.normal(0, 0.01, n))
+    Cp = Op * np.exp(rng.normal(0, 0.01, n))
+    Hp = np.maximum(Op, Cp) * np.exp(np.abs(rng.normal(0, 0.004, n)) + 1e-6)
+    Lp = np.minimum(Op, Cp) * np.exp(-np.abs(rng.normal(0, 0.004, n)) - 1e-6)
+    co = AN_.bar_coordinates(Op, Hp, Lp, Cp, PC)
+    zero_ = pd.Series(0.0, index=co.index)
+    A = A2_.kernel(co["o"], co["c"], co["u"], co["d"], zero_)
+    A0 = AN_.kernel(co["o"], co["c"], co["u"], co["d"], zero_)
+    S.path("8", "e", "B.8", "e", "where the open moved and the bar has a range, A is the open-free kernel",
+           ((A - A0) / A0).to_numpy(), tol=1e-12)
+    mm = pd.Series(rng.normal(0, 0.01, n))
+    st = pd.DataFrame({"o": 0.0, "c": 0.0, "u": 0.0, "d": 0.0}, index=mm.index)
+    As = A2_.kernel(st["o"], st["c"], st["u"], st["d"], mm)
+    S.path("8", "e", "B.8", "e", "a bar that never left the previous close: A = 2 (1 - w) m^2",
+           (As - 2 * (1 - A2_.LAMBDA0) * mm ** 2).to_numpy(), tol=1e-18)
+    A0s = AN_.kernel(st["o"], st["c"], st["u"], st["d"], zero_.iloc[:n])
+    S.path("8", "e", "B.8", "e", "there the open-free kernel is 0", A0s.to_numpy(), tol=0.0)
+    # (f)
+    S.sym("8", "f", "B.8", "f", "lambda_1 = E[W(1)^2] = 1", sp.integrate(z ** 2 * phi(z), (z, -sp.oo, sp.oo)) - 1)
+    reps = 2000 if quick else 20000
+    for nn in (1, 2, 5, 10):
+        W = np.cumsum(rng.standard_normal((reps, 4 * nn)) / math.sqrt(4 * nn), axis=1)
+        fine = np.maximum(W.max(axis=1), 0) - np.minimum(W.min(axis=1), 0)
+        coarse_pts = W[:, 3::4]
+        coarse = np.maximum(coarse_pts.max(axis=1), 0) - np.minimum(coarse_pts.min(axis=1), 0)
+        S.path("8", "f", "B.8", "f", f"R_n <= R_4n on nested grids (n = {nn})", np.maximum(coarse - fine, 0.0), tol=0.0)
+    led = pd.read_csv(TAB / "table143_theory_market_open_checks.csv")
+    for _, r_ in led.iterrows():
+        part = r_["check"][1]
+        how = "Monte Carlo" if "SE" in r_["rule"] else ("pathwise" if "identity" in r_["rule"] else "numerical")
+        S.add("8", part, "B.8", part, f"{r_['check'][4:]} ({r_['design']}), script 54", how, bool(r_["pass"]),
+              f"{r_['rule']}: theory {r_['theory']:.6g}, value {r_['value']:.6g}")
+
+
 def paper(S: Steps, quick: bool) -> None:
     # Yang-Zhang identity (Section 6.7, M15 H11): sample moments, ddof = 1
     o1, o2, o3, o4, c1, c2, c3, c4, kv, rsb = sp.symbols("o1 o2 o3 o4 c1 c2 c3 c4 k RSbar", real=True)
@@ -1079,7 +1200,7 @@ def write_outputs(S: Steps) -> pd.DataFrame:
     for k_, v in macros.items():
         lines.append(r"\expandafter\def\csname thn@" + k_ + r"\endcsname{" + f"{v:,}".replace(",", "{,}") + "}")
     (GEN / "proofs.tex").write_text("\n".join(lines) + "\n")
-    order = ["model", "1", "2", "3", "4", "5", "6", "7", "paper"]
+    order = ["model", "1", "2", "3", "4", "5", "6", "7", "8", "paper"]
     label = {"model": "The model", "paper": "The paper's own claims"}
     rows = []
     for p in order:
@@ -1108,6 +1229,7 @@ def main() -> None:
     prop5(S); print(f"  Proposition 5 ({time.time() - t0:.0f}s)")
     prop6(S, a.quick); print(f"  Proposition 6 ({time.time() - t0:.0f}s)")
     prop7(S, a.quick); print(f"  Proposition 7 ({time.time() - t0:.0f}s)")
+    prop8(S, a.quick); print(f"  Proposition 8 ({time.time() - t0:.0f}s)")
     paper(S, a.quick); print(f"  the paper's claims ({time.time() - t0:.0f}s)")
     t = S.frame()
     nfail = int((~t["pass"]).sum())

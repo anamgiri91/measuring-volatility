@@ -73,7 +73,7 @@ def test_every_step_passes_and_says_how_it_was_verified():
 def test_every_part_of_every_proposition_is_verified():
     parts = proposition_parts()
     assert parts == {"1": list("abcde"), "2": list("abcdefg"), "3": list("abcd"), "4": list("abcd"),
-                     "5": list("abc"), "6": list("abcde"), "7": list("abc")}, parts
+                     "5": list("abc"), "6": list("abcde"), "7": list("abc"), "8": list("abcdef")}, parts
     have = set(zip(steps()["proposition"], steps()["part"]))
     missing = [(p, x) for p, xs in parts.items() for x in xs if (p, x) not in have]
     assert not missing, f"proposition parts without a verified step: {missing}"
@@ -81,9 +81,9 @@ def test_every_part_of_every_proposition_is_verified():
 
 def test_every_step_of_every_proof_is_verified():
     parts = appendix_parts()
-    assert set(parts) == {"B.1", "B.2", "B.3", "B.4", "B.5", "B.6", "B.7"}, parts
+    assert set(parts) == {"B.1", "B.2", "B.3", "B.4", "B.5", "B.6", "B.7", "B.8"}, parts
     assert parts["B.1"] >= {"a", "b", "c", "d", "e", "bound"} and parts["B.2"] >= set("abcdefg")
-    assert parts["B.7"] == {"a", "b", "c"}
+    assert parts["B.7"] == {"a", "b", "c"} and parts["B.8"] == set("abcdef")
     have = set(zip(steps()["appendix"], steps()["appendix_part"]))
     missing = [(s, x) for s, xs in parts.items() for x in sorted(xs) if (s, x) not in have]
     assert not missing, f"proof steps without a verified row: {missing}"

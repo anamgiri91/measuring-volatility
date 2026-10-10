@@ -155,4 +155,5 @@ def test_anonymous_copy_carries_no_trace_of_the_eponym():
                 assert stem not in z.read(name).decode("utf-8", "replace"), name
     text = "\n".join(p.text for p in docx.Document(ANON).paragraphs)
     assert "6.8 An estimator for an overreacting open: the proposed estimator" in text
-    assert "The proposed estimator weights the overnight move" in text
+    # Round 20 rewrote the Findings sentence this checked; the sentence-start rule is checked on its successor.
+    assert "The proposed estimator, in its open-free form, beats close-to-close" in text
