@@ -25,6 +25,12 @@ SOURCES
 ``CSE_STOCKS``  (M18) ``cse-data/stock/*.csv`` as supplied by the author (``archive_2.zip``): one file per
                 Casablanca Stock Exchange share, 77 shares, 2012-03-26 to 2026-03-27, daily open, high,
                 low, close and volume, not adjusted for corporate actions. Its ``index/`` files are not used.
+``PSX``         (M22) ``combined/PSX_KSE100_Full_Historical_Daily.csv`` and ``metadata/PSX_All_Listed_Companies.csv``
+                of github.com/Muhammad-Wasif/PSX-Stock-Market-Dataset at commit c3b8ddd: Pakistan Stock
+                Exchange daily open, high, low, close and volume of 105 companies (described there as the
+                KSE-100's constituents), 2016-10-10 to 2026-10-08, not adjusted for corporate actions; the
+                metadata gives each symbol's sector. Plan M22 uses it as a market never seen in
+                development.
 
 THE UPLOAD'S DATES
 ------------------
@@ -43,7 +49,8 @@ those years are not used.
 
 RULES (frozen in ``M17_ANAM_FRONTIER_PLAN.md``)
 -----------------------------------------------
-1. Ordinary equity only (``DSE_NON_EQUITY``; Vietnam's three-character codes).
+1. Ordinary equity only (``DSE_NON_EQUITY``; Vietnam's three-character codes; for Pakistan, the metadata's
+   sector, excluding ``PSX_NON_EQUITY_SECTORS``, exchange-traded funds and debt).
 2. A record repeated exactly is kept once; a (security, date) key carrying two different records is
    dropped.
 3. No-trade records (a non-positive price, or zero volume) are dropped.
@@ -59,7 +66,9 @@ RULES (frozen in ``M17_ANAM_FRONTIER_PLAN.md``)
 7. Band screen: a bar whose high or low lies further from the previous close than the market's widest
    regular daily limit plus ``BAND_MARGIN`` is dropped (an unadjusted corporate action or a data
    error; Dhaka 10%, Vietnam 15%, the UPCoM limit). Where the limit changed by regulatory decision
-   inside the sample, the limit in force on the day applies (Casablanca, ``MA_BANDS``).
+   inside the sample, the limit in force on the day applies (Casablanca, ``MA_BANDS``; Pakistan,
+   ``PSX_BANDS``). Where the limit is the higher of a percentage and a price step (Pakistan: PKR 1), the
+   step applies to low-priced shares (``price_floor``).
 8. Train/test: sessions before the panel's median session train the forecast shrinkage; the median
    session and later are the test span.
 """
@@ -75,8 +84,8 @@ import pandas as pd
 from nepsevol.estimators import anam as AN
 
 __all__ = ["DSE_NON_EQUITY", "SPANS", "SPANS_M18", "MA_BANDS", "unswap_day_month", "read_dse_upload",
-           "read_dse_mirror", "read_vietnam", "read_casablanca", "band_on", "build_panel", "market_panel",
-           "sha256_file", "sha256_manifest"]
+           "read_dse_mirror", "read_vietnam", "read_casablanca", "read_psx", "band_on", "build_panel",
+           "market_panel", "sha256_file", "sha256_manifest", "SPANS_M22", "PSX_BANDS", "PSX_NON_EQUITY_SECTORS"]
 
 LN2 = float(np.log(2.0))
 PRICES = ["open", "high", "low", "close"]
@@ -101,6 +110,19 @@ DSE_MIXED_YEAR = 2022
 #: the mirror continues the upload after its last stamp
 DSE_UPLOAD_LAST = pd.Timestamp("2025-04-08")
 
+#: (M22) the Pakistan snapshot and its metadata
+PSX_COMMIT = "c3b8ddd127f2440dfde7a29a4e502bd361a68854"
+PSX_SHA256 = "0c2d7b48697ea8abdecfda56acdea4357518cf8237f9062bba1b0e57a5127dda"
+PSX_META_SHA256 = "05e19088d78f4288423421a837dac007159aacfe8ef0ea40ec66ec7525213a5b"
+#: (M22) metadata sectors that are not ordinary operating companies' shares
+PSX_NON_EQUITY_SECTORS = ("REAL ESTATE INVESTMENT TRUST", "MODARABAS", "CLOSE - END MUTUAL FUND")
+#: (M22) PSX's security-wise limit is the higher of a share of the previous close and PKR 1: 5% until the
+#: widening phased in from 20 January 2020 (0.5% a fortnight, 7.5% from about 20 March 2020), and the one phased
+#: in from 27 May 2024 (10% from about 22 July 2024). Each phase-in is given its final value from its first day,
+#: so that an uncertain step date cannot screen out a bar that was inside the limit.
+PSX_BANDS = ((None, 0.05), ("2020-01-20", 0.075), ("2024-05-27", 0.10))
+PSX_PRICE_FLOOR = 1.0
+
 #: (M18) Casablanca's daily limit for shares in continuous trading, the wider of its two regimes (fixing
 #: has the narrower one), by the date each AMMC decision took effect: 4% from 17 March 2020, 6% from
 #: 12 October 2021, 10% again from 9 October 2023.
@@ -111,6 +133,7 @@ MARKETS = {
     "DSE": dict(band=0.10, unit=0.1, closures=(("2020-03-26", "2020-05-30"),)),
     "VN": dict(band=0.15, unit=0.01, closures=()),
     "MA": dict(band=MA_BANDS, unit=0.01, closures=()),
+    "PK": dict(band=PSX_BANDS, unit=0.01, closures=(), price_floor=PSX_PRICE_FLOOR),
 }
 #: panel -> (market, first date, last date)
 SPANS = {
@@ -121,6 +144,10 @@ SPANS = {
 #: (M18) panel -> (market, first date, last date)
 SPANS_M18 = {
     "Morocco 2012-2026": ("MA", "2012-03-26", "2026-03-27"),
+}
+#: (M22) panel -> (market, first date, last date)
+SPANS_M22 = {
+    "Pakistan 2016-2026": ("PK", "2016-10-10", "2026-10-08"),
 }
 
 #: Dhaka codes that are not ordinary equity: mutual funds, corporate bonds, debentures and Sukuk by the
@@ -230,6 +257,24 @@ def read_casablanca(stock_dir, check: bool = True) -> pd.DataFrame:
     return _dedupe(pd.concat(parts, ignore_index=True)).reset_index(drop=True)
 
 
+def read_psx(path, meta_path, check: bool = True) -> pd.DataFrame:
+    """(M22) The Pakistan snapshot's combined file, ordinary equity only (rule 1, by the metadata's sector), with
+    rule 2 applied."""
+    if check:
+        _check(sha256_file(path), PSX_SHA256, "PSX combined file")
+        _check(sha256_file(meta_path), PSX_META_SHA256, "PSX metadata")
+    raw = pd.read_csv(path, dtype={"symbol": str})
+    meta = pd.read_csv(meta_path, dtype={"symbol": str, "sector_name": str})
+    flag = lambda col: meta[col].astype(str).str.strip().str.lower().eq("true")
+    equity = meta.loc[~meta["sector_name"].str.strip().isin(PSX_NON_EQUITY_SECTORS) & ~flag("is_etf") & ~flag("is_debt"),
+                      "symbol"].str.strip()
+    x = pd.DataFrame({"symbol": raw["symbol"].str.strip(), "date": pd.to_datetime(raw["date"]),
+                      "open": raw["open"], "high": raw["high"], "low": raw["low"], "close": raw["close"],
+                      "volume": raw["volume"]})
+    x = x[x["symbol"].isin(set(equity))]
+    return _dedupe(x).reset_index(drop=True)
+
+
 # --------------------------------------------------------------------------------------------
 # Panel
 # --------------------------------------------------------------------------------------------
@@ -248,7 +293,7 @@ def band_on(dates: pd.Series, band) -> pd.Series:
 
 
 def build_panel(x: pd.DataFrame, *, band: float, unit: float, closures=(), start=None, end=None,
-                min_securities: int = MIN_SECURITIES):
+                min_securities: int = MIN_SECURITIES, price_floor: float | None = None):
     """Rules 3-8 on records ``[symbol, date, open, high, low, close, volume]`` of one market.
 
     Returns ``(panel, log)``: the panel carries the bar, ``pc`` (previous close), the coordinates
@@ -293,8 +338,11 @@ def build_panel(x: pd.DataFrame, *, band: float, unit: float, closures=(), start
     x = x[x["pc"].notna()].reset_index(drop=True)
 
     co = AN.bar_coordinates(x["open"], x["high"], x["low"], x["close"], x["pc"])
-    lim = band_on(x["date"], band) + BAND_MARGIN
-    out = (co["h"] > np.log1p(lim)) | (co["l"] < np.log1p(-lim))
+    lim = band_on(x["date"], band)
+    if price_floor is not None:  # (M22) the limit is the higher of the share and a price step
+        lim = np.maximum(lim, price_floor / x["pc"])
+    lim = lim + BAND_MARGIN
+    out = (co["h"] > np.log1p(lim)) | (co["l"] < np.log1p(-np.minimum(lim, 0.99)))
     log["bars outside the band"] = int(out.sum())
     x, co = x[~out].reset_index(drop=True), co[~out].reset_index(drop=True)
     for k in ("o", "c", "u", "d", "r", "h", "l"):
@@ -318,9 +366,12 @@ def market_panel(name: str, root, check: bool = True):
     """The panel ``name`` of :data:`SPANS`, built from the inputs under ``root``
     (``data/external/frontier``)."""
     root = pathlib.Path(root)
-    market, start, end = {**SPANS, **SPANS_M18}[name]
+    market, start, end = {**SPANS, **SPANS_M18, **SPANS_M22}[name]
     if market == "MA":
         x = read_casablanca(root / "casablanca" / "stock", check=check)
+    elif market == "PK":
+        x = read_psx(root / "psx" / "PSX_KSE100_Full_Historical_Daily.csv",
+                     root / "psx" / "PSX_All_Listed_Companies.csv", check=check)
     elif market == "DSE":
         up = read_dse_upload(root / "dse_upload" / "DSE_Data.csv", check=check)
         x = up

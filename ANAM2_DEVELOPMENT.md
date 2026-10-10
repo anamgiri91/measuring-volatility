@@ -103,7 +103,7 @@ opening error: the leave-one-out mean o_M,−i.
 | E12 | Refining the factor HAR | a one-day market state; mean instead of median; long run of 125 sessions; calibration over 20 or 120 dates; no own d1 | none better |
 | E13 | Stock-specific exposure | the stock's own projection of r on o_M, shrunk; the same relative to the pooled one | worse than the full move: stale stocks have attenuated betas, yet their later returns realise the market's move |
 | E14 | The level across stocks | the stock's own calibration, shrunk; the stock's own long-run mean of r² as a HAR component (lrCC) | the stock-level calibration hurt Nepal badly; lrCC helped Vietnam and Dhaka 2009–21 and was neutral elsewhere |
-| E15 | A different model class | gradient-boosted trees on 26 bar features, Poisson and gamma deviance, fixed hyperparameters | see below |
+| E15 | A different model class | gradient-boosted trees on 26 bar features, Poisson and gamma deviance, fixed hyperparameters | not completed before plan M22 was frozen: the runs were stopped after a restart of the machine and again for lack of time, so this result did not inform the design |
 | E16 | The final candidates | kernels {open-free, M1, MS, MSO} × dynamics {HAR, factor HAR, factor HAR + lrCC}; return-only forecasts; ½ with GJR | see the next section |
 
 **The simulation** (`sim_m1.py`). The simulated panel has:

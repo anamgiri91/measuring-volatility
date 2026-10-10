@@ -68,3 +68,14 @@ were frozen in `M17_ANAM_FRONTIER_PLAN.md` before any estimator was computed on 
 | Path under `data/external/frontier/` | What it is | How to obtain it | SHA-256 |
 |---|---|---|---|
 | `casablanca/stock/*.csv` (and `casablanca/info.csv`) | One file per Casablanca Stock Exchange share, 77 shares, 2012-03-26 to 2026-03-27, columns `Time, Open, High, Low, Close, Volume`, not adjusted for corporate actions | Supplied by the author as `archive_2.zip` (SHA-256 `c9cc8888fec542a2aafc6d2a2458c88508ea7761f18b422c8f1aa4e02e0ef1be`), folder `cse-data/`; the original source is not stated. The `index/` folder is not used | manifest `41a7ecdef86b23491dbf1571dfcc718a4cc59a649dbfab4e29a72fb75ebd5e0e` (sorted `"<file> <sha256>"` lines of the 77 share files) |
+
+### Added for M22: Pakistan Stock Exchange
+
+| Path under `data/external/frontier/` | What it is | How to obtain it | SHA-256 |
+|---|---|---|---|
+| `psx/PSX_KSE100_Full_Historical_Daily.csv` | Pakistan Stock Exchange daily OHLC and volume of 105 companies, described by the source as the KSE-100's constituents, 2016-10-10 to 2026-10-08. Its columns are `symbol, date, open, high, low, close, volume, is_anomaly`. It is not adjusted for corporate actions; 1,000 rows carry a non-positive open | `git clone https://github.com/Muhammad-Wasif/PSX-Stock-Market-Dataset` and check out commit `c3b8ddd127f2440dfde7a29a4e502bd361a68854`; copy `combined/PSX_KSE100_Full_Historical_Daily.csv`. The repository is under the MIT licence; the exchange's own terms for the underlying prices were not verified | `0c2d7b48697ea8abdecfda56acdea4357518cf8237f9062bba1b0e57a5127dda` |
+| `psx/PSX_All_Listed_Companies.csv` | The same repository's list of 1,038 listed securities, with columns `symbol, name, sector_name, is_etf, is_debt, is_gem`. Its sectors define which of the 105 companies are ordinary equity | same commit, `metadata/PSX_All_Listed_Companies.csv` | `05e19088d78f4288423421a837dac007159aacfe8ef0ea40ec66ec7525213a5b` |
+
+Plan M22 (`M22_ANAM2_PLAN.md`) uses this market as the one never seen in development. Its panel rules, including
+the dated price limits with their PKR 1 floor, are in `nepsevol.frontier` and were frozen with the plan. The
+repository's download scripts were not run.
