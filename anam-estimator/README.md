@@ -5,7 +5,7 @@ cannot be trusted. It measures how far the open can be trusted, reads it only th
 level on the close-to-close scale.
 
 It comes from the paper *When the Open Overreacts: Measuring Daily Volatility in Frontier Markets
-without Options* (Section 6.8). The paper, its data and every test are in the
+without Options* (Section 6.8; Anam II, below, is Section 6.9). The paper, its data and every test are in the
 [parent repository](https://github.com/anamgiri91/measuring-volatility).
 
 ## Install
@@ -14,8 +14,14 @@ without Options* (Section 6.8). The paper, its data and every test are in the
 pip install "anam-estimator @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator"
 ```
 
-It needs Python 3.9 or later and depends only on numpy and pandas. To pin a version, put a commit
-after `.git@`.
+It needs Python 3.9 or later and depends only on numpy and pandas. Anam II's model (`AnamIIModel`, below)
+fits its weights with SciPy: install it with the `market` extra,
+
+```bash
+pip install "anam-estimator[market] @ git+https://github.com/anamgiri91/measuring-volatility.git#subdirectory=anam-estimator"
+```
+
+To pin a version, put a commit after `.git@`.
 
 ## Quick start
 
@@ -121,6 +127,56 @@ frozen Table 34, whose defects the correction removes.
 | `backtest()` / `score(loss="normalized")` | every past forecast beside what followed, its QLIKE loss in both forms (normalised, zero when exact; canonical, y/f + ln f, defined at a zero target), and their mean (out of sample after `train_end`) |
 | `save(path)` / `AnamModel.load(path)` | keep the fitted settings as JSON |
 
+## Anam II: the market-implied open (version 0.3.0)
+
+For a **panel** of securities from one market, `AnamIIModel` is the second generation, tested in the paper's plan
+M22.
+
+**Why.** In a panel the overnight move has two parts. The session keeps most of the market's part and less of
+each stock's own remainder. One coefficient b shrinks both by the same factor, which is why
+estimating b never beat leaving the open out.
+
+**What it does.** Anam II reads the market's move from the other stocks' opens, which carry none of the stock's
+own opening error. It uses that move where the stock's own open says nothing: where the open printed exactly at
+the previous close.
+
+| Step | Definition |
+|---|---|
+| Market move | m = the mean of o over the panel's other securities that date (leave-one-out) |
+| Effective open | o\* = m where O = PC; 0 elsewhere (0 throughout for a single series) |
+| Kernel | A = 0.8·[o\*² + R\*²/D] + 0.2·r², with R\* = max(h, o\*) − min(l, o\*) and D = 4 ln 2, or 1 on a one-price bar (H = L). Where the open moved, A is the open-free kernel |
+| Calibration | κ as in Anam's estimator |
+| Forecast | κ·Σ cₖZₖ. Z holds the kernel's day, 5-row and 22-row means; its long-run mean lr; lr scaled by the market's current state (the date's medians of m5/lr and m22/lr); and the stock's own long-run mean of r². The weights c are convex, fitted by minimising QLIKE |
+
+```python
+from anam_estimator import AnamIIModel, estimate_market, prepare
+
+model = AnamIIModel(horizon=5).fit(panel)              # optionally train_end="2024-01-01"
+model.forecast()                                       # per security: variance, volatility, kappa, market_open
+model.backtest(); model.score(loss="canonical")
+path = model.variance_path()                           # the 21-session estimate on every bar
+```
+
+**Evidence** (plan M22, frozen before any test).
+* **Against the corrected evaluation's most accurate forecast** (the open-free HAR), Anam II has a lower loss at
+  5 sessions in three of six frontier panels after Holm's adjustment, and is worse in none:
+  * Dhaka 2023–2026;
+  * Vietnam;
+  * the Pakistan Stock Exchange, a market never used in its design: d = -0.0138, t = -3.95.
+* **In Pakistan at 21 sessions,** d = -0.0090 (t = -2.44) does not survive the adjustment.
+* **Against the best forecast built from returns alone,** it wins at 5 sessions in five of six panels.
+* **The gain comes mostly from the dynamics.** The market-implied open adds a detectable gain only where stale
+  prices are pervasive (Dhaka 2023–2026).
+* **No difference in NEPSE or for single series.** In NEPSE it is not distinguishable from the open-free HAR.
+  For a single series, such as an index, it adds nothing, so use `AnamModel(form="open-free")` there.
+
+Results: [`M22_ANAM2_RESULTS.md`](https://github.com/anamgiri91/measuring-volatility/blob/main/M22_ANAM2_RESULTS.md);
+the paper's Section 6.9 and Table 40.
+
+`estimate_market`, `market_kernel`, `market_move` and `effective_open` expose the steps. The arithmetic is the
+frozen research code's (`nepsevol.estimators.anam2`), and the parent repository's tests check that the two agree
+on every NEPSE stock-day and on the NIFTY 50.
+
 ## Output
 
 `anam_estimator()` and `variance_path()` return one row per bar with these columns:
@@ -139,7 +195,9 @@ from, the forecast variance and volatility, b, κ and φ.
 
 ## Model card
 
-**Intended use.** Measuring and forecasting the daily volatility of shares or indices from daily bars.
+**Intended use.** Measuring and forecasting the daily volatility of shares or indices from daily bars. For a
+panel of shares from one market, `AnamIIModel` is the forecast with the stronger evidence (plan M22). For a single
+series, use `AnamModel(form="open-free")`.
 It is aimed at markets where the opening price comes from a thin market or an auction and is partly
 reversed during the session.
 
@@ -172,10 +230,18 @@ M20, frozen before it was run, removes them.
 * **The most accurate forecast in most samples** pairs the open-free form with HAR dynamics. It is not this
   package's φ-shrinkage model, which is close to the paper's frozen design.
 * **Estimating b.** It did not beat setting it to zero (the open-free form) in any sample.
+* **Anam II (plan M22).** It was tested against the open-free HAR on M20's test spans, which were seen, and on
+  the Pakistan Stock Exchange, which was unseen:
+  * at 5 sessions it is better in three of six panels, Pakistan included, and worse in none;
+  * the gain comes mostly from its factor-HAR dynamics.
+
+  See the section above.
 
 **Limitations.**
 
-* Designed on Nepal Stock Exchange data and tested in a finite set of markets.
+* Designed on Nepal Stock Exchange data and tested in a finite set of markets. Anam II was designed on the
+  training spans of all seven samples and tested on one unseen market. That market's panel holds the index's
+  current constituents, so it has survivorship bias.
 * The 60-date calibration lags a sudden change in market rules; rely on close-to-close until the window
   has passed the change.
 * The level is on the close-to-close scale because of the calibration, which any estimator could be
